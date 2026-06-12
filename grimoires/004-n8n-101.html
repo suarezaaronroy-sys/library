@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>n8n 101: AI Workflow Automation — Grimoire 004 · Aaron Suarez</title>
+<meta name="description" content="25-module n8n reference. Self-hosting, expressions, AI agents, RAG, WhatsApp, queue mode, testing, and production hardening. Narrative-first, technically complete.">
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/004-n8n-101.html"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYPEWZXH03"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GYPEWZXH03',{page_title:'Grimoire 004 – n8n 101',page_path:'/grimoires/004-n8n-101.html'});</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ─── ROOT ─── */
+/* html gets scroll-padding-top so anchor links clear the sticky header.
+   overflow-x is set here, NOT on body — setting overflow on body breaks position:sticky. */
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:108px;
+  overflow-x:hidden;
+}
+
+:root{
+  --chrome:92px;       /* mode-banner(40) + site-header(52) */
+  --sidebar:260px;
+
+  --bg:#F5F2EC;--bg2:#EDE9E0;--bg3:#E5E0D5;
+  --ink:#1C1917;--ink2:#44403C;--ink3:#78716C;--ink4:#A8A29E;
+  --accent:#C2410C;--accent2:#EA580C;
+  --teal:#0D9488;--teal-bg:#CCFBF1;
+  --amber:#B45309;--amber-bg:#FEF3C7;
+  --blue:#1D4ED8;--blue-bg:#DBEAFE;--blue-bg2:#BFDBFE;
+  --green:#15803D;--green-bg:#DCFCE7;
+  --red:#B91C1C;--red-bg:#FEE2E2;
+  --purple:#7C3AED;--purple-bg:#F5F3FF;
+  --border:rgba(28,25,23,.12);--border2:rgba(28,25,23,.06);
+  --dark:#1C1917;--dark2:#292524;--dark3:#3C3835;
+  --dark-fg:#F5F2EC;--dark-muted:#A8A29E;--dark-dim:#78716C;
+  --mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;
+  --shadow-sm:0 1px 3px rgba(28,25,23,.07),0 1px 2px rgba(28,25,23,.04);
+  --shadow:0 4px 12px rgba(28,25,23,.07),0 2px 4px rgba(28,25,23,.04);
+}
+
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.7;
+  font-weight:300;
+  /* NO overflow-x:hidden here — it would create a new scroll container
+     and break the fixed sidebar positioning */
+  background-image:
+    radial-gradient(ellipse at 5% 0%,rgba(29,78,216,.04),transparent 38%),
+    radial-gradient(ellipse at 95% 8%,rgba(13,148,136,.03),transparent 35%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.018'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+
+/* ─── TOP CHROME (sticky) ─── */
+.mode-banner{
+  position:sticky;top:0;z-index:300;
+  background:var(--dark);color:var(--dark-fg);
+  padding:0 2rem;height:40px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:11px;
+}
+.mode-banner-left{display:flex;align-items:center;gap:10px}
+.mode-dot{width:7px;height:7px;border-radius:50%;background:var(--blue-bg2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.site-header{
+  position:sticky;top:40px;z-index:200;
+  background:rgba(245,242,236,.96);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-left{display:flex;align-items:center;gap:1rem}
+.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3);transition:.14s;display:flex;align-items:center;gap:.3rem}
+.header-back:hover{color:var(--accent)}
+.header-divider{width:1px;height:16px;background:var(--border)}
+.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,.2)}
+
+/* ─── PROGRESS BAR ─── */
+#progress-bar{
+  position:fixed;
+  top:var(--chrome);
+  left:var(--sidebar);
+  right:0;
+  height:2px;
+  z-index:150;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  transform-origin:left;
+  transform:scaleX(0);
+  transition:transform .08s linear;
+  pointer-events:none;
+}
+
+/* ─── SIDEBAR ─── */
+/* Fixed — completely outside document flow.
+   This is the only reliable approach for a persistent sidebar.
+   No sticky, no grid tricks, no flex hacks. Just fixed. */
+.sidebar{
+  position:fixed;
+  top:var(--chrome);
+  left:0;
+  width:var(--sidebar);
+  height:calc(100vh - var(--chrome));
+  overflow-y:auto;
+  overflow-x:hidden;
+  border-right:1px solid var(--border);
+  background:rgba(245,242,236,.98);
+  backdrop-filter:blur(10px);
+  z-index:100;
+  padding:1rem 0 3rem;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* Nav groups */
+.nav-group{margin-bottom:.15rem}
+.nav-group-label{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink4);
+  padding:10px 16px 4px;
+  display:block;
+}
+.nav-group:not(:first-child) .nav-group-label{
+  border-top:1px solid var(--border2);
+  margin-top:.3rem;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  padding:5px 16px;
+  font-size:12px;
+  color:var(--ink3);
+  line-height:1.35;
+  transition:background .1s,color .1s,border-color .1s;
+  border-left:2px solid transparent;
+}
+.nav-link:hover{background:var(--bg2);color:var(--ink)}
+.nav-link.active{
+  background:rgba(29,78,216,.06);
+  color:var(--blue);
+  border-left-color:var(--blue);
+  font-weight:500;
+}
+.nav-num{
+  font-family:var(--mono);
+  font-size:9px;
+  color:var(--ink4);
+  width:18px;
+  flex-shrink:0;
+}
+.nav-link.active .nav-num{color:var(--blue);opacity:.7}
+.nav-link.warn{color:var(--red)}
+.nav-link.warn:hover{background:var(--red-bg)}
+.nav-link.warn.active{background:rgba(185,28,28,.06);color:var(--red);border-left-color:var(--red)}
+
+/* ─── MAIN CONTENT ─── */
+/* margin-left pushes main clear of the fixed sidebar.
+   footer gets the same margin. That's the whole layout. */
+.main{
+  margin-left:var(--sidebar);
+  padding:2.8rem 3rem 8rem;
+  max-width:860px;
+  min-width:0;
+}
+
+/* All sections with IDs get scroll-margin-top so clicking a nav link
+   lands below the sticky header, not behind it. */
+section[id]{scroll-margin-top:108px}
+
+/* ─── HERO ─── */
+.hero{margin-bottom:3.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.08;margin-bottom:.9rem;letter-spacing:-.025em}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--blue)}
+.hero-sub{font-size:.95rem;color:var(--ink2);max-width:60ch;line-height:1.8;margin-bottom:1.8rem}
+.stat-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.8rem}
+.stat-pill{display:flex;align-items:center;gap:.4rem;padding:5px 12px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:11.5px;color:var(--ink2)}
+.stat-pill strong{font-weight:500;color:var(--ink)}
+.hero-actions{display:flex;gap:.65rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;padding:.65rem 1.1rem;border-radius:999px;border:1px solid;cursor:pointer;transition:.15s ease;font-weight:500}
+.btn.blue{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 14px rgba(29,78,216,.22)}
+.btn.blue:hover{background:#1741ba;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}
+.btn.ghost:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ─── PART BANNERS ─── */
+.part-header{
+  margin:3rem 0 2rem;
+  padding:1.1rem 1.4rem;
+  background:var(--dark);border-radius:14px;
+  display:flex;align-items:center;gap:1.2rem;
+}
+.part-num{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dark-dim)}
+.part-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--dark-fg)}
+.part-sub{font-size:11.5px;color:var(--dark-dim);margin-top:2px}
+.part-divider{width:1px;height:32px;background:rgba(245,242,236,.1);flex-shrink:0}
+
+/* ─── MODULE SECTIONS ─── */
+.module-section{
+  margin-bottom:3rem;
+  padding-bottom:2.8rem;
+  border-bottom:1px solid var(--border2);
+}
+.module-section:last-of-type{border-bottom:none}
+.module-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.4rem}
+.module-num{
+  font-family:var(--mono);font-size:10px;color:var(--ink4);
+  padding:4px 8px;border:1px solid var(--border);border-radius:4px;
+  white-space:nowrap;margin-top:3px;background:#fff;flex-shrink:0;
+}
+.module-title{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:2px}
+.module-sub{font-size:13px;color:var(--ink3)}
+
+/* ─── TEXT ─── */
+h2.sh{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin:1.8rem 0 .75rem}
+h3.sh{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin:1.5rem 0 .6rem;padding-bottom:.35rem;border-bottom:1px solid var(--border2)}
+p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}
+p:last-child{margin-bottom:0}
+strong{font-weight:500;color:var(--ink)}
+code{font-family:var(--mono);font-size:.76em;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--ink)}
+ul,ol{margin:.4rem 0 .75rem 1.2rem;color:var(--ink2);font-size:14px;line-height:1.75}
+li{margin-bottom:.2rem}
+
+/* ─── CALLOUTS ─── */
+.callout{border-radius:10px;padding:.85rem 1.1rem;margin:.9rem 0;font-size:13px;line-height:1.65;display:flex;gap:.7rem;align-items:flex-start}
+.callout-icon{flex-shrink:0;font-size:.95rem;line-height:1.6}
+.callout-body{flex:1}
+.callout-warn{background:var(--amber-bg);border-left:3px solid var(--amber);color:#78350F}
+.callout-danger{background:var(--red-bg);border-left:3px solid var(--red);color:#7F1D1D}
+.callout-info{background:var(--blue-bg);border-left:3px solid var(--blue);color:#1E3A8A}
+.callout-success{background:var(--teal-bg);border-left:3px solid var(--teal);color:#134E4A}
+.callout-tip{background:var(--purple-bg);border-left:3px solid var(--purple);color:#4C1D95}
+
+/* ─── STORY CARDS ─── */
+.story-card{
+  background:#fff;border-radius:12px;
+  padding:1rem 1.3rem;margin:.9rem 0;
+  border-left:3px solid var(--accent);
+  box-shadow:var(--shadow-sm);
+}
+.story-label{font-family:var(--mono);font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
+.story-text{font-size:13.5px;color:var(--ink2);font-style:italic;line-height:1.7}
+
+/* ─── SHOWCASE (dark stat block) ─── */
+.showcase{background:var(--dark);border-radius:18px;padding:1.6rem 1.8rem;margin:1.8rem 0}
+.showcase-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.75rem}
+.showcase h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:.4rem;color:var(--dark-fg)}
+.showcase p{font-size:13px;color:var(--dark-muted);line-height:1.65;margin-bottom:.4rem}
+.showcase-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.1rem 0}
+.showcase-stat{background:rgba(245,242,236,.06);border:1px solid rgba(245,242,236,.1);border-radius:10px;padding:13px}
+.ss-val{font-family:var(--mono);font-size:1.5rem;font-weight:500;color:var(--dark-fg);line-height:1;margin-bottom:4px}
+.ss-val.g{color:#86EFAC}.ss-val.b{color:#93C5FD}.ss-val.a{color:#FCD34D}.ss-val.p{color:#C4B5FD}
+.ss-label{font-size:11px;color:var(--dark-dim);line-height:1.4}
+
+/* ─── REFLECTION ─── */
+.reflection{
+  background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.14);
+  border-left:3px solid var(--purple);border-radius:10px;
+  padding:.85rem 1.1rem;margin:.9rem 0;
+}
+.reflection-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:.35rem}
+.reflection p{color:var(--ink2);font-size:13px;line-height:1.65;margin-bottom:.35rem}
+
+/* ─── POWER TIPS ─── */
+.power-tip{
+  background:var(--dark2);border:1px solid rgba(245,242,236,.08);
+  border-left:3px solid var(--accent2);border-radius:10px;
+  padding:.85rem 1.1rem;margin:.9rem 0;
+}
+.power-tip-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.35rem}
+.power-tip p{color:#D6D3D1;font-size:13px;line-height:1.65;margin-bottom:.35rem}
+.power-tip code{background:rgba(255,255,255,.1);color:#F5F2EC}
+
+/* ─── NODE CONFIGS ─── */
+.node-config{background:#fff;border:1px solid var(--border);border-radius:10px;margin:.9rem 0;overflow:hidden;box-shadow:var(--shadow-sm)}
+.node-header{background:var(--bg2);padding:.5rem .9rem;font-family:var(--mono);font-size:.63rem;font-weight:500;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.node-header-badge{background:var(--dark);color:var(--dark-muted);font-size:.57rem;padding:1px 6px;border-radius:3px}
+.node-body{padding:.8rem .9rem}
+.node-field{display:grid;grid-template-columns:130px 1fr;gap:.7rem;margin:.35rem 0;align-items:baseline}
+.nfl{font-family:var(--mono);font-size:.61rem;color:var(--ink4);line-height:1.5}
+.nfv{color:var(--ink2);font-family:var(--mono);font-size:.66rem;line-height:1.55}
+.node-divider{height:1px;background:var(--border2);margin:.55rem -.9rem}
+
+/* ─── CODE BLOCKS ─── */
+.tech-block{margin:1rem 0}
+.tech-block-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink4);margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}
+.tech-block-label::after{content:'';flex:1;height:1px;background:var(--border2)}
+pre{
+  background:var(--dark);border-radius:10px;
+  padding:1.1rem 1.3rem;overflow-x:auto;
+  font-family:var(--mono);font-size:12px;line-height:1.85;color:#D6D3D1;
+  border:1px solid rgba(255,255,255,.05);
+  margin:.35rem 0;
+}
+pre .c{color:#57534E;font-style:italic}
+pre .k{color:#FDA4AF}
+pre .v{color:#86EFAC}
+pre .s{color:#FCD34D}
+pre .w{color:#F8FAFC;font-weight:500}
+pre .tl{color:#93C5FD}
+pre .p{color:#C4B5FD}
+pre .o{color:#FCA5A5}
+
+/* ─── FEATURE GRIDS ─── */
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin:.9rem 0}
+.feature-grid.cols3{grid-template-columns:repeat(3,1fr)}
+.feature-card{
+  background:#fff;border:1px solid var(--border);border-radius:11px;
+  padding:.95rem 1rem;transition:all .18s ease;
+}
+.feature-card:hover{border-color:rgba(28,25,23,.2);box-shadow:var(--shadow);transform:translateY(-1px)}
+.feature-card-label{font-family:var(--mono);font-size:.57rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:.28rem}
+.feature-card h4{font-size:.86rem;font-weight:500;color:var(--ink);margin-bottom:.28rem;line-height:1.3}
+.feature-card p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin-bottom:0}
+
+/* ─── TABLES ─── */
+.table-wrap{overflow-x:auto;margin:.9rem 0;border-radius:10px;border:1px solid var(--border);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);text-align:left;padding:9px 13px;border-bottom:1px solid var(--border);background:var(--bg2)}
+td{padding:9px 13px;border-bottom:1px solid var(--border2);color:var(--ink2);vertical-align:top;line-height:1.55}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(245,242,236,.5)}
+
+/* ─── BADGES ─── */
+.badge{display:inline-block;font-family:var(--mono);font-size:9.5px;padding:2px 7px;border-radius:4px;vertical-align:middle;margin-left:4px}
+.badge-new{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,.2)}
+.badge-warn{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(180,83,9,.2)}
+.badge-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(185,28,28,.2)}
+.badge-essential{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(13,148,136,.2)}
+
+/* ─── FLOW STEPS ─── */
+.flow{margin:1.1rem 0;display:flex;flex-direction:column;gap:.35rem}
+.flow-step{display:flex;gap:.85rem;align-items:flex-start;padding:.7rem .95rem;background:#fff;border-radius:9px;border:1px solid var(--border2)}
+.flow-step-num{font-family:var(--mono);font-size:.63rem;font-weight:500;width:22px;height:22px;border-radius:50%;background:var(--dark);color:var(--dark-fg);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.flow-step-content h4{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.3;margin-bottom:.18rem}
+.flow-step-content p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin:0}
+.flow-arrow{text-align:center;font-size:.7rem;color:var(--ink4);font-family:var(--mono)}
+
+/* ─── KV TABLES ─── */
+.kv{background:#fff;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:.8rem 0}
+.kv-row{display:grid;grid-template-columns:165px 1fr;border-bottom:1px solid var(--border2)}
+.kv-row:last-child{border-bottom:none}
+.kv-key{padding:.5rem .85rem;font-family:var(--mono);font-size:.63rem;color:var(--ink4);background:var(--bg2);border-right:1px solid var(--border2)}
+.kv-val{padding:.5rem .85rem;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.kv-val code{font-size:.85em}
+
+/* ─── EXPRESSION TABLE ─── */
+.expr-table-wrap{background:#fff;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:.8rem 0}
+.expr-row{display:grid;grid-template-columns:230px 1fr;border-bottom:1px solid var(--border2)}
+.expr-row:last-child{border-bottom:none}
+.expr-expr{padding:.5rem .85rem;font-family:var(--mono);font-size:.65rem;color:var(--blue);border-right:1px solid var(--border2)}
+.expr-desc{padding:.5rem .85rem;font-size:.77rem;color:var(--ink2);line-height:1.5}
+.expr-row.header .expr-expr,.expr-row.header .expr-desc{background:var(--bg2);color:var(--ink3);font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.06em}
+
+/* ─── COMPARE GRID ─── */
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1.1rem 0}
+.compare-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.compare-card-header{padding:.75rem .95rem;border-bottom:1px solid var(--border)}
+.compare-card-header h4{font-size:.88rem;font-weight:500;color:var(--ink)}
+.compare-price{font-family:var(--mono);font-size:1.05rem;font-weight:500;color:var(--ink);margin:.2rem 0 .55rem}
+.compare-price small{font-size:.62rem;color:var(--ink4);font-weight:300}
+.compare-card-body{padding:.85rem .95rem}
+.compare-item{display:flex;align-items:flex-start;gap:.45rem;margin-bottom:.35rem;font-size:.77rem;color:var(--ink2);line-height:1.45}
+.compare-item::before{content:'✓';color:var(--teal);font-weight:600;flex-shrink:0}
+.compare-item.neg::before{content:'✗';color:var(--red)}
+
+/* ─── SOURCES ─── */
+.source-index{display:grid;gap:.35rem;margin:.9rem 0}
+.source-row{display:grid;grid-template-columns:26px 1fr auto;gap:.6rem;align-items:start;padding:.5rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border2)}
+.source-num{font-family:var(--mono);font-size:.58rem;color:var(--ink4)}
+.source-title{font-size:.78rem;color:var(--ink2);line-height:1.45}
+.source-link{font-family:var(--mono);font-size:.58rem;color:var(--blue);white-space:nowrap}
+
+/* ─── FOOTER ─── */
+.page-footer{
+  margin-left:var(--sidebar);
+  padding:1.6rem 3rem;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:11px;color:var(--ink4);
+}
+.page-footer a{color:var(--accent)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  :root{--sidebar:0px}
+  .sidebar{display:none}
+  .main{margin-left:0;padding:2rem 1.5rem 5rem}
+  .page-footer{margin-left:0;padding:1.5rem}
+  #progress-bar{left:0}
+}
+@media(max-width:640px){
+  .feature-grid,.feature-grid.cols3{grid-template-columns:1fr}
+  .showcase-stats{grid-template-columns:1fr 1fr}
+  .compare-grid{grid-template-columns:1fr}
+  .kv-row,.expr-row{grid-template-columns:1fr}
+  .kv-key,.expr-expr{border-right:none;border-bottom:1px solid var(--border2)}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- TOP CHROME -->
+<div class="mode-banner">
+  <div class="mode-banner-left">
+    <div class="mode-dot"></div>
+    <span>Grimoire 004 · n8n 101 · Free · No Gate · 2026 Edition</span>
+  </div>
+  <span style="font-size:10px;color:var(--dark-dim)">Narrative + Technical · 7 Parts · 25 Modules</span>
+</div>
+
+<header class="site-header">
+  <div class="header-left">
+    <a href="../projects/" class="header-back">← Projects</a>
+    <div class="header-divider"></div>
+    <span class="header-title">n8n 101 — AI Workflow Automation</span>
+  </div>
+  <span class="header-badge">Grimoire 004 · 2026 Edition</span>
+</header>
+
+<!-- FIXED SIDEBAR -->
+<nav class="sidebar">
+  <div class="nav-group">
+    <span class="nav-group-label">Overview</span>
+    <a href="#why" class="nav-link"><span class="nav-num">—</span>Why n8n</a>
+    <a href="#security" class="nav-link warn"><span class="nav-num">!</span>CVE-2026-21858</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Part I — Fundamentals</span>
+    <a href="#m1" class="nav-link"><span class="nav-num">M1</span>Self-Hosting</a>
+    <a href="#m2" class="nav-link"><span class="nav-num">M2</span>Cloud vs Self-host</a>
+    <a href="#m3" class="nav-link"><span class="nav-num">M3</span>Editor UI</a>
+    <a href="#m4" class="nav-link"><span class="nav-num">M4</span>Data Model &amp; Expressions</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Part II — Core Nodes</span>
+    <a href="#m5" class="nav-link"><span class="nav-num">M5</span>Webhooks</a>
+    <a href="#m6" class="nav-link"><span class="nav-num">M6</span>HTTP Request</a>
+    <a href="#m7" class="nav-link"><span class="nav-num">M7</span>Data Transformation</a>
+    <a href="#m8" class="nav-link"><span class="nav-num">M8</span>Logic &amp; Control Flow</a>
+    <a href="#m9" class="nav-link"><span class="nav-num">M9</span>Error Handling</a>
+    <a href="#m10" class="nav-link"><span class="nav-num">M10</span>Sub-workflows</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Part III — AI Workflows</span>
+    <a href="#m11" class="nav-link"><span class="nav-num">M11</span>AI Agent Node</a>
+    <a href="#m12" class="nav-link"><span class="nav-num">M12</span>RAG Pipelines</a>
+    <a href="#m13" class="nav-link"><span class="nav-num">M13</span>AI Support Bot</a>
+    <a href="#m14" class="nav-link"><span class="nav-num">M14</span>Lead Qualification</a>
+    <a href="#m15" class="nav-link"><span class="nav-num">M15</span>WhatsApp Handler</a>
+    <a href="#m16" class="nav-link"><span class="nav-num">M16</span>Report Generator</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Part IV — Channels</span>
+    <a href="#m17" class="nav-link"><span class="nav-num">M17</span>WhatsApp + Telegram</a>
+    <a href="#m18" class="nav-link"><span class="nav-num">M18</span>Slack + Email</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Part V — Production</span>
+    <a href="#m19" class="nav-link"><span class="nav-num">M19</span>Env &amp; Secrets</a>
+    <a href="#m20" class="nav-link"><span class="nav-num">M20</span>Queue Mode &amp; Scaling</a>
+    <a href="#m21" class="nav-link"><span class="nav-num">M21</span>Testing Workflows</a>
+    <a href="#m22" class="nav-link"><span class="nav-num">M22</span>n8n API</a>
+    <a href="#m23" class="nav-link"><span class="nav-num">M23</span>Community Nodes</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Part VI — Reference</span>
+    <a href="#m24" class="nav-link"><span class="nav-num">M24</span>n8n vs Make vs Zapier</a>
+    <a href="#m25" class="nav-link"><span class="nav-num">M25</span>Expression Reference</a>
+    <a href="#sources" class="nav-link"><span class="nav-num">—</span>Sources</a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+<!-- HERO -->
+<section class="hero" id="why">
+  <div class="hero-eyebrow">Grimoire 004 · Knowledge System · May 2026</div>
+  <h1>n8n 101: AI Workflow <em>Automation</em></h1>
+  <p class="hero-sub">This isn't a reference doc I wrote once and forgot. It's the accumulated scar tissue from building real automations across real clients — the failures that cost money, the fixes that saved weekends, and the configs that actually work in production. 25 modules. Narrative first. Technical second. No paywalls.</p>
+  <div class="stat-row">
+    <div class="stat-pill"><strong>7</strong> Parts</div>
+    <div class="stat-pill"><strong>25</strong> Modules</div>
+    <div class="stat-pill"><strong>1,200+</strong> integrations</div>
+    <div class="stat-pill"><strong>Self-host</strong> free tier</div>
+    <div class="stat-pill"><strong>Fair-code</strong> license</div>
+    <div class="stat-pill"><strong>2026</strong> AI-native</div>
+    <div class="stat-pill"><strong>Free</strong> · no gate</div>
+  </div>
+  <div class="hero-actions">
+    <a href="https://n8n.io" target="_blank" rel="noopener" class="btn blue">n8n Official ↗</a>
+    <a href="#m1" class="btn ghost">Start Module 1 →</a>
+    <a href="#m25" class="btn ghost">Expression Reference →</a>
+  </div>
+</section>
+
+<!-- WHY N8N -->
+<section class="module-section">
+  <div class="module-header">
+    <span class="module-num">WHY</span>
+    <div>
+      <div class="module-title">I started using n8n because Zapier billed me $800 in one month</div>
+      <div class="module-sub">Fair-code, self-hostable, no per-execution fees — and what that actually means</div>
+    </div>
+  </div>
+  <div class="story-card">
+    <div class="story-label">The Real Reason</div>
+    <div class="story-text">A client's lead form went viral on Facebook. Zapier processed 45,000 tasks in three days. My bill was $847. That's when I understood the structural problem with per-execution pricing: it punishes success. n8n self-hosted costs the same whether you run 100 workflows or 100,000. That's not just cheaper — it's a fundamentally different business model.</div>
+  </div>
+  <p>n8n is <strong>fair-code licensed</strong> (source-available, self-hostable). The license allows unlimited self-hosting with no per-execution fees. You can run it on a $6/month VPS and process as many workflows as your server can handle. The tradeoff: you maintain the server.</p>
+  <h2 class="sh">What "fair-code" actually means</h2>
+  <p>n8n uses the <strong>Sustainable Use License</strong> for hosted/commercial use — you can't build a competing product on top of it. But for internal use, client work, and self-hosted deployments, it's effectively open source. Read the license at n8n.io/legal before building commercial products on top of it.</p>
+  <div class="showcase">
+    <div class="showcase-label">The numbers that matter in 2026</div>
+    <div class="showcase-stats">
+      <div class="showcase-stat"><div class="ss-val b">1,200+</div><div class="ss-label">Pre-built integrations (nodes)</div></div>
+      <div class="showcase-stat"><div class="ss-val g">$0</div><div class="ss-label">Per-execution cost (self-hosted)</div></div>
+      <div class="showcase-stat"><div class="ss-val a">Unlimited</div><div class="ss-label">Workflows, runs, users</div></div>
+      <div class="showcase-stat"><div class="ss-val p">Visual</div><div class="ss-label">Low-code + full JS/Python access</div></div>
+      <div class="showcase-stat"><div class="ss-val g">AI-native</div><div class="ss-label">Agent nodes, RAG, vector stores</div></div>
+      <div class="showcase-stat"><div class="ss-val b">Active</div><div class="ss-label">~120k GitHub stars, growing</div></div>
+    </div>
+  </div>
+  <h2 class="sh">n8n vs the alternatives — the honest positioning</h2>
+  <p>Zapier is better for non-technical teams that need quick, simple integrations and don't expect volume. Make sits in the middle — visual, credit-based, no self-host. n8n is for technical operators who want control, need volume, or are building complex AI workflows. If you're reading this Grimoire, n8n is probably for you.</p>
+  <div class="reflection">
+    <div class="reflection-label">↺ What I learned the hard way</div>
+    <p>Don't build client systems on a pricing model that punishes success. n8n inverts that equation. The only limit is your server — which you control. The only ongoing cost is the VPS — which doesn't scale with usage. Once you internalize this, you start building bigger, bolder automations. Because the cost of running them is the same as the cost of not running them.</p>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="module-section" id="security">
+  <div class="module-header">
+    <span class="module-num">⚠️</span>
+    <div>
+      <div class="module-title">CVE-2026-21858 <span class="badge badge-danger">CVSS 10.0</span></div>
+      <div class="module-sub">Unauthenticated file read — patch immediately, then rotate everything</div>
+    </div>
+  </div>
+  <div class="callout callout-danger">
+    <div class="callout-icon">🚨</div>
+    <div class="callout-body"><strong>Critical severity. Patch first, read the rest later.</strong> CVE-2026-21858 allows unauthenticated attackers to read arbitrary files from your n8n server. That includes your <code>.env</code> file — which contains every API key you've stored in n8n. GHL, OpenAI, Stripe, SMTP, everything. Fixed in <strong>v1.121.0+</strong>. Check your version now.</div>
+  </div>
+  <div class="tech-block">
+    <div class="tech-block-label">Check your version</div>
+    <pre><span class="c"># Check running version</span>
+docker inspect n8n | grep -i image
+<span class="c"># Or visit: https://your-n8n.com/rest/settings</span>
+
+<span class="c"># Upgrade (Docker)</span>
+docker pull n8nio/n8n:1.121.0
+docker-compose down && docker-compose up -d</pre>
+  </div>
+  <div class="power-tip">
+    <div class="power-tip-label">⛑️ Full post-patch checklist</div>
+    <p><strong>1.</strong> Pull and restart: <code>docker pull n8nio/n8n:1.121.0</code> + <code>docker-compose up -d</code><br>
+    <strong>2.</strong> Rotate every credential stored in n8n — GHL, OpenAI, SMTP, Stripe, webhooks, OAuth tokens.<br>
+    <strong>3.</strong> Add <code>N8N_BLOCK_NODE_ACCESS=true</code> to your .env (blocks filesystem node access).<br>
+    <strong>4.</strong> Put n8n behind a reverse proxy (Nginx/Caddy). Never expose port 5678 directly.<br>
+    <strong>5.</strong> Add IP allowlisting for admin routes (<code>/rest/</code>, <code>/settings</code>) in your proxy config.<br>
+    <strong>6.</strong> Set <code>N8N_SECURE_COOKIE=true</code> and <code>N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true</code>.<br>
+    <strong>7.</strong> Enable daily automated database backups. You need them before an incident, not after.<br>
+    <strong>8.</strong> Audit your webhook URLs — remove any with no authentication.</p>
+  </div>
+  <h2 class="sh">Nginx reverse proxy config (hardened)</h2>
+  <div class="tech-block">
+    <pre><span class="c"># /etc/nginx/sites-available/n8n</span>
+<span class="k">server</span> {
+  <span class="tl">listen</span> 443 ssl;
+  <span class="tl">server_name</span> n8n.yourdomain.com;
+
+  <span class="c"># Block admin REST API from non-whitelisted IPs</span>
+  <span class="k">location</span> <span class="s">~ ^/rest/(settings|users|credentials)</span> {
+    <span class="tl">allow</span> 203.0.113.10;   <span class="c"># your office IP</span>
+    <span class="tl">deny</span> all;
+    <span class="tl">proxy_pass</span> http://localhost:5678;
+  }
+
+  <span class="c"># Webhooks — public</span>
+  <span class="k">location</span> /webhook/ {
+    <span class="tl">proxy_pass</span> http://localhost:5678;
+    <span class="tl">proxy_set_header</span> X-Real-IP $remote_addr;
+  }
+
+  <span class="c"># Editor UI — auth required (handled by n8n)</span>
+  <span class="k">location</span> / {
+    <span class="tl">proxy_pass</span> http://localhost:5678;
+    <span class="tl">proxy_set_header</span> Upgrade $http_upgrade;
+    <span class="tl">proxy_set_header</span> Connection "upgrade";
+  }
+}</pre>
+  </div>
+</section>
+
+<!-- PART I -->
+<div class="part-header">
+  <div><div class="part-num">Part I</div><div class="part-title">Fundamentals</div><div class="part-sub">Installation, architecture, and the mental model you need before writing a single node</div></div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M1 — M4</div>
+</div>
+
+<section class="module-section" id="m1">
+  <div class="module-header"><span class="module-num">M1</span><div><div class="module-title">Self-hosting n8n — the complete setup</div><div class="module-sub">Docker, PostgreSQL, Nginx, SSL, backups, and why SQLite will betray you</div></div></div>
+  <div class="story-card"><div class="story-label">The Mistake I Made First</div><div class="story-text">I started with SQLite because it was easy. Two months later, the database corrupted during a power outage. I lost 47 workflows and three weeks of execution logs. A client was mid-campaign. PostgreSQL is not optional for production. This is not a recommendation — it's a prerequisite.</div></div>
+  <h2 class="sh">Prerequisites</h2>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">Minimum Server</div><h4>2 vCPU, 2GB RAM</h4><p>DigitalOcean Droplet or Hetzner CX21. Hetzner is half the price for equivalent specs. I run 4 clients on a $12/mo server.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Required Software</div><h4>Docker + Compose v2</h4><p><code>apt install docker.io docker-compose-plugin</code> on Ubuntu 22.04. Compose v2 uses <code>docker compose</code> (no hyphen).</p></div>
+    <div class="feature-card"><div class="feature-card-label">DNS</div><h4>A record → server IP</h4><p>n8n.yourdomain.com → your VPS IP. SSL needs DNS propagation (5–30 min). Do this first before installing anything.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Ports</div><h4>80, 443, 22 open</h4><p>Block port 5678 from public access. n8n runs internally; Nginx proxies it to 443. Never expose 5678 directly.</p></div>
+  </div>
+  <h2 class="sh">Production docker-compose.yml</h2>
+  <div class="tech-block">
+    <div class="tech-block-label">docker-compose.yml — production-ready</div>
+    <pre><span class="k">version:</span> <span class="s">'3.8'</span>
+
+<span class="k">services:</span>
+  <span class="w">n8n:</span>
+    <span class="tl">image:</span> n8nio/n8n:<span class="s">1.121.0</span>         <span class="c"># pin version, never use 'latest' in prod</span>
+    <span class="tl">container_name:</span> n8n
+    <span class="tl">restart:</span> unless-stopped
+    <span class="tl">ports:</span>
+      - <span class="s">"127.0.0.1:5678:5678"</span>          <span class="c"># bind to localhost only</span>
+    <span class="tl">environment:</span>
+      - <span class="s">N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}</span>
+      - <span class="s">N8N_HOST=${N8N_HOST}</span>
+      - <span class="s">N8N_PORT=5678</span>
+      - <span class="s">N8N_PROTOCOL=https</span>
+      - <span class="s">WEBHOOK_URL=https://${N8N_HOST}</span>
+      - <span class="s">N8N_SECURE_COOKIE=true</span>
+      - <span class="s">N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true</span>
+      - <span class="s">N8N_BLOCK_NODE_ACCESS=true</span>
+      - <span class="s">DB_TYPE=postgresdb</span>
+      - <span class="s">DB_POSTGRESDB_HOST=postgres</span>
+      - <span class="s">DB_POSTGRESDB_PORT=5432</span>
+      - <span class="s">DB_POSTGRESDB_DATABASE=n8n</span>
+      - <span class="s">DB_POSTGRESDB_USER=n8n</span>
+      - <span class="s">DB_POSTGRESDB_PASSWORD=${DB_PASSWORD}</span>
+      - <span class="s">EXECUTIONS_DATA_PRUNE=true</span>
+      - <span class="s">EXECUTIONS_DATA_MAX_AGE=720</span>        <span class="c"># 30 days of logs</span>
+      - <span class="s">GENERIC_TIMEZONE=Europe/London</span>
+    <span class="tl">volumes:</span>
+      - ./n8n_data:/home/node/.n8n
+    <span class="tl">depends_on:</span>
+      postgres:
+        <span class="tl">condition:</span> service_healthy
+
+  <span class="w">postgres:</span>
+    <span class="tl">image:</span> postgres:<span class="s">15-alpine</span>
+    <span class="tl">container_name:</span> n8n_postgres
+    <span class="tl">restart:</span> unless-stopped
+    <span class="tl">environment:</span>
+      - <span class="s">POSTGRES_DB=n8n</span>
+      - <span class="s">POSTGRES_USER=n8n</span>
+      - <span class="s">POSTGRES_PASSWORD=${DB_PASSWORD}</span>
+    <span class="tl">volumes:</span>
+      - ./postgres_data:/var/lib/postgresql/data
+    <span class="tl">healthcheck:</span>
+      test: [<span class="s">"CMD-SHELL"</span>, <span class="s">"pg_isready -U n8n"</span>]
+      interval: 10s
+      timeout: 5s
+      retries: 5</pre>
+  </div>
+  <h2 class="sh">Automated backups</h2>
+  <div class="tech-block">
+    <div class="tech-block-label">backup.sh — runs daily via cron</div>
+    <pre><span class="c">#!/bin/bash</span>
+<span class="c"># crontab -e → 0 3 * * * /root/backup.sh</span>
+
+DATE=$(date +%Y%m%d-%H%M)
+BACKUP_DIR=/root/backups
+mkdir -p $BACKUP_DIR
+
+docker exec n8n_postgres pg_dump -U n8n n8n > $BACKUP_DIR/n8n-db-$DATE.sql
+tar -czf $BACKUP_DIR/n8n-data-$DATE.tar.gz /root/n8n_data
+aws s3 cp $BACKUP_DIR/n8n-db-$DATE.sql s3://your-bucket/n8n-backups/
+
+find $BACKUP_DIR -name "*.sql" -mtime +14 -delete
+find $BACKUP_DIR -name "*.tar.gz" -mtime +14 -delete</pre>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ Caddy is easier than Nginx for SSL</div><p>If you're not comfortable with Nginx, use Caddy. <code>Caddyfile</code>: just write <code>n8n.yourdomain.com { reverse_proxy localhost:5678 }</code> and Caddy handles SSL automatically via Let's Encrypt. No certbot, no renewal crons.</p></div>
+  <div class="reflection"><div class="reflection-label">↺ What I'd do differently</div><p>Start with PostgreSQL from day one, even for local testing. The migration path from SQLite to Postgres is painful — export workflows, rebuild the database, re-enter credentials manually. It's a half-day of work. Postgres from the start costs nothing extra. SQLite is a trap.</p></div>
+</section>
+
+<section class="module-section" id="m2">
+  <div class="module-header"><span class="module-num">M2</span><div><div class="module-title">Cloud vs Self-host — how to actually decide</div><div class="module-sub">The answer depends on volume, technical comfort, and data sensitivity</div></div></div>
+  <p>n8n offers three deployment options. The decision matrix is more nuanced than "cloud is easy, self-host is hard."</p>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="compare-card-header"><h4>n8n Cloud</h4><p class="compare-price">$20<small>/mo starter</small></p></div>
+      <div class="compare-card-body">
+        <div class="compare-item">No server maintenance</div>
+        <div class="compare-item">Automatic updates + security patches</div>
+        <div class="compare-item">Managed backups</div>
+        <div class="compare-item">Instant setup (5 minutes)</div>
+        <div class="compare-item neg">Per-workflow execution limits</div>
+        <div class="compare-item neg">Data leaves your infrastructure</div>
+        <div class="compare-item neg">More expensive at scale</div>
+      </div>
+    </div>
+    <div class="compare-card">
+      <div class="compare-card-header"><h4>Self-Hosted (VPS)</h4><p class="compare-price">$6–20<small>/mo server</small></p></div>
+      <div class="compare-card-body">
+        <div class="compare-item">Unlimited executions, no throttling</div>
+        <div class="compare-item">Full data control (GDPR easier)</div>
+        <div class="compare-item">Custom env variables, filesystem access</div>
+        <div class="compare-item">Community nodes installable</div>
+        <div class="compare-item neg">You manage updates + security</div>
+        <div class="compare-item neg">You manage backups</div>
+        <div class="compare-item neg">Requires basic Linux / Docker</div>
+      </div>
+    </div>
+    <div class="compare-card">
+      <div class="compare-card-header"><h4>Self-Hosted (Enterprise)</h4><p class="compare-price">Custom<small> pricing</small></p></div>
+      <div class="compare-card-body">
+        <div class="compare-item">SSO / SAML / LDAP</div>
+        <div class="compare-item">Version control (git)</div>
+        <div class="compare-item">Audit logs</div>
+        <div class="compare-item">External secrets (Vault, AWS Secrets)</div>
+        <div class="compare-item neg">Sales process required</div>
+        <div class="compare-item neg">Overkill for small teams</div>
+      </div>
+    </div>
+  </div>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Choose Cloud if...</div><div class="kv-val">You're just starting out, don't want to manage infra, or your volume stays under the Cloud plan limits (~2,500 runs/mo on Starter).</div></div>
+    <div class="kv-row"><div class="kv-key">Choose Self-host if...</div><div class="kv-val">Your volume is high (5,000+ runs/mo), you're handling sensitive client data, you need community nodes, or you want zero per-execution cost.</div></div>
+    <div class="kv-row"><div class="kv-key">Migration path</div><div class="kv-val">Start on Cloud → export workflows as JSON when ready → re-create credentials on self-hosted instance. Takes 2–4 hours depending on credential count.</div></div>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ My recommendation for new builders</div><p>Start on n8n Cloud. Learn the tool. Build your first five workflows. Then, when you understand your volume and complexity needs, decide whether self-hosting is worth the ops overhead. Most people never need to self-host. Some absolutely do. Know which you are before committing.</p></div>
+</section>
+
+<section class="module-section" id="m3">
+  <div class="module-header"><span class="module-num">M3</span><div><div class="module-title">The Editor UI — anatomy and keyboard shortcuts</div><div class="module-sub">What everything is called and how to stop clicking so much</div></div></div>
+  <h2 class="sh">The five zones you live in</h2>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">Canvas</div><h4>The workflow graph</h4><p>Nodes are the boxes. Connections are the arrows. Click + drag to pan. Scroll to zoom. Cmd/Ctrl+A to select all. Double-click empty canvas to add a node.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Node Panel</div><h4>Left sidebar</h4><p>Search for nodes. Filter by category (AI, Core, Communication). Drag to canvas or press Enter on a highlighted node. Cmd/Ctrl+K opens search from anywhere.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Node Editor</div><h4>Right panel</h4><p>Click any node to configure it. Parameters, credentials, output preview. Tab between fields. Click the lightning bolt to test the node in isolation.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Executions</div><h4>Top-right menu</h4><p>Full log of past runs. Click any execution to see the exact data at each node. Essential for debugging. Filter by workflow, status, date.</p></div>
+  </div>
+  <h2 class="sh">Keyboard shortcuts worth memorizing</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Shortcut</th><th>Action</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><code>Cmd/Ctrl + K</code></td><td>Node search</td><td>Fastest way to add any node without touching the sidebar</td></tr>
+        <tr><td><code>Cmd/Ctrl + Enter</code></td><td>Execute workflow</td><td>Test without leaving the canvas</td></tr>
+        <tr><td><code>Tab</code></td><td>Move to next field</td><td>Navigate node editor without mouse</td></tr>
+        <tr><td><code>Ctrl + Shift + D</code></td><td>Duplicate node</td><td>Clone config for similar nodes</td></tr>
+        <tr><td><code>F2</code></td><td>Rename node</td><td>Name nodes descriptively — essential for complex flows</td></tr>
+        <tr><td><code>Cmd/Ctrl + A</code></td><td>Select all nodes</td><td>Move entire workflow at once</td></tr>
+        <tr><td><code>Cmd/Ctrl + Z / Y</code></td><td>Undo / Redo</td><td>20 undo levels available</td></tr>
+        <tr><td><code>Space + drag</code></td><td>Pan canvas</td><td>Faster than scrollbars on large workflows</td></tr>
+        <tr><td><code>Cmd/Ctrl + \</code></td><td>Toggle sidebar</td><td>More canvas space when debugging</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 class="sh">Workflow organization</h2>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Naming convention</div><div class="kv-val"><code>[category] action — description</code> e.g. <code>[lead] D0 — welcome email + GHL tag</code></div></div>
+    <div class="kv-row"><div class="kv-key">Tags</div><div class="kv-val">Use tags to group workflows by client, project, or type. Filter in the workflows list. Saves hours when you have 80+ workflows.</div></div>
+    <div class="kv-row"><div class="kv-key">Sticky notes</div><div class="kv-val">Add sticky notes to explain non-obvious logic. Right-click canvas → Add sticky note.</div></div>
+    <div class="kv-row"><div class="kv-key">Node naming</div><div class="kv-val">Name every node. "HTTP Request3" tells you nothing. "Create GHL Contact" tells you everything. Press F2 to rename.</div></div>
+    <div class="kv-row"><div class="kv-key">One workflow, one job</div><div class="kv-val">The cardinal rule. Build small, focused workflows and chain them via sub-workflows (M10).</div></div>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ The execution data inspector</div><p>After running a workflow, click any node on the canvas to see the exact input/output data for that node. This is the fastest debugging tool in n8n — faster than console.log, faster than writing to Sheets. Learn to read the JSON output panel.</p></div>
+</section>
+
+<section class="module-section" id="m4">
+  <div class="module-header"><span class="module-num">M4</span><div><div class="module-title">The n8n data model &amp; expressions</div><div class="module-sub">The mental model that explains everything — items, nodes, the execution context</div></div></div>
+  <div class="story-card"><div class="story-label">The Concept That Changes Everything</div><div class="story-text">I spent two weeks building n8n workflows without understanding what $json actually referred to. I thought it was "the data." It is — but it's the data of the current item, from the previous node. Once I understood items and the execution context properly, every confusing behavior suddenly made sense.</div></div>
+  <h2 class="sh">The item model</h2>
+  <p>n8n passes data between nodes as an <strong>array of items</strong>. Each item has a <code>json</code> property (your data) and optionally a <code>binary</code> property (files). Understanding this is fundamental.</p>
+  <div class="tech-block">
+    <div class="tech-block-label">What a node receives and emits</div>
+    <pre><span class="c">// A node receives items — an array of objects:</span>
+[
+  { <span class="s">"json"</span>: { <span class="s">"email"</span>: <span class="s">"alice@co.com"</span>, <span class="s">"score"</span>: 85 } },
+  { <span class="s">"json"</span>: { <span class="s">"email"</span>: <span class="s">"bob@co.com"</span>,   <span class="s">"score"</span>: 42 } }
+]
+
+<span class="c">// By default, most nodes process each item independently (1-in, 1-out)</span>
+<span class="c">// Some nodes merge items (Summarize, Aggregate)</span>
+<span class="c">// Some nodes split items (Split Out, SplitInBatches)</span></pre>
+  </div>
+  <h2 class="sh">The expression context variables</h2>
+  <p>Expressions use <code>{{ }}</code> mustache syntax. Inside expressions, you have access to these variables:</p>
+  <div class="expr-table-wrap">
+    <div class="expr-row header"><div class="expr-expr">Expression</div><div class="expr-desc">What it returns</div></div>
+    <div class="expr-row"><div class="expr-expr">$json</div><div class="expr-desc">The <code>json</code> property of the current item from the previous node. Equivalent to <code>$input.item.json</code>.</div></div>
+    <div class="expr-row"><div class="expr-expr">$json.fieldName</div><div class="expr-desc">A specific field. Handles dot notation for nested objects: <code>$json.contact.email</code></div></div>
+    <div class="expr-row"><div class="expr-expr">$input.all()</div><div class="expr-desc">All items from the previous node as an array. Use in Code node to process all at once.</div></div>
+    <div class="expr-row"><div class="expr-expr">$input.first()</div><div class="expr-desc">The first item from the previous node. Useful when you know you only want one result.</div></div>
+    <div class="expr-row"><div class="expr-expr">$node["Node Name"].json</div><div class="expr-desc">Access the output of any named node — not just the immediately previous one.</div></div>
+    <div class="expr-row"><div class="expr-expr">$env.VARIABLE_NAME</div><div class="expr-desc">Environment variable. Store API keys, secrets, and config here. Never hardcode.</div></div>
+    <div class="expr-row"><div class="expr-expr">$workflow.name</div><div class="expr-desc">Name of the current workflow. Use in error alert messages.</div></div>
+    <div class="expr-row"><div class="expr-expr">$execution.id</div><div class="expr-desc">Unique ID for this execution run. Use for deduplication and tracing.</div></div>
+    <div class="expr-row"><div class="expr-expr">$execution.mode</div><div class="expr-desc"><code>manual</code> (test run) or <code>trigger</code> (production). Use to skip side effects in test mode.</div></div>
+    <div class="expr-row"><div class="expr-expr">$now</div><div class="expr-desc">Current timestamp as a Luxon DateTime object. <code>$now.toISO()</code>, <code>$now.toFormat('yyyy-MM-dd')</code>, etc.</div></div>
+    <div class="expr-row"><div class="expr-expr">$today</div><div class="expr-desc">Today's date at midnight UTC. Shorthand for <code>$now.startOf('day')</code>.</div></div>
+    <div class="expr-row"><div class="expr-expr">$itemIndex</div><div class="expr-desc">Zero-based index of the current item in the input array.</div></div>
+  </div>
+  <h2 class="sh">Common expression patterns</h2>
+  <div class="tech-block">
+    <pre><span class="c">// String interpolation</span>
+<span class="tl">Hello {{ $json.firstName }}, your booking for {{ $json.propertyAddress }} is confirmed.</span>
+
+<span class="c">// Conditional value</span>
+{{ $json.budget >= 2000 ? 'HOT' : 'WARM' }}
+
+<span class="c">// Date formatting</span>
+{{ $now.toFormat('dd MMM yyyy') }}          <span class="c">// "14 May 2026"</span>
+{{ $now.minus({days: 7}).toISO() }}         <span class="c">// 7 days ago</span>
+
+<span class="c">// Null coalescing</span>
+{{ $json.phone || 'no phone provided' }}
+
+<span class="c">// Access upstream node data</span>
+{{ $node["Webhook"].json.body.email }}
+
+<span class="c">// Skip side effects in test mode</span>
+{{ $execution.mode === 'manual' ? 'test@example.com' : $json.email }}</pre>
+  </div>
+  <h2 class="sh">The Code node — when expressions aren't enough</h2>
+  <div class="tech-block">
+    <pre><span class="c">// Code node runs JS. Access all items:</span>
+const items = $input.all();
+
+return items.map(item => {
+  const { email, budget, move_in_date } = item.json;
+
+  const daysUntil = Math.ceil(
+    (new Date(move_in_date) - new Date()) / (1000 * 60 * 60 * 24)
+  );
+
+  let score = 'COLD';
+  if (budget >= 2000 && daysUntil <= 30) score = 'HOT';
+  else if (budget >= 1500 || daysUntil <= 60) score = 'WARM';
+
+  return {
+    json: { ...item.json, score, days_until_move_in: daysUntil }
+  };
+});</pre>
+  </div>
+  <div class="callout callout-info"><div class="callout-icon">ℹ️</div><div class="callout-body"><strong>Python support:</strong> n8n 1.0+ supports Python in the Code node. Switch the language dropdown. Access items the same way: <code>items = _input.all()</code>.</div></div>
+</section>
+
+<!-- PART II -->
+<div class="part-header">
+  <div><div class="part-num">Part II</div><div class="part-title">Core Nodes</div><div class="part-sub">The building blocks that every real workflow is made of</div></div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M5 — M10</div>
+</div>
+
+<section class="module-section" id="m5">
+  <div class="module-header"><span class="module-num">M5</span><div><div class="module-title">Webhooks — the front door of every automation</div><div class="module-sub">Authentication, idempotency, test vs production URLs, and the scare that changed how I build</div></div></div>
+  <div class="story-card"><div class="story-label">The Scare</div><div class="story-text">A client's webhook endpoint was publicly exposed for three weeks with no authentication. I didn't know until someone in Romania started POSTing test data. No damage — the workflow only created test contacts in a sandbox. But I spent an anxious hour auditing every workflow. Now every webhook has authentication on day one.</div></div>
+  <div class="callout callout-warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>Test vs Production URLs.</strong> The test URL (<code>/webhook-test/[path]</code>) only works when the editor is open and you've clicked "Listen for test event." The production URL (<code>/webhook/[path]</code>) works when the workflow is active. Always test with the test URL, then switch the sending system to the production URL.</div>
+  </div>
+  <div class="node-config">
+    <div class="node-header">Webhook Node — Production Config <span class="node-header-badge">POST</span></div>
+    <div class="node-body">
+      <div class="node-field"><div class="nfl">HTTP Method</div><div class="nfv">POST</div></div>
+      <div class="node-field"><div class="nfl">Path</div><div class="nfv"><code>lead-inbound-{{ $env.WEBHOOK_PATH_SUFFIX }}</code></div></div>
+      <div class="node-field"><div class="nfl">Authentication</div><div class="nfv">Header Auth → Name: <code>X-Webhook-Token</code> → Value: <code>{{ $env.WEBHOOK_SECRET }}</code></div></div>
+      <div class="node-field"><div class="nfl">Respond</div><div class="nfv">Immediately (respond 200 first, then process async)</div></div>
+      <div class="node-divider"></div>
+      <div class="node-field"><div class="nfl">Response Body</div><div class="nfv"><code>{"received": true, "id": "{{ $execution.id }}"}</code></div></div>
+    </div>
+  </div>
+  <h2 class="sh">Webhook authentication options</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Method</th><th>Security Level</th><th>When to Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>None</strong></td><td>🔴 None</td><td>Testing only, localhost — never production</td></tr>
+        <tr><td><strong>Header Auth</strong></td><td>🟡 Good</td><td>Custom integrations, server-to-server</td></tr>
+        <tr><td><strong>Basic Auth</strong></td><td>🟡 Good</td><td>Legacy systems, some CMS</td></tr>
+        <tr><td><strong>JWT</strong></td><td>🟢 Strong</td><td>User-facing webhooks, mobile apps</td></tr>
+        <tr><td><strong>Signature Verify</strong></td><td>🟢 Strong</td><td>Stripe, GitHub, Shopify webhooks — verify HMAC in Code node</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 class="sh">Idempotency — the problem most people ignore until it's too late</h2>
+  <div class="story-card"><div class="story-label">The Duplicate Contact Problem</div><div class="story-text">A Typeform webhook fired twice for the same submission (Typeform's retry behavior on timeout). We created two contacts in GHL for the same person. One went through the hot-lead sequence, one sat cold. The lead was confused, the sales rep was confused. Fixed with idempotency — check before you create.</div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">Idempotency check pattern</div>
+    <pre><span class="c">// After webhook, before creating records — check if already processed</span>
+
+<span class="w">HTTP Request</span>: GET Sheets — check Processed!A:A for submission token
+
+<span class="w">Code node:</span>
+const processed = $input.first().json.values?.flat() || [];
+const submissionId = $node["Webhook"].json.body.token;
+
+if (processed.includes(submissionId)) {
+  return [];  <span class="c">// empty array stops execution — duplicate</span>
+}
+return [{ json: { submission_id: submissionId, ...$node["Webhook"].json.body } }];</pre>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ "Respond Immediately" vs "Last Node"</div><p>Always set webhooks to "Respond Immediately" for production integrations. Returns HTTP 200 instantly, then processes async. If you use "Last Node," the calling system waits for your entire workflow — which can timeout for long-running AI workflows. Typeform, Stripe, and Facebook all have short timeout windows.</p></div>
+</section>
+
+<section class="module-section" id="m6">
+  <div class="module-header"><span class="module-num">M6</span><div><div class="module-title">HTTP Request — the universal connector</div><div class="module-sub">When no pre-built node exists, this reaches everything. Pagination, auth, retry, file handling.</div></div></div>
+  <p>If a service has a REST API, the HTTP Request node can integrate with it. GHL, custom CRMs, internal tools, legacy systems — anything with an API endpoint. This is the most powerful node in n8n after the Code node.</p>
+  <h2 class="sh">Authentication patterns</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Auth Type</th><th>Config</th><th>Common APIs</th></tr></thead>
+      <tbody>
+        <tr><td>Bearer Token</td><td><code>Authorization: Bearer {{ $env.API_KEY }}</code></td><td>GHL, OpenAI, most modern REST APIs</td></tr>
+        <tr><td>API Key (header)</td><td>Custom header e.g. <code>X-API-Key: {{ $env.KEY }}</code></td><td>Airtable, SendGrid, various</td></tr>
+        <tr><td>Basic Auth</td><td>Username + password in Credentials</td><td>Legacy systems, WooCommerce</td></tr>
+        <tr><td>OAuth2</td><td>Set up credential once, n8n handles refresh</td><td>Google APIs, Salesforce, HubSpot</td></tr>
+        <tr><td>Custom (Code node)</td><td>Sign request in Code before HTTP node</td><td>AWS (SigV4), Stripe (HMAC)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 class="sh">Pagination</h2>
+  <div class="tech-block">
+    <pre><span class="w">HTTP Request node — cursor-based pagination:</span>
+<span class="tl">Pagination Type</span>: Response Contains Next URL
+<span class="tl">Next URL Expression</span>: {{ $response.body.meta.nextPageUrl }}
+
+<span class="c">// Or for offset-based:</span>
+<span class="tl">Pagination Type</span>: Update a Parameter
+<span class="tl">Parameter Name</span>: offset
+<span class="tl">Value</span>: += 100
+<span class="tl">Max Pages</span>: 50  <span class="c">(safety limit)</span>
+<span class="tl">Stop When</span>: response returns empty array</pre>
+  </div>
+  <div class="node-config">
+    <div class="node-header">HTTP Request — Retry Settings</div>
+    <div class="node-body">
+      <div class="node-field"><div class="nfl">Retry on Fail</div><div class="nfv">✓ Enabled — 3 attempts, exponential backoff (1s, 2s, 4s)</div></div>
+      <div class="node-field"><div class="nfl">Continue on Fail</div><div class="nfv">Off for critical ops (GHL create, payments). On for non-critical (analytics, logging).</div></div>
+    </div>
+  </div>
+  <div class="reflection"><div class="reflection-label">↺ A mistake I kept making</div><p>I used to hardcode API keys in HTTP Request node configuration. Then I'd export a workflow to share with a client — and my keys went with it. Now every secret lives in <code>$env.VARIABLE_NAME</code>. Workflow JSONs can be safely shared and version controlled. The secrets stay in <code>.env</code> on the server.</p></div>
+</section>
+
+<section class="module-section" id="m7">
+  <div class="module-header"><span class="module-num">M7</span><div><div class="module-title">Data transformation nodes</div><div class="module-sub">Set, Edit Fields, Item Lists, Merge, Aggregate — the toolkit for reshaping data</div></div></div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">Set / Edit Fields</div><h4>Add, rename, remove fields</h4><p>The most-used transformation node. Add calculated fields, rename API response fields to your schema, remove sensitive fields before logging.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Item Lists</div><h4>Merge, split, aggregate</h4><p>Split a field that contains an array into separate items. Or merge multiple items into one. Essential for API responses that return arrays.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Merge</div><h4>Combine data streams</h4><p>Join two branches of data by a key (like SQL JOIN), wait for both branches, or choose between branches.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Aggregate</div><h4>Combine all items into one</h4><p>Collapse N items into 1 with summary statistics. Use for report generation: all leads → {total: N, hot: M}.</p></div>
+  </div>
+  <h2 class="sh">Merge node — the four modes</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mode</th><th>What it does</th><th>Use case</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Merge by Index</strong></td><td>Pairs item 1 from A with item 1 from B</td><td>When two branches process the same items in parallel</td></tr>
+        <tr><td><strong>Merge by Key</strong></td><td>Joins by matching field value (like SQL JOIN)</td><td>Enrich lead data from two different API calls using email as key</td></tr>
+        <tr><td><strong>Append</strong></td><td>Concatenates all items from A and B</td><td>Combine results from two searches into one result set</td></tr>
+        <tr><td><strong>Wait</strong></td><td>Waits for both branches to complete</td><td>When you need both A and B to finish before the next step</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tech-block">
+    <div class="tech-block-label">Data normalization example</div>
+    <pre><span class="c">// Incoming webhook (raw, messy):</span>
+{ "lead_first_name": "Alice", "budget_pcm": "£2,500", "properties": ["flat","2-bed"] }
+
+<span class="c">// Edit Fields node — reshape to schema:</span>
+<span class="w">fullName</span>      = {{ $json.lead_first_name + ' ' + $json.lead_last_name }}
+<span class="w">budget</span>        = {{ parseInt($json.budget_pcm.replace(/[^0-9]/g, '')) }}
+<span class="w">property_type</span> = {{ $json.properties.join(', ') }}
+
+<span class="c">// Output:</span>
+{ "fullName": "Alice Chen", "budget": 2500, "property_type": "flat, 2-bed" }</pre>
+  </div>
+</section>
+
+<section class="module-section" id="m8">
+  <div class="module-header"><span class="module-num">M8</span><div><div class="module-title">Logic &amp; control flow — IF, Switch, Wait, Loop, Filter</div><div class="module-sub">How to stop building spaghetti workflows</div></div></div>
+  <div class="story-card"><div class="story-label">The 50-Node Workflow</div><div class="story-text">I once built a workflow with 47 nodes. It handled everything — lead scoring, CRM sync, email, WhatsApp, Slack alerts, reporting. When something broke, finding the broken node took 40 minutes. Now I follow one rule: one workflow, one job.</div></div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">IF Node</div><h4>Two-way branch</h4><p>True/False paths. Conditions: equal, not equal, contains, regex match, empty, exists. Stack multiple conditions with AND/OR.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Switch Node</div><h4>Multi-way branch</h4><p>Route items to N outputs based on a field value. Perfect for: residential→team1, commercial→team2, industrial→team3.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Wait Node</div><h4>Delay or pause</h4><p>Wait fixed time, until a datetime, or until a webhook resumes the execution. Essential for drip sequences.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Filter Node</div><h4>Remove items</h4><p>Discard items that don't meet a condition. Unlike IF, this doesn't branch — it just drops unwanted items and continues.</p></div>
+    <div class="feature-card"><div class="feature-card-label">SplitInBatches</div><h4>Loop over batches</h4><p>Process 100 items at a time instead of all at once. Prevents API rate limit errors.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Execute Workflow</div><h4>Call sub-workflow</h4><p>Trigger another workflow and optionally wait for its result. The key to modular architecture. See M10.</p></div>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ Wait node gotcha — server restarts</div><p>If your n8n server restarts while a workflow is paused at a Wait node, <strong>that execution will continue from where it stopped</strong> — because Wait state is persisted to the database. This is why PostgreSQL is non-negotiable for drip sequences. SQLite can corrupt on restart and lose your paused executions.</p></div>
+</section>
+
+<section class="module-section" id="m9">
+  <div class="module-header"><span class="module-num">M9</span><div><div class="module-title">Error handling — the thing you forget until it breaks at 3am</div><div class="module-sub">Error Trigger, retry logic, dead letter queues, silent failure detection</div></div></div>
+  <div class="story-card"><div class="story-label">The 3AM Incident</div><div class="story-text">A GHL API rate limit error started failing at 2:13am. The workflow retried once (default), failed silently, and stopped. No alert. No notification. By 9am, 147 leads had not been synced to CRM. The client found out when a hot lead called asking why they hadn't heard back. That was the last time I deployed a workflow without global error handling.</div></div>
+  <h2 class="sh">The Error Trigger workflow — build this before anything else</h2>
+  <div class="tech-block">
+    <div class="tech-block-label">Global error handler workflow</div>
+    <pre><span class="c">// Workflow name: [system] global error handler</span>
+
+<span class="w">Trigger:</span> Error Trigger  <span class="c">← under "Core" in node panel</span>
+  ↓
+<span class="w">Code node</span> — format alert:
+const err = $input.first().json;
+return [{
+  json: {
+    workflow: err.workflow.name,
+    error: err.execution.error?.message,
+    url: `https://your-n8n.com/workflow/${err.workflow.id}/executions/${err.execution.id}`
+  }
+}];
+  ↓
+<span class="w">Slack node</span> — post to #automation-alerts:
+🚨 *{{ $json.workflow }}* failed: {{ $json.error }}
+  ↓
+<span class="w">Google Sheets append</span> — dead letter log:
+Timestamp | Workflow | Error | URL | Resolved</pre>
+  </div>
+  <div class="callout callout-info"><div class="callout-icon">ℹ️</div><div class="callout-body"><strong>How to connect it:</strong> Open any other workflow → Settings → Error Workflow → select "[system] global error handler". Set this on every workflow, or use the n8n API to bulk-set it (see M22).</div></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Setting</th><th>Behavior</th><th>Use when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Retry on Fail: On</strong></td><td>Retries N times before failing</td><td>Almost always. Transient network errors are common.</td></tr>
+        <tr><td><strong>Continue on Fail: Off</strong></td><td>Workflow stops, triggers Error Workflow</td><td>Critical operations (payment, CRM create)</td></tr>
+        <tr><td><strong>Continue on Fail: On</strong></td><td>Error data passes to next node, workflow continues</td><td>Non-critical (analytics, logging, enrichment)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ Monitor your error log weekly</div><p>A dead letter queue only helps if someone reads it. Add a Monday 9am scheduled workflow that counts PENDING rows in your dead letter Sheets tab. If > 0, post to Slack: "🟡 Dead letter queue: 4 items need review." This turns error tracking from reactive to proactive.</p></div>
+</section>
+
+<section class="module-section" id="m10">
+  <div class="module-header"><span class="module-num">M10</span><div><div class="module-title">Sub-workflows — modular architecture for maintainable automation</div><div class="module-sub">One workflow, one job. How to structure 50 workflows so nothing is a mess.</div></div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">Modular workflow architecture — property management example</div>
+    <pre><span class="c">// ENTRY POINT WORKFLOWS (triggered by external events)</span>
+[lead] webhook — GHL form            → calls → [lead] process new lead
+[lead] webhook — WhatsApp inbound    → calls → [lead] process new lead
+
+<span class="c">// CORE WORKFLOW (the one job)</span>
+[lead] process new lead
+  ↓ calls → [util] create GHL contact
+  ↓ calls → [util] send welcome email
+  ↓ IF hot → calls → [alert] slack hot lead
+  ↓ calls → [lead] start drip sequence
+
+<span class="c">// UTILITY WORKFLOWS (reusable)</span>
+[util] create GHL contact           ← called from: 3 entry points
+[util] send welcome email           ← called from: 2 workflows
+
+<span class="c">// SCHEDULED WORKFLOWS</span>
+[report] weekly KPI summary         → every Monday 09:00
+[maint] check dead letter queue     → every Monday 09:05</pre>
+  </div>
+  <h2 class="sh">Execute Workflow node — sync vs async</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mode</th><th>Behavior</th><th>Use when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Wait for result</strong></td><td>Pauses until sub-workflow returns data</td><td>You need the sub-workflow's output to continue</td></tr>
+        <tr><td><strong>Fire and forget</strong></td><td>Triggers sub-workflow and immediately continues</td><td>Side effects that don't affect the main flow</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="reflection"><div class="reflection-label">↺ The naming convention that saved my sanity</div><p>Every workflow gets a prefix: <code>[lead]</code>, <code>[util]</code>, <code>[report]</code>, <code>[alert]</code>, <code>[maint]</code>. Filter the workflow list by prefix. When debugging you immediately know what category you're in. When onboarding someone new, they understand the architecture before opening a single workflow.</p></div>
+</section>
+
+<!-- PART III -->
+<div class="part-header">
+  <div><div class="part-num">Part III</div><div class="part-title">AI Workflows</div><div class="part-sub">Agents, RAG, classification, and the production patterns that actually work</div></div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M11 — M16</div>
+</div>
+
+<section class="module-section" id="m11">
+  <div class="module-header"><span class="module-num">M11</span><div><div class="module-title">The AI Agent node — how it actually works</div><div class="module-sub">Tools, memory, reasoning loops, and when to use agents vs simple LLM calls</div></div></div>
+  <p>The AI Agent node is n8n's most powerful AI feature. Unlike a simple LLM call (question → answer), an AI Agent can use <strong>tools</strong> — nodes it can call to take actions — and reason over multiple steps before returning a final answer.</p>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">Use LLM Node when...</div><h4>Simple transformation or generation</h4><p>Classify a lead, write an email, extract fields from text. One input → one output. Faster and cheaper than an agent.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Use AI Agent when...</div><h4>Multi-step reasoning with actions</h4><p>Answer a support question by searching a knowledge base AND checking a CRM AND maybe sending an email. The agent decides which tools to use.</p></div>
+  </div>
+  <h2 class="sh">The reasoning loop</h2>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>User message → Agent</h4><p>Agent receives the input, plus its system prompt and available tools.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>LLM decides next action</h4><p>The model reasons: call a tool, call multiple tools, or respond directly.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Tool executes</h4><p>n8n runs the tool (HTTP Request, vector search, calculator) and returns the result.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Repeat or respond</h4><p>If the model needs more information, it calls another tool. If it has enough, it responds. Max iterations prevent infinite loops.</p></div></div>
+  </div>
+  <div class="node-config">
+    <div class="node-header">AI Agent Node — Full Config</div>
+    <div class="node-body">
+      <div class="node-field"><div class="nfl">Chat Model</div><div class="nfv">OpenAI GPT-4o-mini (fast + cheap) or GPT-4o (complex reasoning)</div></div>
+      <div class="node-field"><div class="nfl">System Prompt</div><div class="nfv">Define role, constraints, output format. Explicit about what NOT to do.</div></div>
+      <div class="node-field"><div class="nfl">Max Iterations</div><div class="nfv">5 (increase to 10 for complex tasks; cap prevents runaway tool calls)</div></div>
+      <div class="node-field"><div class="nfl">Memory</div><div class="nfv">Window Buffer (last N messages) or Redis-backed for persistent sessions</div></div>
+      <div class="node-field"><div class="nfl">Tools</div><div class="nfv">Any n8n node: HTTP Request, vector search, calculator, code node</div></div>
+    </div>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ System prompt engineering for agents</div><p>Good agent system prompts have four parts: (1) Role definition, (2) Constraints ("Only answer using the knowledge base tool"), (3) Escalation rule ("If confidence &lt; 0.7, escalate to human"), (4) Output format ("Always respond in under 200 words"). Without explicit constraints, the agent will improvise — fine in demos, dangerous in production.</p></div>
+</section>
+
+<section class="module-section" id="m12">
+  <div class="module-header"><span class="module-num">M12</span><div><div class="module-title">RAG pipelines — giving your AI a knowledge base</div><div class="module-sub">Ingestion, chunking, embedding, retrieval — the full pipeline built in n8n</div></div></div>
+  <p><strong>RAG (Retrieval-Augmented Generation)</strong> means: before answering, search a knowledge base for relevant context, then give that context to the LLM along with the question. The LLM answers based on your data, not just its training data. This is how you build AI that knows your business.</p>
+  <div class="tech-block">
+    <div class="tech-block-label">Workflow 1 — Knowledge base ingestion</div>
+    <pre><span class="w">Trigger</span>: Manual / Schedule
+  ↓
+<span class="w">Google Drive node</span>: Get all docs from /knowledge-base folder
+  ↓
+<span class="w">Text Splitter node</span>:
+  Chunk Size: 800 tokens
+  Chunk Overlap: 80 tokens (10% overlap retains context across boundaries)
+  Splitter: Recursive Character
+  ↓
+<span class="w">Embeddings node</span>: text-embedding-3-small
+  ↓
+<span class="w">Vector Store (Pinecone / Qdrant)</span>:
+  Operation: Upsert
+  Metadata: { source, doc_title, chunk_index, last_updated }</pre>
+  </div>
+  <div class="tech-block">
+    <div class="tech-block-label">Workflow 2 — Retrieval (runs per user query)</div>
+    <pre><span class="w">Input</span>: { "query": "How do I submit a maintenance request?" }
+  ↓
+<span class="w">Embeddings node</span>: embed the query text
+  ↓
+<span class="w">Vector Store node</span>:
+  Operation: Search | Top K: 5 | Score Threshold: 0.72
+  ↓
+<span class="w">Code node</span>: format context
+const context = $input.all()
+  .filter(c => c.json.score >= 0.72)
+  .map((c, i) => `[${i+1}] ${c.json.text}`)
+  .join('\n\n');
+  ↓
+<span class="w">LLM node</span>:
+  System: Answer ONLY using the provided context. If not in context,
+          say "I need to check on that" and return confidence: 0.3.
+  User: Context:\n{{ $json.context }}\n\nQuestion: {{ $json.query }}</pre>
+  </div>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Chunk too large (&gt;1500 tokens)</div><div class="kv-val">Too much noise. LLM gets confused by irrelevant parts. Score looks high but answer quality suffers.</div></div>
+    <div class="kv-row"><div class="kv-key">Chunk too small (&lt;200 tokens)</div><div class="kv-val">Not enough context. Answers miss nuance. Requires retrieving more chunks for full picture.</div></div>
+    <div class="kv-row"><div class="kv-key">Sweet spot: 600–900 tokens</div><div class="kv-val">Enough context for coherent answers. Small enough for accurate similarity matching. Use 10% overlap.</div></div>
+  </div>
+  <div class="reflection"><div class="reflection-label">↺ The feedback loop I should have built first</div><p>When a human answers an escalated question, that Q&amp;A pair is gold. Feed every escalated Q&amp;A back into the knowledge base as a new chunk. Your bot gets smarter from its own failures. Without this loop, your bot never improves. I added it three months late. The improvement was immediate.</p></div>
+</section>
+
+<section class="module-section" id="m13">
+  <div class="module-header"><span class="module-num">M13</span><div><div class="module-title">AI customer support bot — end to end</div><div class="module-sub">How I replaced repetitive support work for a property management client</div></div></div>
+  <div class="story-card"><div class="story-label">The Problem</div><div class="story-text">A property management client had 200+ support messages daily. Tenants asked the same questions over and over. Support staff typed the same answers, hour after hour. I watched one person paste "Rent is due on the 1st" fourteen times in a single morning. Two months later, the bot handles 70% of questions instantly.</div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">Full workflow — Slack support bot with RAG + escalation</div>
+    <pre><span class="w">Step 1: Webhook</span> — receive Slack event
+  Auth: Slack request signature verification (HMAC)
+  Respond: Immediately (Slack has 3s timeout)
+
+<span class="w">Step 2: Code node</span> — extract message
+const text = payload.event.text.replace(/&lt;@[^&gt;]+&gt;/g, '').trim();
+return [{ json: { userId: payload.event.user, text, channel: payload.event.channel } }];
+
+<span class="w">Step 3: Vector Search</span> (Qdrant)
+  Top K: 5 | Score Threshold: 0.70
+
+<span class="w">Step 4: AI Agent</span>
+  Model: gpt-4o-mini (temperature: 0.2)
+  Memory: PostgreSQL (keyed by userId)
+  System:
+    You are a support agent for Whitmore Property Management (UK).
+    Answer ONLY using the provided knowledge base context.
+    Be concise — max 150 words. Use UK English.
+    If answer not in context, set confidence = 0.2 and say:
+    "I'd like to check this with the team."
+
+<span class="w">Step 5: IF</span> — confidence >= 0.65?
+  TRUE  → Send AI reply to user via Slack DM
+  FALSE → Post to #support-escalations for human review
+
+<span class="w">Step 6: Google Sheets append</span> — log all interactions
+  timestamp | user | question | response | confidence | escalated</pre>
+  </div>
+  <div class="showcase">
+    <div class="showcase-label">Results after 60 days</div>
+    <div class="showcase-stats">
+      <div class="showcase-stat"><div class="ss-val g">71%</div><div class="ss-label">Questions answered by AI without escalation</div></div>
+      <div class="showcase-stat"><div class="ss-val b">~8s</div><div class="ss-label">Average response time (vs 2–4 hours before)</div></div>
+      <div class="showcase-stat"><div class="ss-val a">29%</div><div class="ss-label">Escalations — only the genuinely hard questions</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="module-section" id="m14">
+  <div class="module-header"><span class="module-num">M14</span><div><div class="module-title">Lead qualification + CRM sync</div><div class="module-sub">AI scoring, GHL tagging, and the routing logic that runs while you sleep</div></div></div>
+  <div class="story-card"><div class="story-label">The Problem</div><div class="story-text">Every form submission went into a shared email inbox. Someone had to read it, decide if the lead was hot, and manually enter it into GHL. Hot leads sat for hours. Warm leads were ignored for days. The answer wasn't better process — it was removing the human from routine decisions entirely.</div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">Full lead qualification workflow</div>
+    <pre><span class="w">Step 1: Webhook</span>
+  Receives: name, email, phone, property_type, budget_pcm, move_in_date, source
+
+<span class="w">Step 2: LLM Node</span> (classification only — not an agent)
+  Model: gpt-4o-mini | Temperature: 0
+  System: You are a lead scoring engine. Output ONLY valid JSON.
+  User:
+    Score this rental lead as HOT, WARM, or COLD.
+    HOT:  budget >= 2000 AND days_to_move <= 30
+    WARM: budget >= 1500 OR days_to_move <= 60
+    COLD: all others
+    Lead: {{ JSON.stringify($json) }}
+    Return: { "score": "HOT|WARM|COLD", "reason": "...", "priority_action": "..." }
+
+<span class="w">Step 3: Switch node</span>
+  HOT  → GHL contact + Slack alert + WhatsApp template
+  WARM → GHL contact + email sequence
+  COLD → GHL contact + monthly newsletter only
+
+<span class="w">Step 4: Google Sheets append</span>
+  timestamp | name | email | budget | score | reason | source</pre>
+  </div>
+  <div class="tech-block">
+    <div class="tech-block-label">Common GHL API calls</div>
+    <pre><span class="c">// Create contact (v2 API)</span>
+POST https://services.leadconnectorhq.com/contacts/
+Authorization: Bearer {{ $env.GHL_API_KEY }}
+{
+  "email": "{{ $json.email }}",
+  "firstName": "{{ $json.first_name }}",
+  "tags": ["{{ $json.score.toLowerCase() }}", "{{ $json.source_clean }}"],
+  "locationId": "{{ $env.GHL_LOCATION_ID }}"
+}
+
+<span class="c">// Add to pipeline</span>
+POST https://services.leadconnectorhq.com/opportunities/
+{
+  "pipelineId": "{{ $env.GHL_PIPELINE_HOT }}",
+  "pipelineStageId": "{{ $env.GHL_STAGE_NEW }}",
+  "contactId": "{{ $json.contact_id }}"
+}</pre>
+  </div>
+</section>
+
+<section class="module-section" id="m15">
+  <div class="module-header"><span class="module-num">M15</span><div><div class="module-title">WhatsApp landlord lead handler</div><div class="module-sub">90% open rates, painful setup, incomparable ROI — the complete implementation</div></div></div>
+  <div class="story-card"><div class="story-label">Why It's Worth the Pain</div><div class="story-text">In the UK, WhatsApp open rates are 90%+. Email is 22%. We tested both in parallel for six weeks. Email averaged 18% open rate. WhatsApp averaged 87%. The extra setup time paid back in week two.</div></div>
+  <div class="callout callout-warn"><div class="callout-icon">⚠️</div><div class="callout-body"><strong>WhatsApp Business API rules:</strong> First messages to new contacts must use pre-approved templates. Free-form messages only allowed within 24 hours of the contact's last inbound message. Violating this results in account suspension. Meta enforces this strictly.</div></div>
+  <h2 class="sh">Setup checklist</h2>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Meta Business Account</h4><p>Must be verified. Requires business registration documents. Allow 3–7 days.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>WhatsApp Business Account (WABA)</h4><p>Create inside Meta Business Manager. Link a phone number (UK mobile or VoIP).</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Message Template Approval</h4><p>Submit templates to Meta. 1–3 business days. Submit 3–5 templates at once.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Webhook Configuration</h4><p>Configure your n8n webhook URL in Meta Developer Portal.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Test with sandbox number</h4><p>Meta provides a test number for development. Test all templates before going live.</p></div></div>
+  </div>
+  <div class="tech-block">
+    <div class="tech-block-label">WhatsApp inbound handler</div>
+    <pre><span class="w">Step 1: Webhook</span> — receive Meta Cloud API POST
+  IF $json.hub?.challenge → return challenge (text/plain)
+
+<span class="w">Step 2: Extract message</span>
+const msg = $input.first().json.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
+if (!msg || msg.type !== 'text') return [];
+return [{ json: { from: msg.from, text: msg.text.body } }];
+
+<span class="w">Step 3: LLM extract</span> — parse landlord intent
+  Return JSON: { property_type, bedrooms, location, asking_rent_pcm, missing_fields }
+
+<span class="w">Step 4: IF</span> — missing required fields?
+  TRUE  → Send template requesting missing info
+  FALSE → Create GHL contact + send confirmation template
+
+<span class="w">Send template:</span>
+POST https://graph.facebook.com/v19.0/{{ $env.WABA_PHONE_ID }}/messages
+{
+  "messaging_product": "whatsapp",
+  "to": "{{ $json.from }}",
+  "type": "template",
+  "template": {
+    "name": "property_details_request",
+    "language": { "code": "en_GB" }
+  }
+}</pre>
+  </div>
+</section>
+
+<section class="module-section" id="m16">
+  <div class="module-header"><span class="module-num">M16</span><div><div class="module-title">Weekly report generator — automated client reporting</div><div class="module-sub">Stop wasting Friday afternoons on manual reports nobody reads</div></div></div>
+  <div class="story-card"><div class="story-label">The Wasted Friday Afternoon</div><div class="story-text">Every Friday at 4pm, a senior ops person spent 2–3 hours pulling numbers from GHL, formatting them in Sheets, writing a summary email. One Friday they were sick. The report didn't go out. The client was angry Monday. Automating this took four hours to build and saved those four hours every single week indefinitely.</div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">Full weekly report workflow</div>
+    <pre><span class="w">Step 1: Schedule Trigger</span> — Every Monday at 09:00 (Europe/London)
+
+<span class="w">Step 2: HTTP Request</span> — fetch leads from GHL (last 7 days)
+  createdAfter: {{ $now.minus({days:7}).toISO() }}
+
+<span class="w">Step 3: Code node</span> — compute metrics
+const contacts = $input.all().map(i => i.json);
+const total     = contacts.length;
+const hot       = contacts.filter(c => c.tags?.includes('lead-hot')).length;
+const converted = contacts.filter(c => c.tags?.includes('converted')).length;
+
+return [{
+  json: {
+    period_start: new Date(Date.now()-7*86400000).toISOString().slice(0,10),
+    total, hot, converted,
+    conversion_rate: total ? ((converted/total)*100).toFixed(1) : 0
+  }
+}];
+
+<span class="w">Step 4: LLM node</span> — 3-sentence executive summary from the numbers
+
+<span class="w">Step 5: Parallel branches</span>
+  A → Google Sheets append (historical log)
+  B → Email to client (SMTP)
+  C → Slack to #client-reports (team quick view)</pre>
+  </div>
+  <div class="reflection"><div class="reflection-label">↺ Email reports nobody reads</div><p>I started with email-only reports. Open rate: ~30%. Then I added the Slack preview with key metrics. Now the team sees the numbers the moment they open Slack Monday morning. Don't assume people will open their email. Put the summary where they already are.</p></div>
+</section>
+
+<!-- PART IV -->
+<div class="part-header">
+  <div><div class="part-num">Part IV</div><div class="part-title">Channels</div><div class="part-sub">WhatsApp, Telegram, Slack, and email — deep configs for each</div></div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M17 — M18</div>
+</div>
+
+<section class="module-section" id="m17">
+  <div class="module-header"><span class="module-num">M17</span><div><div class="module-title">WhatsApp + Telegram — deep config</div><div class="module-sub">When to use each, and the configs that make them reliable in production</div></div></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Dimension</th><th>Telegram</th><th>WhatsApp Business API</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Setup time</strong></td><td>~15 minutes</td><td>3–10 days (verification + approvals)</td></tr>
+        <tr><td><strong>Template approval</strong></td><td>Not required</td><td>Required for first outbound message</td></tr>
+        <tr><td><strong>Open rates</strong></td><td>~45% (tech-savvy users)</td><td>~90% (mainstream UK/EU audiences)</td></tr>
+        <tr><td><strong>Free tier</strong></td><td>Unlimited</td><td>1,000 conversations/month free</td></tr>
+        <tr><td><strong>Best use case</strong></td><td>Internal ops alerts, developer tools</td><td>Customer-facing B2C communication</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 class="sh">Telegram setup (complete)</h2>
+  <div class="tech-block">
+    <pre><span class="c"># 1. Create bot via @BotFather → /newbot → get TOKEN</span>
+<span class="c"># 2. Get your chat ID</span>
+curl https://api.telegram.org/bot<span class="s">TOKEN</span>/getUpdates
+
+<span class="c"># 3. Set webhook to receive messages</span>
+curl -X POST https://api.telegram.org/bot<span class="s">TOKEN</span>/setWebhook \
+  -d url=https://your-n8n.com/webhook/telegram \
+  -d secret_token=<span class="s">your-secret</span>
+
+<span class="c"># 4. Send message from n8n</span>
+POST https://api.telegram.org/bot<span class="s">TOKEN</span>/sendMessage
+{
+  "chat_id": "{{ $json.chat_id }}",
+  "text": "Your message here",
+  "parse_mode": "Markdown"
+}</pre>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ When to use which</div><p>Telegram for internal alerts (server down, workflow failed). WhatsApp for customer-facing communication in the UK (90%+ open rates). Don't try to use WhatsApp for internal alerts — the template approval process makes it too slow for operational needs.</p></div>
+</section>
+
+<section class="module-section" id="m18">
+  <div class="module-header"><span class="module-num">M18</span><div><div class="module-title">Slack + Email — the channels your team actually lives in</div><div class="module-sub">Rich Slack blocks, HTML email templates, and SMTP vs transactional API</div></div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">Rich Slack Block Kit message — hot lead alert</div>
+    <pre>POST https://slack.com/api/chat.postMessage
+Authorization: Bearer {{ $env.SLACK_BOT_TOKEN }}
+{
+  "channel": "#hot-leads",
+  "blocks": [
+    {
+      "type": "header",
+      "text": { "type": "plain_text", "text": "🔥 Hot Lead — Action Required" }
+    },
+    {
+      "type": "section",
+      "fields": [
+        { "type": "mrkdwn", "text": "*Name*\n{{ $json.fullName }}" },
+        { "type": "mrkdwn", "text": "*Budget*\n£{{ $json.budget }}/mo" }
+      ]
+    },
+    {
+      "type": "actions",
+      "elements": [{
+        "type": "button",
+        "style": "primary",
+        "text": { "type": "plain_text", "text": "View in GHL" },
+        "url": "https://app.gohighlevel.com/contacts/{{ $json.ghl_id }}"
+      }]
+    }
+  ]
+}</pre>
+  </div>
+  <h2 class="sh">Email — SMTP vs transactional API</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Method</th><th>Setup</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SMTP (Gmail/Outlook)</strong></td><td>5 min, App Password</td><td>Low volume (&lt;500/day), internal reports, client emails</td></tr>
+        <tr><td><strong>SendGrid API</strong></td><td>15 min, API key</td><td>Marketing emails, high volume, transactional</td></tr>
+        <tr><td><strong>Postmark</strong></td><td>15 min, API key</td><td>Receipts, confirmations, time-sensitive</td></tr>
+        <tr><td><strong>Amazon SES</strong></td><td>30 min, IAM setup</td><td>&gt;10,000 emails/month</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-body"><strong>Gmail App Password:</strong> Go to Google Account → Security → 2FA must be on → App Passwords → generate one for "n8n." Never use your main Gmail password in n8n.</div></div>
+</section>
+
+<!-- PART V -->
+<div class="part-header">
+  <div><div class="part-num">Part V</div><div class="part-title">Production</div><div class="part-sub">The unglamorous work that determines whether your automation survives contact with reality</div></div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M19 — M23</div>
+</div>
+
+<section class="module-section" id="m19">
+  <div class="module-header"><span class="module-num">M19</span><div><div class="module-title">Environment management &amp; secrets</div><div class="module-sub">How secrets work in n8n, and why you should never export a workflow with hardcoded keys</div></div></div>
+  <div class="feature-grid cols3">
+    <div class="feature-card"><div class="feature-card-label">n8n Credentials</div><h4>OAuth + API auth</h4><p>Managed by n8n. Encrypted with your <code>N8N_ENCRYPTION_KEY</code>. Used by native nodes (Slack, Google, etc). Do not export.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Environment Variables</div><h4>$env.VARIABLE</h4><p>Set in <code>.env</code> or Docker environment. Accessible in expressions. Never appear in exported JSON.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Workflow Variables</div><h4>$vars.variable</h4><p>Set in workflow settings. Shared across all executions. Good for client-specific config (location IDs, pipeline IDs).</p></div>
+  </div>
+  <div class="tech-block">
+    <div class="tech-block-label">.env — complete example</div>
+    <pre><span class="c"># ─── n8n core ───</span>
+N8N_ENCRYPTION_KEY=<span class="s">64-char-hex</span>
+N8N_HOST=<span class="s">n8n.yourdomain.com</span>
+DB_PASSWORD=<span class="s">strong-db-password</span>
+
+<span class="c"># ─── GHL ───</span>
+GHL_API_KEY_CLIENT_A=<span class="s">...</span>
+GHL_LOCATION_ID_CLIENT_A=<span class="s">...</span>
+
+<span class="c"># ─── AI ───</span>
+OPENAI_API_KEY=<span class="s">sk-...</span>
+
+<span class="c"># ─── channels ───</span>
+SLACK_BOT_TOKEN=<span class="s">xoxb-...</span>
+META_TOKEN=<span class="s">EAA...</span>
+TELEGRAM_BOT_TOKEN=<span class="s">...</span>
+
+<span class="c"># ─── email ───</span>
+SMTP_USER=<span class="s">ops@yourdomain.com</span>
+SMTP_PASS=<span class="s">gmail-app-password</span></pre>
+  </div>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Export workflow JSON</div><div class="kv-val">Workflows export as JSON (no credentials or env vars). Safe to commit to git.</div></div>
+    <div class="kv-row"><div class="kv-key">.gitignore</div><div class="kv-val">Add: <code>.env</code>, <code>n8n_data/</code>, <code>postgres_data/</code></div></div>
+    <div class="kv-row"><div class="kv-key">Multi-environment</div><div class="kv-val">Run separate n8n instances for dev/staging/prod. Different <code>.env</code> files. Never test against production data.</div></div>
+  </div>
+</section>
+
+<section class="module-section" id="m20">
+  <div class="module-header"><span class="module-num">M20</span><div><div class="module-title">Queue mode &amp; scaling</div><div class="module-sub">When single-instance isn't enough — Redis, workers, and concurrency limits</div></div></div>
+  <div class="callout callout-info"><div class="callout-icon">ℹ️</div><div class="callout-body"><strong>Most people never need this.</strong> Queue mode is for high-concurrency scenarios: 100+ simultaneous executions, webhook spikes, or long-running AI workflows that block the main thread. If you're running under 50 concurrent executions, default mode is fine.</div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">docker-compose.yml — queue mode with workers</div>
+    <pre><span class="k">services:</span>
+  <span class="w">n8n-main:</span>              <span class="c"># handles UI + webhook reception</span>
+    <span class="tl">image:</span> n8nio/n8n:1.121.0
+    <span class="tl">environment:</span>
+      - <span class="s">EXECUTIONS_MODE=queue</span>
+      - <span class="s">QUEUE_BULL_REDIS_HOST=redis</span>
+
+  <span class="w">n8n-worker:</span>           <span class="c"># handles workflow execution</span>
+    <span class="tl">image:</span> n8nio/n8n:1.121.0
+    <span class="tl">command:</span> n8n worker --concurrency=10
+    <span class="tl">deploy:</span>
+      <span class="tl">replicas:</span> 3           <span class="c"># 3 workers × 10 = 30 parallel executions</span>
+
+  <span class="w">redis:</span>
+    <span class="tl">image:</span> redis:7-alpine
+    <span class="tl">command:</span> redis-server --appendonly yes</pre>
+  </div>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Worker concurrency</div><div class="kv-val"><code>--concurrency=N</code> — workflows per worker simultaneously. Default: 10. Memory-heavy AI workflows: use 3–5.</div></div>
+    <div class="kv-row"><div class="kv-key">Workflow-level limit</div><div class="kv-val">Set in workflow settings → "Max concurrent executions." Prevents one high-volume workflow from saturating all workers.</div></div>
+  </div>
+</section>
+
+<section class="module-section" id="m21">
+  <div class="module-header"><span class="module-num">M21</span><div><div class="module-title">Testing workflows — the discipline that prevents 3am incidents</div><div class="module-sub">Manual testing, mock data, staging environments, and the pre-deploy checklist</div></div></div>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Node-level test</h4><p>Click the test button (lightning bolt) on an individual node with mock input. Verify output before connecting downstream.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Partial workflow test</h4><p>Right-click any node → "Test from here" — runs from that node forward using real or mock data.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Full workflow test</h4><p>Click "Test Workflow" button. Uses real credentials, real APIs. Verify in staging/test accounts.</p></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Test mode isolation</h4><p>Use <code>{{ $execution.mode === 'manual' ? 'test@...' : $json.email }}</code> to redirect real side-effects during testing.</p></div></div>
+  </div>
+  <h2 class="sh">Pre-deploy checklist</h2>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Error handler set</div><div class="kv-val">Workflow Settings → Error Workflow → "[system] global error handler" ✓</div></div>
+    <div class="kv-row"><div class="kv-key">Retry enabled</div><div class="kv-val">All HTTP Request nodes: Retry on Fail = On, Max 3 attempts ✓</div></div>
+    <div class="kv-row"><div class="kv-key">No hardcoded keys</div><div class="kv-val">Search workflow JSON for "sk-", "EAA", "Bearer" — should be zero results ✓</div></div>
+    <div class="kv-row"><div class="kv-key">Webhook authenticated</div><div class="kv-val">All webhook nodes have authentication configured ✓</div></div>
+    <div class="kv-row"><div class="kv-key">All paths tested</div><div class="kv-val">Every branch of every IF/Switch node has been executed at least once ✓</div></div>
+    <div class="kv-row"><div class="kv-key">Node names meaningful</div><div class="kv-val">No "HTTP Request3" or "IF5" — all nodes have descriptive names ✓</div></div>
+  </div>
+</section>
+
+<section class="module-section" id="m22">
+  <div class="module-header"><span class="module-num">M22</span><div><div class="module-title">The n8n API — managing your instance programmatically</div><div class="module-sub">Bulk-configure error handlers, export workflows to git, monitor execution health</div></div></div>
+  <div class="tech-block">
+    <div class="tech-block-label">Common n8n API calls</div>
+    <pre><span class="c">// Auth: X-N8N-API-KEY header (create in Settings → n8n API)</span>
+
+<span class="c">// List all workflows</span>
+GET /api/v1/workflows
+
+<span class="c">// Export workflow JSON (safe to git-commit)</span>
+GET /api/v1/workflows/{id}
+
+<span class="c">// Bulk-set error workflow on all workflows</span>
+PATCH /api/v1/workflows/{id}
+{ "settings": { "errorWorkflow": "error-handler-workflow-id" } }
+
+<span class="c">// Get all failed executions for a workflow</span>
+GET /api/v1/executions?workflowId={id}&status=error&limit=20
+
+<span class="c">// Trigger workflow via API</span>
+POST /api/v1/workflows/{id}/execute
+{ "runData": { "Start": [{ "json": { "your": "data" } }] } }</pre>
+  </div>
+  <h2 class="sh">Auto-backup workflow (Sunday 2am)</h2>
+  <div class="tech-block">
+    <pre><span class="w">Trigger:</span> Schedule → Sunday 02:00
+  ↓
+<span class="w">HTTP Request:</span> GET /api/v1/workflows
+  ↓
+<span class="w">SplitInBatches:</span> size 1
+  ↓
+<span class="w">HTTP Request:</span> GET /api/v1/workflows/{{ $json.id }}
+  ↓
+<span class="w">GitHub node:</span> create/update file
+  Path: workflows/{{ $json.name.replace(/[^a-z0-9]/gi,'-').toLowerCase() }}.json
+  Commit: "Auto-backup {{ $json.name }} — {{ $now.toFormat('yyyy-MM-dd') }}"</pre>
+  </div>
+</section>
+
+<section class="module-section" id="m23">
+  <div class="module-header"><span class="module-num">M23</span><div><div class="module-title">Community nodes — what's actually useful</div><div class="module-sub">How to install them (self-hosted only), quality signals, and the ones I actually use</div></div></div>
+  <div class="callout callout-warn"><div class="callout-icon">⚠️</div><div class="callout-body"><strong>Self-hosted only.</strong> Community nodes cannot be installed on n8n Cloud. Also: community nodes are third-party code running on your server. Review the source before installing on production.</div></div>
+  <div class="tech-block">
+    <pre><span class="c"># Via n8n UI (easiest)</span>
+Settings → Community Nodes → Install → enter npm package name
+
+<span class="c"># Via CLI (inside Docker container)</span>
+docker exec -it n8n n8n nodes install n8n-nodes-packagename</pre>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Package</th><th>What it does</th><th>Quality signal</th></tr></thead>
+      <tbody>
+        <tr><td><code>n8n-nodes-browserless</code></td><td>Browser automation (scraping, PDF generation)</td><td>High downloads, active maintenance</td></tr>
+        <tr><td><code>n8n-nodes-mcp</code></td><td>Connect to MCP servers from n8n workflows</td><td>Growing, watch actively</td></tr>
+        <tr><td><code>n8n-nodes-redis</code></td><td>Direct Redis operations — rate limiting, session storage</td><td>Stable, widely used</td></tr>
+        <tr><td><code>n8n-nodes-document-generator</code></td><td>Generate PDF/DOCX from HTML templates</td><td>Active, good docs</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="power-tip"><div class="power-tip-label">⚡ The quality filter</div><p>Before installing: (1) Check npm last-publish date — anything over 12 months without updates is risky. (2) Check GitHub issues — are critical bugs open? (3) Check if it's been updated for n8n 1.0+ API. When in doubt, use the HTTP Request node — it's always maintained.</p></div>
+</section>
+
+<!-- PART VI -->
+<div class="part-header">
+  <div><div class="part-num">Part VI</div><div class="part-title">Reference</div><div class="part-sub">Comparison tables, expression cheatsheet, and cited sources</div></div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M24 — M25</div>
+</div>
+
+<section class="module-section" id="m24">
+  <div class="module-header"><span class="module-num">M24</span><div><div class="module-title">n8n vs Make vs Zapier (2026) — from someone who uses all three</div><div class="module-sub">The honest comparison, including the situations where n8n is the wrong choice</div></div></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Dimension</th><th>n8n</th><th>Make</th><th>Zapier</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pricing model</strong></td><td>Self-host (server cost) or $20/mo Cloud</td><td>Credit-based (~$9–$29/mo)</td><td>Task-based ($20–$800+/mo)</td></tr>
+        <tr><td><strong>Per-execution cost</strong></td><td>None (self-host)</td><td>Yes (credits consumed)</td><td>Yes (tasks consumed)</td></tr>
+        <tr><td><strong>Self-host option</strong></td><td>✓ Yes, Docker</td><td>✗ No</td><td>✗ No</td></tr>
+        <tr><td><strong>Native integrations</strong></td><td>1,200+</td><td>3,000+</td><td>6,000+</td></tr>
+        <tr><td><strong>Code support</strong></td><td>Full JS + Python</td><td>Limited (basic functions)</td><td>Limited (Code by Zapier)</td></tr>
+        <tr><td><strong>AI features</strong></td><td>AI Agent, RAG, vector stores, LLM node</td><td>Make AI Agents (improving)</td><td>Zapier AI (GPT-based, basic)</td></tr>
+        <tr><td><strong>Community nodes</strong></td><td>✓ npm ecosystem</td><td>✗</td><td>✗</td></tr>
+        <tr><td><strong>Learning curve</strong></td><td>Steep (technical comfort needed)</td><td>Moderate</td><td>Easy (non-technical friendly)</td></tr>
+        <tr><td><strong>Error handling</strong></td><td>Full — Error Trigger, retry, dead letter</td><td>Good — built in</td><td>Basic — email alerts</td></tr>
+        <tr><td><strong>Best for</strong></td><td>High-volume, AI workflows, technical teams</td><td>Marketing automation, visual builders</td><td>Non-technical teams, quick simple integrations</td></tr>
+        <tr><td><strong>Worst for</strong></td><td>Non-technical teams, quick no-code demos</td><td>Very high volume (credits scale fast)</td><td>High-volume, complex data transforms</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="reflection"><div class="reflection-label">↺ My honest, unsentimental take</div><p>I use all three. Zapier for quick client integrations when the app isn't in n8n's catalog and volume is low. Make for marketing teams who need visual clarity and moderate volume. n8n for everything I run myself at scale. The $847 Zapier bill didn't make me hate Zapier — it made me understand that per-execution pricing is a bad fit for scalable systems. Use the right tool for the volume and complexity.</p></div>
+</section>
+
+<section class="module-section" id="m25">
+  <div class="module-header"><span class="module-num">M25</span><div><div class="module-title">Expression reference — the complete cheatsheet</div><div class="module-sub">Every expression pattern you'll actually use, in one place</div></div></div>
+  <h3 class="sh">Data access</h3>
+  <div class="tech-block">
+    <pre><span class="c">// Current item</span>
+{{ $json.fieldName }}                      <span class="c">// simple field</span>
+{{ $json["field-with-dashes"] }}           <span class="c">// bracket notation</span>
+{{ $json.address?.city }}                  <span class="c">// optional chaining (safe for null)</span>
+{{ $json.items[0].name }}                  <span class="c">// array index</span>
+{{ $json.contact?.email || 'no email' }}   <span class="c">// null coalescing</span>
+
+<span class="c">// Upstream nodes</span>
+{{ $node["Webhook"].json.body.email }}
+{{ $node["GHL Create"].json.id }}
+
+<span class="c">// Execution context</span>
+{{ $execution.id }}           <span class="c">// unique run ID</span>
+{{ $execution.mode }}         <span class="c">// 'manual' or 'trigger'</span>
+{{ $workflow.name }}          <span class="c">// workflow name</span>
+{{ $itemIndex }}              <span class="c">// 0-based index of current item</span></pre>
+  </div>
+  <h3 class="sh">Date &amp; time (Luxon)</h3>
+  <div class="tech-block">
+    <pre>{{ $now.toISO() }}                          <span class="c">// "2026-05-14T09:30:00.000Z"</span>
+{{ $now.toFormat('dd MMM yyyy') }}          <span class="c">// "14 May 2026"</span>
+{{ $now.toFormat('yyyy-MM-dd') }}           <span class="c">// "2026-05-14"</span>
+{{ $now.plus({days: 7}).toISO() }}          <span class="c">// 7 days from now</span>
+{{ $now.minus({months: 1}).toISO() }}       <span class="c">// 1 month ago</span>
+{{ $now.startOf('week').toISO() }}          <span class="c">// start of current week</span>
+{{ $now.endOf('month').toISO() }}           <span class="c">// end of current month</span>
+{{ $today }}                               <span class="c">// today at midnight UTC</span></pre>
+  </div>
+  <h3 class="sh">String operations</h3>
+  <div class="tech-block">
+    <pre>{{ $json.name.toUpperCase() }}
+{{ $json.name.trim() }}
+{{ $json.name.replace(/\s+/g, '-') }}          <span class="c">// regex replace</span>
+{{ $json.email.split('@')[0] }}                 <span class="c">// split + index</span>
+{{ $json.description.substring(0, 100) + '...' }}<span class="c">// truncate</span>
+{{ [$json.firstName, $json.lastName].filter(Boolean).join(' ') }}</pre>
+  </div>
+  <h3 class="sh">Numbers, arrays, conditionals</h3>
+  <div class="tech-block">
+    <pre><span class="c">// Numbers</span>
+{{ Math.round($json.budget * 12) }}
+{{ ($json.converted / $json.total * 100).toFixed(1) }}
+{{ parseInt($json.budgetStr.replace(/[^0-9]/g,'')) }}
+
+<span class="c">// Arrays</span>
+{{ $json.tags.length }}
+{{ $json.tags.includes('vip') }}
+{{ $json.tags.join(', ') }}
+{{ $json.items.map(i => i.name).join(', ') }}
+{{ $json.items.filter(i => i.active).length }}
+{{ $json.scores.reduce((sum, s) => sum + s, 0) }}
+
+<span class="c">// Conditionals</span>
+{{ $json.score >= 80 ? 'HOT' : $json.score >= 50 ? 'WARM' : 'COLD' }}
+{{ $json.company || 'Individual' }}
+{{ $execution.mode === 'manual' ? 'test@example.com' : $json.email }}</pre>
+  </div>
+  <h3 class="sh">Code node patterns</h3>
+  <div class="tech-block">
+    <pre><span class="c">// Deduplicate items by field</span>
+const seen = new Set();
+return $input.all().filter(item => {
+  const key = item.json.email;
+  if (seen.has(key)) return false;
+  seen.add(key);
+  return true;
+});
+
+<span class="c">// Array → individual items</span>
+const rows = $input.first().json.contacts;
+return rows.map(row => ({ json: row }));
+
+<span class="c">// Aggregate multiple items into one</span>
+const items = $input.all();
+return [{ json: {
+  total: items.length,
+  emails: items.map(i => i.json.email),
+  sum: items.reduce((s, i) => s + i.json.budget, 0)
+} }];
+
+<span class="c">// Safe JSON parse (handle LLM output formatting)</span>
+function safeJson(str, fallback = {}) {
+  try { return JSON.parse(str.replace(/```json|```/g, '').trim()); }
+  catch { return fallback; }
+}
+const parsed = safeJson($json.llm_output);</pre>
+  </div>
+</section>
+
+<section class="module-section" id="sources">
+  <div class="module-header"><span class="module-num">SOURCES</span><div><div class="module-title">Cited sources &amp; reference documentation</div><div class="module-sub">Everything I drew from, in one place</div></div></div>
+  <div class="source-index">
+    <div class="source-row"><div class="source-num">01</div><div class="source-title">n8n Official Documentation — docs.n8n.io</div><a href="https://docs.n8n.io" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">02</div><div class="source-title">CVE-2026-21858 — FortiGuard Labs Advisory</div><a href="https://www.fortiguard.com/threat-signal-report/6309/n8n-unauthenticated-remote-code-execution" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">03</div><div class="source-title">n8n Security Hardening Guide — docs.n8n.io/hosting/securing</div><a href="https://docs.n8n.io/hosting/securing/" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">04</div><div class="source-title">n8n Expressions Reference — docs.n8n.io/code/expressions</div><a href="https://docs.n8n.io/code/expressions/" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">05</div><div class="source-title">Luxon Date Library — moment.github.io/luxon</div><a href="https://moment.github.io/luxon/" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">06</div><div class="source-title">n8n AI Agent Documentation — docs.n8n.io/advanced-ai</div><a href="https://docs.n8n.io/advanced-ai/" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">07</div><div class="source-title">Meta WhatsApp Cloud API — developers.facebook.com</div><a href="https://developers.facebook.com/docs/whatsapp/cloud-api" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">08</div><div class="source-title">GoHighLevel API v2 Reference — highlevel.stoplight.io</div><a href="https://highlevel.stoplight.io/docs/integrations" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">09</div><div class="source-title">n8n Queue Mode — docs.n8n.io/hosting/scaling</div><a href="https://docs.n8n.io/hosting/scaling/queue-mode/" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">10</div><div class="source-title">Slack Block Kit Builder — api.slack.com/block-kit</div><a href="https://api.slack.com/block-kit" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">11</div><div class="source-title">n8n Sustainable Use License — n8n.io/legal</div><a href="https://n8n.io/legal/" target="_blank" rel="noopener" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">12</div><div class="source-title">Make vs n8n Comparison — make.com/en/compare</div><a href="https://www.make.com/en/compare/make-vs-n8n" target="_blank" rel="noopener" class="source-link">↗</a></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="page-footer">
+  <div>
+    <span>n8n 101 — AI Workflow Automation · Grimoire 004</span>
+    <span style="margin:0 10px;opacity:.3">·</span>
+    <span>May 2026 · 7 Parts · 25 Modules · Free · No gate</span>
+  </div>
+  <div style="display:flex;gap:1rem">
+    <a href="../projects/">← Back to Projects</a>
+    <a href="https://n8n.io" target="_blank" rel="noopener">n8n Official ↗</a>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const pct = document.documentElement.scrollTop /
+    (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+  bar.style.transform = `scaleX(${pct})`;
+}, { passive: true });
+
+// Active nav tracking
+// Approach: on every scroll, find the last section whose top is at or above
+// the threshold (header height + small buffer). That's the section we're in.
+// When it changes, update the active class and scroll the sidebar to show it.
+const THRESHOLD = 112; // px — header(92) + breathing room(20)
+const sections  = Array.from(document.querySelectorAll('section[id]'));
+const sidebar   = document.querySelector('.sidebar');
+const links     = document.querySelectorAll('.nav-link');
+let activeId    = null;
+
+function updateNav() {
+  let found = null;
+  for (const s of sections) {
+    if (s.getBoundingClientRect().top <= THRESHOLD) {
+      found = s.id;
+    }
+  }
+  if (!found || found === activeId) return;
+  activeId = found;
+
+  links.forEach(l => l.classList.remove('active'));
+  const link = document.querySelector(`.nav-link[href="#${found}"]`);
+  if (!link) return;
+  link.classList.add('active');
+
+  // Keep active link visible in the sidebar.
+  // scrollIntoView with block:'nearest' only scrolls if needed,
+  // and targets the nearest scrollable ancestor (the sidebar) automatically.
+  link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav(); // run on load
+</script>
+</body>
+</html>

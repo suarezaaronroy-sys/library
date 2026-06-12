@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zapier 101 — Grimoire 005 · Aaron Suarez</title>
+<meta name="description" content="25-module Zapier reference. Single source of truth, filters, idempotency, multi-Zap architecture, task economy, and production hardening. Narrative-first, technically complete.">
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/005-zapier-101.html"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYPEWZXH03"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GYPEWZXH03',{page_title:'Grimoire 005 – Zapier 101',page_path:'/grimoires/005-zapier-101.html'});</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ─── ROOT ─── */
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:108px;
+  overflow-x:hidden;
+}
+
+:root{
+  --chrome:92px;
+  --sidebar:260px;
+
+  --bg:#F5F2EC;--bg2:#EDE9E0;--bg3:#E5E0D5;
+  --ink:#1C1917;--ink2:#44403C;--ink3:#78716C;--ink4:#A8A29E;
+  --accent:#C2410C;--accent2:#EA580C;
+  --teal:#0D9488;--teal-bg:#CCFBF1;
+  --amber:#B45309;--amber-bg:#FEF3C7;
+  --blue:#1D4ED8;--blue-bg:#DBEAFE;--blue-bg2:#BFDBFE;
+  --green:#15803D;--green-bg:#DCFCE7;
+  --red:#B91C1C;--red-bg:#FEE2E2;
+  --purple:#7C3AED;--purple-bg:#F5F3FF;
+  --border:rgba(28,25,23,.12);--border2:rgba(28,25,23,.06);
+  --dark:#1C1917;--dark2:#292524;--dark3:#3C3835;
+  --dark-fg:#F5F2EC;--dark-muted:#A8A29E;--dark-dim:#78716C;
+  --mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;
+  --shadow-sm:0 1px 3px rgba(28,25,23,.07),0 1px 2px rgba(28,25,23,.04);
+  --shadow:0 4px 12px rgba(28,25,23,.07),0 2px 4px rgba(28,25,23,.04);
+}
+
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.7;
+  font-weight:300;
+  background-image:
+    radial-gradient(ellipse at 5% 0%,rgba(29,78,216,.04),transparent 38%),
+    radial-gradient(ellipse at 95% 8%,rgba(13,148,136,.03),transparent 35%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.018'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+
+/* ─── TOP CHROME (sticky) ─── */
+.mode-banner{
+  position:sticky;top:0;z-index:300;
+  background:var(--dark);color:var(--dark-fg);
+  padding:0 2rem;height:40px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:11px;
+}
+.mode-banner-left{display:flex;align-items:center;gap:10px}
+.mode-dot{width:7px;height:7px;border-radius:50%;background:var(--blue-bg2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.site-header{
+  position:sticky;top:40px;z-index:200;
+  background:rgba(245,242,236,.96);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-left{display:flex;align-items:center;gap:1rem}
+.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3);transition:.14s;display:flex;align-items:center;gap:.3rem}
+.header-back:hover{color:var(--accent)}
+.header-divider{width:1px;height:16px;background:var(--border)}
+.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,.2)}
+
+/* ─── PROGRESS BAR ─── */
+#progress-bar{
+  position:fixed;
+  top:var(--chrome);
+  left:var(--sidebar);
+  right:0;
+  height:2px;
+  z-index:150;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  transform-origin:left;
+  transform:scaleX(0);
+  transition:transform .08s linear;
+  pointer-events:none;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar{
+  position:fixed;
+  top:var(--chrome);
+  left:0;
+  width:var(--sidebar);
+  height:calc(100vh - var(--chrome));
+  overflow-y:auto;
+  overflow-x:hidden;
+  border-right:1px solid var(--border);
+  background:rgba(245,242,236,.98);
+  backdrop-filter:blur(10px);
+  z-index:100;
+  padding:1rem 0 3rem;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.nav-group{margin-bottom:.15rem}
+.nav-group-label{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink4);
+  padding:10px 16px 4px;
+  display:block;
+}
+.nav-group:not(:first-child) .nav-group-label{
+  border-top:1px solid var(--border2);
+  margin-top:.3rem;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  padding:5px 16px;
+  font-size:12px;
+  color:var(--ink3);
+  line-height:1.35;
+  transition:background .1s,color .1s,border-color .1s;
+  border-left:2px solid transparent;
+}
+.nav-link:hover{background:var(--bg2);color:var(--ink)}
+.nav-link.active{
+  background:rgba(29,78,216,.06);
+  color:var(--blue);
+  border-left-color:var(--blue);
+  font-weight:500;
+}
+.nav-num{
+  font-family:var(--mono);
+  font-size:9px;
+  color:var(--ink4);
+  width:18px;
+  flex-shrink:0;
+}
+.nav-link.active .nav-num{color:var(--blue);opacity:.7}
+.nav-link.warn{color:var(--red)}
+.nav-link.warn:hover{background:var(--red-bg)}
+.nav-link.warn.active{background:rgba(185,28,28,.06);color:var(--red);border-left-color:var(--red)}
+
+/* ─── MAIN CONTENT ─── */
+.main{
+  margin-left:var(--sidebar);
+  padding:2.8rem 3rem 8rem;
+  max-width:860px;
+  min-width:0;
+}
+section[id]{scroll-margin-top:108px}
+
+/* ─── TYPOGRAPHY ─── */
+.hero{margin-bottom:3.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.08;margin-bottom:.9rem;letter-spacing:-.025em}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--blue)}
+.hero-sub{font-size:.95rem;color:var(--ink2);max-width:60ch;line-height:1.8;margin-bottom:1.8rem}
+.stat-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.8rem}
+.stat-pill{display:flex;align-items:center;gap:.4rem;padding:5px 12px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:11.5px;color:var(--ink2)}
+.stat-pill strong{font-weight:500;color:var(--ink)}
+.hero-actions{display:flex;gap:.65rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;padding:.65rem 1.1rem;border-radius:999px;border:1px solid;cursor:pointer;transition:.15s ease;font-weight:500}
+.btn.blue{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 14px rgba(29,78,216,.22)}
+.btn.blue:hover{background:#1741ba;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}
+.btn.ghost:hover{border-color:var(--blue);color:var(--blue)}
+
+.part-header{
+  margin:3rem 0 2rem;
+  padding:1.1rem 1.4rem;
+  background:var(--dark);border-radius:14px;
+  display:flex;align-items:center;gap:1.2rem;
+}
+.part-num{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dark-dim)}
+.part-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--dark-fg)}
+.part-sub{font-size:11.5px;color:var(--dark-dim);margin-top:2px}
+.part-divider{width:1px;height:32px;background:rgba(245,242,236,.1);flex-shrink:0}
+
+.module-section{
+  margin-bottom:3rem;
+  padding-bottom:2.8rem;
+  border-bottom:1px solid var(--border2);
+}
+.module-section:last-of-type{border-bottom:none}
+.module-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.4rem}
+.module-num{
+  font-family:var(--mono);font-size:10px;color:var(--ink4);
+  padding:4px 8px;border:1px solid var(--border);border-radius:4px;
+  white-space:nowrap;margin-top:3px;background:#fff;flex-shrink:0;
+}
+.module-title{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:2px}
+.module-sub{font-size:13px;color:var(--ink3)}
+
+h2.sh{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin:1.8rem 0 .75rem}
+h3.sh{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin:1.5rem 0 .6rem;padding-bottom:.35rem;border-bottom:1px solid var(--border2)}
+p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}
+strong{font-weight:500;color:var(--ink)}
+code{font-family:var(--mono);font-size:.76em;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--ink)}
+ul,ol{margin:.4rem 0 .75rem 1.2rem;color:var(--ink2);font-size:14px;line-height:1.75}
+
+/* ─── CALLOUTS ─── */
+.callout{border-radius:10px;padding:.85rem 1.1rem;margin:.9rem 0;font-size:13px;line-height:1.65;display:flex;gap:.7rem;align-items:flex-start}
+.callout-icon{flex-shrink:0;font-size:.95rem;line-height:1.6}
+.callout-body{flex:1}
+.callout-warn{background:var(--amber-bg);border-left:3px solid var(--amber);color:#78350F}
+.callout-danger{background:var(--red-bg);border-left:3px solid var(--red);color:#7F1D1D}
+.callout-info{background:var(--blue-bg);border-left:3px solid var(--blue);color:#1E3A8A}
+.callout-success{background:var(--teal-bg);border-left:3px solid var(--teal);color:#134E4A}
+.callout-tip{background:var(--purple-bg);border-left:3px solid var(--purple);color:#4C1D95}
+
+/* ─── STORY CARDS ─── */
+.story-card{
+  background:#fff;border-radius:12px;
+  padding:1rem 1.3rem;margin:.9rem 0;
+  border-left:3px solid var(--accent);
+  box-shadow:var(--shadow-sm);
+}
+.story-label{font-family:var(--mono);font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
+.story-text{font-size:13.5px;color:var(--ink2);font-style:italic;line-height:1.7}
+
+/* ─── NARRATIVE PROSE ─── */
+.narrative{
+  border-left:2px solid var(--border);
+  padding-left:1.3rem;
+  margin:1.4rem 0;
+}
+.narrative p{font-size:14.5px;line-height:1.85;color:var(--ink2);margin-bottom:.6rem}
+.narrative p:last-child{margin-bottom:0}
+
+/* ─── STANDALONE QUOTE ─── */
+.pull-quote{
+  margin:2rem 0;
+  padding:1.2rem 1.5rem;
+  border-radius:12px;
+  background:var(--dark);
+  font-family:var(--serif);
+  font-size:1.05rem;
+  font-style:italic;
+  font-weight:300;
+  color:var(--dark-fg);
+  line-height:1.6;
+  letter-spacing:-.01em;
+}
+.pull-quote::before{content:'"';font-size:2.5rem;line-height:0;vertical-align:-.4em;color:var(--accent2);margin-right:.2rem;font-style:normal}
+
+/* ─── SHOWCASE / STATS ─── */
+.showcase{background:var(--dark);border-radius:18px;padding:1.6rem 1.8rem;margin:1.8rem 0}
+.showcase-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.75rem}
+.showcase h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:.4rem;color:var(--dark-fg)}
+.showcase p{font-size:13px;color:var(--dark-muted);line-height:1.65}
+.showcase-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.1rem 0}
+.showcase-stat{background:rgba(245,242,236,.06);border:1px solid rgba(245,242,236,.1);border-radius:10px;padding:13px}
+.ss-val{font-family:var(--mono);font-size:1.5rem;font-weight:500;color:var(--dark-fg);line-height:1;margin-bottom:4px}
+.ss-val.g{color:#86EFAC}.ss-val.b{color:#93C5FD}.ss-val.a{color:#FCD34D}
+.ss-label{font-size:11px;color:var(--dark-dim);line-height:1.4}
+
+/* ─── REFLECTION ─── */
+.reflection{background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.14);border-left:3px solid var(--purple);border-radius:10px;padding:.85rem 1.1rem;margin:.9rem 0}
+.reflection-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:.35rem}
+.reflection p{color:var(--ink2);font-size:13px;line-height:1.65;margin-bottom:.35rem}
+
+/* ─── POWER TIP ─── */
+.power-tip{background:var(--dark2);border:1px solid rgba(245,242,236,.08);border-left:3px solid var(--accent2);border-radius:10px;padding:.85rem 1.1rem;margin:.9rem 0}
+.power-tip-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.35rem}
+.power-tip p{color:#D6D3D1;font-size:13px;line-height:1.65}
+
+/* ─── CODE ─── */
+.tech-block{margin:1rem 0}
+.tech-block-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink4);margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}
+.tech-block-label::after{content:'';flex:1;height:1px;background:var(--border2)}
+pre{
+  background:var(--dark);border-radius:10px;
+  padding:1.1rem 1.3rem;overflow-x:auto;
+  font-family:var(--mono);font-size:12px;line-height:1.85;color:#D6D3D1;
+  border:1px solid rgba(255,255,255,.05);
+  margin:.35rem 0;
+}
+pre .c{color:#57534E;font-style:italic}
+pre .k{color:#FDA4AF}
+pre .v{color:#86EFAC}
+pre .s{color:#FCD34D}
+pre .w{color:#F8FAFC;font-weight:500}
+pre .tl{color:#93C5FD}
+pre .p{color:#C4B5FD}
+pre .o{color:#FCA5A5}
+
+/* ─── GRIDS ─── */
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin:.9rem 0}
+.feature-card{background:#fff;border:1px solid var(--border);border-radius:11px;padding:.95rem 1rem}
+.feature-card-label{font-family:var(--mono);font-size:.57rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:.28rem}
+.feature-card h4{font-size:.86rem;font-weight:500;color:var(--ink);margin-bottom:.28rem}
+.feature-card p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin-bottom:0}
+
+/* ─── TABLES ─── */
+.table-wrap{overflow-x:auto;margin:.9rem 0;border-radius:10px;border:1px solid var(--border);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);text-align:left;padding:9px 13px;border-bottom:1px solid var(--border);background:var(--bg2)}
+td{padding:9px 13px;border-bottom:1px solid var(--border2);color:var(--ink2);vertical-align:top;line-height:1.55}
+
+/* ─── BADGES ─── */
+.badge{display:inline-block;font-family:var(--mono);font-size:9.5px;padding:2px 7px;border-radius:4px;vertical-align:middle;margin-left:4px}
+.badge-new{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,.2)}
+.badge-warn{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(180,83,9,.2)}
+.badge-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(185,28,28,.2)}
+.badge-essential{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(13,148,136,.2)}
+
+/* ─── FLOW STEPS ─── */
+.flow{margin:1.1rem 0;display:flex;flex-direction:column;gap:.35rem}
+.flow-step{display:flex;gap:.85rem;align-items:flex-start;padding:.7rem .95rem;background:#fff;border-radius:9px;border:1px solid var(--border2)}
+.flow-step-num{font-family:var(--mono);font-size:.63rem;font-weight:500;width:22px;height:22px;border-radius:50%;background:var(--dark);color:var(--dark-fg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.flow-step-content h4{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.3}
+.flow-step-content p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin:0}
+
+/* ─── KV ROWS ─── */
+.kv{background:#fff;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:.8rem 0}
+.kv-row{display:grid;grid-template-columns:165px 1fr;border-bottom:1px solid var(--border2)}
+.kv-row:last-child{border-bottom:none}
+.kv-key{padding:.5rem .85rem;font-family:var(--mono);font-size:.63rem;color:var(--ink4);background:var(--bg2);border-right:1px solid var(--border2)}
+.kv-val{padding:.5rem .85rem;font-size:.78rem;color:var(--ink2);line-height:1.5}
+
+/* ─── COMPARE GRID ─── */
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1.1rem 0}
+.compare-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.compare-card-header{padding:.75rem .95rem;border-bottom:1px solid var(--border)}
+.compare-card-header h4{font-size:.88rem;font-weight:500;color:var(--ink)}
+.compare-price{font-family:var(--mono);font-size:1.05rem;font-weight:500;color:var(--ink);margin:.2rem 0 .55rem}
+.compare-price small{font-size:.62rem;color:var(--ink4);font-weight:300}
+.compare-card-body{padding:.85rem .95rem}
+.compare-item{display:flex;align-items:flex-start;gap:.45rem;margin-bottom:.35rem;font-size:.77rem;color:var(--ink2);line-height:1.45}
+.compare-item::before{content:'✓';color:var(--teal);font-weight:600;flex-shrink:0}
+.compare-item.neg::before{content:'✗';color:var(--red)}
+
+/* ─── SOURCE INDEX ─── */
+.source-index{display:grid;gap:.35rem;margin:.9rem 0}
+.source-row{display:grid;grid-template-columns:26px 1fr auto;gap:.6rem;align-items:start;padding:.5rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border2)}
+.source-num{font-family:var(--mono);font-size:.58rem;color:var(--ink4)}
+.source-title{font-size:.78rem;color:var(--ink2);line-height:1.45}
+.source-link{font-family:var(--mono);font-size:.58rem;color:var(--blue);white-space:nowrap}
+
+/* ─── DIAGRAM WRAPPER ─── */
+.diagram-wrap{
+  margin:1.4rem 0;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:#fff;
+}
+.diagram-label{
+  font-family:var(--mono);
+  font-size:9.5px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--ink4);
+  padding:.6rem 1rem;
+  border-bottom:1px solid var(--border2);
+  background:var(--bg2);
+}
+.diagram-body{padding:1.2rem}
+
+/* ─── TIMELINE / DEBT ─── */
+.debt-timeline{margin:1.2rem 0;display:flex;flex-direction:column;gap:0}
+.debt-year{display:flex;gap:1.2rem;align-items:flex-start;padding:.7rem 0}
+.debt-year:not(:last-child){border-bottom:1px solid var(--border2)}
+.debt-year-label{font-family:var(--mono);font-size:10px;color:var(--ink4);width:40px;flex-shrink:0;padding-top:2px}
+.debt-year-content h4{font-size:.84rem;font-weight:500;color:var(--ink)}
+.debt-year-content p{font-size:.77rem;color:var(--ink3);line-height:1.5;margin:0}
+
+/* ─── FOOTER ─── */
+.page-footer{
+  margin-left:var(--sidebar);
+  padding:1.6rem 3rem;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:11px;color:var(--ink4);
+}
+.page-footer a{color:var(--accent)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  :root{--sidebar:0px}
+  .sidebar{display:none}
+  .main{margin-left:0;padding:2rem 1.5rem 5rem}
+  .page-footer{margin-left:0;padding:1.5rem}
+  #progress-bar{left:0}
+}
+@media(max-width:640px){
+  .feature-grid{grid-template-columns:1fr}
+  .showcase-stats{grid-template-columns:1fr 1fr}
+  .compare-grid{grid-template-columns:1fr}
+  .kv-row{grid-template-columns:1fr}
+  .kv-key{border-right:none;border-bottom:1px solid var(--border2)}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div class="mode-banner">
+  <div class="mode-banner-left"><div class="mode-dot"></div><span>Grimoire 005 · Zapier 101 · Free · No Gate · 2026 Edition</span></div>
+  <span style="font-size:10px;color:var(--dark-dim)">Narrative + Technical · 7 Parts · 25 Modules</span>
+</div>
+
+<header class="site-header">
+  <div class="header-left"><a href="../projects/" class="header-back">← Projects</a><div class="header-divider"></div><span class="header-title">Zapier 101 — Building Automations That Survive Production</span></div>
+  <span class="header-badge">Grimoire 005 · 2026 Edition</span>
+</header>
+
+<nav class="sidebar">
+  <div class="nav-group"><span class="nav-group-label">Overview</span><a href="#why" class="nav-link"><span class="nav-num">—</span>Why Zapier</a><a href="#cost" class="nav-link warn"><span class="nav-num">!</span>The $800 Wake‑up</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part I — Understanding</span><a href="#m1" class="nav-link"><span class="nav-num">M1</span>Sarah is the Integration</a><a href="#m2" class="nav-link"><span class="nav-num">M2</span>Mental Model</a><a href="#m3" class="nav-link"><span class="nav-num">M3</span>Where Excel/Struggle</a><a href="#m35" class="nav-link"><span class="nav-num">M3.5</span>Why Companies Stay</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part II — Architecture</span><a href="#m4" class="nav-link"><span class="nav-num">M4</span>Design First</a><a href="#m5" class="nav-link"><span class="nav-num">M5</span>Automation Pipeline</a><a href="#m6" class="nav-link"><span class="nav-num">M6</span>Single Source of Truth</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part III — Zap Design</span><a href="#m7" class="nav-link"><span class="nav-num">M7</span>The Zap Called "Final V3"</a><a href="#m8" class="nav-link"><span class="nav-num">M8</span>The Day Sarah Quit</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part IV — Data Hygiene</span><a href="#m9" class="nav-link"><span class="nav-num">M9</span>GIGO</a><a href="#m10" class="nav-link"><span class="nav-num">M10</span>Standardize</a><a href="#m11" class="nav-link"><span class="nav-num">M11</span>Validate Before Act</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part V — Advanced Best</span><a href="#m12" class="nav-link"><span class="nav-num">M12</span>Filters Save $</a><a href="#m13" class="nav-link"><span class="nav-num">M13</span>Paths & Delays</a><a href="#m14" class="nav-link"><span class="nav-num">M14</span>Lookup Tables</a><a href="#m15" class="nav-link"><span class="nav-num">M15</span>Build for Failure</a><a href="#m16" class="nav-link"><span class="nav-num">M16</span>Error Handling</a><a href="#m17" class="nav-link"><span class="nav-num">M17</span>Idempotency</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part VI — Scaling</span><a href="#m18" class="nav-link"><span class="nav-num">M18</span>Task Economy</a><a href="#m185" class="nav-link"><span class="nav-num">M18.5</span>The Cost Argument</a><a href="#m19" class="nav-link"><span class="nav-num">M19</span>Multi‑Zap Arch</a><a href="#m20" class="nav-link"><span class="nav-num">M20</span>Audit & Debt</a><a href="#m21" class="nav-link"><span class="nav-num">M21</span>Security</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part VII — Mistakes</span><a href="#m22" class="nav-link"><span class="nav-num">M22</span>7 Common Errors</a><a href="#m23" class="nav-link"><span class="nav-num">M23</span>Final Thoughts</a></div>
+  <div class="nav-group"><span class="nav-group-label">Reference</span><a href="#m24" class="nav-link"><span class="nav-num">M24</span>Zapier vs n8n/Make</a><a href="#m25" class="nav-link"><span class="nav-num">M25</span>Expression Ref</a><a href="#sources" class="nav-link"><span class="nav-num">—</span>Sources</a></div>
+</nav>
+
+<main class="main">
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero" id="why">
+  <div class="hero-eyebrow">Grimoire 005 · Production Automation · May 2026</div>
+  <h1>Zapier 101: <em>Automations That Survive</em></h1>
+  <p class="hero-sub">This is not a list of triggers and actions. It's the scar tissue from eight years of automating real businesses — the duplicate contacts, the silent failures, the $847 bills, and the 47-step Zap nobody would touch. 25 modules. Narrative first. Built around one truth that most people learn too late:</p>
+  <div class="pull-quote" style="margin:1.2rem 0 1.6rem;font-size:1rem">The automation wasn't broken. The architecture was.</div>
+  <div class="stat-row">
+    <div class="stat-pill"><strong>7</strong> Parts</div>
+    <div class="stat-pill"><strong>25</strong> Modules</div>
+    <div class="stat-pill"><strong>6,000+</strong> apps supported</div>
+    <div class="stat-pill"><strong>80%</strong> of disasters preventable</div>
+    <div class="stat-pill"><strong>$847</strong> the real cost of bad architecture</div>
+  </div>
+  <div class="hero-actions"><a href="https://zapier.com" target="_blank" class="btn blue">Zapier ↗</a><a href="#m1" class="btn ghost">Start Module 1 →</a></div>
+</section>
+
+<!-- ═══════════ WHY / COST ═══════════ -->
+<section class="module-section" id="cost">
+  <div class="module-header">
+    <span class="module-num">WHY</span>
+    <div>
+      <div class="module-title">The $847 education</div>
+      <div class="module-sub">What nobody tells you when you first open Zapier</div>
+    </div>
+  </div>
+
+  <p>There's a version of this story that belongs to almost everyone who has used Zapier for more than a year.</p>
+
+  <p>A client's lead form ran a promotion. Traffic spiked. The Zap that handled incoming leads — the one that had worked quietly for months — woke up and started processing. It processed every lead. It processed the same lead twice when webhooks retried. It processed spam. It processed the test submissions from the marketing team. It processed the form preview clicks from people who never actually submitted anything.</p>
+
+  <p>Three days later, the monthly invoice arrived. $847.</p>
+
+  <div class="story-card">
+    <div class="story-label">The receipt</div>
+    <div class="story-text">45,000 tasks in 72 hours. Each one consuming Zapier's per-task quota. The automation didn't break — it worked exactly as designed. The design was the problem. No filter to catch spam. No idempotency to prevent duplicate processing. No usage alert to flag when the bill crossed a threshold. Just a machine running perfectly at enormous cost, creating chaos in the CRM every time a webhook retried.</div>
+  </div>
+
+  <p>But here's the part that stung more than the invoice: because there was no idempotency check, every lead that triggered a retry got created twice in the CRM. Two contacts. Two deals. Two task assignments. The sales rep called the same lead twice in one hour. The lead, understandably, never converted.</p>
+
+  <p>We paid $847 to confuse a potential customer and annoy a sales rep.</p>
+
+  <p>That's what this grimoire is about. Not Zapier's features — those you can read in their documentation in an afternoon. This is about the architecture decisions that separate automations that work from automations that work <em>reliably</em>, cost-predictably, and without destroying data when something unexpected happens.</p>
+
+  <p>Because something unexpected always happens. And when it does, the automation is almost never the problem.</p>
+
+  <p>The architecture is.</p>
+
+  <div class="showcase">
+    <div class="showcase-label">What amateur Zapier architecture actually costs</div>
+    <div class="showcase-stats">
+      <div class="showcase-stat"><div class="ss-val b">$847</div><div class="ss-label">Unplanned bill from a single traffic spike</div></div>
+      <div class="showcase-stat"><div class="ss-val g">47%</div><div class="ss-label">Duplicate record rate after 3 months without idempotency</div></div>
+      <div class="showcase-stat"><div class="ss-val a">0</div><div class="ss-label">Owners assigned to a typical inherited Zap</div></div>
+    </div>
+  </div>
+</section>
+<!-- ═══════════ PART I ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Part I</div>
+    <div class="part-title">Understanding Zapier</div>
+    <div class="part-sub">What it is, how it thinks, where it belongs</div>
+  </div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M1 — M3</div>
+</div>
+
+<!-- M1 -->
+<section class="module-section" id="m1">
+  <div class="module-header">
+    <span class="module-num">M1</span>
+    <div>
+      <div class="module-title">Sarah is the integration</div>
+      <div class="module-sub">The invisible cost hiding inside every growing business</div>
+    </div>
+  </div>
+
+  <p>Sarah receives a lead.</p>
+
+  <p>She copies the name, email, and phone number from the notification email. She opens the CRM in another tab. She creates a contact. She assigns it to a sales rep. She pastes the details into a Slack message. She updates the spreadsheet the ops team uses to track pipeline. She adds the email to Mailchimp so the nurture sequence fires.</p>
+
+  <p>Twenty minutes later, another lead arrives.</p>
+
+  <p>She does it again.</p>
+
+  <p>One hundred times a week. Every week. Sarah — who was hired to do marketing — now spends a quarter of her time being a human copy-paste machine between applications that don't talk to each other.</p>
+
+  <div class="pull-quote" style="margin:1.4rem 0">Sarah is the integration.</div>
+
+  <p>This is the real integration problem. Not a technical problem. A business problem. Every growing company hits it. The software stack works fine in isolation — forms, CRM, email platform, billing, Slack, project management. But the data those apps produce is useful to all the other apps, and without something connecting them, a human fills the gap.</p>
+
+  <p>Most businesses don't need more software. They need their existing software to stop ignoring each other.</p>
+
+  <p>Zapier solves this with event-driven connections. When something happens in app A, do something in app B. No code, no engineering, no sprint planning. Which is the source of both its enormous adoption and many of its production problems — because the barrier to entry is so low that bad architecture gets deployed just as easily as good architecture.</p>
+
+  <p>The platform has no opinion about which one you built.</p>
+
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Core value</div><div class="kv-val">Move data between apps without code, triggered by real events rather than scheduled batch jobs.</div></div>
+    <div class="kv-row"><div class="kv-key">The real ROI</div><div class="kv-val">People complain Zapier is expensive. Those same people happily pay a salary for someone whose entire job is copying information between tabs. The math usually resolves itself in the first week.</div></div>
+    <div class="kv-row"><div class="kv-key">The hidden risk</div><div class="kv-val">Low barrier to entry means bad architecture gets deployed as easily as good architecture. The platform doesn't distinguish between them. This grimoire does.</div></div>
+  </div>
+</section>
+
+<!-- M2 -->
+<section class="module-section" id="m2">
+  <div class="module-header">
+    <span class="module-num">M2</span>
+    <div>
+      <div class="module-title">How Zapier thinks — the mental model that changes everything</div>
+      <div class="module-sub">State changes, not batch jobs. Events, not schedules.</div>
+    </div>
+  </div>
+
+  <p>Most people who struggle with Zapier are thinking about it the wrong way. They're thinking in batch jobs — "process all the leads from today at midnight." Zapier thinks in state changes — "when this specific thing just happened, do this."</p>
+
+  <p>This distinction matters because it changes how you architect everything. A batch mindset leads you to build Zaps that try to do too much. An event mindset leads you to build Zaps that respond to a single, specific moment. The latter is easier to test, easier to debug, and far less likely to produce side effects you didn't anticipate.</p>
+
+  <p>The anatomy of every Zap is the same: a trigger, optional routing logic, and actions. The trigger fires when a state change occurs in the source app. The routing decides what happens based on properties of that event. The actions update other systems to reflect the new state.</p>
+
+  <div class="narrative">
+    <p>Think of it like a relay system. Something changes in the world — a form gets submitted, a payment gets processed, a calendar event gets created, a status gets updated. That change is the signal. Zapier receives the signal and routes it to wherever it needs to go.</p>
+    <p>The relay doesn't care what happened before. It doesn't care what will happen next. It only knows: this specific event just occurred, and here's what to do about it.</p>
+  </div>
+
+  <p>When you internalize this model, certain common mistakes become obvious. Trying to use Zapier to query historical data — "find all contacts created this week" — fights the event model. Trying to build complex multi-step decision trees in a single Zap fights the relay model. The platform works with you when you think in discrete events; it works against you when you try to make it behave like a database or an ETL pipeline.</p>
+</section>
+
+<!-- M3 -->
+<section class="module-section" id="m3">
+  <div class="module-header">
+    <span class="module-num">M3</span>
+    <div>
+      <div class="module-title">Where Zapier genuinely excels — and where it quietly struggles</div>
+      <div class="module-sub">Knowing the edges of a tool is knowing when not to use it</div>
+    </div>
+  </div>
+
+  <p>Zapier is exceptional at one specific thing: connecting two apps around a simple business event with minimal setup. Lead intake. CRM updates. Internal notifications. Automated follow-up sequences. Calendar-to-task creation. Payment-to-invoice syncing. These are the workflows it was built for, and it handles them with a reliability and speed you'd spend weeks replicating in code.</p>
+
+  <p>It starts struggling when you ask it to do things that require complex logic, heavy data transformation, or volume at scale.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-card-label">Where Zapier excels</div>
+      <h4>Event-driven business workflows</h4>
+      <p>Lead intake, CRM syncing, internal alerts, onboarding sequences, payment notifications, appointment reminders. Anything with a clear trigger and a small number of downstream actions.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-label">Where Zapier struggles</div>
+      <h4>Heavy transformation, high volume, complex branching</h4>
+      <p>200+ step logic chains, 10,000+ daily tasks, real-time data pipelines, ETL operations, anything requiring iteration over arrays. These cases belong in n8n, Make, or custom code.</p>
+    </div>
+  </div>
+
+  <p>The most expensive Zapier mistake isn't building the wrong Zap — it's using Zapier for the wrong category of problem entirely. If your automation requires loops, large dataset queries, or complex programmatic logic, look at n8n before you start. See Module 24 for a full comparison.</p>
+</section>
+
+<!-- M3.5 -->
+<section class="module-section" id="m35">
+  <div class="module-header">
+    <span class="module-num">M3.5</span>
+    <div>
+      <div class="module-title">Why companies stay on Zapier despite the price</div>
+      <div class="module-sub">Reliability is not a feature. It's what every other feature depends on.</div>
+    </div>
+  </div>
+
+  <p>Every few months someone posts a thread about migrating off Zapier. The pricing. The per-task model. The fact that n8n is free to self-host. The replies fill up with people who agree. Some of them follow through.</p>
+
+  <p>Most of them come back.</p>
+
+  <p>Here's the thing nobody says plainly: nobody gets promoted because they saved $30 a month on their automation tool. People get fired because leads stopped flowing. Because invoices didn't send. Because the sales team went two days without CRM notifications and assumed the pipeline was dead.</p>
+
+  <p>Zapier's value proposition is not features. It's the absence of a conversation you don't want to have.</p>
+
+  <div class="narrative">
+    <p>The conversation goes: "The automation tool went down last night. We lost twelve hours of lead data. I know, I know — I'll migrate it. It won't happen again." That conversation doesn't happen with Zapier very often. With self-hosted alternatives, it's a real possibility, especially when the person who set up the server is no longer on the team.</p>
+  </div>
+
+  <p>Zapier is expensive in the same way that a reliable car is expensive. You could get a cheaper one. The cheaper one might work perfectly. It might also leave you on the side of a road at the worst possible time. The decision isn't about features. It's about how much risk you're willing to carry in your operations stack.</p>
+
+  <p>For businesses where lead flow is revenue-critical, where automation downtime has a direct dollar cost, Zapier's reliability premium is usually worth it. The calculus changes at high volume — 50,000+ tasks a month is where the migration math starts to favor n8n seriously. Below that, the total cost of ownership including maintenance time usually keeps Zapier ahead.</p>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">📊</div>
+    <div class="callout-body"><strong>The honest migration calculator:</strong> Before switching, price in the full cost — server setup, monitoring, maintenance hours per month, the emergency hour at 2am when it goes down. Zapier's subscription price is often cheaper than the actual cost of the alternative. Not always. But more often than the comparison tables suggest.</div>
+  </div>
+</section>
+
+<!-- ═══════════ PART II ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Part II</div>
+    <div class="part-title">Automation Architecture</div>
+    <div class="part-sub">Design before you open Zapier</div>
+  </div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M4 — M6</div>
+</div>
+
+<!-- M4 -->
+<section class="module-section" id="m4">
+  <div class="module-header">
+    <span class="module-num">M4</span>
+    <div>
+      <div class="module-title">Design before you build</div>
+      <div class="module-sub">The whiteboard conversation that prevents three months of problems</div>
+    </div>
+  </div>
+
+  <p>Every automation disaster I've inherited started the same way. Someone opened Zapier, saw a trigger that looked right, connected it to an action that looked right, tested it once, turned it on, and forgot about it.</p>
+
+  <p>Three months later, the CRM has phantom contacts. Or a customer is getting four confirmation emails instead of one. Or a critical workflow has been silently failing since the app it depended on changed its API format.</p>
+
+  <div class="narrative">
+    <p>None of these problems are Zapier's fault. They're design failures. The Zap did exactly what it was told. The person who built it just hadn't thought through what "exactly what it was told" would mean at 3,000 leads a month, or when a webhook retries, or when a team member tests the form from a @company.com address.</p>
+  </div>
+
+  <p>Before you open Zapier, answer these questions on paper or a whiteboard:</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-num">1</div>
+      <div class="flow-step-content">
+        <h4>What exactly triggers this?</h4>
+        <p>Not "a form submission" — which form, which fields, what happens if required fields are empty?</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">2</div>
+      <div class="flow-step-content">
+        <h4>What does it do, in sequence?</h4>
+        <p>Every step, including the ones that check for existing records before creating new ones.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">3</div>
+      <div class="flow-step-content">
+        <h4>What breaks if step N fails?</h4>
+        <p>If the CRM is down, does the lead vanish? If the email platform rejects the address, does the contact still get created?</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">4</div>
+      <div class="flow-step-content">
+        <h4>Who owns this when something goes wrong?</h4>
+        <p>A Zap without an owner is an automation that will fail silently until it causes a customer complaint.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">5</div>
+      <div class="flow-step-content">
+        <h4>What does success actually look like?</h4>
+        <p>Define the expected outcome precisely enough that you could verify it in three months without remembering anything about the build.</p>
+      </div>
+    </div>
+  </div>
+
+  <p>If you can't answer all five questions before you open Zapier, you're not ready to build yet.</p>
+</section>
+
+<!-- M5 -->
+<section class="module-section" id="m5">
+  <div class="module-header">
+    <span class="module-num">M5</span>
+    <div>
+      <div class="module-title">The automation pipeline</div>
+      <div class="module-sub">Source → Processing → Destination. Every Zap, everywhere.</div>
+    </div>
+  </div>
+
+  <p>Once you've answered the design questions, you can map the automation as a pipeline. Every Zap — regardless of complexity — follows the same three-stage structure. Understanding it prevents the most common architectural error: trying to do too much in a single stage.</p>
+
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Source</div><div class="kv-val">Where the event originates. Forms, CRM events, calendar entries, payment receipts, webhook pushes. The source determines the trigger and the shape of the data you're working with.</div></div>
+    <div class="kv-row"><div class="kv-key">Processing</div><div class="kv-val">Everything between trigger and action. Formatter steps, filters, path routing, lookup tables, validation checks. This is where most architectural decisions live.</div></div>
+    <div class="kv-row"><div class="kv-key">Destination</div><div class="kv-val">Where the processed data lands. CRM, email platform, Slack, database, task manager. The destination defines what "done" looks like for this event.</div></div>
+  </div>
+
+  <p>The error most beginners make is collapsing the processing stage. They go straight from source to destination without validating data, standardizing formats, or checking for existing records. The result is a Zap that works perfectly in testing — where the data is clean and curated — and behaves unpredictably in production, where it isn't.</p>
+</section>
+
+<!-- M6 -->
+<section class="module-section" id="m6">
+  <div class="module-header">
+    <span class="module-num">⭐ M6</span>
+    <div>
+      <div class="module-title">Single source of truth — or: the CRM civil war <span class="badge badge-essential">essential</span></div>
+      <div class="module-sub">One system owns the customer. Everything else is a consumer.</div>
+    </div>
+  </div>
+
+  <p>Here's a scenario I've seen at three different companies. Tell me if it sounds familiar.</p>
+
+  <p>Marketing keeps its contacts in Mailchimp. Sales keeps theirs in the CRM. Support has a different view in the helpdesk platform. Operations maintains a master spreadsheet because "the CRM is always out of date." Someone on the marketing team updates a customer's email address in Mailchimp. The CRM still has the old one. The helpdesk platform has a third version from a typo two years ago.</p>
+
+  <p>Now a Zap runs that's supposed to pull the customer's email from "the system." Which system? All three are equally authoritative. All three are wrong in different ways.</p>
+
+  <div class="narrative">
+    <p>This is what happens when multiple systems all believe they own the customer record. It's not a technology problem — it's a governance problem that automation makes invisible until it explodes. Every update from every system propagates everywhere else, reinforcing its own version of the truth. The conflict doesn't surface until a customer complains about receiving two contradictory emails on the same day, or until a sales rep closes a deal on an account that the CRM listed as churned.</p>
+  </div>
+
+  <p>The fix is architectural, not technical. Choose one system as the master for each data entity. One system owns contacts. One system owns invoices. One system owns project status. Every other system reads from the master; none of them write to the master directly except the designated source.</p>
+
+  <div class="callout callout-warn">
+    <div class="callout-icon">🚨</div>
+    <div class="callout-body"><strong>The rule:</strong> One system creates. All others consume. If your CRM is the master for contacts, then every Zap that touches contact data should either read from the CRM or write to the CRM. No other system should independently create or modify contact records. The moment two systems claim ownership over the same record, you have a civil war that no automation can resolve.</div>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Single source of truth — contact pattern</div>
+    <pre><span class="c">// ✓ Correct: CRM is master, others are consumers</span>
+Form Submission → <span class="w">Search CRM by email</span>
+  → <span class="v">Found</span>:    Update existing contact (preserve CRM as source)
+  → <span class="o">Not found</span>: Create new contact in CRM
+                → Sync to email platform (read-only replica)
+                → Notify sales in Slack
+
+<span class="c">// ✗ Wrong: every system independently creates records</span>
+Form Submission → Create in CRM
+Form Submission → Create in Mailchimp (separate Zap, no coordination)
+Form Submission → Create in HubSpot  (another Zap, no awareness of the others)
+<span class="c">// Result: three separate records that diverge immediately</span></pre>
+  </div>
+
+  <p>This sounds obvious. It isn't, in practice. The civil war usually starts innocently: one team builds their own integration because "the CRM isn't set up yet." Another team adds a separate Zap because "we need this field that the first Zap doesn't capture." Six months later, there are seven Zaps all touching the same customer record from different angles, none of them aware of each other.</p>
+
+  <p>Define your sources of truth before you build the first Zap. Write them down. Put them in the shared wiki. Then enforce them.</p>
+</section>
+<!-- ═══════════ PART III ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Part III</div>
+    <div class="part-title">Professional Zap Design</div>
+    <div class="part-sub">Naming, folders, documentation — the unsexy work that saves you at 3am</div>
+  </div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M7 — M8</div>
+</div>
+
+<!-- M7 -->
+<section class="module-section" id="m7">
+  <div class="module-header">
+    <span class="module-num">M7</span>
+    <div>
+      <div class="module-title">The Zap called "Final Final V3"</div>
+      <div class="module-sub">You will inherit a Zapier account one day. This is what you'll find.</div>
+    </div>
+  </div>
+
+  <p>Somewhere in a Zapier account right now, there is a Zap called "Final Final V3." It's in production. It's been running for fourteen months. Nobody remembers why it was called that. The person who built it left the company. The person who inherited it doesn't want to touch it. The person who's supposed to own it has never opened the Zap editor.</p>
+
+  <p>Next to it: "New Zap." "Copy of New Zap." "IMPORTANT — DO NOT DELETE." "Mike's automation (ask him)." "Test 3 — actually works." All of them live. All of them unnamed in any meaningful way.</p>
+
+  <p>When something breaks at 11pm — and something will break at 11pm — you are not going to scroll through eighty ambiguously named Zaps trying to figure out which one is responsible for the customer complaint that just landed in your inbox. You will spend forty minutes on archaeology before you even start debugging.</p>
+
+  <p>Naming is not housekeeping. It's infrastructure for future-you under pressure.</p>
+
+  <p>The pattern that works: <code>[Source app] → [Destination app] — [what it actually does]</code></p>
+
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Sales</div><div class="kv-val">Form → CRM — New lead intake &nbsp;·&nbsp; CRM → Slack — New deal alert &nbsp;·&nbsp; CRM → Email — Lead nurture trigger</div></div>
+    <div class="kv-row"><div class="kv-key">Ops</div><div class="kv-val">Calendar → Notion — Meeting notes scaffold &nbsp;·&nbsp; Stripe → Xero — Payment sync &nbsp;·&nbsp; GHL → Sheets — Pipeline dashboard</div></div>
+    <div class="kv-row"><div class="kv-key">Internal</div><div class="kv-val">Slack → Notion — Decision log &nbsp;·&nbsp; Email → Slack — Priority flag alert</div></div>
+    <div class="kv-row"><div class="kv-key">Never</div><div class="kv-val">"Test," "New Zap," "Copy of...," anything with no verb, anything named after a person who might leave, anything with a version number</div></div>
+  </div>
+
+  <p>Folders follow the same logic: Sales, Marketing, Operations, Finance, Internal, Archive. The Archive folder matters more than most people realize — it's where Zaps go when they're no longer active but you're not ready to delete them. A Zap in Archive is not running and not confusing anyone. A Zap in the main list that's turned off is a landmine waiting for someone to turn it back on to see what it does.</p>
+</section>
+
+<!-- M8 -->
+<section class="module-section" id="m8">
+  <div class="module-header">
+    <span class="module-num">M8</span>
+    <div>
+      <div class="module-title">The day Sarah quit</div>
+      <div class="module-sub">Why the documentation you skip today is the investigation you run in three months</div>
+    </div>
+  </div>
+
+  <p>Sarah left on a Friday.</p>
+
+  <p>She'd built most of the automations over the past year — the lead intake, the CRM syncs, the client onboarding sequences. She was good at it. She built things that worked. What she didn't build was any record of how they worked, why they were built the way they were, or what would happen if any of them stopped.</p>
+
+  <p>By Tuesday, three Zaps had failed silently. By Thursday, the team wasn't sure which of the remaining automations were load-bearing and which were vestigial. By the following week, the ops manager had spent thirty hours reverse-engineering workflows Sarah had built in an afternoon, and still wasn't confident she'd understood all of them correctly.</p>
+
+  <div class="narrative">
+    <p>The automations were fine. The knowledge was gone. And it turned out the knowledge was worth more than the automations.</p>
+  </div>
+
+  <p>Documentation isn't about being organized. It's about making your work legible to whoever comes next — which might be a new hire, a client, or you at 8am after a red-eye flight trying to debug something you built six months ago.</p>
+
+  <p>Four questions every production Zap must answer, written down somewhere the next person can find:</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-num">1</div>
+      <div class="flow-step-content"><h4>What starts it?</h4><p>The exact trigger condition, not just the app name. "Typeform submission" is not enough — which form, which workspace, does it fire on partial submissions or only complete ones?</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">2</div>
+      <div class="flow-step-content"><h4>What does it do?</h4><p>The intended outcome in one sentence. What's different about the world after this Zap fires successfully?</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">3</div>
+      <div class="flow-step-content"><h4>Who owns it?</h4><p>A named person, not a team. If that person leaves, the first offboarding step is updating this field. Not after. Before they hand back their laptop.</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">4</div>
+      <div class="flow-step-content"><h4>What breaks if it stops working?</h4><p>The blast radius. Does this affect every new lead? Does it affect billing? Customer communication? The bigger the blast radius, the more important the alert system becomes.</p></div>
+    </div>
+  </div>
+
+  <p>A Notion page per Zap is overkill. A shared Google Sheet with one row per Zap is enough. The format doesn't matter. The information does.</p>
+</section>
+
+<!-- ═══════════ PART IV ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Part IV</div>
+    <div class="part-title">Data Hygiene</div>
+    <div class="part-sub">Garbage in, garbage out — automated at scale</div>
+  </div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M9 — M11</div>
+</div>
+
+<!-- M9 -->
+<section class="module-section" id="m9">
+  <div class="module-header">
+    <span class="module-num">M9</span>
+    <div>
+      <div class="module-title">GIGO — automation doesn't fix bad data, it promotes it</div>
+      <div class="module-sub">The typo that lived in three systems for two years</div>
+    </div>
+  </div>
+
+  <p>The most underappreciated property of automation: it is perfectly neutral about data quality. It will move clean data quickly. It will move corrupt data just as quickly, to every system you've connected, with the same efficiency and the same reliability.</p>
+
+  <div class="story-card">
+    <div class="story-label">The country that wasn't a country</div>
+    <div class="story-text">A user filled out a lead form and typed "P.I." in the country field instead of "Philippines." The Zap copied it to the CRM. The CRM synced it to the email platform. The email platform fed it to the analytics dashboard. Two weeks later, a monthly report landed in the founder's inbox showing "Philippines" as the third-largest market and "P.I." as the eighteenth-largest. Four meeting hours were spent debating the "P.I. market opportunity" before someone checked the source data.</div>
+  </div>
+
+  <p>The lesson isn't that users make mistakes — of course they do. The lesson is that automation compounds the cost of those mistakes by distributing them everywhere, instantly, with no friction. A typo that a human would have caught while manually entering data becomes a permanent fixture of every connected system before anyone notices it exists.</p>
+
+  <p>Data hygiene is not optional when you're automating. It's a first-class design concern that gets addressed in the processing stage, before anything reaches a destination system.</p>
+</section>
+
+<!-- M10 -->
+<section class="module-section" id="m10">
+  <div class="module-header">
+    <span class="module-num">M10</span>
+    <div>
+      <div class="module-title">Standardize with Formatter before you write to anything</div>
+      <div class="module-sub">Dates, phone numbers, currency, casing — resolve them in transit</div>
+    </div>
+  </div>
+
+  <p>Zapier's Formatter step is one of the most underused features in the platform. Most people think of it as optional polish. It isn't — it's the layer between raw user input and your clean, queryable CRM data.</p>
+
+  <p>Common standardization patterns that prevent weeks of downstream pain:</p>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Formatter patterns</div>
+    <pre><span class="c">// Phone numbers: users submit in 20+ formats</span>
++63 912 345 6789  →  +639123456789
+0912-345-6789     →  +639123456789
+912.345.6789      →  +639123456789
+<span class="tl">Formatter: Text → Phone → International format</span>
+
+<span class="c">// Date formats: every form produces a different shape</span>
+05/14/2026     →  2026-05-14 (ISO 8601 for database storage)
+May 14, 2026   →  2026-05-14
+14-May-26      →  2026-05-14
+<span class="tl">Formatter: Date/Time → Format → YYYY-MM-DD</span>
+
+<span class="c">// Country fields: use a lookup table</span>
+PH / Philippines / P.I. / Republic of Philippines  →  Philippines
+UK / United Kingdom / England / Britain            →  United Kingdom
+US / USA / United States / America                 →  United States
+
+<span class="c">// Name casing: prevent "john DOE" from entering your CRM</span>
+john doe    →  John Doe
+SARAH SMITH →  Sarah Smith
+<span class="tl">Formatter: Text → Capitalize</span></pre>
+  </div>
+
+  <p>The rule: any data field where humans have creative freedom — any freetext field — needs to pass through a Formatter step before it reaches a destination system. Don't assume the user will give you clean data. Assume they won't, and build accordingly.</p>
+</section>
+
+<!-- M11 -->
+<section class="module-section" id="m11">
+  <div class="module-header">
+    <span class="module-num">M11</span>
+    <div>
+      <div class="module-title">Validate before you act</div>
+      <div class="module-sub">The filter that catches incomplete records before they corrupt your CRM</div>
+    </div>
+  </div>
+
+  <p>Validation is the gate between the outside world and your clean internal data. It asks: is this record worth processing at all?</p>
+
+  <p>Without it, your CRM will accumulate contacts with no email address, no name, no phone number — records that exist because someone hit Submit on an empty form, or because a webhook fired with missing fields, or because a test produced null values that looked valid to Zapier.</p>
+
+  <p>The pattern is straightforward: after the trigger and any Formatter steps, add a Filter step. Only continue if the required fields are present and non-empty. For lead intake, that usually means email, first name, and phone at minimum. For anything financial, you'd add amount and currency. Failed validation should go somewhere — a dead-letter Google Sheet that logs the incomplete record — not silently disappear.</p>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Validation filter pattern</div>
+    <pre><span class="c">// Filter step: Only continue if ALL of these are true</span>
+Email        is not empty
+Email        contains @ 
+First Name   is not empty
+Phone        matches number format
+Source       does not contain "internal_test"
+Source       does not contain "@yourcompany.com"
+
+<span class="c">// Failed records: don't discard them, log them</span>
+→ Add row to "Dead Letter — Invalid Leads" Google Sheet
+→ Include: timestamp, raw data, reason for failure
+→ Review weekly, fix form validation at source</pre>
+  </div>
+
+  <p>A dead-letter log is not a sign of failure. It's a diagnostic tool. If you're seeing 200 invalid records a week, something about your form needs attention. If you're seeing zero, your form validation is probably too strict and you're losing real leads. The log tells you which problem you have.</p>
+</section>
+<!-- ═══════════ PART V ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Part V</div>
+    <div class="part-title">Advanced Best Practices</div>
+    <div class="part-sub">Filters, paths, idempotency, failure handling — the gap between amateur and professional</div>
+  </div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M12 — M17</div>
+</div>
+
+<!-- M12 -->
+<section class="module-section" id="m12">
+  <div class="module-header">
+    <span class="module-num">⭐ M12</span>
+    <div>
+      <div class="module-title">The day Zapier charged us for spam <span class="badge badge-essential">cost control</span></div>
+      <div class="module-sub">Filters are not a convenience feature. They are a billing feature.</div>
+    </div>
+  </div>
+
+  <p>I once inherited a Zap that processed every lead that came through a contact form.</p>
+
+  <p>Qualified leads. Unqualified leads. Spam submissions from bots. Employees testing the form. Competitors filling it out to see the confirmation email. Agency partners submitting for a demo they'd never buy. People who typed the wrong website and accidentally filled out someone else's form.</p>
+
+  <p>Everything.</p>
+
+  <p>Nobody thought much about it because it worked. The sales rep got notified. The CRM got updated. The confirmation email went out. The fact that 70% of those notifications were for people who would never convert — that didn't show up anywhere except the monthly Zapier invoice.</p>
+
+  <div class="story-card">
+    <div class="story-label">The thing about per-task pricing</div>
+    <div class="story-text">Zapier charges per task executed, not per successful outcome. That means you pay the same whether the automation processed a lead who became a $50,000 client or a bot that submitted your form with "asdfjkl;" in every field. The machine has no opinion about value. It just runs, and charges you for running.</div>
+  </div>
+
+  <p>The fix seems obvious in retrospect: add a filter immediately after the trigger. Only process records that meet the criteria for a real lead. Everything else stops there. No further steps execute. No further tasks accumulate.</p>
+
+  <p>But here's the part that's genuinely counterintuitive: <strong>most beginners put filters late in the workflow.</strong> They filter at step 8, after the Formatter and the search and the lookup table. The filter catches the bad record, but Zapier has already consumed tasks for steps 1 through 7.</p>
+
+  <!-- FILTER MATH DIAGRAM -->
+  <div class="diagram-wrap">
+    <div class="diagram-label">The cost of filter placement</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 680 280" role="img">
+        <title>Filter placement and task cost comparison</title>
+        <desc>Two workflow diagrams showing how placing a filter early vs late dramatically reduces task consumption</desc>
+        <defs>
+          <marker id="arr-m12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- BAD: Late filter -->
+        <text x="40" y="28" font-family="'DM Mono', monospace" font-size="10" fill="#B91C1C" text-anchor="start" letter-spacing=".08em" text-transform="uppercase">✗ LATE FILTER — 8 tasks per lead (including spam)</text>
+
+        <!-- Steps row bad -->
+        <g>
+          <rect x="40" y="42" width="76" height="34" rx="6" fill="#DBEAFE" stroke="rgba(29,78,216,.3)" stroke-width="0.5"/>
+          <text x="78" y="63" font-family="'DM Sans', sans-serif" font-size="11" fill="#1D4ED8" text-anchor="middle">Trigger</text>
+        </g>
+        <line x1="116" y1="59" x2="134" y2="59" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="136" y="42" width="62" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="167" y="63" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Format</text>
+        </g>
+        <line x1="198" y1="59" x2="216" y2="59" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="218" y="42" width="62" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="249" y="63" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Search</text>
+        </g>
+        <line x1="280" y1="59" x2="298" y2="59" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="300" y="42" width="62" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="331" y="63" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Lookup</text>
+        </g>
+        <line x1="362" y1="59" x2="380" y2="59" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <!-- Filter late = bad -->
+        <g>
+          <rect x="382" y="42" width="70" height="34" rx="6" fill="#FEE2E2" stroke="rgba(185,28,28,.3)" stroke-width="0.5"/>
+          <text x="417" y="63" font-family="'DM Sans', sans-serif" font-size="11" fill="#B91C1C" text-anchor="middle">Filter ✗</text>
+        </g>
+        <line x1="452" y1="59" x2="470" y2="59" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="472" y="42" width="62" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="503" y="63" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Create</text>
+        </g>
+        <line x1="534" y1="59" x2="552" y2="59" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="554" y="42" width="70" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="589" y="63" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Notify</text>
+        </g>
+
+        <text x="40" y="105" font-family="'DM Mono', monospace" font-size="10" fill="#B91C1C">10,000 leads × 7 steps = 70,000 tasks</text>
+
+        <!-- Divider -->
+        <line x1="40" y1="122" x2="640" y2="122" stroke="rgba(28,25,23,.08)" stroke-width="0.5" stroke-dasharray="4 4"/>
+
+        <!-- GOOD: Early filter -->
+        <text x="40" y="148" font-family="'DM Mono', monospace" font-size="10" fill="#0D9488" text-anchor="start" letter-spacing=".08em">✓ EARLY FILTER — 1 task per non-qualifying lead</text>
+
+        <g>
+          <rect x="40" y="162" width="76" height="34" rx="6" fill="#DBEAFE" stroke="rgba(29,78,216,.3)" stroke-width="0.5"/>
+          <text x="78" y="183" font-family="'DM Sans', sans-serif" font-size="11" fill="#1D4ED8" text-anchor="middle">Trigger</text>
+        </g>
+        <line x1="116" y1="179" x2="134" y2="179" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <!-- Filter early = good -->
+        <g>
+          <rect x="136" y="162" width="70" height="34" rx="6" fill="#CCFBF1" stroke="rgba(13,148,136,.3)" stroke-width="0.5"/>
+          <text x="171" y="183" font-family="'DM Sans', sans-serif" font-size="11" fill="#0D9488" text-anchor="middle">Filter ✓</text>
+        </g>
+        <!-- Rejected path -->
+        <line x1="171" y1="196" x2="171" y2="220" stroke="#A8A29E" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr-m12)"/>
+        <text x="180" y="235" font-family="'DM Sans', sans-serif" font-size="10" fill="#A8A29E">Stopped. 1 task consumed.</text>
+
+        <!-- Passing path -->
+        <line x1="206" y1="179" x2="224" y2="179" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <text x="226" y="173" font-family="'DM Mono', monospace" font-size="9" fill="#0D9488">30% pass</text>
+        <g>
+          <rect x="226" y="162" width="62" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="257" y="183" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Format</text>
+        </g>
+        <line x1="288" y1="179" x2="306" y2="179" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="308" y="162" width="62" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="339" y="183" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Search</text>
+        </g>
+        <line x1="370" y1="179" x2="388" y2="179" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="390" y="162" width="62" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="421" y="183" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Create</text>
+        </g>
+        <line x1="452" y1="179" x2="470" y2="179" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-m12)"/>
+        <g>
+          <rect x="472" y="162" width="70" height="34" rx="6" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="507" y="183" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C" text-anchor="middle">Notify</text>
+        </g>
+
+        <text x="40" y="262" font-family="'DM Mono', monospace" font-size="10" fill="#0D9488">3,000 qualifying leads × 5 steps = 15,000 tasks</text>
+        <text x="40" y="276" font-family="'DM Mono', monospace" font-size="10" fill="#0D9488">7,000 spam leads × 1 step = 7,000 tasks</text>
+      </svg>
+    </div>
+  </div>
+
+  <p>The math is stark. With a late filter on 10,000 monthly triggers: 70,000 tasks. With an early filter that stops 70% of traffic: 15,000 tasks from qualifying leads, plus 7,000 for the single filter step on rejected records — 22,000 total. Same outcome. 69% lower cost.</p>
+
+  <div class="power-tip">
+    <div class="power-tip-label">⚡ The first step rule</div>
+    <p>After the trigger, the first step is always a filter. Not sometimes. Always. Even if you think every trigger will be a valid record. Test submissions, employee tests, API noise, and webhook retries all fire your trigger. The filter is your bouncer. Put it at the door.</p>
+  </div>
+
+  <p>Filters should check: budget or value threshold, required field presence, source exclusions (block your own domain), and anything else that disqualifies a record from requiring further processing. Every disqualification criterion you identify is money you're not paying Zapier to process junk.</p>
+</section>
+
+<!-- M13 -->
+<section class="module-section" id="m13">
+  <div class="module-header">
+    <span class="module-num">M13</span>
+    <div>
+      <div class="module-title">Paths and delay steps</div>
+      <div class="module-sub">Routing logic and time-based automation — the two most underused features</div>
+    </div>
+  </div>
+
+  <p><strong>Paths</strong> are Zapier's answer to if/else logic. Instead of building two separate Zaps for high-value and low-value leads, you build one Zap with a Paths step that routes each record down the appropriate branch. High-value leads go to the sales rep and get a personal email. Low-value leads go into a nurture sequence. The trigger, the filter, and the early processing steps are shared. Only the outcome differs.</p>
+
+  <p>The mistake is building separate Zaps for every branch, then maintaining six almost-identical automations indefinitely. Paths keep related logic together. When the trigger changes, you update one Zap.</p>
+
+  <p><strong>Delay steps</strong> are the feature people discover and immediately wish they'd known about earlier. Most people use them for follow-up timing — wait 24 hours, then send the follow-up email. But the more powerful pattern is conditional delay: wait 2 hours, check if the task is complete, then send a reminder only if it isn't. Or: wait 48 hours, check if the lead has been contacted, escalate to the manager if they haven't. The delay step is how you build persistence into a process that would otherwise fire once and forget.</p>
+
+  <div class="callout callout-tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Delay + check pattern:</strong> Delay → search for the record → check field status → if still pending, take escalation action. This is how you build SLA monitoring in Zapier without a dedicated monitoring tool. The Zap becomes a timer that checks its own work.</div>
+  </div>
+</section>
+
+<!-- M14 -->
+<section class="module-section" id="m14">
+  <div class="module-header">
+    <span class="module-num">M14</span>
+    <div>
+      <div class="module-title">Lookup tables instead of twenty filters</div>
+      <div class="module-sub">The maintenance problem that lookup tables solve elegantly</div>
+    </div>
+  </div>
+
+  <p>At some point, most automation builders discover they've built twenty filters that all do variations of the same thing. "If state is NY, assign to Northeast team. If state is CA, assign to West team. If state is TX or FL, assign to South team." Twenty states, twenty filter conditions, a Zap that takes ten minutes to scroll through.</p>
+
+  <p>Then the territories change. Now you need to update seventeen of those conditions across three Zaps that all contain variations of the same logic.</p>
+
+  <p>A lookup table solves this. Build a Formatter step that maps raw input values to standardized outputs. States to regions. Country codes to full names. Lead scores to tier names. Product codes to product names. When the mapping changes, update the table in one place. Every Zap that uses it updates automatically.</p>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Lookup table — territory routing</div>
+    <pre><span class="c">// Instead of 20+ filter branches:</span>
+Formatter → Utilities → Lookup Table
+NY, CT, MA, VT, NH, ME, RI  →  Northeast
+CA, OR, WA, NV, AZ          →  West
+TX, FL, GA, AL, MS          →  South
+IL, OH, MI, IN, WI          →  Midwest
+
+<span class="c">// Single step, easy to update, readable at a glance</span>
+<span class="c">// Change territory assignments: update one table, not 20 filters</span></pre>
+  </div>
+
+  <p>The rule of thumb: if you find yourself writing the same logic more than three times, a lookup table is probably the right answer. It's more readable, more maintainable, and far less fragile than a cascade of duplicate filters.</p>
+</section>
+
+<!-- M15 -->
+<section class="module-section" id="m15">
+  <div class="module-header">
+    <span class="module-num">⭐ M15</span>
+    <div>
+      <div class="module-title">Build for failure — the professional mindset <span class="badge badge-essential">professional mindset</span></div>
+      <div class="module-sub">The amateur builds the happy path. The professional builds Tuesday at 3pm.</div>
+    </div>
+  </div>
+
+  <p>There's a specific Tuesday. You know the one. Everything that can go slightly wrong does — not catastrophically, just enough to expose every assumption the architecture was built on. The CRM API returns a 503. The email platform decides the contact already exists and rejects the create request. A webhook fires twice in three seconds because of a network retry. The lookup table has a value it's never seen before, so it returns null, and the step downstream that was expecting a string gets null and behaves in a way nobody tested.</p>
+
+  <p>The amateur builds for the demo. Data is clean. APIs are responsive. Every field is populated. The Zap runs perfectly.</p>
+
+  <p>The professional builds for Tuesday at 3pm. What happens when the data isn't clean? What happens when the API times out? What happens when step 4 receives null instead of a string?</p>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>The three questions to ask before every step:</strong> What if the upstream API is down? What if this field is empty when I expect a value? What if this record already exists when I try to create it? If you don't have an answer to all three, the step isn't production-ready.</div>
+  </div>
+
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">API downtime</div><div class="kv-val">Critical Zaps should have a fallback: log the failed record to a dead-letter sheet. Zapier will retry failed tasks automatically for 7 days — but you need to know the failure happened.</div></div>
+    <div class="kv-row"><div class="kv-key">Missing fields</div><div class="kv-val">Default values before downstream steps. A lookup that returns null should return "Unknown" instead. A missing name should default to "New Contact." Don't let null propagate.</div></div>
+    <div class="kv-row"><div class="kv-key">Duplicate records</div><div class="kv-val">See Module 17. Always search before you create. This is not optional.</div></div>
+    <div class="kv-row"><div class="kv-key">Rate limits</div><div class="kv-val">Some destination apps have rate limits lower than Zapier can push. If your Zap fires 50 times a minute and your CRM allows 20 API calls per minute, you will have failures. Know your limits before you deploy at scale.</div></div>
+  </div>
+</section>
+
+<!-- M16 -->
+<section class="module-section" id="m16">
+  <div class="module-header">
+    <span class="module-num">M16</span>
+    <div>
+      <div class="module-title">Error handling — don't assume you'll notice</div>
+      <div class="module-sub">Silent failures are the most expensive kind</div>
+    </div>
+  </div>
+
+  <p>Here's how most people discover a critical Zap has been failing: a customer complains. Or a sales rep asks why they haven't gotten a lead notification in three days. Or the weekly ops review shows a gap in CRM data that nobody can explain.</p>
+
+  <p>In other words: they discover it after the damage is done.</p>
+
+  <p>The pattern that prevents this is almost embarrassingly simple: build a Zap that monitors Zapier's own failure events and sends an alert when something breaks. Zapier exposes a "Zap Run Error" trigger. Wire it to a Slack message and an email. For critical Zaps — anything that touches billing, customer communication, or lead intake — add a phone notification.</p>
+
+  <p>The alert should include the Zap name, the step that failed, the error message, and the data from the run that failed. Everything needed to diagnose and fix the problem without digging through logs manually.</p>
+
+  <div class="callout callout-danger">
+    <div class="callout-icon">🔴</div>
+    <div class="callout-body"><strong>The tiered alert system:</strong> P0 (billing, lead intake, customer communication) → Slack + email + SMS. P1 (internal ops, reporting, notifications) → Slack + email. P2 (nice-to-have automations, non-critical) → daily digest. The tier determines the urgency. Not every failure needs to wake someone up. But some failures absolutely should.</div>
+  </div>
+
+  <p>Build the monitoring Zap before the Zap it's monitoring. That's the order of operations for professional automation work.</p>
+</section>
+
+<!-- M17 -->
+<section class="module-section" id="m17">
+  <div class="module-header">
+    <span class="module-num">⭐ M17</span>
+    <div>
+      <div class="module-title">Idempotency — the lead that entered three times <span class="badge badge-essential">prevents duplicates</span></div>
+      <div class="module-sub">Networks retry. Users double-click. Your Zap should handle both.</div>
+    </div>
+  </div>
+
+  <p>Here's something most people don't think about when they build their first webhook-based Zap: webhooks are not guaranteed to fire exactly once.</p>
+
+  <p>Networks are unreliable. When a webhook fires and the receiving end doesn't respond quickly enough — because Zapier is briefly busy, or there's a network hiccup, or the response was just slightly delayed — the sending system may retry. It fires the same webhook a second time, with the same payload, a few seconds or a few minutes later. From Zapier's perspective, it looks like two separate events.</p>
+
+  <div class="story-card">
+    <div class="story-label">The lead that entered three times</div>
+    <div class="story-text">A Typeform form connected via webhook. A user submitted it on a slow mobile connection. The webhook fired. Zapier received it. But the response was delayed long enough that Typeform's retry logic kicked in. The webhook fired again. Then a second retry. Three separate events, all identical, all looking like new lead submissions. Without idempotency, we created three contacts in the CRM, three deals in the pipeline, three task assignments. The sales rep called the same lead three times in one hour. The lead blocked the number. The deal never closed. Idempotency would have cost us one extra step. The lack of it cost us a sale.</div>
+  </div>
+
+  <p>The solution isn't complicated. It just requires building the check into every Zap that creates records.</p>
+
+  <p>Before you create anything, search for it. Before you create a contact, search the CRM for a contact with that email address. If you find one, update it. If you don't find one, create it. This single pattern — search before create — eliminates 95% of duplicate records in production systems.</p>
+
+  <!-- IDEMPOTENCY DIAGRAM -->
+  <div class="diagram-wrap">
+    <div class="diagram-label">The idempotency pattern</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 680 260" role="img">
+        <title>Idempotency check-before-create pattern</title>
+        <desc>Flowchart showing how to search for an existing record before creating a new one to prevent duplicates</desc>
+        <defs>
+          <marker id="arr-idem" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- Trigger -->
+        <g>
+          <rect x="40" y="30" width="100" height="44" rx="8" fill="#DBEAFE" stroke="rgba(29,78,216,.3)" stroke-width="0.5"/>
+          <text x="90" y="56" font-family="'DM Sans', sans-serif" font-size="12" fill="#1D4ED8" text-anchor="middle" dominant-baseline="central">Webhook fires</text>
+        </g>
+        <line x1="140" y1="52" x2="164" y2="52" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-idem)"/>
+
+        <!-- Filter -->
+        <g>
+          <rect x="166" y="30" width="100" height="44" rx="8" fill="#CCFBF1" stroke="rgba(13,148,136,.3)" stroke-width="0.5"/>
+          <text x="216" y="56" font-family="'DM Sans', sans-serif" font-size="12" fill="#0D9488" text-anchor="middle" dominant-baseline="central">Validate fields</text>
+        </g>
+        <line x1="266" y1="52" x2="290" y2="52" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-idem)"/>
+
+        <!-- Search -->
+        <g>
+          <rect x="292" y="30" width="120" height="44" rx="8" fill="#FEF3C7" stroke="rgba(180,83,9,.3)" stroke-width="0.5"/>
+          <text x="352" y="49" font-family="'DM Sans', sans-serif" font-size="12" fill="#92400E" text-anchor="middle">Search CRM</text>
+          <text x="352" y="64" font-family="'DM Sans', sans-serif" font-size="10" fill="#B45309" text-anchor="middle">by email address</text>
+        </g>
+
+        <!-- Decision diamond (as rounded rect with different color) -->
+        <line x1="352" y1="74" x2="352" y2="105" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-idem)"/>
+        <g>
+          <rect x="292" y="107" width="120" height="40" rx="20" fill="#F5F2EC" stroke="rgba(28,25,23,.2)" stroke-width="0.5"/>
+          <text x="352" y="131" font-family="'DM Mono', monospace" font-size="11" fill="#44403C" text-anchor="middle" dominant-baseline="central">Found?</text>
+        </g>
+
+        <!-- Yes path: Update -->
+        <line x1="292" y1="127" x2="236" y2="127" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-idem)"/>
+        <text x="263" y="121" font-family="'DM Mono', monospace" font-size="9" fill="#0D9488">Yes</text>
+        <g>
+          <rect x="136" y="107" width="100" height="40" rx="8" fill="#CCFBF1" stroke="rgba(13,148,136,.3)" stroke-width="0.5"/>
+          <text x="186" y="131" font-family="'DM Sans', sans-serif" font-size="12" fill="#0D9488" text-anchor="middle" dominant-baseline="central">Update contact</text>
+        </g>
+
+        <!-- No path: Create -->
+        <line x1="412" y1="127" x2="468" y2="127" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-idem)"/>
+        <text x="437" y="121" font-family="'DM Mono', monospace" font-size="9" fill="#B91C1C">No</text>
+        <g>
+          <rect x="470" y="107" width="100" height="40" rx="8" fill="#FEE2E2" stroke="rgba(185,28,28,.2)" stroke-width="0.5"/>
+          <text x="520" y="131" font-family="'DM Sans', sans-serif" font-size="12" fill="#B91C1C" text-anchor="middle" dominant-baseline="central">Create contact</text>
+        </g>
+
+        <!-- Both converge to notify -->
+        <line x1="186" y1="147" x2="186" y2="190" stroke="#A8A29E" stroke-width="1"/>
+        <line x1="520" y1="147" x2="520" y2="190" stroke="#A8A29E" stroke-width="1"/>
+        <line x1="186" y1="190" x2="352" y2="190" stroke="#A8A29E" stroke-width="1"/>
+        <line x1="352" y1="190" x2="520" y2="190" stroke="#A8A29E" stroke-width="1"/>
+        <line x1="352" y1="190" x2="352" y2="208" stroke="#A8A29E" stroke-width="1" marker-end="url(#arr-idem)"/>
+
+        <g>
+          <rect x="280" y="210" width="144" height="40" rx="8" fill="#F5F2EC" stroke="rgba(28,25,23,.12)" stroke-width="0.5"/>
+          <text x="352" y="234" font-family="'DM Sans', sans-serif" font-size="12" fill="#44403C" text-anchor="middle" dominant-baseline="central">Notify + downstream actions</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Idempotency pattern</div>
+    <pre><span class="c">// Every Zap that creates records follows this pattern:</span>
+Trigger → Filter → <span class="w">Search CRM by email</span>
+  → <span class="v">Found</span>:    Update contact → continue
+  → <span class="o">Not found</span>: Create contact → continue
+                        ↓
+             Both paths merge here
+                        ↓
+             Notify, assign, downstream actions
+
+<span class="c">// For extra-critical operations, log processed IDs</span>
+<span class="c">// to a Google Sheet and check against them on every run</span>
+Trigger → <span class="tl">Check "Processed IDs" sheet for submission_id</span>
+  → Already processed → Stop (filter)
+  → New → Continue, then log ID to sheet</pre>
+  </div>
+
+  <p>The ID-based deduplication is the nuclear option — it guarantees that even if the same event fires a hundred times, it processes exactly once. Use it for payment processing, invoice creation, or any workflow where creating a duplicate has financial consequences.</p>
+
+  <div class="reflection">
+    <div class="reflection-label">↺ The rule</div>
+    <p>Never create without searching first. The search step costs one task. The duplicate contact costs a confused customer, an annoyed sales rep, and months of CRM cleanup. The math is obvious.</p>
+  </div>
+</section>
+<!-- ═══════════ PART VI ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Part VI</div>
+    <div class="part-title">Scaling Zapier</div>
+    <div class="part-sub">Task economy, architecture, debt, and the automations that outlive their builders</div>
+  </div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M18 — M21</div>
+</div>
+<section class="module-section" id="m18">
+  <div class="module-header">
+    <span class="module-num">⭐ M18</span>
+    <div>
+      <div class="module-title">Task economy — treating every step like it costs money</div>
+      <div class="module-sub">Because it does</div>
+    </div>
+  </div>
+
+  <p>The professional Zapier mindset asks a question that amateurs rarely think to ask: can I achieve the same outcome in fewer steps?</p>
+
+  <p>This isn't about cutting corners. It's about recognizing that every step in every Zap is a unit of cost, and that the cost compounds invisibly until it becomes the $847 invoice. Task economy is the discipline of optimizing for outcome per task — getting the same result while consuming the minimum number of Zapier's task quota.</p>
+
+  <p>The high-leverage moves, roughly in order of impact:</p>
+
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Early filters</div><div class="kv-val">The most impactful optimization (see M12). Stop non-qualifying records before they consume downstream steps.</div></div>
+    <div class="kv-row"><div class="kv-key">Webhooks as triggers</div><div class="kv-val">Webhook triggers don't count as tasks. Polling triggers (where Zapier checks for new data on a schedule) do. Where possible, use app-native webhooks instead of polling.</div></div>
+    <div class="kv-row"><div class="kv-key">Combine formatter steps</div><div class="kv-val">A single Formatter step can apply multiple transformations. Don't use three steps where one step's utilities panel can do the same work.</div></div>
+    <div class="kv-row"><div class="kv-key">Monthly task audit</div><div class="kv-val">Export your task usage by Zap. The 20% of Zaps consuming 80% of tasks are always identifiable. Often a single filter addition reduces consumption by 50-70%.</div></div>
+    <div class="kv-row"><div class="kv-key">Move expensive ops late</div><div class="kv-val">API calls to paid services, complex searches, multi-record operations — place these after filters. Don't call the enrichment API for a record you're about to discard.</div></div>
+  </div>
+
+  <p>Task economy becomes critical at scale. At 500 monthly triggers, the difference between 5 and 8 steps per Zap is negligible. At 50,000 monthly triggers, it's the difference between a plan that covers your needs and a plan that costs three times more than expected.</p>
+</section>
+
+<!-- M18.5 -->
+<section class="module-section" id="m185">
+  <div class="module-header">
+    <span class="module-num">M18.5</span>
+    <div>
+      <div class="module-title">The cost argument, honestly</div>
+      <div class="module-sub">Yes, Zapier is expensive. Here's what it's actually competing with.</div>
+    </div>
+  </div>
+
+  <p>Zapier is expensive.</p>
+
+  <p>That's the honest starting point. At moderate volume — 20,000 tasks a month — you're paying prices that would have seemed absurd for software-as-a-service five years ago. The comparison to n8n is obvious and correct. If you self-host n8n on a $12 DigitalOcean droplet, you pay twelve dollars a month regardless of how many tasks run.</p>
+
+  <p>So why do serious operations teams keep paying Zapier's rates?</p>
+
+  <p>Because Zapier is not competing with n8n. It's competing with what you were doing before Zapier.</p>
+
+  <div class="narrative">
+    <p>A sales team waiting 48 hours for leads to reach their CRM because the manual process breaks down over weekends. A billing error that slips through because the sync between Stripe and the accounting platform depends on someone remembering to export a CSV on Fridays. An onboarding sequence that fires three days late because the person who triggers it manually went on holiday.</p>
+    <p>Against those alternatives, Zapier isn't expensive. It's cheap. The per-task pricing feels painful until you price what the tasks are actually replacing.</p>
+  </div>
+
+  <p>The calculus shifts at scale. When you're running 100,000 tasks a month, the Zapier bill is real money and n8n's maintenance overhead starts to look like the better tradeoff. The crossover point depends on your team's technical capacity — if you have someone comfortable with Linux, Docker, and basic server management, n8n at 30,000+ tasks/month is usually worth it. If you don't, the Zapier premium is essentially paying for managed reliability, and that's a legitimate product.</p>
+
+  <div class="power-tip">
+    <div class="power-tip-label">⚡ The actual comparison</div>
+    <p>Don't compare Zapier's monthly cost to n8n's monthly cost. Compare Zapier's monthly cost to: the cost of the tasks it replaced + the engineer-hours to maintain an alternative + the cost of one production incident on a self-hosted platform that goes down at the wrong moment. The number usually looks different.</p>
+  </div>
+</section>
+<section class="module-section" id="m19">
+  <div class="module-header">
+    <span class="module-num">⭐ M19</span>
+    <div>
+      <div class="module-title">The monster Zap — and how multi-Zap architecture replaces it <span class="badge badge-essential">replaces monster Zaps</span></div>
+      <div class="module-sub">47 steps, 11 paths, 6 delays. Nobody would touch it.</div>
+    </div>
+  </div>
+
+  <p>I was handed a Zapier account once that had a single Zap called "MAIN LEAD ZAP — DO NOT TOUCH."</p>
+
+  <p>It had 47 steps. Eleven path branches. Six delay steps scattered through it. It had been built incrementally over about eighteen months, each addition making sense in the moment, until the cumulative result was something nobody — including the person who built it — could confidently follow from trigger to end.</p>
+
+  <p>When it broke, which it did with some regularity, debugging it was a thirty-minute exercise in archaeology. Which branch did this record take? Which delay is it sitting in? Which path combination produced this outcome?</p>
+
+  <div class="pull-quote">Nobody wanted to touch it. Nobody wanted to delete it. It just sat there, a kind of automation haunted house, theoretically doing its job, inspiring dread in everyone who had to log in and look at it.</div>
+
+  <p>The monster Zap is the automation equivalent of a god object in software engineering — a single thing that knows too much, does too much, and becomes impossible to maintain or change without risking everything it does.</p>
+
+  <p>The architectural alternative is modular design. Break the monster into smaller Zaps, each with a single clear responsibility, that hand off to each other through a shared data store.</p>
+
+  <!-- MULTI-ZAP ARCHITECTURE DIAGRAM -->
+  <div class="diagram-wrap">
+    <div class="diagram-label">Multi-Zap architecture vs the monster Zap</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 680 320" role="img">
+        <title>Multi-Zap modular architecture diagram</title>
+        <desc>Four separate focused Zaps replacing a single monolithic 47-step Zap</desc>
+        <defs>
+          <marker id="arr-multi" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- Monster Zap (left, bad) -->
+        <text x="40" y="22" font-family="'DM Mono', monospace" font-size="10" fill="#B91C1C" letter-spacing=".06em">✗ MONSTER ZAP</text>
+        <rect x="40" y="30" width="160" height="260" rx="12" fill="#FEE2E2" stroke="rgba(185,28,28,.2)" stroke-width="0.5"/>
+        <text x="120" y="56" font-family="'DM Sans', sans-serif" font-size="11" fill="#B91C1C" text-anchor="middle">MAIN LEAD ZAP</text>
+        <text x="120" y="70" font-family="'DM Mono', monospace" font-size="9" fill="#EF4444" text-anchor="middle">DO NOT TOUCH</text>
+
+        <!-- Stacked steps indicating complexity -->
+        <rect x="58" y="82" width="124" height="20" rx="3" fill="rgba(185,28,28,.08)" stroke="rgba(185,28,28,.15)" stroke-width="0.5"/>
+        <text x="120" y="95" font-family="'DM Mono', monospace" font-size="8.5" fill="#B91C1C" text-anchor="middle">step 1 of 47</text>
+        <rect x="58" y="106" width="124" height="20" rx="3" fill="rgba(185,28,28,.08)" stroke="rgba(185,28,28,.15)" stroke-width="0.5"/>
+        <text x="120" y="119" font-family="'DM Mono', monospace" font-size="8.5" fill="#B91C1C" text-anchor="middle">step 2 of 47</text>
+        <rect x="58" y="130" width="124" height="20" rx="3" fill="rgba(185,28,28,.08)" stroke="rgba(185,28,28,.15)" stroke-width="0.5"/>
+        <text x="120" y="143" font-family="'DM Mono', monospace" font-size="8.5" fill="#B91C1C" text-anchor="middle">step 3 of 47</text>
+        <text x="120" y="172" font-family="'DM Mono', monospace" font-size="11" fill="#B91C1C" text-anchor="middle">· · ·</text>
+        <text x="120" y="195" font-family="'DM Sans', sans-serif" font-size="9" fill="#B91C1C" text-anchor="middle">11 path branches</text>
+        <text x="120" y="210" font-family="'DM Sans', sans-serif" font-size="9" fill="#B91C1C" text-anchor="middle">6 delay steps</text>
+        <text x="120" y="225" font-family="'DM Sans', sans-serif" font-size="9" fill="#B91C1C" text-anchor="middle">1 person understands it</text>
+        <text x="120" y="240" font-family="'DM Sans', sans-serif" font-size="9" fill="#B91C1C" text-anchor="middle">(they left in 2024)</text>
+        <text x="120" y="274" font-family="'DM Mono', monospace" font-size="9" fill="#EF4444" text-anchor="middle">owner: unknown</text>
+
+        <!-- Arrow between -->
+        <text x="218" y="162" font-family="'DM Sans', sans-serif" font-size="14" fill="#A8A29E" text-anchor="middle">→</text>
+
+        <!-- Modular Zaps (right, good) -->
+        <text x="248" y="22" font-family="'DM Mono', monospace" font-size="10" fill="#0D9488" letter-spacing=".06em">✓ MODULAR ARCHITECTURE</text>
+
+        <!-- Zap 1: Intake -->
+        <rect x="248" y="30" width="160" height="62" rx="10" fill="#CCFBF1" stroke="rgba(13,148,136,.3)" stroke-width="0.5"/>
+        <text x="328" y="52" font-family="'DM Sans', sans-serif" font-size="12" fill="#0D9488" text-anchor="middle" font-weight="500">Zap 1: Lead Intake</text>
+        <text x="328" y="68" font-family="'DM Mono', monospace" font-size="9" fill="#14B8A6" text-anchor="middle">Filter + Validate + Create</text>
+        <text x="328" y="82" font-family="'DM Mono', monospace" font-size="8" fill="#5EEAD4" text-anchor="middle">owner: marketing@</text>
+
+        <!-- Connector arrow -->
+        <line x1="328" y1="92" x2="328" y2="108" stroke="#A8A29E" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr-multi)"/>
+        <text x="336" y="103" font-family="'DM Mono', monospace" font-size="8.5" fill="#A8A29E">via Sheets row</text>
+
+        <!-- Zap 2: Qualify -->
+        <rect x="248" y="110" width="160" height="62" rx="10" fill="#DBEAFE" stroke="rgba(29,78,216,.25)" stroke-width="0.5"/>
+        <text x="328" y="132" font-family="'DM Sans', sans-serif" font-size="12" fill="#1D4ED8" text-anchor="middle" font-weight="500">Zap 2: Qualification</text>
+        <text x="328" y="148" font-family="'DM Mono', monospace" font-size="9" fill="#3B82F6" text-anchor="middle">Score + Route + Assign</text>
+        <text x="328" y="162" font-family="'DM Mono', monospace" font-size="8" fill="#93C5FD" text-anchor="middle">owner: sales@</text>
+
+        <!-- Connector arrow -->
+        <line x1="328" y1="172" x2="328" y2="188" stroke="#A8A29E" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr-multi)"/>
+        <text x="336" y="183" font-family="'DM Mono', monospace" font-size="8.5" fill="#A8A29E">via CRM status</text>
+
+        <!-- Zap 3: Outreach -->
+        <rect x="248" y="190" width="160" height="62" rx="10" fill="#F5F3FF" stroke="rgba(124,58,237,.25)" stroke-width="0.5"/>
+        <text x="328" y="212" font-family="'DM Sans', sans-serif" font-size="12" fill="#7C3AED" text-anchor="middle" font-weight="500">Zap 3: Outreach</text>
+        <text x="328" y="228" font-family="'DM Mono', monospace" font-size="9" fill="#8B5CF6" text-anchor="middle">Email + Slack + Task</text>
+        <text x="328" y="242" font-family="'DM Mono', monospace" font-size="8" fill="#C4B5FD" text-anchor="middle">owner: sales@</text>
+
+        <!-- Connector arrow -->
+        <line x1="328" y1="252" x2="328" y2="268" stroke="#A8A29E" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr-multi)"/>
+        <text x="336" y="263" font-family="'DM Mono', monospace" font-size="8.5" fill="#A8A29E">via delay + check</text>
+
+        <!-- Zap 4: Follow-up -->
+        <rect x="248" y="270" width="160" height="44" rx="10" fill="#FEF3C7" stroke="rgba(180,83,9,.25)" stroke-width="0.5"/>
+        <text x="328" y="290" font-family="'DM Sans', sans-serif" font-size="12" fill="#B45309" text-anchor="middle" font-weight="500">Zap 4: Follow-up</text>
+        <text x="328" y="305" font-family="'DM Mono', monospace" font-size="9" fill="#D97706" text-anchor="middle">owner: sales@</text>
+
+        <!-- Benefits list -->
+        <text x="430" y="55" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C">Each Zap has one job</text>
+        <text x="430" y="72" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C">Each Zap has one owner</text>
+        <text x="430" y="89" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C">Test in isolation</text>
+        <text x="430" y="106" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C">Debug in isolation</text>
+        <text x="430" y="123" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C">Update without fear</text>
+        <text x="430" y="140" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C">Disable one stage,</text>
+        <text x="430" y="156" font-family="'DM Sans', sans-serif" font-size="11" fill="#44403C">rest keeps running</text>
+      </svg>
+    </div>
+  </div>
+
+  <p>The handoff mechanism between Zaps can be a Google Sheet row, a CRM status field, a Slack message to a monitoring channel, or a webhook. The specific mechanism matters less than the principle: each Zap does one thing, hands off its output to a well-defined place, and the next Zap picks up from there.</p>
+
+  <p>The practical benefit becomes obvious the first time something breaks. With the monster Zap, a failure somewhere in step 23 of 47 means debugging the entire chain. With modular architecture, a failure means "Zap 2 is broken." You look at Zap 2. You fix Zap 2. Everything else continues running.</p>
+
+  <div class="callout callout-success">
+    <div class="callout-icon">✓</div>
+    <div class="callout-body"><strong>The single-responsibility test:</strong> Can you explain what this Zap does in one sentence? "This Zap validates and creates CRM contacts from form submissions" passes. "This Zap handles the whole lead process" fails. If the description requires "and" more than once, the Zap should probably be two Zaps.</div>
+  </div>
+</section>
+
+<!-- M20 -->
+<section class="module-section" id="m20">
+  <div class="module-header">
+    <span class="module-num">⭐ M20</span>
+    <div>
+      <div class="module-title">Automation debt — the Zaps nobody will touch</div>
+      <div class="module-sub">"This is temporary." Six words that create permanent problems.</div>
+    </div>
+  </div>
+
+  <p>Every team that has used Zapier for more than a year has automation debt. Most of them don't know it by that name. They just know there are Zaps in their account that nobody created in the last twelve months, that nobody is confident deleting, and that might be doing something important or might be doing nothing at all. Nobody can tell.</p>
+
+  <div class="debt-timeline">
+    <div class="debt-year">
+      <div class="debt-year-label">Month 1</div>
+      <div class="debt-year-content"><h4>"This is temporary"</h4><p>Built to cover a gap in the new tool stack. "We'll replace this once the CRM integration is set up properly." It works. Turns it on. Forgets to replace it.</p></div>
+    </div>
+    <div class="debt-year">
+      <div class="debt-year-label">Month 6</div>
+      <div class="debt-year-content"><h4>"I think Sarah built that one"</h4><p>Sarah has moved teams. The Zap is still running. Nobody is sure what it does. Nobody wants to turn it off to find out.</p></div>
+    </div>
+    <div class="debt-year">
+      <div class="debt-year-label">Month 12</div>
+      <div class="debt-year-content"><h4>"Don't touch the old Zaps"</h4><p>Institutional knowledge crystallizes into superstition. The Zap acquires a reputation. It's treated like load-bearing infrastructure, even if nobody knows what it's holding up.</p></div>
+    </div>
+    <div class="debt-year">
+      <div class="debt-year-label">Month 18</div>
+      <div class="debt-year-content"><h4>The autopsy</h4><p>New team member does an audit. The Zap hasn't had a successful run in four months. It was consuming tasks the whole time, triggering on events from a form that was archived six months ago, and doing exactly nothing useful with them.</p></div>
+    </div>
+  </div>
+
+  <p>Automation debt is expensive in three ways. It costs money (ghost Zaps consuming tasks). It costs time (every person who encounters it has to figure out if it matters). And it costs trust — people stop touching automations because they're afraid of breaking something invisible.</p>
+
+  <p>The solution is a quarterly audit. Not a deep dive — just a systematic review.</p>
+
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Step 1</div><div class="kv-val">Export all Zaps to a spreadsheet. Columns: name, status, last successful run, task consumption past 30 days, owner.</div></div>
+    <div class="kv-row"><div class="kv-key">Step 2</div><div class="kv-val">Sort by last successful run. Anything with zero successful runs in 60+ days gets a flag. It's either broken or no longer needed.</div></div>
+    <div class="kv-row"><div class="kv-key">Step 3</div><div class="kv-val">Sort by task consumption. Identify the 20% consuming 80% of tasks. Each one gets examined for filter optimization opportunities.</div></div>
+    <div class="kv-row"><div class="kv-key">Step 4</div><div class="kv-val">Anything with no owner, no recent activity, and no clear documentation gets moved to Archive. If nothing breaks in 30 days, delete it.</div></div>
+  </div>
+
+  <p>Archive before you delete. Turning a Zap off and letting it sit in Archive for 30 days is the safe way to validate that nothing depended on it. If nobody complains, delete it with confidence.</p>
+
+  <div class="callout callout-tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Name your archive date:</strong> When you move a Zap to Archive, rename it to include the date: "ARCHIVED 2026-05 — Sales → Sheets old pipeline." Three months later, you'll know exactly when it was archived and can make a confident deletion decision.</div>
+  </div>
+</section>
+
+<!-- M21 -->
+<section class="module-section" id="m21">
+  <div class="module-header">
+    <span class="module-num">M21</span>
+    <div>
+      <div class="module-title">Security — automation is infrastructure, treat it like infrastructure</div>
+      <div class="module-sub">The departing employee, the orphaned connection, the hardcoded key</div>
+    </div>
+  </div>
+
+  <p>Automation tools are invisible infrastructure. Nobody thinks about them until something goes wrong, and when something goes wrong with automation security, it can go wrong in ways that are hard to detect and harder to reverse.</p>
+
+  <p>Three security concerns that most teams don't address until there's an incident:</p>
+
+  <p><strong>The departing employee.</strong> When someone who built or owned Zaps leaves the team, their connected apps remain active. If their Zapier account is connected to the production CRM with write access, those permissions survive their departure unless someone explicitly revokes them. Remove access to automation tools on the same day as any other offboarding step — not "when we get around to it."</p>
+
+  <p><strong>The orphaned connection.</strong> Every app connected to Zapier is a trust grant. That app can read or write data depending on the OAuth scopes granted. Run a quarterly review of connected apps and revoke anything that isn't actively used by a running Zap. Unused connections are attack surface.</p>
+
+  <p><strong>The hardcoded API key.</strong> Never store API keys, passwords, or tokens as literal values in Zap steps. Use Zapier's credential management — connected accounts — where the key is stored once and referenced by connection name. If a key needs to be rotated, you update one connected account, not every Zap that uses it.</p>
+
+  <div class="callout callout-danger">
+    <div class="callout-icon">🔴</div>
+    <div class="callout-body"><strong>Use service accounts for critical Zaps.</strong> Zaps that have write access to financial systems, customer data, or billing platforms should run under a dedicated service account, not a personal employee account. When the employee leaves, the service account remains and the Zaps keep working. When the employee's personal account is suspended, all their Zaps break simultaneously — typically at the worst possible moment.</div>
+  </div>
+</section>
+<!-- ═══════════ PART VII ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Part VII</div>
+    <div class="part-title">Common Mistakes & Final Thoughts</div>
+    <div class="part-sub">The seven mistakes, and what separates automation that lasts from automation that haunts</div>
+  </div>
+  <div class="part-divider"></div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M22 — M23</div>
+</div>
+
+<!-- M22 -->
+<section class="module-section" id="m22">
+  <div class="module-header">
+    <span class="module-num">M22</span>
+    <div>
+      <div class="module-title">Seven mistakes that cause 80% of automation disasters</div>
+      <div class="module-sub">Each one avoidable. Each one common.</div>
+    </div>
+  </div>
+
+  <p>These aren't abstract principles. Every one of them comes from a real incident. Name changed. Lesson kept.</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-num">1</div>
+      <div class="flow-step-content">
+        <h4>Automating a broken process</h4>
+        <p>Automation doesn't fix broken processes. It runs them faster. If the manual version of a workflow involves people checking and correcting errors at each step, the automated version will produce errors at the same rate with nobody checking them. Map the process on paper first. Fix the process. Then automate it.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">2</div>
+      <div class="flow-step-content">
+        <h4>Building before documenting</h4>
+        <p>If you can't describe the complete workflow — trigger to outcome, including failure cases — in three minutes on paper, you're not ready to build it. The documentation is not the output of the build. It's the prerequisite.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">3</div>
+      <div class="flow-step-content">
+        <h4>No ownership</h4>
+        <p>Every Zap needs a named human who receives the alert when it breaks, has the context to debug it, and is accountable for its behavior. "The team owns it" means nobody owns it. When it breaks at 3am, you'll find out what "nobody owns it" actually costs.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">4</div>
+      <div class="flow-step-content">
+        <h4>No failure alerts</h4>
+        <p>Silent failures are the most expensive kind. Zapier can send you an alert every time a Zap fails. If you haven't set this up, you're operating blind. The first indication that something is wrong will be a customer complaint or a data gap, which is always later and more expensive than a Slack notification would have been.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">5</div>
+      <div class="flow-step-content">
+        <h4>Creating without checking — the duplicate trap</h4>
+        <p>Webhooks retry. Users double-click. Networks delay. Any of these produces a second trigger for the same event. Without an idempotency check, that second trigger creates a second record. Always search before you create. No exceptions.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">6</div>
+      <div class="flow-step-content">
+        <h4>Using Zapier as a database</h4>
+        <p>Zapier is an integration engine. It connects systems and moves data between them. It is not a data store, and it performs poorly when used as one. If you need to store and query data, use a real database — Google Sheets for low volume, Airtable for structured data, a proper database for anything that needs to scale. Zapier reads from and writes to these. It does not replace them.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">7</div>
+      <div class="flow-step-content">
+        <h4>Overengineering</h4>
+        <p>Sometimes Form → CRM is enough. A Zap that does one thing cleanly and predictably is more valuable than a Zap that tries to handle every edge case and ends up handling none of them reliably. Start with the simplest possible version. Add complexity only when the simple version demonstrates a real need for it, not because it's theoretically more complete.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- M23 -->
+<section class="module-section" id="m23">
+  <div class="module-header">
+    <span class="module-num">M23</span>
+    <div>
+      <div class="module-title">Final thoughts — what good automation looks like from the outside</div>
+    </div>
+  </div>
+
+  <p>The best automations are invisible in the right way. Not invisible because they're hidden or mysterious, but invisible because they work so consistently that nobody thinks to notice them. The lead arrives in the CRM. The confirmation email goes out. The sales rep gets notified. Nobody remarks on any of this because it always happens, reliably, without anyone doing anything.</p>
+
+  <p>The worst automations are invisible in the wrong way. They're invisible because nobody remembers building them. They fail silently. They corrupt data without anyone noticing. They run as ghost processes in a Zapier account that hasn't been audited since 2023, consuming tasks for events that no longer exist.</p>
+
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Good automation</div><div class="kv-val">Reliable, documented, predictable, maintainable. Owner assigned. Failure alerts configured. Built for the unhappy path, not just the demo. Simple enough that the next person can understand it without asking you.</div></div>
+    <div class="kv-row"><div class="kv-key">Bad automation</div><div class="kv-val">Complex, fragile, mysterious. Ownerless. No error handling. Built in a rush to cover a gap. Touched by four people over eighteen months with no version history. Named "MAIN ZAP — DO NOT TOUCH."</div></div>
+  </div>
+
+  <div class="callout callout-success">
+    <div class="callout-icon">✓</div>
+    <div class="callout-body"><strong>The best Zap is sometimes no Zap.</strong> Not every repetitive task deserves automation. If a process happens twice a month, takes three minutes manually, and would take three hours to automate correctly — with documentation, error handling, idempotency, and monitoring — the math doesn't work. Automate the high-volume, high-frequency, data-moving tasks. Leave the rest alone.</div>
+  </div>
+
+  <p>The goal is not to build impressive Zaps. The goal is to build systems that keep working six months from now when nobody remembers who built them or why. Systems that fail loudly enough to be fixed quickly. Systems that cost what you expect them to cost. Systems that leave the data cleaner than they found it.</p>
+
+  <p>Build for your future self at 4pm on a Friday when production is failing and you have a client on the phone.</p>
+
+  <div class="reflection">
+    <div class="reflection-label">↺ The grimoire promise</div>
+    <p>You now have the architecture for production-ready automation. Not the feature list — the judgment. The $847 bill was an education. Apply it before you pay for your own.</p>
+  </div>
+</section>
+
+<!-- ═══════════ REFERENCE ═══════════ -->
+<div class="part-header">
+  <div>
+    <div class="part-num">Reference</div>
+    <div class="part-title">Zapier vs n8n/Make · Expression Cheatsheet · Sources</div>
+  </div>
+  <div class="part-divider"></div>
+</div>
+
+<!-- M24 -->
+<section class="module-section" id="m24">
+  <div class="module-header">
+    <span class="module-num">M24</span>
+    <div>
+      <div class="module-title">Zapier vs Make vs n8n — the honest opinion</div>
+      <div class="module-sub">Three tools. Three different bets. Only one is right for your situation.</div>
+    </div>
+  </div>
+
+  <p>If you need something running by 4pm today: Zapier.</p>
+
+  <p>If you need unlimited flexibility and you have someone on the team comfortable with a Linux terminal: n8n.</p>
+
+  <p>If you want powerful visual logic at better pricing than Zapier but you're not ready to manage infrastructure: Make.</p>
+
+  <p>That's the honest version. Now the longer one.</p>
+
+  <p><strong>Zapier</strong> wins on two things that don't show up in comparison tables: the breadth of its integration library (6,000+ apps, most of them deeply maintained) and the speed from zero to working. When a client needs something connected before the end of the week and the two apps involved are HubSpot and Slack, Zapier is the right answer. The per-task pricing is the real liability — at 50,000+ tasks a month you start to feel it, and at 200,000+ you start to resent it.</p>
+
+  <p><strong>Make</strong> is more capable than most people give it credit for, and less intuitive than most people would like. The visual scenario builder handles complex data transformation better than Zapier's linear step model. The pricing is genuinely better for medium-volume work. The tradeoff is a steeper learning curve and an ecosystem that doesn't quite have Zapier's polish or n8n's community momentum. It occupies a real middle ground but doesn't dominate either end.</p>
+
+  <p><strong>n8n</strong> is where the ceiling disappears. Full JavaScript and Python in workflow nodes. Any API, any logic, any data structure. AI agents and RAG pipelines as first-class citizens. Self-hosted on a $12/month VPS, the marginal cost of additional executions is zero. For anyone building serious automation infrastructure — not connecting two SaaS tools but actually engineering business logic — n8n is the honest long-term answer. The barrier is real: you need to be comfortable with Docker, you need to think about uptime, and you need to own your own incidents. That's not a small ask.</p>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="compare-card-header"><h4>Zapier</h4><p class="compare-price">$20–$800<small>/mo</small></p></div>
+      <div class="compare-card-body">
+        <div class="compare-item">6,000+ integrations, best-in-class UI</div>
+        <div class="compare-item">Fastest path from idea to working</div>
+        <div class="compare-item">Zero infrastructure to manage</div>
+        <div class="compare-item">Best choice under 30k tasks/month</div>
+        <div class="compare-item neg">Per-task pricing scales painfully</div>
+        <div class="compare-item neg">No self-host, no custom code</div>
+      </div>
+    </div>
+    <div class="compare-card">
+      <div class="compare-card-header"><h4>Make</h4><p class="compare-price">$9–$29<small>/mo</small></p></div>
+      <div class="compare-card-body">
+        <div class="compare-item">Better pricing for medium volume</div>
+        <div class="compare-item">Stronger data transform capabilities</div>
+        <div class="compare-item">Good middle ground for complex flows</div>
+        <div class="compare-item neg">Steeper learning curve than Zapier</div>
+        <div class="compare-item neg">Credit model still scales with volume</div>
+        <div class="compare-item neg">No self-host option</div>
+      </div>
+    </div>
+    <div class="compare-card">
+      <div class="compare-card-header"><h4>n8n (self-host)</h4><p class="compare-price">$12<small>/mo server</small></p></div>
+      <div class="compare-card-body">
+        <div class="compare-item">Flat cost, unlimited executions</div>
+        <div class="compare-item">Full JS/Python, any API, no ceiling</div>
+        <div class="compare-item">AI agents, RAG, modern architecture</div>
+        <div class="compare-item">Right answer at serious volume</div>
+        <div class="compare-item neg">You own the server. You own the incidents.</div>
+        <div class="compare-item neg">Smaller native integration library</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflection">
+    <div class="reflection-label">↺ The migration decision</div>
+    <p>Start on Zapier. Learn the patterns. When your monthly bill crosses $200 and you have someone technical enough to manage a VPS, evaluate n8n seriously. The migration is not trivial — rebuilding institutional automation knowledge takes time — but the long-term cost structure usually justifies it above that threshold.</p>
+  </div>
+</section>
+
+<!-- M25 -->
+<section class="module-section" id="m25">
+  <div class="module-header">
+    <span class="module-num">M25</span>
+    <div>
+      <div class="module-title">Zapier expression and filter cheatsheet</div>
+      <div class="module-sub">The expressions you'll actually use in production</div>
+    </div>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-block-label">String operations</div>
+    <pre><span class="c">// Capitalize a name field</span>
+{{ lead_name | capitalize }}           <span class="c">// john doe → John Doe</span>
+
+<span class="c">// Lowercase for consistent email comparison</span>
+{{ lead_email | lower }}              <span class="c">// JOHN@CO.COM → john@co.com</span>
+
+<span class="c">// Extract domain from email</span>
+{{ lead_email | split("@") | last }}  <span class="c">// john@acme.com → acme.com</span>
+
+<span class="c">// Replace characters</span>
+{{ lead_phone | replace("-", "") }}   <span class="c">// 0912-345-6789 → 09123456789</span>
+
+<span class="c">// Truncate long text</span>
+{{ lead_notes | truncate(200) }}</pre>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Date and number operations</div>
+    <pre><span class="c">// Format a date for display</span>
+{{ submission_date | date("MMMM D, YYYY") }}   <span class="c">// May 14, 2026</span>
+
+<span class="c">// Format a date for database storage</span>
+{{ submission_date | date("YYYY-MM-DD") }}      <span class="c">// 2026-05-14</span>
+
+<span class="c">// Conditional value (ternary)</span>
+{{ lead_budget > 5000 ? "HOT" : "WARM" }}
+
+<span class="c">// Math</span>
+{{ monthly_value * 12 }}                        <span class="c">// annualize</span>
+{{ (leads_closed / leads_total) * 100 }}        <span class="c">// conversion rate</span></pre>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Filter conditions (most useful)</div>
+    <pre><span class="c">// Qualify a lead</span>
+budget      (number) greater than         2000
+email       (text)   does not contain     @yourcompany.com
+email       (text)   does not contain     @competitor.com
+first_name  (text)   is not               (empty)
+phone       (text)   is not               (empty)
+
+<span class="c">// Block test data</span>
+source      (text)   does not contain     test
+source      (text)   does not contain     internal
+
+<span class="c">// Route by value</span>
+deal_stage  (text)   is                   Closed Won
+deal_value  (number) greater than or equal to  10000</pre>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-block-label">Lookup table example — region mapping</div>
+    <pre><span class="c">// Formatter → Utilities → Lookup Table</span>
+Input value: lead_state (or lead_country)
+
+NY, CT, MA, RI, VT, NH, ME  →  Northeast
+CA, OR, WA, NV, AZ, HI      →  West
+TX, FL, GA, AL, MS, LA      →  South
+IL, OH, MI, IN, WI, MN      →  Midwest
+Fallback value:              →  Unassigned
+
+<span class="c">// Result field: lead_region</span>
+<span class="c">// Use downstream in filter: only continue if lead_region is not Unassigned</span></pre>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="module-section" id="sources">
+  <div class="module-header">
+    <span class="module-num">SOURCES</span>
+    <div>
+      <div class="module-title">Cited references and recommended reading</div>
+    </div>
+  </div>
+  <div class="source-index">
+    <div class="source-row"><div class="source-num">01</div><div class="source-title">Zapier Help Center — comprehensive documentation for all features, triggers, and actions</div><a href="https://zapier.com/help" target="_blank" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">02</div><div class="source-title">Zapier University — free certification course covering core concepts and advanced patterns</div><a href="https://zapier.com/university" target="_blank" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">03</div><div class="source-title">Zapier Community — idempotency patterns and duplicate prevention best practices</div><a href="https://community.zapier.com" target="_blank" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">04</div><div class="source-title">GoHighLevel Zapier integration documentation — trigger and action reference</div><a href="https://help.gohighlevel.com" target="_blank" class="source-link">↗</a></div>
+    <div class="source-row"><div class="source-num">05</div><div class="source-title">n8n Documentation — self-hosting guide and workflow reference for comparison</div><a href="https://docs.n8n.io" target="_blank" class="source-link">↗</a></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="page-footer">
+  <div><span>Zapier 101 — Automations That Survive Production · Grimoire 005</span><span style="margin:0 10px;opacity:.3">·</span><span>May 2026 · 7 Parts · 25 Modules</span></div>
+  <div style="display:flex;gap:1.5rem"><a href="../projects/">← Back to Projects</a><a href="https://zapier.com" target="_blank">Zapier Official ↗</a></div>
+</footer>
+
+<script>
+const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const pct = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+  bar.style.transform = `scaleX(${pct})`;
+}, { passive: true });
+
+const sections = Array.from(document.querySelectorAll('section[id]'));
+const links = document.querySelectorAll('.nav-link');
+let activeId = null;
+const THRESHOLD = 112;
+function updateNav() {
+  let found = null;
+  for (const s of sections) if (s.getBoundingClientRect().top <= THRESHOLD) found = s.id;
+  if (!found || found === activeId) return;
+  activeId = found;
+  links.forEach(l => l.classList.remove('active'));
+  const link = document.querySelector(`.nav-link[href="#${found}"]`);
+  if (link) { link.classList.add('active'); link.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+</script>
+</body>
+</html>

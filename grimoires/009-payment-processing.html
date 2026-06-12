@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Processing - Grimoire 009 - Aaron Suarez</title>
+<meta name="description" content="The culmination of a payment processing career: a support agent's journey through merchant services, payment infrastructure, risk, receipts, auth codes, entry types, billing descriptors, support scripts, processors, card networks, terminals, gateways, and the business of moving money.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/009-payment-processing.html">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYPEWZXH03"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GYPEWZXH03',{page_title:'Grimoire 009 - Payment Processing',page_path:'/grimoires/009-payment-processing.html'});</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:108px;overflow-x:hidden}
+:root{--chrome:92px;--sidebar:280px;--bg:#F5F2EC;--bg2:#EDE9E0;--bg3:#E5E0D5;--ink:#1C1917;--ink2:#44403C;--ink3:#78716C;--ink4:#A8A29E;--accent:#C2410C;--accent2:#EA580C;--teal:#0D9488;--teal-bg:#CCFBF1;--amber:#B45309;--amber-bg:#FEF3C7;--blue:#1D4ED8;--blue-bg:#DBEAFE;--green:#15803D;--green-bg:#DCFCE7;--red:#B91C1C;--red-bg:#FEE2E2;--purple:#7C3AED;--purple-bg:#F5F3FF;--border:rgba(28,25,23,.12);--border2:rgba(28,25,23,.06);--dark:#1C1917;--dark2:#292524;--dark-fg:#F5F2EC;--dark-muted:#A8A29E;--dark-dim:#78716C;--mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;--shadow-sm:0 1px 3px rgba(28,25,23,.07),0 1px 2px rgba(28,25,23,.04)}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;font-weight:300;background-image:radial-gradient(ellipse at 5% 0%,rgba(194,65,12,.04),transparent 38%),radial-gradient(ellipse at 95% 8%,rgba(13,148,136,.035),transparent 35%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.018'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}.mode-banner{position:sticky;top:0;z-index:300;background:var(--dark);color:var(--dark-fg);padding:0 2rem;height:40px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:11px}.mode-banner-left{display:flex;align-items:center;gap:10px}.mode-dot{width:7px;height:7px;border-radius:50%;background:#FED7AA;animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.site-header{position:sticky;top:40px;z-index:200;background:rgba(245,242,236,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 2rem;height:52px;display:flex;align-items:center;justify-content:space-between}.header-left{display:flex;align-items:center;gap:1rem}.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3)}.header-back:hover{color:var(--accent)}.header-divider{width:1px;height:16px;background:var(--border)}.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:var(--amber-bg);color:var(--amber);border:1px solid rgba(180,83,9,.22)}
+#progress-bar{position:fixed;top:var(--chrome);left:var(--sidebar);right:0;height:2px;z-index:150;background:linear-gradient(90deg,var(--accent),var(--teal));transform-origin:left;transform:scaleX(0);transition:transform .08s linear;pointer-events:none}.sidebar{position:fixed;top:var(--chrome);left:0;width:var(--sidebar);height:calc(100vh - var(--chrome));overflow-y:auto;border-right:1px solid var(--border);background:rgba(245,242,236,.98);backdrop-filter:blur(10px);z-index:100;padding:1rem 0 3rem;scrollbar-width:thin}.nav-group{margin-bottom:.15rem}.nav-group-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);padding:10px 16px 4px;display:block}.nav-group:not(:first-child) .nav-group-label{border-top:1px solid var(--border2);margin-top:.3rem}.nav-link{display:flex;align-items:center;gap:.5rem;padding:5px 16px;font-size:12px;color:var(--ink3);line-height:1.35;transition:.1s;border-left:2px solid transparent}.nav-link:hover{background:var(--bg2);color:var(--ink)}.nav-link.active{background:rgba(194,65,12,.07);color:var(--accent);border-left-color:var(--accent);font-weight:500}.nav-num{font-family:var(--mono);font-size:9px;color:var(--ink4);width:24px;flex-shrink:0}
+.main{margin-left:var(--sidebar);padding:2.8rem 3rem 8rem;max-width:920px;min-width:0}section[id]{scroll-margin-top:108px}.hero{margin-bottom:3.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}.hero h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3.1rem);font-weight:600;line-height:1.08;margin-bottom:.9rem;letter-spacing:-.025em}.hero h1 em{font-style:italic;font-weight:300;color:var(--accent)}.hero-sub{font-size:.98rem;color:var(--ink2);max-width:64ch;line-height:1.8;margin-bottom:1.8rem}.stat-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.8rem}.stat-pill{display:flex;align-items:center;gap:.4rem;padding:5px 12px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:11.5px;color:var(--ink2)}.stat-pill strong{font-weight:500;color:var(--ink)}.btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;padding:.65rem 1.1rem;border-radius:999px;border:1px solid;transition:.15s ease;font-weight:500;margin-right:.55rem}.btn.orange{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(194,65,12,.22)}.btn.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}
+.part-header{margin:3rem 0 2rem;padding:1.1rem 1.4rem;background:var(--dark);border-radius:14px;display:flex;align-items:center;gap:1.2rem}.part-num{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dark-dim)}.part-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--dark-fg)}.part-sub{font-size:11.5px;color:var(--dark-dim);margin-top:2px}.part-divider{width:1px;height:32px;background:rgba(245,242,236,.1);flex-shrink:0}.module-section{margin-bottom:3rem;padding-bottom:2.8rem;border-bottom:1px solid var(--border2)}.module-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.4rem}.module-num{font-family:var(--mono);font-size:10px;color:var(--ink4);padding:4px 8px;border:1px solid var(--border);border-radius:4px;white-space:nowrap;margin-top:3px;background:#fff;flex-shrink:0}.module-title{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:2px}.module-sub{font-size:13px;color:var(--ink3)}
+p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{font-weight:500;color:var(--ink)}code{font-family:var(--mono);font-size:.76em;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--ink)}ul,ol{margin:.4rem 0 .75rem 1.2rem;color:var(--ink2);font-size:14px;line-height:1.75}.callout{border-radius:10px;padding:.85rem 1.1rem;margin:.9rem 0;font-size:13px;line-height:1.65;display:flex;gap:.7rem;align-items:flex-start}.callout-icon{font-family:var(--mono);font-size:.78rem;line-height:1.8;flex-shrink:0}.callout-body{flex:1}.callout-warn{background:var(--amber-bg);border-left:3px solid var(--amber);color:#78350F}.callout-danger{background:var(--red-bg);border-left:3px solid var(--red);color:#7F1D1D}.callout-info{background:var(--blue-bg);border-left:3px solid var(--blue);color:#1E3A8A}.callout-success{background:var(--teal-bg);border-left:3px solid var(--teal);color:#134E4A}.story-card{background:#fff;border-radius:12px;padding:1rem 1.3rem;margin:.9rem 0;border-left:3px solid var(--accent);box-shadow:var(--shadow-sm)}.story-label{font-family:var(--mono);font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}.story-text{font-size:13.5px;color:var(--ink2);font-style:italic;line-height:1.7}.pull-quote{margin:2rem 0;padding:1.2rem 1.5rem;border-radius:12px;background:var(--dark);font-family:var(--serif);font-size:1.05rem;font-style:italic;font-weight:300;color:var(--dark-fg);line-height:1.6}.pull-quote::before{content:'"';font-size:2.5rem;line-height:0;vertical-align:-.4em;color:var(--accent2);margin-right:.2rem;font-style:normal}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin:.9rem 0}.feature-card{background:#fff;border:1px solid var(--border);border-radius:11px;padding:.95rem 1rem}.feature-card-label{font-family:var(--mono);font-size:.57rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:.28rem}.feature-card h4{font-size:.86rem;font-weight:500;color:var(--ink);margin-bottom:.28rem}.feature-card p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin-bottom:0}.table-wrap{overflow-x:auto;margin:.9rem 0;border-radius:10px;border:1px solid var(--border)}table{width:100%;border-collapse:collapse;font-size:12.5px}th{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);text-align:left;padding:9px 13px;border-bottom:1px solid var(--border);background:var(--bg2)}td{padding:9px 13px;border-bottom:1px solid var(--border2);color:var(--ink2);vertical-align:top;line-height:1.55}.flow{margin:1.1rem 0;display:flex;flex-direction:column;gap:.35rem}.flow-step{display:flex;gap:.85rem;align-items:flex-start;padding:.7rem .95rem;background:#fff;border-radius:9px;border:1px solid var(--border2)}.flow-step-num{font-family:var(--mono);font-size:.63rem;font-weight:500;width:22px;height:22px;border-radius:50%;background:var(--dark);color:var(--dark-fg);display:flex;align-items:center;justify-content:center;flex-shrink:0}.flow-step-content h4{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.3}.flow-step-content p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin:0}.kv{background:#fff;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:.8rem 0}.kv-row{display:grid;grid-template-columns:175px 1fr;border-bottom:1px solid var(--border2)}.kv-row:last-child{border-bottom:none}.kv-key{padding:.5rem .85rem;font-family:var(--mono);font-size:.63rem;color:var(--ink4);background:var(--bg2);border-right:1px solid var(--border2)}.kv-val{padding:.5rem .85rem;font-size:.78rem;color:var(--ink2);line-height:1.5}.tech-block{margin:1rem 0}.tech-block-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink4);margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}.tech-block-label::after{content:'';flex:1;height:1px;background:var(--border2)}pre{background:var(--dark);border-radius:10px;padding:1.1rem 1.3rem;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.85;color:#D6D3D1;border:1px solid rgba(255,255,255,.05);margin:.35rem 0}.source-index{display:grid;gap:.35rem;margin:.9rem 0}.source-row{display:grid;grid-template-columns:26px 1fr auto;gap:.6rem;align-items:start;padding:.5rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border2)}.source-num{font-family:var(--mono);font-size:.58rem;color:var(--ink4)}.source-title{font-size:.78rem;color:var(--ink2);line-height:1.45}.source-link{font-family:var(--mono);font-size:.58rem;color:var(--blue);white-space:nowrap}.page-footer{margin-left:var(--sidebar);padding:1.6rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink4)}.page-footer a{color:var(--accent)}
+@media(max-width:960px){:root{--sidebar:0px}.sidebar{display:none}.main{margin-left:0;padding:2rem 1.5rem 5rem}.page-footer{margin-left:0;padding:1.5rem;display:block}#progress-bar{left:0}.feature-grid{grid-template-columns:1fr}.kv-row{grid-template-columns:1fr}.kv-key{border-right:0;border-bottom:1px solid var(--border2)}}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="mode-banner"><div class="mode-banner-left"><div class="mode-dot"></div><span>Grimoire 009 - Payment Processing - Career Culmination + Support Agent Knowledge Base</span></div><span style="font-size:10px;color:var(--dark-dim)">Merchant Services - Risk - Infrastructure - Field Manual</span></div>
+<header class="site-header"><div class="header-left"><a href="../projects/" class="header-back">&larr; Projects</a><div class="header-divider"></div><span class="header-title">Payment Processing - The Career That Taught Me How Money Moves</span></div><span class="header-badge">Grimoire 009</span></header>
+<nav class="sidebar">
+  <div class="nav-group"><span class="nav-group-label">Opening</span><a href="#intro" class="nav-link"><span class="nav-num">IN</span>The Merchant</a><a href="#career-note" class="nav-link"><span class="nav-num">CN</span>Career Note</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part I - Support</span><a href="#c1" class="nav-link"><span class="nav-num">C1</span>Job Posting</a><a href="#c2" class="nav-link"><span class="nav-num">C2</span>First Statement</a><a href="#c3" class="nav-link"><span class="nav-num">C3</span>The Industry</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part II - Money</span><a href="#c4" class="nav-link"><span class="nav-num">C4</span>Tap A Card</a><a href="#c5" class="nav-link"><span class="nav-num">C5</span>Not Instant</a><a href="#c6" class="nav-link"><span class="nav-num">C6</span>Paid?</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part III - Industry</span><a href="#c7" class="nav-link"><span class="nav-num">C7</span>Agent</a><a href="#c8" class="nav-link"><span class="nav-num">C8</span>Processor</a><a href="#c9" class="nav-link"><span class="nav-num">C9</span>Sponsor Bank</a><a href="#c10" class="nav-link"><span class="nav-num">C10</span>Networks</a><a href="#c11" class="nav-link"><span class="nav-num">C11</span>Issuer</a><a href="#c12" class="nav-link"><span class="nav-num">C12</span>Acquirer</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part IV - Economy</span><a href="#c13" class="nav-link"><span class="nav-num">C13</span>US Cards</a><a href="#c14" class="nav-link"><span class="nav-num">C14</span>Philippines</a><a href="#c15" class="nav-link"><span class="nav-num">C15</span>$100</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part V - Services</span><a href="#c16" class="nav-link"><span class="nav-num">C16</span>Accept Cards</a><a href="#c17" class="nav-link"><span class="nav-num">C17</span>Statements</a><a href="#c18" class="nav-link"><span class="nav-num">C18</span>Surcharging</a><a href="#c19" class="nav-link"><span class="nav-num">C19</span>Cash Discount</a><a href="#c20" class="nav-link"><span class="nav-num">C20</span>Dual Pricing</a><a href="#c21" class="nav-link"><span class="nav-num">C21</span>Zero Cost</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part VI - Onboarding</span><a href="#c22" class="nav-link"><span class="nav-num">C22</span>Sign Up</a><a href="#c23" class="nav-link"><span class="nav-num">C23</span>KYB</a><a href="#c24" class="nav-link"><span class="nav-num">C24</span>Underwriting</a><a href="#c25" class="nav-link"><span class="nav-num">C25</span>High Risk</a><a href="#c26" class="nav-link"><span class="nav-num">C26</span>Reserves</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part VII - Hardware</span><a href="#c27" class="nav-link"><span class="nav-num">C27</span>Terminal</a><a href="#c28" class="nav-link"><span class="nav-num">C28</span>POS</a><a href="#c29" class="nav-link"><span class="nav-num">C29</span>Gateway</a><a href="#c30" class="nav-link"><span class="nav-num">C30</span>Stripe</a><a href="#c31" class="nav-link"><span class="nav-num">C31</span>Gateway vs Processor</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part VIII - Field Manual</span><a href="#c32" class="nav-link"><span class="nav-num">C32</span>Missing Money</a><a href="#c33" class="nav-link"><span class="nav-num">C33</span>Decline</a><a href="#c34" class="nav-link"><span class="nav-num">C34</span>Terminal</a><a href="#c35" class="nav-link"><span class="nav-num">C35</span>Escalation</a><a href="#c36" class="nav-link"><span class="nav-num">C36</span>First Questions</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part IX - Systems</span><a href="#c37" class="nav-link"><span class="nav-num">C37</span>Event</a><a href="#c38" class="nav-link"><span class="nav-num">C38</span>Webhooks</a><a href="#c39" class="nav-link"><span class="nav-num">C39</span>Not Payments</a><a href="#c40" class="nav-link"><span class="nav-num">C40</span>Follow Money</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part X - Case Files</span><a href="#c41" class="nav-link"><span class="nav-num">C41</span>First Week</a><a href="#c42" class="nav-link"><span class="nav-num">C42</span>Angry Call</a><a href="#c43" class="nav-link"><span class="nav-num">C43</span>Statement Scar</a><a href="#c44" class="nav-link"><span class="nav-num">C44</span>Risk Hold</a><a href="#c45" class="nav-link"><span class="nav-num">C45</span>Chargeback</a><a href="#c46" class="nav-link"><span class="nav-num">C46</span>Refund Batch</a><a href="#c47" class="nav-link"><span class="nav-num">C47</span>Terminal Not Broken</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part XI - Mechanics</span><a href="#c48" class="nav-link"><span class="nav-num">C48</span>Receipt</a><a href="#c49" class="nav-link"><span class="nav-num">C49</span>Auth Code</a><a href="#c50" class="nav-link"><span class="nav-num">C50</span>Rekey Same Auth</a><a href="#c51" class="nav-link"><span class="nav-num">C51</span>Entry Types</a><a href="#c52" class="nav-link"><span class="nav-num">C52</span>Descriptors</a><a href="#c53" class="nav-link"><span class="nav-num">C53</span>Pricing</a><a href="#c54" class="nav-link"><span class="nav-num">C54</span>Chargebacks</a><a href="#c55" class="nav-link"><span class="nav-num">C55</span>Risk Flags</a><a href="#c56" class="nav-link"><span class="nav-num">C56</span>Processor Models</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part XII - Scripts</span><a href="#c57" class="nav-link"><span class="nav-num">C57</span>Missing Deposit</a><a href="#c58" class="nav-link"><span class="nav-num">C58</span>Fees Script</a><a href="#c59" class="nav-link"><span class="nav-num">C59</span>Decline Script</a><a href="#c60" class="nav-link"><span class="nav-num">C60</span>Hold Script</a><a href="#c61" class="nav-link"><span class="nav-num">C61</span>Terminal Script</a><a href="#c62" class="nav-link"><span class="nav-num">C62</span>Ticket Notes</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part XIII - Agent KB</span><a href="#c63" class="nav-link"><span class="nav-num">C63</span>Intent Map</a><a href="#c64" class="nav-link"><span class="nav-num">C64</span>Data Fields</a><a href="#c65" class="nav-link"><span class="nav-num">C65</span>Never Say</a><a href="#c66" class="nav-link"><span class="nav-num">C66</span>Templates</a><a href="#c67" class="nav-link"><span class="nav-num">C67</span>30-Day Training</a><a href="#c68" class="nav-link"><span class="nav-num">C68</span>Glossary</a><a href="#c69" class="nav-link"><span class="nav-num">C69</span>Decision Tree</a><a href="#c70" class="nav-link"><span class="nav-num">C70</span>Final Operating System</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part XIV - Technical Survival</span><a href="#c71" class="nav-link"><span class="nav-num">C71</span>Base Architecture</a><a href="#c72" class="nav-link"><span class="nav-num">C72</span>POS + Terminal</a><a href="#c73" class="nav-link"><span class="nav-num">C73</span>Website Checkout</a><a href="#c74" class="nav-link"><span class="nav-num">C74</span>Hosted vs Embedded</a><a href="#c75" class="nav-link"><span class="nav-num">C75</span>Varsheet</a><a href="#c76" class="nav-link"><span class="nav-num">C76</span>API Keys</a><a href="#c77" class="nav-link"><span class="nav-num">C77</span>Webhooks</a><a href="#c78" class="nav-link"><span class="nav-num">C78</span>Test Mode</a><a href="#c79" class="nav-link"><span class="nav-num">C79</span>Reconciliation</a><a href="#c80" class="nav-link"><span class="nav-num">C80</span>Integrations</a><a href="#c81" class="nav-link"><span class="nav-num">C81</span>Go-Live</a><a href="#c82" class="nav-link"><span class="nav-num">C82</span>Noob Mistakes</a><a href="#c83" class="nav-link"><span class="nav-num">C83</span>Integration Ticket</a><a href="#c84" class="nav-link"><span class="nav-num">C84</span>Future Agent</a></div>
+  <div class="nav-group"><span class="nav-group-label">Reference</span><a href="#sources" class="nav-link"><span class="nav-num">SRC</span>Sources</a></div>
+</nav>
+<main class="main">
+<section class="hero" id="intro">
+  <div class="hero-eyebrow">Grimoire 009 - Merchant Services - June 2026</div>
+  <h1>Payment Processing: <em>The Industry I Didn't Know I Was Learning</em></h1>
+  <p class="hero-sub">The culmination of a payment processing career: support calls, merchant statements, angry funding tickets, risk holds, terminal failures, onboarding mysteries, bank logic, processor language, and the slow realization that moving money is really the business of managing trust. This one starts as a story because that is how the industry teaches you.</p>
+  <div class="stat-row"><div class="stat-pill"><strong>14</strong> parts</div><div class="stat-pill"><strong>84</strong> chapters</div><div class="stat-pill"><strong>Support</strong> field manual</div><div class="stat-pill"><strong>Technical</strong> survival guide</div><div class="stat-pill"><strong>AI agent</strong> ready</div></div>
+  <a href="#c1" class="btn orange">Begin The Story &rarr;</a><a href="#c32" class="btn ghost">Support Manual</a><a href="#c40" class="btn ghost">Follow The Money</a>
+  <div class="story-card"><div class="story-label">The merchant who wanted his money</div><div class="story-text">My understanding of payment processing once looked like this: customer pays, business gets money. Simple. Then a merchant called. His terminal said approved. His POS said approved. His batch was closed. His bank account showed nothing. And I had absolutely no idea where his money was.</div></div>
+  <div class="pull-quote">Payment processing is not a product. It is an ecosystem. Most people only see the final two seconds of it.</div>
+</section>
+
+<section class="module-section" id="career-note"><div class="module-header"><span class="module-num">CAREER</span><div><div class="module-title">Author's Note: The Career Finally Makes Sense</div><div class="module-sub">This is not just an industry explainer</div></div></div>
+  <p>Some Grimoires are built from research. This one is built from repetition: the same merchant panic in different clothes, the same fee confusion on a new statement, the same terminal failure five minutes before closing, the same funding delay that sounds simple until you trace it through batches, banks, reserves, risk notes, and processor language.</p>
+  <p>At first, payment processing felt like support work. Answer the call. Calm the merchant. Find the ticket. Escalate the issue. Close the case. But over time, the calls formed a map. Every frustrated merchant was pointing at a different part of the same machine.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Early career</div><div class="kv-val">I thought the job was answering payment questions.</div></div><div class="kv-row"><div class="kv-key">Middle career</div><div class="kv-val">I realized the questions were about systems: risk, funding, hardware, banks, gateways, integrations, and trust.</div></div><div class="kv-row"><div class="kv-key">Now</div><div class="kv-val">The career becomes a field guide: what I wish someone had handed me before the first angry merchant asked where the money went.</div></div></div>
+  <div class="callout callout-success"><div class="callout-icon">POINT</div><div class="callout-body">This Grimoire should feel like the moment the scattered years become a single operating system. Not nostalgia. Not a textbook. A working map earned from the support floor.</div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part I</div><div class="part-title">I Thought I Was Learning Support</div><div class="part-sub">Before the industry map, there was a headset and a confused merchant</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C1 - C3</div></div>
+
+<section class="module-section" id="c1"><div class="module-header"><span class="module-num">C1</span><div><div class="module-title">The Job Posting</div><div class="module-sub">Why payment processing looks simple from the outside</div></div></div>
+  <p>I did not enter payments because I was fascinated by interchange, acquirers, terminals, chargebacks, PCI, or risk underwriting. I entered through support. The posting sounded like normal customer service: answer questions, troubleshoot accounts, help merchants.</p>
+  <p>From the outside, payments looked like a utility. The customer pays. The business receives the money. Maybe a fee happens somewhere. That was the whole story in my head, and it was wrong in the way most beginner mental models are wrong: not stupid, just too small.</p>
+  <div class="callout callout-info"><div class="callout-icon">LESSON</div><div class="callout-body">Nearly everyone underestimates this industry because the best payment experiences hide the system. Tap. Approved. Receipt. Done. The complexity disappears until something breaks.</div></div>
+</section>
+
+<section class="module-section" id="c2"><div class="module-header"><span class="module-num">C2</span><div><div class="module-title">The First Merchant Statement</div><div class="module-sub">The first time fees stopped looking like one line item</div></div></div>
+  <p>The first statement call is a rite of passage. A merchant asks, "Why am I paying all these fees?" and suddenly the statement looks less like a bill and more like an archaeological dig: interchange, assessments, batch fees, PCI fees, monthly fees, statement fees, gateway fees, authorization fees, non-qualified downgrades.</p>
+  <p>Merchants understand revenue because they earn it. Many do not understand the machinery that moves that revenue from a customer's card to their bank account. That gap is where support lives.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Interchange</div><div class="kv-val">The card-issuing bank's portion, usually the largest component of card cost.</div></div><div class="kv-row"><div class="kv-key">Assessment</div><div class="kv-val">Network fees charged by card brands such as Visa and Mastercard.</div></div><div class="kv-row"><div class="kv-key">Processor markup</div><div class="kv-val">The amount charged by the provider stack for routing, reporting, support, risk, and profit.</div></div><div class="kv-row"><div class="kv-key">Misc fees</div><div class="kv-val">Monthly, PCI, batch, gateway, chargeback, statement, or service fees depending on account setup.</div></div></div>
+</section>
+
+<section class="module-section" id="c3"><div class="module-header"><span class="module-num">C3</span><div><div class="module-title">The Day I Realized This Was An Industry</div><div class="module-sub">Not software. Not banking. Not sales. All of it.</div></div></div>
+  <p>The click happened slowly. Payment processing was not one company and one transaction. It was banks, processors, networks, sales organizations, underwriting teams, compliance rules, hardware vendors, gateways, point-of-sale systems, risk departments, support teams, and merchants all touching the same flow.</p>
+  <div class="tech-block"><div class="tech-block-label">The real industry</div><pre>Banks
+Processors
+Card Networks
+Sales Organizations
+Hardware Vendors
+Gateways
+Compliance Teams
+Risk Departments
+Support Teams
+Merchants</pre></div>
+  <p>Once you see that, support changes. You stop asking "why didn't the money show up?" and start asking "where in the chain is the state different from what the merchant thinks it is?"</p>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part II</div><div class="part-title">Following The Money</div><div class="part-sub">What happens in two seconds, and why funding takes longer</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C4 - C6</div></div>
+
+<section class="module-section" id="c4"><div class="module-header"><span class="module-num">C4</span><div><div class="module-title">What Happens When Someone Taps A Card</div><div class="module-sub">The transaction journey hidden inside "approved"</div></div></div>
+  <div class="tech-block"><div class="tech-block-label">Authorization path</div><pre>Customer
+  -> Terminal
+  -> POS
+  -> Gateway
+  -> Processor
+  -> Card Network
+  -> Issuing Bank
+  -> Approval / Decline
+  -> Back through the chain</pre></div>
+  <p>The tap is not money moving. It is a request for permission. The terminal collects card data. The POS attaches sale information. The gateway or processor routes the request. The network identifies the issuing bank. The issuing bank checks the card, account, fraud rules, available credit or funds, and returns a decision.</p>
+  <div class="callout callout-success"><div class="callout-icon">KEY</div><div class="callout-body">Authorization answers: "Can this transaction be accepted right now?" It does not mean the merchant has been funded.</div></div>
+</section>
+
+<section class="module-section" id="c5"><div class="module-header"><span class="module-num">C5</span><div><div class="module-title">Why Money Doesn't Move Instantly</div><div class="module-sub">Authorization, capture, settlement, and funding are different states</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>State</th><th>Meaning</th><th>Support translation</th></tr></thead><tbody><tr><td>Authorization</td><td>Issuer approved the transaction request.</td><td>The cardholder can buy; funds may be held.</td></tr><tr><td>Capture</td><td>Merchant finalizes the transaction for clearing.</td><td>The sale is ready to be included in settlement.</td></tr><tr><td>Settlement</td><td>Transactions are submitted through the processing/network/bank chain.</td><td>The batch is being reconciled between parties.</td></tr><tr><td>Funding</td><td>Merchant receives money in the bank account.</td><td>The merchant sees the deposit.</td></tr></tbody></table></div>
+  <p>Merchants often collapse all four into "paid." Support cannot. A missing money ticket starts by identifying which state the transaction actually reached.</p>
+</section>
+
+<section class="module-section" id="c6"><div class="module-header"><span class="module-num">C6</span><div><div class="module-title">Why Paid Doesn't Mean Paid</div><div class="module-sub">Approved is not funded</div></div></div>
+  <p>The customer sees approved. The merchant expects funded. Reality may be authorized, captured, settled, held, reversed, charged back, batched late, funded to a different account, or delayed by risk review.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Customer language</div><div class="kv-val">"It went through."</div></div><div class="kv-row"><div class="kv-key">Merchant language</div><div class="kv-val">"Where is my money?"</div></div><div class="kv-row"><div class="kv-key">Processor language</div><div class="kv-val">"Authorization approved, batch submitted, funding pending."</div></div><div class="kv-row"><div class="kv-key">Support job</div><div class="kv-val">Translate between all three without promising what you cannot verify.</div></div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part III</div><div class="part-title">Meeting The Industry</div><div class="part-sub">The players behind every authorization, fee, decline, hold, and deposit</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C7 - C12</div></div>
+
+<section class="module-section" id="c7"><div class="module-header"><span class="module-num">C7</span><div><div class="module-title">The Agent</div><div class="module-sub">The sales side of payments</div></div></div>
+  <p>Merchant services became a sales industry because merchants need acceptance, pricing is confusing, providers are hard to compare, and relationships matter when money is interrupted. Agents and ISOs bring merchants into the ecosystem and often earn residuals from processing volume.</p>
+  <p>The best agents understand fit, risk, hardware, pricing, and support. The worst sell "free processing" and vanish when underwriting, funding, or chargebacks appear.</p>
+</section>
+
+<section class="module-section" id="c8"><div class="module-header"><span class="module-num">C8</span><div><div class="module-title">The Processor</div><div class="module-sub">The transaction engine most customers never see</div></div></div>
+  <p>Processors route authorization messages, support settlement, generate reports, monitor risk, integrate with terminals and gateways, and connect merchants to the broader card ecosystem. Names like Fiserv, TSYS, Worldpay, and Global Payments may be invisible to consumers while processing enormous transaction volume behind the scenes.</p>
+  <div class="feature-grid"><div class="feature-card"><div class="feature-card-label">Processor work</div><h4>Route messages</h4><p>Move transaction data between merchant systems, networks, and banks.</p></div><div class="feature-card"><div class="feature-card-label">Processor work</div><h4>Settle batches</h4><p>Help turn approved transactions into clearing and funding records.</p></div><div class="feature-card"><div class="feature-card-label">Processor work</div><h4>Report activity</h4><p>Statements, deposits, fees, chargebacks, and transaction history.</p></div><div class="feature-card"><div class="feature-card-label">Processor work</div><h4>Monitor risk</h4><p>Spot unusual volume, fraud patterns, and merchant behavior changes.</p></div></div>
+</section>
+
+<section class="module-section" id="c9"><div class="module-header"><span class="module-num">C9</span><div><div class="module-title">The Sponsoring Bank</div><div class="module-sub">The chapter where risk starts to make sense</div></div></div>
+  <p>Merchant processing is tied to banking because card acceptance creates risk. A merchant could take payment today and disappear tomorrow. A customer could dispute a transaction months later. A processor or acquiring bank may have to deal with chargeback exposure, compliance requirements, and financial loss.</p>
+  <div class="callout callout-warn"><div class="callout-icon">RISK</div><div class="callout-body">The bank carries risk. That is why underwriting exists, reserves exist, funding holds exist, and accounts can be terminated.</div></div>
+</section>
+
+<section class="module-section" id="c10"><div class="module-header"><span class="module-num">C10</span><div><div class="module-title">Visa Isn't A Bank</div><div class="module-sub">Card networks are highways, not lenders</div></div></div>
+  <p>Visa and Mastercard are card networks. They establish rules, route transactions, define fee structures, support dispute frameworks, and connect issuers and acquirers. They are not usually the bank that issued the card or the bank funding the merchant.</p>
+  <p>Think of the network like a highway system with rules, tolls, lanes, and traffic signals. The issuing bank and acquiring side are the vehicles moving value and risk across that highway.</p>
+</section>
+
+<section class="module-section" id="c11"><div class="module-header"><span class="module-num">C11</span><div><div class="module-title">The Issuing Bank</div><div class="module-sub">Why "Do Not Honor" ruins everyone's afternoon</div></div></div>
+  <p>The issuing bank gave the card to the customer. It owns the relationship with the cardholder and makes many approval or decline decisions based on funds, credit line, fraud rules, card status, geography, merchant type, and behavior patterns.</p>
+  <p>In support, "Do Not Honor" is frustrating because it often means the issuer declined without giving the merchant a fixable reason. The correct answer is usually not "try harder." It is "the cardholder should contact their bank or use another payment method."</p>
+</section>
+
+<section class="module-section" id="c12"><div class="module-header"><span class="module-num">C12</span><div><div class="module-title">The Acquiring Side</div><div class="module-sub">The merchant's side of the ecosystem</div></div></div>
+  <p>The acquiring side enables the merchant to accept card payments. It includes merchant accounts, acquirers, processors, ISOs, payment facilitators, gateways, and service providers depending on the model.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Issuer</div><div class="kv-val">Cardholder side. Approves or declines the customer's transaction.</div></div><div class="kv-row"><div class="kv-key">Acquirer</div><div class="kv-val">Merchant side. Enables acceptance and participates in settlement/funding.</div></div><div class="kv-row"><div class="kv-key">Processor</div><div class="kv-val">Technical and operational transaction engine.</div></div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part IV</div><div class="part-title">Why This Industry Exists</div><div class="part-sub">Cards are not universal; payment culture changes by country</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C13 - C15</div></div>
+
+<section class="module-section" id="c13"><div class="module-header"><span class="module-num">C13</span><div><div class="module-title">The United States Built An Economy Around Cards</div><div class="module-sub">Credit, rewards, acceptance, and consumer habit</div></div></div>
+  <p>In the United States, cards are not just payment instruments. They are credit products, rewards systems, fraud-protection tools, convenience layers, loyalty devices, and business acceptance infrastructure. Consumers expect cards to work almost everywhere, and merchants often accept the cost because card acceptance can increase conversion and ticket size.</p>
+</section>
+
+<section class="module-section" id="c14"><div class="module-header"><span class="module-num">C14</span><div><div class="module-title">Why The Philippines Is Different</div><div class="module-sub">Cash, wallets, bank transfers, and local rails</div></div></div>
+  <p>Payment processing feels different depending on where you live. In the Philippines, cash, bank transfers, QR payments, GCash, Maya, and local wallet behavior shape the market differently from US card culture. A person raised in one system may assume the other is strange until they understand the incentives.</p>
+  <div class="callout callout-info"><div class="callout-icon">MAP</div><div class="callout-body">Payments are local before they are global. Regulation, banking access, credit culture, fraud patterns, consumer trust, and mobile adoption all change the payment stack.</div></div>
+</section>
+
+<section class="module-section" id="c15"><div class="module-header"><span class="module-num">C15</span><div><div class="module-title">The Economics Of A $100 Transaction</div><div class="module-sub">Who gets what when the merchant sees a fee</div></div></div>
+  <p>A $100 card sale does not usually produce a clean $100 deposit. A slice goes to interchange, a slice to network assessments, and a slice to processor/provider markup. The exact amount depends on card type, merchant category, transaction method, pricing model, region, risk, and program rules.</p>
+  <div class="table-wrap"><table><thead><tr><th>Recipient</th><th>Why they get paid</th></tr></thead><tbody><tr><td>Issuing bank</td><td>Takes credit/fraud exposure and receives interchange.</td></tr><tr><td>Card network</td><td>Runs the network rules and rails, receives assessments/network fees.</td></tr><tr><td>Processor/provider</td><td>Routes, reports, supports, funds, monitors, and maintains infrastructure.</td></tr><tr><td>Agent/ISO</td><td>May receive residuals for sales and relationship management.</td></tr></tbody></table></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part V</div><div class="part-title">Merchant Services</div><div class="part-sub">The business conversation merchants actually have</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C16 - C21</div></div>
+
+<section class="module-section" id="c16"><div class="module-header"><span class="module-num">C16</span><div><div class="module-title">Why Businesses Accept Cards</div><div class="module-sub">Convenience is expensive, but friction is expensive too</div></div></div>
+  <p>Businesses accept cards because customers expect it, tickets can increase, checkout is easier, online commerce requires it, and refusing cards can cost sales. The merchant dislikes fees, but also dislikes losing customers who do not carry cash or expect rewards.</p>
+</section>
+
+<section class="module-section" id="c17"><div class="module-header"><span class="module-num">C17</span><div><div class="module-title">Understanding Merchant Statements</div><div class="module-sub">A beginner's guide to the bill nobody wants to read</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Find volume</h4><p>Total card sales processed for the statement period.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Find total fees</h4><p>All processing and monthly charges combined.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Calculate effective rate</h4><p>Total fees divided by total volume. This is a blunt but useful starting point.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Separate pass-through from markup</h4><p>Interchange and assessments are not the same as provider profit.</p></div></div></div>
+</section>
+
+<section class="module-section" id="c18"><div class="module-header"><span class="module-num">C18</span><div><div class="module-title">Surcharging</div><div class="module-sub">Why merchants love it and customers hate it</div></div></div>
+  <p>Surcharging adds a fee when a customer pays by credit card, where allowed and compliant. Merchants like it because it offsets card acceptance costs. Customers dislike it because it makes the cost visible at the worst possible moment: checkout.</p>
+  <div class="callout callout-danger"><div class="callout-icon">LEGAL</div><div class="callout-body">Surcharge rules vary by jurisdiction, card brand, card type, signage, disclosure, and cap requirements. Never tell a merchant "just add 4%" without compliance review.</div></div>
+</section>
+
+<section class="module-section" id="c19"><div class="module-header"><span class="module-num">C19</span><div><div class="module-title">Cash Discount Programs</div><div class="module-sub">Why this is not the same thing as surcharging</div></div></div>
+  <p>A cash discount program presents a regular price and offers a discount for cash, depending on implementation and legal context. The consumer psychology is different: one feels like a penalty for cards; the other feels like a reward for cash. The compliance details matter.</p>
+</section>
+
+<section class="module-section" id="c20"><div class="module-header"><span class="module-num">C20</span><div><div class="module-title">Dual Pricing</div><div class="module-sub">The modern evolution of visible payment cost</div></div></div>
+  <p>Dual pricing shows different cash and card prices before checkout. It can be clearer for consumers than surprise fees and more honest for merchants than hiding acceptance costs. Like surcharging and cash discounting, execution and compliance matter.</p>
+</section>
+
+<section class="module-section" id="c21"><div class="module-header"><span class="module-num">C21</span><div><div class="module-title">The Dream Of Zero Cost Processing</div><div class="module-sub">Marketing claim vs industry reality</div></div></div>
+  <p>"Zero cost" usually means shifting cost, not deleting cost. Someone pays: the merchant, the customer, the provider through margin tradeoffs, or the business through conversion friction. The more honest phrase is "cost recovery," not magic.</p>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part VI</div><div class="part-title">Merchant Onboarding</div><div class="part-sub">Why signing up is not the same as being approved to move money</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C22 - C26</div></div>
+
+<section class="module-section" id="c22"><div class="module-header"><span class="module-num">C22</span><div><div class="module-title">The Merchant Who Just Wants To Take Cards</div><div class="module-sub">Expectation vs reality</div></div></div>
+  <div class="tech-block"><div class="tech-block-label">Expectation</div><pre>Sign Up
+  -> Take Payments</pre></div>
+  <div class="tech-block"><div class="tech-block-label">Reality</div><pre>Application
+  -> Verification
+  -> Underwriting
+  -> Approval
+  -> Deployment
+  -> Processing
+  -> Monitoring</pre></div>
+  <p>Payment acceptance is not just account creation. It is permission to participate in a risk-bearing financial system.</p>
+</section>
+
+<section class="module-section" id="c23"><div class="module-header"><span class="module-num">C23</span><div><div class="module-title">KYB</div><div class="module-sub">Know Your Business</div></div></div>
+  <p>KYB verifies that the business is real, the owners are identifiable, the activity matches what was represented, and the provider understands the risk. It can include business documents, beneficial ownership, website review, bank verification, processing history, tax IDs, and prohibited activity checks.</p>
+</section>
+
+<section class="module-section" id="c24"><div class="module-header"><span class="module-num">C24</span><div><div class="module-title">Underwriting</div><div class="module-sub">The department every merchant eventually meets</div></div></div>
+  <p>Underwriting asks: should this merchant be allowed to process, at what volume, under what terms, and with what controls? A low-risk coffee shop and a high-ticket coaching program do not carry the same exposure.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Business model</div><div class="kv-val">What is being sold and how is it fulfilled?</div></div><div class="kv-row"><div class="kv-key">Ticket size</div><div class="kv-val">Higher tickets increase dispute exposure.</div></div><div class="kv-row"><div class="kv-key">Delivery timing</div><div class="kv-val">Future delivery creates risk if the merchant fails before fulfilling.</div></div><div class="kv-row"><div class="kv-key">History</div><div class="kv-val">Chargebacks, processing volume, refunds, and prior terminations matter.</div></div></div>
+</section>
+
+<section class="module-section" id="c25"><div class="module-header"><span class="module-num">C25</span><div><div class="module-title">High Risk Merchants</div><div class="module-sub">Why risk matters before the first transaction</div></div></div>
+  <p>Some businesses are considered higher risk because of chargeback history, regulatory exposure, delayed fulfillment, subscription behavior, reputation, fraud patterns, or product category. Travel, supplements, coaching, subscriptions, CBD, ticketing, adult, and certain digital offers often receive more scrutiny.</p>
+</section>
+
+<section class="module-section" id="c26"><div class="module-header"><span class="module-num">C26</span><div><div class="module-title">Holds And Reserves</div><div class="module-sub">Why processors sometimes say "not yet"</div></div></div>
+  <p>Funding holds and reserves are risk controls. A rolling reserve withholds a percentage of processing volume for a period. A hold pauses funding while risk reviews activity. Merchants experience this emotionally as "they took my money." Providers see it as exposure management.</p>
+  <div class="callout callout-warn"><div class="callout-icon">SUPPORT</div><div class="callout-body">When discussing holds, do not speculate. Confirm the reason code or risk note, explain the required documents or timeline, and avoid promising release dates unless risk has confirmed them.</div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part VII</div><div class="part-title">Hardware And Infrastructure</div><div class="part-sub">The counter, the cloud, and the bridge between them</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C27 - C31</div></div>
+
+<section class="module-section" id="c27"><div class="module-header"><span class="module-num">C27</span><div><div class="module-title">The Terminal On The Counter</div><div class="module-sub">EMV, NFC, tap-to-pay, and the tiny machine everyone blames</div></div></div>
+  <p>The terminal is the visible edge of the payment system. It reads cards, encrypts data, prompts for PIN or signature when needed, communicates with the processor or POS, and displays the result. When anything fails, the terminal gets blamed because it is the thing the merchant can see.</p>
+</section>
+
+<section class="module-section" id="c28"><div class="module-header"><span class="module-num">C28</span><div><div class="module-title">POS Systems</div><div class="module-sub">The software layer that became its own industry</div></div></div>
+  <p>Point-of-sale systems like Clover, Toast, Square, Lightspeed, and many vertical tools do more than accept payment. They manage menus, inventory, employees, orders, tips, taxes, reporting, loyalty, and customer profiles. That is why POS became its own industry: the payment is one event inside an operational system.</p>
+</section>
+
+<section class="module-section" id="c29"><div class="module-header"><span class="module-num">C29</span><div><div class="module-title">Gateways</div><div class="module-sub">The digital bridge</div></div></div>
+  <p>A payment gateway connects digital transaction requests to processing rails. In ecommerce, the gateway is often the layer that handles checkout communication, tokenization, authorization requests, captures, refunds, and integrations with carts or apps.</p>
+</section>
+
+<section class="module-section" id="c30"><div class="module-header"><span class="module-num">C30</span><div><div class="module-title">Why Stripe Changed Everything</div><div class="module-sub">APIs, developer-first infrastructure, and embedded payments</div></div></div>
+  <p>Stripe made payments feel programmable. Instead of only thinking in terminals and merchant statements, developers could create customers, payment intents, subscriptions, invoices, webhooks, connected accounts, and platform payments through APIs. This helped shift the industry from merchant services as a sales conversation to payments as infrastructure.</p>
+</section>
+
+<section class="module-section" id="c31"><div class="module-header"><span class="module-num">C31</span><div><div class="module-title">Gateway vs Processor</div><div class="module-sub">The confusion chapter</div></div></div>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Gateway</div><div class="kv-val">The digital front door that accepts transaction requests and connects software to payment processing.</div></div><div class="kv-row"><div class="kv-key">Processor</div><div class="kv-val">The engine that routes, clears, reports, and supports transaction processing.</div></div><div class="kv-row"><div class="kv-key">Why confusing</div><div class="kv-val">Some companies provide both, and modern platforms blur the layers for convenience.</div></div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part VIII</div><div class="part-title">Support Field Manual</div><div class="part-sub">How to think when the merchant is angry and the answer is hidden in a system state</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C32 - C36</div></div>
+
+<section class="module-section" id="c32"><div class="module-header"><span class="module-num">C32</span><div><div class="module-title">The Missing Money Ticket</div><div class="module-sub">Investigation framework</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Identify the transaction or batch</h4><p>Date, amount, last four, authorization code, batch number, location, terminal/POS, and merchant ID.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Check state</h4><p>Authorized, captured, voided, refunded, settled, rejected, held, charged back, or funded.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Check batch timing</h4><p>Was the batch closed? Was it after cutoff? Was there a weekend or holiday?</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Check bank account</h4><p>Was funding sent to the expected bank account? Any recent bank changes?</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Check risk notes</h4><p>Any hold, reserve, review, rejected batch, negative balance, or documentation request?</p></div></div></div>
+  <div class="callout callout-danger"><div class="callout-icon">DON'T</div><div class="callout-body">Do not say "the money will arrive tomorrow" because the merchant wants relief. Say what state you can verify and what must happen next.</div></div>
+</section>
+
+<section class="module-section" id="c33"><div class="module-header"><span class="module-num">C33</span><div><div class="module-title">The Declined Transaction</div><div class="module-sub">Who actually owns the problem?</div></div></div>
+  <p>A decline can come from the issuer, the processor, the gateway, fraud rules, terminal configuration, card type restrictions, AVS/CVV mismatch, insufficient funds, card status, or network issues. The support move is to identify who made the decision.</p>
+  <div class="table-wrap"><table><thead><tr><th>Decline type</th><th>Likely owner</th><th>Support answer</th></tr></thead><tbody><tr><td>Insufficient funds</td><td>Issuer/cardholder</td><td>Use another payment method or contact bank.</td></tr><tr><td>Do Not Honor</td><td>Issuer</td><td>Cardholder must contact bank; reason may not be disclosed.</td></tr><tr><td>AVS/CVV mismatch</td><td>Gateway/fraud rules</td><td>Verify billing info or adjust fraud settings if appropriate.</td></tr><tr><td>Card type not accepted</td><td>Merchant account setup</td><td>Check acceptance settings and card brand permissions.</td></tr><tr><td>Terminal communication failure</td><td>Device/network</td><td>Troubleshoot connectivity before blaming the card.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c34"><div class="module-header"><span class="module-num">C34</span><div><div class="module-title">The Terminal Isn't Working</div><div class="module-sub">Real troubleshooting without panic</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Power</h4><p>Is the device on, charged, plugged in, and booted correctly?</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Network</h4><p>Wi-Fi, Ethernet, cellular, IP settings, signal strength, router changes.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Scope</h4><p>One terminal, all terminals, one location, all locations, one card type, all cards?</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Error</h4><p>Exact message, screenshot, receipt, time, transaction amount, firmware/app version.</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Fallback</h4><p>Can merchant use another terminal, virtual terminal, invoice link, or offline process if allowed?</p></div></div></div>
+</section>
+
+<section class="module-section" id="c35"><div class="module-header"><span class="module-num">C35</span><div><div class="module-title">Escalation Paths</div><div class="module-sub">Agent vs processor vs bank</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Issue</th><th>First team</th><th>Escalate to</th></tr></thead><tbody><tr><td>Statement confusion</td><td>Support/agent</td><td>Pricing or account manager</td></tr><tr><td>Missing deposit</td><td>Support</td><td>Processor/funding/risk</td></tr><tr><td>Risk hold</td><td>Support documents</td><td>Risk/underwriting</td></tr><tr><td>Issuer decline</td><td>Support explains</td><td>Cardholder's bank, not merchant processor</td></tr><tr><td>Terminal hardware failure</td><td>Support troubleshooting</td><td>Device vendor/deployment team</td></tr><tr><td>Chargeback</td><td>Support intake</td><td>Disputes team</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c36"><div class="module-header"><span class="module-num">C36</span><div><div class="module-title">The Questions Every Support Agent Should Ask First</div><div class="module-sub">A practical framework</div></div></div>
+  <div class="tech-block"><div class="tech-block-label">First questions</div><pre>1. What merchant account / location is affected?
+2. What exactly happened, and what did you expect to happen?
+3. Is this about authorization, settlement, funding, fees, hardware, or reporting?
+4. What date, amount, card last four, batch, or deposit are we investigating?
+5. Is the issue one transaction, one batch, one device, one customer, or everything?
+6. What changed recently? Bank account, terminal, POS, pricing, ownership, volume?
+7. Is there a risk hold, dispute, refund, rejected batch, or documentation request?
+8. What can I verify before I promise anything?</pre></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part IX</div><div class="part-title">Payments As Systems</div><div class="part-sub">The Aaron chapter: every payment is an event in a larger business machine</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C37 - C40</div></div>
+
+<section class="module-section" id="c37"><div class="module-header"><span class="module-num">C37</span><div><div class="module-title">Every Payment Is An Event</div><div class="module-sub">Not money first. State first.</div></div></div>
+  <p>A payment is an event before it is money in an account. It has states, timestamps, identifiers, actors, rules, retries, failures, notifications, and downstream consequences. Approved, captured, settled, refunded, disputed, failed, held, and funded are all states in a system.</p>
+  <p>Once you see payments as events, payment processing starts to look less like a cash register and more like distributed infrastructure.</p>
+</section>
+
+<section class="module-section" id="c38"><div class="module-header"><span class="module-num">C38</span><div><div class="module-title">Webhooks Move Modern Commerce</div><div class="module-sub">Stripe events, payment notifications, CRM updates</div></div></div>
+  <p>Modern commerce runs on payment events. A successful payment can unlock a course, create a CRM opportunity, send a receipt, update inventory, schedule fulfillment, start a subscription, notify accounting, or trigger a support workflow.</p>
+  <div class="tech-block"><div class="tech-block-label">Payment event chain</div><pre>payment_intent.succeeded
+  -> mark invoice paid
+  -> update CRM deal
+  -> send receipt
+  -> grant product access
+  -> notify fulfillment
+  -> update revenue dashboard</pre></div>
+</section>
+
+<section class="module-section" id="c39"><div class="module-header"><span class="module-num">C39</span><div><div class="module-title">Most Payment Problems Are Not Payment Problems</div><div class="module-sub">They are CRM, automation, and integration problems wearing a payment costume</div></div></div>
+  <p>The charge went through, but the course was not unlocked. The invoice was paid, but the CRM still says open. The refund was issued, but the customer received another renewal email. The subscription failed, but nobody created a recovery task. In each case, the payment processor may have done its job. The business system failed to respond correctly.</p>
+  <div class="callout callout-info"><div class="callout-icon">SYSTEM</div><div class="callout-body">A support agent who understands payments and automation becomes dangerous in the best way. They can see where money, data, and process fell out of sync.</div></div>
+</section>
+
+<section class="module-section" id="c40"><div class="module-header"><span class="module-num">C40</span><div><div class="module-title">Following The Money</div><div class="module-sub">The final map</div></div></div>
+  <p>At the beginning, the model looked like this:</p>
+  <div class="tech-block"><pre>Customer
+  -> Pays
+  -> Business Gets Money</pre></div>
+  <p>After the industry teaches you a few lessons, the model becomes this:</p>
+  <div class="tech-block"><pre>Customer
+  -> Terminal
+  -> POS
+  -> Gateway
+  -> Processor
+  -> Network
+  -> Issuing Bank
+  -> Acquiring Bank
+  -> Settlement
+  -> Funding
+  -> CRM
+  -> Reporting
+  -> Business</pre></div>
+  <div class="pull-quote">The industry I thought was about processing payments was actually about managing trust, risk, technology, compliance, and the movement of money at scale.</div>
+  <p>That is why payment processing deserves a Grimoire. It is a history, an onboarding guide, a support manual, and an industry map all at once.</p>
+  <p>And for me, it is also a career artifact. Every strange ticket taught a layer. Every merchant statement taught economics. Every decline taught ownership. Every hold taught risk. Every terminal failure taught infrastructure. Every integration issue taught that payments do not end when the card is approved; they continue into CRM records, automations, reports, receipts, subscriptions, and the emotional reality of a business owner waiting for money.</p>
+  <div class="story-card"><div class="story-label">What the career taught</div><div class="story-text">Support was never just support. It was the front-row seat to how commerce actually works when the clean diagrams fail. This Grimoire is the map I had to build one call, one ticket, one merchant, one batch, one decline, one funding delay at a time.</div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part X</div><div class="part-title">Career Case Files</div><div class="part-sub">The support scars that turn concepts into instincts</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C41 - C47</div></div>
+
+<section class="module-section" id="c41"><div class="module-header"><span class="module-num">C41</span><div><div class="module-title">The First Week On The Floor</div><div class="module-sub">When every acronym sounds like a locked door</div></div></div>
+  <p>The first week in payments is a wall of terms: MID, TID, batch, auth, settlement, interchange, PCI, gateway, chargeback, descriptor, reserve, ACH, AVS, CVV, EMV, NFC. You do not learn them from a glossary first. You learn them because a merchant is waiting and the ticket will not move until you understand which word matters.</p>
+  <div class="callout callout-info"><div class="callout-icon">TRAIN</div><div class="callout-body">A new support agent should not memorize everything at once. They should learn the five core maps first: transaction state, money movement, account identity, hardware path, and escalation ownership.</div></div>
+</section>
+
+<section class="module-section" id="c42"><div class="module-header"><span class="module-num">C42</span><div><div class="module-title">The First Angry Merchant Call</div><div class="module-sub">The moment empathy becomes operational</div></div></div>
+  <p>Anger in payments is rarely just anger. It is payroll pressure, rent pressure, customer embarrassment, fear of fraud, or the feeling that a financial system is speaking a language the merchant never agreed to learn.</p>
+  <p>The support lesson is simple: acknowledge the pressure, then narrow the investigation. "I understand why this is urgent. I am going to verify the transaction state, the batch, and the funding record before I give you an answer." Calm is not softness. Calm is how you keep the case from becoming theater.</p>
+</section>
+
+<section class="module-section" id="c43"><div class="module-header"><span class="module-num">C43</span><div><div class="module-title">The Statement Explanation I Got Wrong</div><div class="module-sub">Why merchants feel lied to when nobody explains pricing</div></div></div>
+  <p>The first bad statement explanation usually sounds like hiding: "Those are just processing fees." That answer is technically adjacent to truth and emotionally useless. Merchants need categories: pass-through costs, provider markup, monthly/service fees, compliance fees, and behavior-based costs such as keyed transactions, downgrades, chargebacks, or batch fees.</p>
+  <div class="table-wrap"><table><thead><tr><th>Merchant asks</th><th>Weak answer</th><th>Better answer</th></tr></thead><tbody><tr><td>Why is this so expensive?</td><td>That's just your rate.</td><td>Let's separate card network/bank costs from provider markup and monthly fees.</td></tr><tr><td>Why did it change?</td><td>Rates vary.</td><td>Your card mix, entry type, volume, refunds, chargebacks, or assessment changes may have changed.</td></tr><tr><td>Can you remove this?</td><td>No.</td><td>Some fees are pass-through; some are provider-controlled. I'll identify which is which.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c44"><div class="module-header"><span class="module-num">C44</span><div><div class="module-title">The Business That Grew Too Fast</div><div class="module-sub">Why success can trigger risk review</div></div></div>
+  <p>One of the strangest lessons in payments: a merchant making more money can look like risk. A sudden volume spike, higher average ticket, new product, different fulfillment promise, or unusual refund pattern can trigger review because the processor underwrote one risk profile and is now seeing another.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Merchant view</div><div class="kv-val">"Business is finally working. Why are you holding funds?"</div></div><div class="kv-row"><div class="kv-key">Risk view</div><div class="kv-val">"The account is processing outside expected behavior. Exposure increased."</div></div><div class="kv-row"><div class="kv-key">Support bridge</div><div class="kv-val">Collect invoices, fulfillment proof, bank statements, marketing pages, and processing explanation.</div></div></div>
+</section>
+
+<section class="module-section" id="c45"><div class="module-header"><span class="module-num">C45</span><div><div class="module-title">The First Chargeback Case</div><div class="module-sub">The sale that came back as a fight</div></div></div>
+  <p>A chargeback teaches that "approved" does not mean final forever. The cardholder can dispute. The issuer can reverse funds provisionally. The merchant must respond with evidence. If chargeback ratios rise, the entire merchant account can become a risk problem.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Dispute arrives</h4><p>Reason code, transaction, deadline, amount, cardholder claim.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Merchant gathers evidence</h4><p>Receipt, invoice, signed agreement, delivery proof, refund policy, communication logs.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Representment</h4><p>Merchant or provider submits evidence to fight the dispute.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Decision</h4><p>Issuer/network process determines whether funds stay reversed or return.</p></div></div></div>
+</section>
+
+<section class="module-section" id="c46"><div class="module-header"><span class="module-num">C46</span><div><div class="module-title">The Refund That Broke The Batch</div><div class="module-sub">Negative days, rejected funding, and merchant confusion</div></div></div>
+  <p>Refunds feel like undo buttons to customers. In settlement, they are transactions with consequences. A day with more refunds than sales can produce a negative batch. A merchant with insufficient reserve or bank issues may see funding adjustments, rejects, or delayed deposits.</p>
+  <div class="callout callout-warn"><div class="callout-icon">CHECK</div><div class="callout-body">When funding is short, check refunds, chargebacks, fees, reserves, negative batches, ACH rejects, and previous-day adjustments before assuming a deposit is missing.</div></div>
+</section>
+
+<section class="module-section" id="c47"><div class="module-header"><span class="module-num">C47</span><div><div class="module-title">The Terminal That Wasn't Broken</div><div class="module-sub">When the visible device gets blamed for an invisible configuration</div></div></div>
+  <p>Sometimes the terminal is fine. The problem is the Wi-Fi, the POS integration, the merchant account setup, the terminal ID, the batch configuration, the unsupported card type, the gateway credentials, or a processor outage. Good support agents resist the first obvious answer.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Device problem</div><div class="kv-val">Power, reader, printer, screen, firmware, damage.</div></div><div class="kv-row"><div class="kv-key">Network problem</div><div class="kv-val">Wi-Fi, Ethernet, cellular, DNS, router, firewall.</div></div><div class="kv-row"><div class="kv-key">Setup problem</div><div class="kv-val">TID, MID, processor config, card type, batch settings, gateway credentials.</div></div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part XI</div><div class="part-title">Payment Mechanics Support Agents Must Know</div><div class="part-sub">Receipt literacy, auth codes, rekeys, entry types, descriptors, pricing, disputes, and processor models</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C48 - C56</div></div>
+
+<section class="module-section" id="c48"><div class="module-header"><span class="module-num">C48</span><div><div class="module-title">Parts Of A Receipt</div><div class="module-sub">The tiny paper trail support agents should be able to read</div></div></div>
+  <p>A receipt is not just proof for the customer. It is an investigation artifact. It can reveal transaction state, card entry method, authorization code, merchant identity, terminal identity, batch context, masked PAN, card brand, timestamp, and whether the merchant is looking at the right sale.</p>
+  <div class="table-wrap"><table><thead><tr><th>Receipt field</th><th>What it means</th><th>Support use</th></tr></thead><tbody><tr><td>Merchant name/location</td><td>Business identity printed on receipt</td><td>Confirms merchant/location, may differ from descriptor.</td></tr><tr><td>Date/time</td><td>Transaction timestamp</td><td>Compare with batch cutoff and funding date.</td></tr><tr><td>Amount</td><td>Sale, tip, tax, total</td><td>Match transaction records and deposits.</td></tr><tr><td>Card brand</td><td>Visa, Mastercard, Amex, Discover, etc.</td><td>Useful for card-type restrictions and fee questions.</td></tr><tr><td>Masked card number</td><td>Usually last four digits</td><td>Helps locate transaction without exposing full PAN.</td></tr><tr><td>Entry method</td><td>Chip, tap, swipe, keyed, ecommerce</td><td>Impacts risk, liability, and fees.</td></tr><tr><td>Auth code</td><td>Issuer approval reference</td><td>Proof that authorization happened, not proof of funding.</td></tr><tr><td>Reference / trace / transaction ID</td><td>Processor or terminal identifier</td><td>Key for searching processor records.</td></tr><tr><td>Batch number</td><td>Batch grouping identifier</td><td>Useful for settlement/funding investigation.</td></tr><tr><td>AID / TVR / TSI</td><td>EMV technical fields</td><td>Device/card diagnostics for advanced cases.</td></tr></tbody></table></div>
+  <div class="callout callout-danger"><div class="callout-icon">PCI</div><div class="callout-body">Never ask a merchant to email full card numbers, CVV, or sensitive authentication data. Use last four, date, amount, auth code, and transaction/reference IDs.</div></div>
+</section>
+
+<section class="module-section" id="c49"><div class="module-header"><span class="module-num">C49</span><div><div class="module-title">What Is An Auth Code?</div><div class="module-sub">The approval fingerprint merchants often misunderstand</div></div></div>
+  <p>An authorization code is a code returned after the issuer approves an authorization request. It is useful evidence that the transaction was approved at that moment. It is not a deposit confirmation, not a settlement confirmation, and not a promise that a dispute cannot happen later.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Means</div><div class="kv-val">Issuer approved the authorization request.</div></div><div class="kv-row"><div class="kv-key">Does not mean</div><div class="kv-val">Funds are in the merchant bank account.</div></div><div class="kv-row"><div class="kv-key">Use it for</div><div class="kv-val">Finding transactions, proving approval, matching receipts to processor records.</div></div><div class="kv-row"><div class="kv-key">Support phrase</div><div class="kv-val">"The auth code confirms approval. Now we need to verify capture, settlement, and funding."</div></div></div>
+</section>
+
+<section class="module-section" id="c50"><div class="module-header"><span class="module-num">C50</span><div><div class="module-title">Rekey Same Auth</div><div class="module-sub">When an approved authorization has to be manually corrected or re-entered</div></div></div>
+  <p>In some support environments, "rekey same auth" refers to re-entering or correcting a transaction using the same original authorization approval rather than obtaining a brand-new authorization. The exact process depends on processor, gateway, POS, and internal policy.</p>
+  <div class="callout callout-warn"><div class="callout-icon">CAUTION</div><div class="callout-body">Treat rekey/same-auth handling as policy-sensitive. A support agent should confirm processor rules, transaction state, amount, auth code, and whether the original transaction was captured, voided, duplicated, or missing before advising action.</div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Verify original approval</h4><p>Receipt, auth code, date, amount, last four, processor record.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Check current state</h4><p>Authorized only, captured, settled, voided, failed, duplicate, or missing.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Prevent duplicate billing</h4><p>Never rekey blindly. Confirm whether the cardholder was already charged or held.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Document</h4><p>Record who approved, why it was rekeyed, original auth, and final transaction ID.</p></div></div></div>
+</section>
+
+<section class="module-section" id="c51"><div class="module-header"><span class="module-num">C51</span><div><div class="module-title">Entry Types</div><div class="module-sub">How the card entered the transaction changes risk and cost</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Entry type</th><th>Meaning</th><th>Support significance</th></tr></thead><tbody><tr><td>Chip / EMV</td><td>Card inserted into chip reader</td><td>Lower counterfeit risk, card-present evidence.</td></tr><tr><td>Tap / NFC</td><td>Contactless card or wallet</td><td>Card-present, tokenized wallet may show device account number.</td></tr><tr><td>Swipe</td><td>Magstripe read</td><td>Higher counterfeit risk than EMV; fallback matters.</td></tr><tr><td>Keyed</td><td>Card manually entered</td><td>Higher risk and usually higher cost; AVS/CVV important.</td></tr><tr><td>Ecommerce</td><td>Online checkout</td><td>Card-not-present; fraud tools and descriptor clarity matter.</td></tr><tr><td>MOTO</td><td>Mail order / telephone order</td><td>Card-not-present; documentation and authorization practices matter.</td></tr><tr><td>Recurring</td><td>Stored credential/subscription</td><td>Requires consent, proper indicators, retry and cancellation handling.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c52"><div class="module-header"><span class="module-num">C52</span><div><div class="module-title">Billing Descriptors</div><div class="module-sub">The line on the cardholder statement that can prevent or cause disputes</div></div></div>
+  <p>A billing descriptor is the merchant name or label a customer sees on their card statement. If the descriptor is confusing, customers may dispute a legitimate transaction because they do not recognize it.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Static descriptor</div><div class="kv-val">Same descriptor appears for transactions.</div></div><div class="kv-row"><div class="kv-key">Dynamic descriptor</div><div class="kv-val">Descriptor can include product, location, or platform-specific detail where supported.</div></div><div class="kv-row"><div class="kv-key">Support symptom</div><div class="kv-val">"My customer says they don't recognize the charge."</div></div><div class="kv-row"><div class="kv-key">Fix path</div><div class="kv-val">Verify descriptor setup, receipt branding, confirmation emails, and customer-facing business name.</div></div></div>
+</section>
+
+<section class="module-section" id="c53"><div class="module-header"><span class="module-num">C53</span><div><div class="module-title">Pricing Models: Flat, Interchange-Plus, Tiered</div><div class="module-sub">Why the same $100 can cost different merchants different amounts</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Model</th><th>How it feels</th><th>Support explanation</th></tr></thead><tbody><tr><td>Flat rate</td><td>Simple percentage</td><td>Easy to understand, may be more expensive for some card mixes.</td></tr><tr><td>Interchange-plus</td><td>Pass-through plus markup</td><td>More transparent, but statements look more complex.</td></tr><tr><td>Tiered</td><td>Qualified/mid/non-qualified buckets</td><td>Often confusing; downgrades can frustrate merchants.</td></tr><tr><td>Subscription/membership</td><td>Monthly fee plus lower markup</td><td>Can work for volume, but math must be checked.</td></tr></tbody></table></div>
+  <p>The support agent should avoid arguing about "best." The right model depends on volume, card mix, ticket size, entry method, risk, business type, and the merchant's tolerance for complexity.</p>
+</section>
+
+<section class="module-section" id="c54"><div class="module-header"><span class="module-num">C54</span><div><div class="module-title">Chargebacks, Retrievals, Representment, Ratios</div><div class="module-sub">The dispute lifecycle in support language</div></div></div>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Retrieval request</div><div class="kv-val">A request for transaction information or documentation before or around dispute handling.</div></div><div class="kv-row"><div class="kv-key">Chargeback</div><div class="kv-val">A cardholder dispute that can reverse funds from the merchant.</div></div><div class="kv-row"><div class="kv-key">Representment</div><div class="kv-val">Merchant's attempt to fight the dispute with evidence.</div></div><div class="kv-row"><div class="kv-key">Friendly fraud</div><div class="kv-val">Customer disputes a legitimate transaction, intentionally or through confusion.</div></div><div class="kv-row"><div class="kv-key">Chargeback ratio</div><div class="kv-val">Chargebacks relative to transaction count/volume. High ratios can trigger monitoring or termination.</div></div></div>
+</section>
+
+<section class="module-section" id="c55"><div class="module-header"><span class="module-num">C55</span><div><div class="module-title">Risk Flags Support Agents Should Recognize</div><div class="module-sub">When a ticket is not just a ticket</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Flag</th><th>Why it matters</th><th>Ask for</th></tr></thead><tbody><tr><td>Sudden volume spike</td><td>Exposure exceeds expected processing</td><td>Invoices, fulfillment proof, campaign explanation.</td></tr><tr><td>High ticket increase</td><td>Larger chargeback exposure</td><td>Contracts, delivery terms, customer communication.</td></tr><tr><td>Many refunds</td><td>Possible dissatisfaction or operational issue</td><td>Refund reasons and product/service changes.</td></tr><tr><td>New business model</td><td>Underwriting mismatch</td><td>Updated website, offer, terms, and processing forecast.</td></tr><tr><td>Chargeback cluster</td><td>Account stability risk</td><td>Evidence packets, customer communication, prevention plan.</td></tr><tr><td>Bank account change</td><td>Fraud and funding risk</td><td>Verified ownership and authorization.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c56"><div class="module-header"><span class="module-num">C56</span><div><div class="module-title">Processor Models</div><div class="module-sub">Traditional merchant accounts, PayFacs, ISOs, and embedded payments</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Model</th><th>What it is</th><th>Support implication</th></tr></thead><tbody><tr><td>Traditional merchant account</td><td>Merchant has a direct-ish acquiring relationship through provider stack.</td><td>More underwriting, more control, more statement complexity.</td></tr><tr><td>Payment facilitator</td><td>Platform onboards sub-merchants under its master processing setup.</td><td>Fast onboarding, centralized risk, platform-controlled experience.</td></tr><tr><td>ISO/MSP</td><td>Sales/service organization resells or manages merchant services.</td><td>Relationship layer may own merchant communication.</td></tr><tr><td>Stripe/Square-style</td><td>Developer/platform-first or aggregated processing experience.</td><td>Fast start, policy-driven holds, API/event support.</td></tr><tr><td>Embedded payments</td><td>Payments built into software platforms.</td><td>Merchant may think the software company is the processor.</td></tr></tbody></table></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part XII</div><div class="part-title">Support Scripts And Ticket Templates</div><div class="part-sub">Language that calms, narrows, verifies, and escalates</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C57 - C62</div></div>
+
+<section class="module-section" id="c57"><div class="module-header"><span class="module-num">C57</span><div><div class="module-title">Missing Deposit Call Script</div><div class="module-sub">The call no one wants, handled cleanly</div></div></div>
+  <div class="tech-block"><pre>I understand why this is urgent. I am going to trace this in order:
+1. The batch date and close time
+2. The settlement status
+3. The funding record
+4. Any holds, reserves, fees, refunds, chargebacks, or ACH rejects
+
+Can you confirm the processing date, expected deposit amount, and last deposit you received?</pre></div>
+  <p>Never start with blame. Start with the chain.</p>
+</section>
+
+<section class="module-section" id="c58"><div class="module-header"><span class="module-num">C58</span><div><div class="module-title">"Why Are My Fees So High?" Script</div><div class="module-sub">Explaining without hiding</div></div></div>
+  <div class="tech-block"><pre>Let's break the statement into categories instead of treating it as one mystery fee:
+- Card brand and issuing bank costs
+- Processor/provider markup
+- Monthly or service fees
+- Behavior-based costs like keyed transactions, chargebacks, or batch fees
+
+I'll calculate your effective rate first, then we can identify which fees are controllable.</pre></div>
+</section>
+
+<section class="module-section" id="c59"><div class="module-header"><span class="module-num">C59</span><div><div class="module-title">Declined Card Explanation Script</div><div class="module-sub">When the merchant wants you to override the issuer</div></div></div>
+  <div class="tech-block"><pre>The decline response came from the card side, not from your terminal approving or rejecting the customer personally.
+In many cases, the issuing bank does not provide us a detailed reason.
+The customer should contact their bank or use another payment method.
+
+I can still check whether this is affecting all cards, one card type, one terminal, or only this customer's card.</pre></div>
+</section>
+
+<section class="module-section" id="c60"><div class="module-header"><span class="module-num">C60</span><div><div class="module-title">Hold Or Reserve Conversation Script</div><div class="module-sub">When the answer is "not yet"</div></div></div>
+  <div class="tech-block"><pre>I know a funding hold creates real pressure. My job is to help identify what risk needs in order to review it.
+I do not want to guess or promise a release date before the review team confirms it.
+
+Right now we need:
+- Reason for hold
+- Documents requested
+- Affected batches/amounts
+- Review timeline if available
+- Any reserve terms or release conditions</pre></div>
+</section>
+
+<section class="module-section" id="c61"><div class="module-header"><span class="module-num">C61</span><div><div class="module-title">Terminal Troubleshooting Script</div><div class="module-sub">A calm path through a noisy moment</div></div></div>
+  <div class="tech-block"><pre>Let's isolate whether this is device, network, account setup, or processor-side.
+1. Is this one terminal or all terminals?
+2. Is it all cards or one card/customer?
+3. What exact error appears?
+4. Is the terminal connected to Wi-Fi, Ethernet, or cellular?
+5. Did anything change today: router, POS, location, account, or update?
+6. Can you send a photo of the error screen and last receipt if safe?</pre></div>
+</section>
+
+<section class="module-section" id="c62"><div class="module-header"><span class="module-num">C62</span><div><div class="module-title">Escalation Note Template</div><div class="module-sub">How to make the next team love you</div></div></div>
+  <div class="tech-block"><pre>Merchant:
+MID / Location:
+Contact:
+Issue type:
+Urgency / business impact:
+
+Timeline:
+- 
+
+Evidence collected:
+- Date/time:
+- Amount:
+- Last four:
+- Auth code:
+- Batch number:
+- Transaction/reference ID:
+- Error message:
+- Screenshots/receipts:
+
+What was checked:
+- Authorization:
+- Capture:
+- Settlement:
+- Funding:
+- Risk notes:
+- Device/network:
+
+What merchant expects:
+What we need from escalation:
+What was communicated to merchant:</pre></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part XIII</div><div class="part-title">Future AI Support Agent Knowledge Base</div><div class="part-sub">Structured support logic for email triage, draft replies, and escalation</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C63 - C70</div></div>
+
+<section class="module-section" id="c63"><div class="module-header"><span class="module-num">C63</span><div><div class="module-title">Support Intent Map</div><div class="module-sub">How an AI email agent should classify incoming messages</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Intent</th><th>Signals</th><th>Route</th></tr></thead><tbody><tr><td>Missing deposit</td><td>Where is my money, deposit missing, batch funded, bank account</td><td>Funding investigation</td></tr><tr><td>Fee question</td><td>Statement, rates, fees, expensive, PCI, monthly charge</td><td>Statement review</td></tr><tr><td>Decline</td><td>Do Not Honor, declined, won't go through, card rejected</td><td>Decline troubleshooting</td></tr><tr><td>Hardware</td><td>Terminal down, reader not working, error screen, printer</td><td>Device support</td></tr><tr><td>Risk/hold</td><td>Funds held, reserve, account frozen, documents requested</td><td>Risk escalation</td></tr><tr><td>Chargeback</td><td>Dispute, retrieval, representment, evidence, chargeback</td><td>Disputes queue</td></tr><tr><td>Descriptor</td><td>Customer doesn't recognize charge, statement name</td><td>Descriptor review</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c64"><div class="module-header"><span class="module-num">C64</span><div><div class="module-title">Required Data Fields For Email Support</div><div class="module-sub">What the agent must collect before pretending to know</div></div></div>
+  <div class="tech-block"><pre>Common fields:
+- Merchant legal name / DBA
+- MID or account ID
+- Location
+- Contact name and callback/email
+- Issue category
+- Business impact / urgency
+
+Transaction fields:
+- Date and time
+- Amount
+- Last four only
+- Card brand
+- Auth code
+- Transaction/reference ID
+- Batch number
+- Entry type
+- Receipt image if safe
+
+Funding fields:
+- Batch date
+- Expected amount
+- Actual deposit amount
+- Bank account last four
+- Funding date
+- Holds/reserves/fees/refunds/chargebacks checked</pre></div>
+</section>
+
+<section class="module-section" id="c65"><div class="module-header"><span class="module-num">C65</span><div><div class="module-title">Things A Support Agent Should Never Say</div><div class="module-sub">Especially an AI support agent</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Never say</th><th>Say instead</th></tr></thead><tbody><tr><td>Your money will arrive tomorrow.</td><td>I can verify the current funding status and any release timeline available.</td></tr><tr><td>The bank declined for fraud.</td><td>The issuer declined the transaction; they may not disclose the detailed reason to us.</td></tr><tr><td>Just rekey it.</td><td>We need to verify the original authorization and current transaction state first.</td></tr><tr><td>This is free processing.</td><td>This program may shift or recover processing cost; compliance and customer disclosure matter.</td></tr><tr><td>Send the full card number.</td><td>Please provide only the last four digits, date, amount, and auth/reference code.</td></tr><tr><td>Risk will release it.</td><td>Risk will review once the required information is received.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c66"><div class="module-header"><span class="module-num">C66</span><div><div class="module-title">Email Reply Templates</div><div class="module-sub">Drafts an AI agent can adapt but should not overpromise</div></div></div>
+  <div class="tech-block"><div class="tech-block-label">Missing deposit reply</div><pre>Hi [Name],
+
+I understand you're looking for the deposit from [date/batch].
+To trace it accurately, please send:
+- Expected deposit amount
+- Batch date
+- Merchant/location
+- Any batch report or deposit screenshot available
+
+We'll check settlement, funding, fees/refunds/chargebacks, bank rejects, and any risk notes before confirming the next step.</pre></div>
+  <div class="tech-block"><div class="tech-block-label">Decline reply</div><pre>Hi [Name],
+
+The decline message usually means the card issuer did not approve the transaction.
+Please send the transaction date/time, amount, card brand, last four digits only, and exact decline message.
+
+We'll verify whether this is isolated to one card/customer or affecting the terminal/account more broadly.</pre></div>
+</section>
+
+<section class="module-section" id="c67"><div class="module-header"><span class="module-num">C67</span><div><div class="module-title">30-Day Training Plan For A New Payments Support Agent</div><div class="module-sub">How to turn confusion into competence</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Week 1: Vocabulary and maps</h4><p>Transaction lifecycle, account IDs, receipt fields, common decline codes, batch/funding basics.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Week 2: Ticket patterns</h4><p>Missing deposits, statement questions, terminal issues, refunds, chargebacks, descriptor confusion.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Week 3: Risk and escalation</h4><p>Underwriting, holds, reserves, high-risk categories, documents, red flags, escalation notes.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Week 4: Systems thinking</h4><p>Webhooks, CRM sync, accounting sync, subscription events, reconciliation, support QA.</p></div></div></div>
+</section>
+
+<section class="module-section" id="c68"><div class="module-header"><span class="module-num">C68</span><div><div class="module-title">Support Glossary</div><div class="module-sub">Short definitions for fast triage</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td>Auth code</td><td>Issuer approval reference for an authorization.</td></tr><tr><td>Batch</td><td>Group of transactions submitted for settlement.</td></tr><tr><td>Capture</td><td>Finalizing an authorization for settlement.</td></tr><tr><td>Descriptor</td><td>Name/label on cardholder statement.</td></tr><tr><td>Entry type</td><td>How card data entered the transaction: chip, tap, swipe, keyed, ecommerce.</td></tr><tr><td>MID</td><td>Merchant identifier.</td></tr><tr><td>TID</td><td>Terminal identifier.</td></tr><tr><td>Reserve</td><td>Funds held to offset risk exposure.</td></tr><tr><td>Representment</td><td>Merchant response to fight a chargeback.</td></tr><tr><td>Settlement</td><td>Submitting captured transactions through clearing/funding process.</td></tr><tr><td>Tokenization</td><td>Replacing sensitive card data with a reusable token.</td></tr><tr><td>AVS</td><td>Address Verification Service for card-not-present checks.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c69"><div class="module-header"><span class="module-num">C69</span><div><div class="module-title">AI Support Decision Tree</div><div class="module-sub">A safe first-pass flow for email support</div></div></div>
+  <div class="tech-block"><pre>if message contains missing deposit / funding:
+  collect funding fields
+  do not promise release date
+  route to funding investigation
+
+elif message contains declined / do not honor:
+  collect transaction fields
+  explain issuer ownership carefully
+  check scope: one card vs many cards
+
+elif message contains terminal not working:
+  collect device/network/error fields
+  ask scope questions
+  route to hardware/device support
+
+elif message contains fees / statement:
+  request statement period
+  classify fee categories
+  route to statement review
+
+elif message contains hold / reserve / frozen:
+  acknowledge urgency
+  collect documents requested
+  route to risk escalation
+
+elif message contains chargeback / dispute:
+  collect deadline and evidence
+  route to disputes
+
+else:
+  ask clarifying questions and classify after reply</pre></div>
+</section>
+
+<section class="module-section" id="c70"><div class="module-header"><span class="module-num">C70</span><div><div class="module-title">The Final Operating System</div><div class="module-sub">What this career becomes when turned into support intelligence</div></div></div>
+  <p>If this Grimoire becomes a future AI email support agent, the agent should not be trained to sound clever. It should be trained to do what good payment support does: classify the issue, collect safe identifiers, understand transaction state, avoid overpromising, protect sensitive data, explain ownership, route correctly, and leave the next human with a clean ticket.</p>
+  <div class="pull-quote">The highest form of payment support is not having every answer. It is knowing which system owns the answer, what evidence proves it, and what not to promise before the money is traced.</div>
+  <p>That is the culmination: the career becomes a map, the map becomes a manual, and the manual becomes an operating system for helping merchants without making the system less safe.</p>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part XIV</div><div class="part-title">Technical Survival Guide</div><div class="part-sub">POS, terminals, website payments, integrations, varsheets, webhooks, test mode, and go-live basics</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C71 - C84</div></div>
+
+<section class="module-section" id="c71"><div class="module-header"><span class="module-num">C71</span><div><div class="module-title">Base Payment Architecture</div><div class="module-sub">The map before processor-specific instructions</div></div></div>
+  <p>Every processor has its own vocabulary, dashboard, credential format, SDK, and help article. Underneath that, most payment setups share the same base architecture: a customer-facing surface, a payment acceptance layer, a processor/gateway, an account identity, a notification layer, and a back-office reconciliation layer.</p>
+  <div class="tech-block"><div class="tech-block-label">Universal payment architecture</div><pre>Customer
+  -> Payment surface
+     (terminal, POS, website checkout, invoice link, mobile app)
+  -> Payment acceptance layer
+     (gateway, processor API, terminal SDK, hosted checkout)
+  -> Processor / acquiring stack
+  -> Card network / bank rails
+  -> Authorization result
+  -> Capture / settlement / funding
+  -> Webhooks / reports / CRM / accounting</pre></div>
+  <div class="callout callout-success"><div class="callout-icon">SURVIVE</div><div class="callout-body">When lost, ask: Where did the customer enter payment? Who created the transaction? Who processed it? Who received the event? Who records the order? Who reconciles the deposit?</div></div>
+</section>
+
+<section class="module-section" id="c72"><div class="module-header"><span class="module-num">C72</span><div><div class="module-title">POS + Terminal Architecture</div><div class="module-sub">Countertop payments without pretending the terminal is the whole system</div></div></div>
+  <p>A POS + terminal setup has at least four layers: the POS software, the physical reader, the merchant account/processor configuration, and the network connecting the device to the payment rails. A failure in any layer can look like "the terminal is broken."</p>
+  <div class="table-wrap"><table><thead><tr><th>Layer</th><th>What to verify</th><th>Common failure</th></tr></thead><tbody><tr><td>POS</td><td>Store/location, register, user, product/tax/tip settings</td><td>Sale created in POS but not sent correctly to terminal.</td></tr><tr><td>Terminal</td><td>Serial number, TID, firmware, reader status, paired POS</td><td>Wrong terminal assigned to location or register.</td></tr><tr><td>Network</td><td>Wi-Fi/Ethernet/cellular, firewall, signal, router changes</td><td>Device cannot reach processor host.</td></tr><tr><td>Processor config</td><td>MID, card types, batch close, debit/EBT/tips, surcharge/cash discount</td><td>Transactions approve but batch or funding behaves unexpectedly.</td></tr><tr><td>Receipt/reporting</td><td>Receipt fields, batch report, POS report, processor report</td><td>POS total and processor total do not match.</td></tr></tbody></table></div>
+  <div class="tech-block"><div class="tech-block-label">Terminal setup vars</div><pre>Merchant DBA:
+Location:
+MID:
+Terminal ID:
+Device serial number:
+Processor:
+Gateway, if any:
+POS provider:
+Connection type: Wi-Fi / Ethernet / Cellular
+Batch close time:
+Tip enabled? yes/no
+Debit enabled? yes/no
+Card brands enabled:
+Receipt descriptor:
+Support contact:
+Escalation contact:</pre></div>
+</section>
+
+<section class="module-section" id="c73"><div class="module-header"><span class="module-num">C73</span><div><div class="module-title">Website + Payment Integration Architecture</div><div class="module-sub">Online checkout as a system of client, server, processor, and events</div></div></div>
+  <p>Online payment setup is not just "paste a payment button." A real website integration has a frontend, backend, payment provider, webhook receiver, order database, customer notifications, and reconciliation reports.</p>
+  <div class="tech-block"><div class="tech-block-label">Basic website checkout flow</div><pre>Customer clicks Pay
+  -> Website frontend collects cart/order info
+  -> Backend creates payment session / payment intent
+  -> Provider returns client token / checkout URL
+  -> Customer enters payment details securely
+  -> Provider confirms authorization/payment state
+  -> Webhook notifies backend of final event
+  -> Backend marks order paid
+  -> CRM / fulfillment / email / accounting update</pre></div>
+  <div class="callout callout-warn"><div class="callout-icon">RULE</div><div class="callout-body">The frontend should not be trusted as the final source of payment truth. Use provider-side status and webhooks to mark orders paid.</div></div>
+</section>
+
+<section class="module-section" id="c74"><div class="module-header"><span class="module-num">C74</span><div><div class="module-title">Hosted Checkout vs Embedded Forms</div><div class="module-sub">The tradeoff noobs should understand before choosing</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Approach</th><th>Best for</th><th>Tradeoff</th></tr></thead><tbody><tr><td>Hosted checkout</td><td>Fast, safer setup with provider-hosted payment page</td><td>Less control over UX, but lower implementation burden.</td></tr><tr><td>Embedded components</td><td>Custom checkout experience using provider elements/SDK</td><td>More control, more frontend/backend responsibility.</td></tr><tr><td>Direct API collection</td><td>Rare, advanced, tightly controlled environments</td><td>High PCI/security burden. Avoid unless you know exactly why.</td></tr><tr><td>Invoice/payment link</td><td>Manual or low-code collection</td><td>Fastest path, less integrated order automation.</td></tr></tbody></table></div>
+  <p>For beginners, hosted checkout or payment links are often the right first version. Custom embedded payment forms make sense when the business needs a controlled checkout flow and has technical support.</p>
+</section>
+
+<section class="module-section" id="c75"><div class="module-header"><span class="module-num">C75</span><div><div class="module-title">The Payment Integration Varsheet</div><div class="module-sub">The sheet that prevents half of setup chaos</div></div></div>
+  <p>A varsheet is the implementation truth table. It lists the credentials, URLs, account IDs, environments, webhooks, contacts, and business rules needed to understand a payment setup. Without it, support becomes archaeology.</p>
+  <div class="tech-block"><div class="tech-block-label">Varsheet template</div><pre>Business / client:
+Processor:
+Gateway:
+Platform / CMS:
+Checkout type: hosted / embedded / invoice / terminal / POS
+
+Environments:
+- Test dashboard URL:
+- Live dashboard URL:
+- Test publishable key:
+- Live publishable key:
+- Secret key owner:
+- Key storage location:
+
+Account identity:
+- Merchant ID:
+- Location ID:
+- Connected account ID:
+- Terminal IDs:
+- Descriptor:
+- Bank account last four:
+
+Webhook endpoints:
+- Test webhook URL:
+- Live webhook URL:
+- Events subscribed:
+- Signing secret storage:
+- Retry policy:
+
+Order system:
+- Order database/table:
+- Paid status field:
+- Refund status field:
+- CRM destination:
+- Accounting destination:
+
+Business rules:
+- Capture timing:
+- Refund policy:
+- Subscription retry rules:
+- Tax/shipping rules:
+- Surcharge/cash discount rules:
+
+Contacts:
+- Merchant owner:
+- Developer:
+- Processor support:
+- Risk/underwriting:
+- Emergency escalation:</pre></div>
+</section>
+
+<section class="module-section" id="c76"><div class="module-header"><span class="module-num">C76</span><div><div class="module-title">API Keys, Environments, And Secret Hygiene</div><div class="module-sub">Test vs live is not a suggestion</div></div></div>
+  <p>Payment integrations usually have test and live environments. Mixing them causes classic noob failures: test cards in live mode, live keys on staging, webhooks pointed to the wrong server, or real customers paying into the wrong account.</p>
+  <div class="table-wrap"><table><thead><tr><th>Item</th><th>Rule</th></tr></thead><tbody><tr><td>Secret keys</td><td>Never expose in frontend code, screenshots, emails, or docs.</td></tr><tr><td>Publishable/client keys</td><td>Can be used client-side but still must match the correct environment.</td></tr><tr><td>Webhook signing secrets</td><td>Store securely and verify signatures server-side.</td></tr><tr><td>Test mode</td><td>Use provider test cards and test events before live payments.</td></tr><tr><td>Live mode</td><td>Requires approved account, correct bank, correct descriptor, correct webhook URLs.</td></tr></tbody></table></div>
+  <div class="callout callout-danger"><div class="callout-icon">DO NOT</div><div class="callout-body">Do not paste secret keys into ChatGPT, Slack, ticket comments, screenshots, frontend JavaScript, or shared spreadsheets. Reference where they are stored, not the value.</div></div>
+</section>
+
+<section class="module-section" id="c77"><div class="module-header"><span class="module-num">C77</span><div><div class="module-title">Webhooks: The Event Layer</div><div class="module-sub">Why checkout success pages are not enough</div></div></div>
+  <p>Webhooks are server-to-server notifications sent when payment events happen. They are how your system learns that a payment succeeded, failed, was refunded, disputed, or updated. A customer returning to the success page is helpful, but it is not reliable enough to be the only source of truth.</p>
+  <div class="table-wrap"><table><thead><tr><th>Event type</th><th>Use</th></tr></thead><tbody><tr><td>payment succeeded</td><td>Mark order paid, send receipt, fulfill product.</td></tr><tr><td>payment failed</td><td>Notify customer, retry, create recovery task.</td></tr><tr><td>refund created</td><td>Update order and accounting records.</td></tr><tr><td>chargeback/dispute opened</td><td>Create support/disputes task and collect evidence.</td></tr><tr><td>subscription updated/canceled</td><td>Update access, billing status, CRM lifecycle.</td></tr></tbody></table></div>
+  <div class="tech-block"><div class="tech-block-label">Webhook handling rule</div><pre>1. Verify signature
+2. Check event id for idempotency
+3. Fetch/verify object if needed
+4. Update internal state
+5. Log outcome
+6. Return success only after safe handling</pre></div>
+</section>
+
+<section class="module-section" id="c78"><div class="module-header"><span class="module-num">C78</span><div><div class="module-title">Test Mode And Sandbox Survival</div><div class="module-sub">How to break things before customers do</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Test successful payment</h4><p>Order becomes paid, receipt sends, CRM updates, fulfillment triggers.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Test failed payment</h4><p>Order does not become paid, customer sees useful error, recovery path exists.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Test webhook retry</h4><p>Duplicate events do not duplicate orders, emails, shipments, or CRM deals.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Test refund</h4><p>Refund updates order, CRM, customer email, and accounting path.</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Test abandoned checkout</h4><p>No false paid status; optional recovery flow starts.</p></div></div></div>
+</section>
+
+<section class="module-section" id="c79"><div class="module-header"><span class="module-num">C79</span><div><div class="module-title">Reconciliation Basics</div><div class="module-sub">The difference between sales, payouts, deposits, and accounting</div></div></div>
+  <p>Reconciliation is matching what the business thinks happened against what the processor funded and what the bank received. A website may show $10,000 in sales, the processor may show $9,650 after refunds/fees/reserves, and the bank may show deposits split across days.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Gross sales</div><div class="kv-val">Total transaction volume before fees, refunds, disputes, and adjustments.</div></div><div class="kv-row"><div class="kv-key">Net sales</div><div class="kv-val">Sales after refunds or adjustments, depending on report.</div></div><div class="kv-row"><div class="kv-key">Payout</div><div class="kv-val">Processor funding transfer to merchant bank.</div></div><div class="kv-row"><div class="kv-key">Deposit</div><div class="kv-val">What appears in the bank account.</div></div><div class="kv-row"><div class="kv-key">Variance</div><div class="kv-val">Difference that must be explained by fees, refunds, reserves, chargebacks, timing, or errors.</div></div></div>
+</section>
+
+<section class="module-section" id="c80"><div class="module-header"><span class="module-num">C80</span><div><div class="module-title">CRM, Accounting, And Automation Integrations</div><div class="module-sub">Most payment problems happen after the payment succeeds</div></div></div>
+  <p>The payment event is only the start of the business workflow. The real setup must answer: who gets access, who gets notified, what deal updates, what invoice closes, what subscription changes, and what happens if the payment event arrives twice or late?</p>
+  <div class="table-wrap"><table><thead><tr><th>Destination</th><th>Payment event should do</th><th>Common bug</th></tr></thead><tbody><tr><td>CRM</td><td>Create/update contact, deal, lifecycle stage, task</td><td>Duplicate contacts or deal not marked won.</td></tr><tr><td>Email/SMS</td><td>Receipt, onboarding, failed payment, renewal reminder</td><td>Customer gets email before payment is confirmed.</td></tr><tr><td>Accounting</td><td>Invoice paid, fee entry, refund entry, payout match</td><td>Gross sales booked without fees/refunds.</td></tr><tr><td>Fulfillment</td><td>Ship order or unlock digital access</td><td>Fulfillment triggers from success page instead of webhook.</td></tr><tr><td>Support</td><td>Create task for failures, disputes, high-risk events</td><td>No one sees failed payments or disputes until customer complains.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c81"><div class="module-header"><span class="module-num">C81</span><div><div class="module-title">Go-Live Checklist</div><div class="module-sub">Before real customer money touches the system</div></div></div>
+  <div class="tech-block"><pre>[ ] Merchant account approved
+[ ] Correct legal entity / DBA
+[ ] Correct bank account last four verified
+[ ] Descriptor reviewed
+[ ] Live API keys installed server-side
+[ ] Test keys removed from production
+[ ] Webhook endpoint live and signature verified
+[ ] Required webhook events subscribed
+[ ] Successful payment tested live with small amount
+[ ] Failed payment behavior tested
+[ ] Refund path tested
+[ ] Receipt email tested
+[ ] Order status updates from webhook, not only frontend redirect
+[ ] CRM/accounting/fulfillment sync tested
+[ ] Duplicate webhook/idempotency behavior tested
+[ ] Tax/shipping/tip/surcharge rules verified
+[ ] Support team has varsheet and escalation contacts
+[ ] Rollback plan exists</pre></div>
+</section>
+
+<section class="module-section" id="c82"><div class="module-header"><span class="module-num">C82</span><div><div class="module-title">Noob Mistakes That Break Payment Setups</div><div class="module-sub">The pain list</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Mistake</th><th>Consequence</th><th>Fix</th></tr></thead><tbody><tr><td>Using frontend success page as payment truth</td><td>Orders marked paid when payment is incomplete</td><td>Use webhooks/provider status.</td></tr><tr><td>Mixing test and live keys</td><td>Payments fail or go to wrong environment</td><td>Maintain varsheet and environment labels.</td></tr><tr><td>No idempotency</td><td>Duplicate orders, emails, shipments, CRM deals</td><td>Store event IDs and transaction IDs.</td></tr><tr><td>No descriptor review</td><td>Customers dispute unfamiliar charges</td><td>Set clear descriptor and receipt branding.</td></tr><tr><td>No refund workflow</td><td>Accounting/CRM/customer records drift</td><td>Handle refund events downstream.</td></tr><tr><td>No reconciliation plan</td><td>Merchant cannot explain deposits</td><td>Match sales, payouts, fees, refunds, bank deposits.</td></tr><tr><td>Secrets in shared docs</td><td>Security incident risk</td><td>Use secure secret storage.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="c83"><div class="module-header"><span class="module-num">C83</span><div><div class="module-title">Payment Integration Support Ticket Template</div><div class="module-sub">For website/POS/gateway setup issues</div></div></div>
+  <div class="tech-block"><pre>Integration issue:
+Merchant / client:
+Environment: test / live
+Processor / gateway:
+Platform / CMS / POS:
+Checkout type:
+
+Observed behavior:
+Expected behavior:
+First affected date/time:
+Customer-facing error:
+Dashboard error:
+
+Transaction details, if any:
+- Date/time:
+- Amount:
+- Transaction ID:
+- Auth code:
+- Last four only:
+
+Technical details:
+- API key environment confirmed? yes/no
+- Webhook endpoint:
+- Webhook event ID:
+- Webhook delivery status:
+- Order ID:
+- CRM/accounting record ID:
+- Terminal ID, if card-present:
+
+What changed recently:
+Screenshots/logs attached:
+Escalation needed from:</pre></div>
+</section>
+
+<section class="module-section" id="c84"><div class="module-header"><span class="module-num">C84</span><div><div class="module-title">What The Future AI Agent Should Know About Integrations</div><div class="module-sub">The safe boundary between helpful and dangerous</div></div></div>
+  <p>An AI support agent can triage integration tickets, ask for missing identifiers, classify likely failure layers, draft replies, and assemble escalation notes. It should not request secrets, modify live keys, disable webhooks, change bank accounts, alter descriptors, or tell a merchant to reprocess payments without human approval.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Agent can do</div><div class="kv-val">Classify issue, collect safe fields, explain architecture, draft troubleshooting steps, create escalation summary.</div></div><div class="kv-row"><div class="kv-key">Agent must not do</div><div class="kv-val">Handle raw card data, store secrets, promise funding, approve risk releases, change payment settings without authorization.</div></div><div class="kv-row"><div class="kv-key">Agent should ask</div><div class="kv-val">Which environment, which processor, which transaction ID, which webhook event, which order ID, what changed recently?</div></div></div>
+  <div class="pull-quote">Processor docs teach the buttons. The base architecture teaches survival.</div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Reference</div><div class="part-title">Cited References And Recommended Reading</div></div><div class="part-divider"></div></div>
+<section class="module-section" id="sources"><div class="module-header"><span class="module-num">SRC</span><div><div class="module-title">Sources</div><div class="module-sub">Primary references for payment fundamentals and infrastructure</div></div></div>
+  <div class="source-index">
+    <div class="source-row"><div class="source-num">01</div><div class="source-title">Stripe documentation - PaymentIntents and the modern API model for tracking payment lifecycle state.</div><a href="https://docs.stripe.com/payments/payment-intents" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">02</div><div class="source-title">Stripe documentation - Webhooks and event-driven payment integrations.</div><a href="https://docs.stripe.com/webhooks" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">03</div><div class="source-title">PCI Security Standards Council - PCI DSS overview and payment data security standards.</div><a href="https://www.pcisecuritystandards.org/standards/" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">04</div><div class="source-title">Visa merchant and small business resources - card acceptance concepts and network role.</div><a href="https://usa.visa.com/run-your-business/small-business-tools/payment-technology.html" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">05</div><div class="source-title">Mastercard merchant resources - payment acceptance, safety, and business resources.</div><a href="https://www.mastercard.us/en-us/business/overview/safety-and-security.html" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">06</div><div class="source-title">Stripe Terminal documentation - reader connection, in-person payments, and terminal integration concepts.</div><a href="https://docs.stripe.com/terminal" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">07</div><div class="source-title">Stripe testing documentation - test cards, sandbox behavior, and integration validation before go-live.</div><a href="https://docs.stripe.com/testing" target="_blank" class="source-link">open</a></div>
+  </div>
+</section>
+</main>
+<footer class="page-footer"><div><span>Payment Processing - Grimoire 009</span><span style="margin:0 10px;opacity:.3">-</span><span>June 2026 - Career Culmination - 14 Parts - 84 Chapters</span></div><div style="display:flex;gap:1.5rem"><a href="../projects/">&larr; Back to Projects</a><a href="https://docs.stripe.com/payments/payment-intents" target="_blank">Stripe Docs</a></div></footer>
+<script>
+const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const pct = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+  bar.style.transform = `scaleX(${pct})`;
+}, { passive: true });
+const sections = Array.from(document.querySelectorAll('section[id]'));
+const links = document.querySelectorAll('.nav-link');
+let activeId = null;
+const THRESHOLD = 112;
+function updateNav() {
+  let found = null;
+  for (const s of sections) if (s.getBoundingClientRect().top <= THRESHOLD) found = s.id;
+  if (!found || found === activeId) return;
+  activeId = found;
+  links.forEach(l => l.classList.remove('active'));
+  const link = document.querySelector(`.nav-link[href="#${found}"]`);
+  if (link) { link.classList.add('active'); link.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+</script>
+</body>
+</html>

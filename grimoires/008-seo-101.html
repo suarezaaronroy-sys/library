@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO 101 - Grimoire 008 - Aaron Suarez</title>
+<meta name="description" content="SEO 101 for the AI search era: old SEO, new SEO, GEO, AEO, AI Overviews, ChatGPT search, technical SEO, content strategy, local SEO, structured data, and practical playbooks for being cited, found, trusted, and chosen.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/008-seo-101.html">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYPEWZXH03"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GYPEWZXH03',{page_title:'Grimoire 008 - SEO 101',page_path:'/grimoires/008-seo-101.html'});</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:108px;overflow-x:hidden}
+:root{
+  --chrome:92px;--sidebar:270px;
+  --bg:#F5F2EC;--bg2:#EDE9E0;--bg3:#E5E0D5;
+  --ink:#1C1917;--ink2:#44403C;--ink3:#78716C;--ink4:#A8A29E;
+  --accent:#C2410C;--accent2:#EA580C;
+  --teal:#0D9488;--teal-bg:#CCFBF1;--amber:#B45309;--amber-bg:#FEF3C7;
+  --blue:#1D4ED8;--blue-bg:#DBEAFE;--green:#15803D;--green-bg:#DCFCE7;
+  --red:#B91C1C;--red-bg:#FEE2E2;--purple:#7C3AED;--purple-bg:#F5F3FF;
+  --border:rgba(28,25,23,.12);--border2:rgba(28,25,23,.06);
+  --dark:#1C1917;--dark2:#292524;--dark-fg:#F5F2EC;--dark-muted:#A8A29E;--dark-dim:#78716C;
+  --mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;
+  --shadow-sm:0 1px 3px rgba(28,25,23,.07),0 1px 2px rgba(28,25,23,.04);
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;font-weight:300;background-image:radial-gradient(ellipse at 5% 0%,rgba(13,148,136,.045),transparent 38%),radial-gradient(ellipse at 95% 8%,rgba(29,78,216,.035),transparent 35%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.018'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+.mode-banner{position:sticky;top:0;z-index:300;background:var(--dark);color:var(--dark-fg);padding:0 2rem;height:40px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:11px}
+.mode-banner-left{display:flex;align-items:center;gap:10px}.mode-dot{width:7px;height:7px;border-radius:50%;background:#A7F3D0;animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.site-header{position:sticky;top:40px;z-index:200;background:rgba(245,242,236,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 2rem;height:52px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:1rem}.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3)}.header-back:hover{color:var(--accent)}.header-divider{width:1px;height:16px;background:var(--border)}.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:var(--teal-bg);color:var(--teal);border:1px solid rgba(13,148,136,.22)}
+#progress-bar{position:fixed;top:var(--chrome);left:var(--sidebar);right:0;height:2px;z-index:150;background:linear-gradient(90deg,var(--teal),var(--blue));transform-origin:left;transform:scaleX(0);transition:transform .08s linear;pointer-events:none}
+.sidebar{position:fixed;top:var(--chrome);left:0;width:var(--sidebar);height:calc(100vh - var(--chrome));overflow-y:auto;border-right:1px solid var(--border);background:rgba(245,242,236,.98);backdrop-filter:blur(10px);z-index:100;padding:1rem 0 3rem;scrollbar-width:thin}
+.nav-group{margin-bottom:.15rem}.nav-group-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);padding:10px 16px 4px;display:block}.nav-group:not(:first-child) .nav-group-label{border-top:1px solid var(--border2);margin-top:.3rem}
+.nav-link{display:flex;align-items:center;gap:.5rem;padding:5px 16px;font-size:12px;color:var(--ink3);line-height:1.35;transition:.1s;border-left:2px solid transparent}.nav-link:hover{background:var(--bg2);color:var(--ink)}.nav-link.active{background:rgba(13,148,136,.07);color:var(--teal);border-left-color:var(--teal);font-weight:500}.nav-num{font-family:var(--mono);font-size:9px;color:var(--ink4);width:24px;flex-shrink:0}
+.main{margin-left:var(--sidebar);padding:2.8rem 3rem 8rem;max-width:900px;min-width:0}section[id]{scroll-margin-top:108px}
+.hero{margin-bottom:3.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}.hero h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3.1rem);font-weight:600;line-height:1.08;margin-bottom:.9rem;letter-spacing:-.025em}.hero h1 em{font-style:italic;font-weight:300;color:var(--teal)}.hero-sub{font-size:.98rem;color:var(--ink2);max-width:64ch;line-height:1.8;margin-bottom:1.8rem}
+.stat-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.8rem}.stat-pill{display:flex;align-items:center;gap:.4rem;padding:5px 12px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:11.5px;color:var(--ink2)}.stat-pill strong{font-weight:500;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;padding:.65rem 1.1rem;border-radius:999px;border:1px solid;transition:.15s ease;font-weight:500;margin-right:.55rem}.btn.teal{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 4px 14px rgba(13,148,136,.22)}.btn.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}
+.part-header{margin:3rem 0 2rem;padding:1.1rem 1.4rem;background:var(--dark);border-radius:14px;display:flex;align-items:center;gap:1.2rem}.part-num{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dark-dim)}.part-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--dark-fg)}.part-sub{font-size:11.5px;color:var(--dark-dim);margin-top:2px}.part-divider{width:1px;height:32px;background:rgba(245,242,236,.1);flex-shrink:0}
+.module-section{margin-bottom:3rem;padding-bottom:2.8rem;border-bottom:1px solid var(--border2)}.module-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.4rem}.module-num{font-family:var(--mono);font-size:10px;color:var(--ink4);padding:4px 8px;border:1px solid var(--border);border-radius:4px;white-space:nowrap;margin-top:3px;background:#fff;flex-shrink:0}.module-title{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:2px}.module-sub{font-size:13px;color:var(--ink3)}
+h2.sh{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin:1.8rem 0 .75rem}h3.sh{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin:1.5rem 0 .6rem;padding-bottom:.35rem;border-bottom:1px solid var(--border2)}
+p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{font-weight:500;color:var(--ink)}code{font-family:var(--mono);font-size:.76em;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--ink)}ul,ol{margin:.4rem 0 .75rem 1.2rem;color:var(--ink2);font-size:14px;line-height:1.75}
+.callout{border-radius:10px;padding:.85rem 1.1rem;margin:.9rem 0;font-size:13px;line-height:1.65;display:flex;gap:.7rem;align-items:flex-start}.callout-icon{font-family:var(--mono);font-size:.78rem;line-height:1.8;flex-shrink:0}.callout-body{flex:1}.callout-warn{background:var(--amber-bg);border-left:3px solid var(--amber);color:#78350F}.callout-danger{background:var(--red-bg);border-left:3px solid var(--red);color:#7F1D1D}.callout-info{background:var(--blue-bg);border-left:3px solid var(--blue);color:#1E3A8A}.callout-success{background:var(--teal-bg);border-left:3px solid var(--teal);color:#134E4A}.callout-tip{background:var(--purple-bg);border-left:3px solid var(--purple);color:#4C1D95}
+.story-card{background:#fff;border-radius:12px;padding:1rem 1.3rem;margin:.9rem 0;border-left:3px solid var(--accent);box-shadow:var(--shadow-sm)}.story-label{font-family:var(--mono);font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}.story-text{font-size:13.5px;color:var(--ink2);font-style:italic;line-height:1.7}
+.pull-quote{margin:2rem 0;padding:1.2rem 1.5rem;border-radius:12px;background:var(--dark);font-family:var(--serif);font-size:1.05rem;font-style:italic;font-weight:300;color:var(--dark-fg);line-height:1.6}.pull-quote::before{content:'"';font-size:2.5rem;line-height:0;vertical-align:-.4em;color:var(--accent2);margin-right:.2rem;font-style:normal}
+.showcase{background:var(--dark);border-radius:18px;padding:1.6rem 1.8rem;margin:1.8rem 0}.showcase-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.75rem}.showcase h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:.4rem;color:var(--dark-fg)}.showcase p{font-size:13px;color:var(--dark-muted);line-height:1.65}.showcase-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.1rem 0}.showcase-stat{background:rgba(245,242,236,.06);border:1px solid rgba(245,242,236,.1);border-radius:10px;padding:13px}.ss-val{font-family:var(--mono);font-size:1.35rem;font-weight:500;color:var(--dark-fg);line-height:1;margin-bottom:4px}.ss-label{font-size:11px;color:var(--dark-dim);line-height:1.4}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin:.9rem 0}.feature-card{background:#fff;border:1px solid var(--border);border-radius:11px;padding:.95rem 1rem}.feature-card-label{font-family:var(--mono);font-size:.57rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:.28rem}.feature-card h4{font-size:.86rem;font-weight:500;color:var(--ink);margin-bottom:.28rem}.feature-card p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin-bottom:0}
+.table-wrap{overflow-x:auto;margin:.9rem 0;border-radius:10px;border:1px solid var(--border)}table{width:100%;border-collapse:collapse;font-size:12.5px}th{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);text-align:left;padding:9px 13px;border-bottom:1px solid var(--border);background:var(--bg2)}td{padding:9px 13px;border-bottom:1px solid var(--border2);color:var(--ink2);vertical-align:top;line-height:1.55}
+.flow{margin:1.1rem 0;display:flex;flex-direction:column;gap:.35rem}.flow-step{display:flex;gap:.85rem;align-items:flex-start;padding:.7rem .95rem;background:#fff;border-radius:9px;border:1px solid var(--border2)}.flow-step-num{font-family:var(--mono);font-size:.63rem;font-weight:500;width:22px;height:22px;border-radius:50%;background:var(--dark);color:var(--dark-fg);display:flex;align-items:center;justify-content:center;flex-shrink:0}.flow-step-content h4{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.3}.flow-step-content p{font-size:.77rem;color:var(--ink3);line-height:1.55;margin:0}
+.kv{background:#fff;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:.8rem 0}.kv-row{display:grid;grid-template-columns:175px 1fr;border-bottom:1px solid var(--border2)}.kv-row:last-child{border-bottom:none}.kv-key{padding:.5rem .85rem;font-family:var(--mono);font-size:.63rem;color:var(--ink4);background:var(--bg2);border-right:1px solid var(--border2)}.kv-val{padding:.5rem .85rem;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.tech-block{margin:1rem 0}.tech-block-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink4);margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}.tech-block-label::after{content:'';flex:1;height:1px;background:var(--border2)}pre{background:var(--dark);border-radius:10px;padding:1.1rem 1.3rem;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.85;color:#D6D3D1;border:1px solid rgba(255,255,255,.05);margin:.35rem 0}.c{color:#A8A29E;font-style:italic}.k{color:#FDA4AF}.v{color:#86EFAC}.s{color:#FCD34D}.tl{color:#93C5FD}
+.source-index{display:grid;gap:.35rem;margin:.9rem 0}.source-row{display:grid;grid-template-columns:26px 1fr auto;gap:.6rem;align-items:start;padding:.5rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border2)}.source-num{font-family:var(--mono);font-size:.58rem;color:var(--ink4)}.source-title{font-size:.78rem;color:var(--ink2);line-height:1.45}.source-link{font-family:var(--mono);font-size:.58rem;color:var(--blue);white-space:nowrap}
+.page-footer{margin-left:var(--sidebar);padding:1.6rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink4)}.page-footer a{color:var(--accent)}
+@media(max-width:960px){:root{--sidebar:0px}.sidebar{display:none}.main{margin-left:0;padding:2rem 1.5rem 5rem}.page-footer{margin-left:0;padding:1.5rem;display:block}#progress-bar{left:0}.feature-grid,.showcase-stats{grid-template-columns:1fr}.kv-row{grid-template-columns:1fr}.kv-key{border-right:0;border-bottom:1px solid var(--border2)}}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="mode-banner"><div class="mode-banner-left"><div class="mode-dot"></div><span>Grimoire 008 - SEO 101 - Old Search + AI Search - 2026 Edition</span></div><span style="font-size:10px;color:var(--dark-dim)">SEO + AEO + GEO + VA Operations Playbook</span></div>
+<header class="site-header"><div class="header-left"><a href="../projects/" class="header-back">&larr; Projects</a><div class="header-divider"></div><span class="header-title">SEO 101 - From Ranking Pages To Becoming The Answer</span></div><span class="header-badge">Grimoire 008</span></header>
+
+<nav class="sidebar">
+  <div class="nav-group"><span class="nav-group-label">Part I - The Shift</span><a href="#m1" class="nav-link"><span class="nav-num">M1</span>Storm Map</a><a href="#m2" class="nav-link"><span class="nav-num">M2</span>Old vs New</a><a href="#m3" class="nav-link"><span class="nav-num">M3</span>Search Is Changing</a><a href="#m4" class="nav-link"><span class="nav-num">M4</span>What Still Works</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part II - Old SEO</span><a href="#m5" class="nav-link"><span class="nav-num">M5</span>Crawl</a><a href="#m6" class="nav-link"><span class="nav-num">M6</span>Index</a><a href="#m7" class="nav-link"><span class="nav-num">M7</span>Keywords</a><a href="#m8" class="nav-link"><span class="nav-num">M8</span>Architecture</a><a href="#m9" class="nav-link"><span class="nav-num">M9</span>On Page</a><a href="#m10" class="nav-link"><span class="nav-num">M10</span>Links</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part III - New SEO</span><a href="#m11" class="nav-link"><span class="nav-num">M11</span>AEO/GEO</a><a href="#m12" class="nav-link"><span class="nav-num">M12</span>Entity SEO</a><a href="#m13" class="nav-link"><span class="nav-num">M13</span>Information Gain</a><a href="#m14" class="nav-link"><span class="nav-num">M14</span>Citation Design</a><a href="#m15" class="nav-link"><span class="nav-num">M15</span>Structured Data</a><a href="#m16" class="nav-link"><span class="nav-num">M16</span>AI Crawlers</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part IV - Playbook</span><a href="#m17" class="nav-link"><span class="nav-num">M17</span>Content System</a><a href="#m18" class="nav-link"><span class="nav-num">M18</span>Page Template</a><a href="#m19" class="nav-link"><span class="nav-num">M19</span>Local SEO</a><a href="#m20" class="nav-link"><span class="nav-num">M20</span>Ecommerce</a><a href="#m21" class="nav-link"><span class="nav-num">M21</span>Programmatic</a><a href="#m22" class="nav-link"><span class="nav-num">M22</span>Measurement</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part V - Advanced</span><a href="#m23" class="nav-link"><span class="nav-num">M23</span>Topical Authority</a><a href="#m24" class="nav-link"><span class="nav-num">M24</span>Brand Search</a><a href="#m25" class="nav-link"><span class="nav-num">M25</span>Reviews</a><a href="#m26" class="nav-link"><span class="nav-num">M26</span>Refresh</a><a href="#m27" class="nav-link"><span class="nav-num">M27</span>Tools</a><a href="#m28" class="nav-link"><span class="nav-num">M28</span>90-Day Plan</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part VI - VA Playbook</span><a href="#m29" class="nav-link"><span class="nav-num">M29</span>Role Map</a><a href="#m30" class="nav-link"><span class="nav-num">M30</span>Weekly Routine</a><a href="#m31" class="nav-link"><span class="nav-num">M31</span>Keyword SOP</a><a href="#m32" class="nav-link"><span class="nav-num">M32</span>Page Audit SOP</a><a href="#m33" class="nav-link"><span class="nav-num">M33</span>Content Brief</a><a href="#m34" class="nav-link"><span class="nav-num">M34</span>Publishing SOP</a><a href="#m35" class="nav-link"><span class="nav-num">M35</span>Local SEO SOP</a><a href="#m36" class="nav-link"><span class="nav-num">M36</span>Reporting SOP</a><a href="#m37" class="nav-link"><span class="nav-num">M37</span>AI Search SOP</a><a href="#m38" class="nav-link"><span class="nav-num">M38</span>Escalation</a></div>
+  <div class="nav-group"><span class="nav-group-label">Reference</span><a href="#sources" class="nav-link"><span class="nav-num">SRC</span>Sources</a></div>
+</nav>
+
+<main class="main">
+<section class="hero" id="why">
+  <div class="hero-eyebrow">Grimoire 008 - Search System - June 2026</div>
+  <h1>SEO 101: <em>Old Search, New Search, And The AI Answer Engine Era</em></h1>
+  <p class="hero-sub">SEO used to mean winning blue links. It still does, but the battlefield is changing: AI Overviews, AI Mode, ChatGPT search, Copilot, answer engines, and citation-based discovery are turning search from a ranked list into a synthesized answer. This guide explains the old rules, the new rules, and the practical system for being crawled, trusted, cited, clicked, and chosen.</p>
+  <div class="stat-row"><div class="stat-pill"><strong>38</strong> modules</div><div class="stat-pill"><strong>Old</strong> SEO fundamentals</div><div class="stat-pill"><strong>New</strong> AI search playbook</div><div class="stat-pill"><strong>VA</strong> SOPs</div><div class="stat-pill"><strong>90-day</strong> action plan</div></div>
+  <a href="#m1" class="btn teal">Start Module 1 &rarr;</a><a href="#m11" class="btn ghost">New SEO</a><a href="#m28" class="btn ghost">90-Day Plan</a>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part I</div><div class="part-title">The Shift</div><div class="part-sub">Why SEO is not dead, but the old mental model is too small</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M1 - M4</div></div>
+
+<section class="module-section" id="m1"><div class="module-header"><span class="module-num">M1</span><div><div class="module-title">The SEO Storm Map</div><div class="module-sub">Search is becoming an answer layer, not only a results page</div></div></div>
+  <p>For twenty years, the core SEO game was simple to describe: help search engines discover, understand, rank, and display your pages. The details were hard, but the interface was familiar. A user searched. Google returned links. Your page fought for position.</p>
+  <p>Now search engines increasingly produce answers. Google AI Overviews and AI Mode summarize and link. ChatGPT search uses search crawlers and citations. Copilot blends search with assistant behavior. Users ask longer, messier questions and expect synthesis, not just ten links.</p>
+  <div class="pull-quote">Old SEO asks: how do I rank? New SEO asks: how do I become the trusted source an answer engine uses when it explains the topic?</div>
+  <p>This does not mean technical SEO, links, keywords, and page quality stop mattering. It means they become the floor. The ceiling is now source-worthiness: original facts, entity clarity, evidence, topical depth, structured information, brand trust, and content that can be safely cited without a human reading the whole site first.</p>
+</section>
+
+<section class="module-section" id="m2"><div class="module-header"><span class="module-num">M2</span><div><div class="module-title">Old SEO vs New SEO</div><div class="module-sub">The mental model upgrade</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Old SEO</th><th>New SEO</th></tr></thead><tbody><tr><td>Rank for keywords</td><td>Be cited for questions, comparisons, entities, tasks, and decisions</td></tr><tr><td>Optimize page titles and headings</td><td>Design extractable answers, evidence blocks, definitions, tables, and sourceable claims</td></tr><tr><td>Build backlinks</td><td>Build reputation across web, communities, knowledge graphs, reviews, authors, and mentions</td></tr><tr><td>Measure clicks and rankings</td><td>Measure rankings, clicks, AI citations, branded demand, assisted conversions, and zero-click influence</td></tr><tr><td>Publish more content</td><td>Publish content with information gain, firsthand proof, and clear expertise</td></tr><tr><td>Write for crawlers and readers</td><td>Write for crawlers, readers, answer engines, and AI summarizers without making the page robotic</td></tr></tbody></table></div>
+  <div class="callout callout-info"><div class="callout-icon">NOTE</div><div class="callout-body">Google says there are no special extra requirements to appear in AI Overviews or AI Mode beyond Search eligibility and standard SEO best practices. That is true technically. Strategically, the bar for being cited is different from the bar for merely being indexed.</div></div>
+</section>
+
+<section class="module-section" id="m3"><div class="module-header"><span class="module-num">M3</span><div><div class="module-title">Why Search Is Changing</div><div class="module-sub">The query is becoming a conversation</div></div></div>
+  <p>Traditional search handles fragmented intent. A user types "best CRM for dentists," clicks a few links, compares tabs, searches again, watches videos, asks Reddit, then books a demo. AI search compresses that journey. It can answer "compare GoHighLevel, HubSpot, and Pipedrive for a dental clinic with 3 locations and heavy SMS follow-up" in one prompt.</p>
+  <div class="feature-grid"><div class="feature-card"><div class="feature-card-label">Old behavior</div><h4>Many small searches</h4><p>Users refine queries manually across pages and tabs.</p></div><div class="feature-card"><div class="feature-card-label">New behavior</div><h4>One complex prompt</h4><p>Users ask for synthesis, tradeoffs, and recommendations.</p></div><div class="feature-card"><div class="feature-card-label">Old result</div><h4>Ranked links</h4><p>The search engine points at pages and lets users evaluate.</p></div><div class="feature-card"><div class="feature-card-label">New result</div><h4>Summarized answer</h4><p>The engine cites sources, pulls facts, and frames the decision.</p></div></div>
+  <p>This creates a new SEO job: your content must be useful to the answer construction process. A page full of vague claims is hard to cite. A page with clear definitions, tables, examples, data, authorship, and caveats is easier to use.</p>
+</section>
+
+<section class="module-section" id="m4"><div class="module-header"><span class="module-num">M4</span><div><div class="module-title">What Still Works</div><div class="module-sub">The old fundamentals did not vanish</div></div></div>
+  <p>Search engines still need to crawl pages, index content, understand topics, evaluate quality, and decide what to show. AI search often depends on the same web substrate. If your site blocks crawlers, hides important content in inaccessible JavaScript, has no internal links, has weak titles, or provides thin content, AI will not magically rescue it.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Still matters</div><div class="kv-val">Crawlability, indexability, site architecture, page experience, internal links, titles, helpful content, structured data, reputation.</div></div><div class="kv-row"><div class="kv-key">Less sufficient</div><div class="kv-val">Keyword stuffing, generic skyscraper content, empty listicles, AI rewrites of competitor posts, backlink-only strategies.</div></div><div class="kv-row"><div class="kv-key">More important</div><div class="kv-val">Original evidence, first-hand expertise, entity clarity, page-level trust, answer-ready formatting, update discipline.</div></div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part II</div><div class="part-title">Old SEO Fundamentals</div><div class="part-sub">The parts you still need before AI search can care about you</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M5 - M10</div></div>
+
+<section class="module-section" id="m5"><div class="module-header"><span class="module-num">M5</span><div><div class="module-title">Crawl: Can Search Engines Reach You?</div><div class="module-sub">Discovery comes before ranking</div></div></div>
+  <p>Crawling is the first gate. Search engines discover pages through links, sitemaps, feeds, submissions, and crawling systems. If your important pages are orphaned, blocked, too slow, hidden behind forms, or rendered in ways crawlers cannot access, they might as well not exist.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Submit XML sitemap</h4><p>Include canonical URLs you care about. Keep it clean.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Check robots.txt</h4><p>Do not accidentally block CSS, JavaScript, images, or important directories.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Use internal links</h4><p>Every important page should be reachable from other relevant pages.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Inspect logs</h4><p>See what bots actually crawl, not just what you hope they crawl.</p></div></div></div>
+</section>
+
+<section class="module-section" id="m6"><div class="module-header"><span class="module-num">M6</span><div><div class="module-title">Index: Can Search Engines Store And Serve You?</div><div class="module-sub">Crawled is not the same as indexed</div></div></div>
+  <p>A page can be crawled but not indexed. Common reasons: duplication, canonical confusion, thin content, blocked snippets, noindex tags, low value, redirect issues, soft 404s, or content Google already has in better form elsewhere.</p>
+  <div class="table-wrap"><table><thead><tr><th>Signal</th><th>What to check</th></tr></thead><tbody><tr><td>Canonical</td><td>Does the canonical URL point to the real preferred page?</td></tr><tr><td>Noindex</td><td>Are meta robots or X-Robots-Tag headers blocking indexing?</td></tr><tr><td>Duplication</td><td>Does this page add enough value beyond similar pages?</td></tr><tr><td>Rendering</td><td>Can Google see the main content and links?</td></tr><tr><td>Snippets</td><td>Is the page eligible for snippets and supporting links?</td></tr></tbody></table></div>
+  <div class="callout callout-warn"><div class="callout-icon">AI</div><div class="callout-body">For Google AI features, pages need to be indexed and eligible to be shown in Search with a snippet. Blocking snippets may limit supporting-link eligibility.</div></div>
+</section>
+
+<section class="module-section" id="m7"><div class="module-header"><span class="module-num">M7</span><div><div class="module-title">Keywords: Intent, Not Incantations</div><div class="module-sub">The keyword is a clue, not the strategy</div></div></div>
+  <p>Old keyword research often treated queries like magic phrases. Modern keyword work maps intent: what the user is trying to do, what they already know, what decision they are making, what format they need, and what proof would make them trust the answer.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Informational</div><div class="kv-val">What is local SEO? How does AI search work?</div></div><div class="kv-row"><div class="kv-key">Commercial</div><div class="kv-val">Best CRM for med spas. GoHighLevel vs HubSpot.</div></div><div class="kv-row"><div class="kv-key">Transactional</div><div class="kv-val">Book SEO consultation. Buy technical SEO audit.</div></div><div class="kv-row"><div class="kv-key">Support</div><div class="kv-val">Fix indexing issue. Why did traffic drop?</div></div></div>
+  <p>AI search makes long-tail intent more valuable because users can ask naturally. Build pages around complete problems, not exact-match fragments.</p>
+</section>
+
+<section class="module-section" id="m8"><div class="module-header"><span class="module-num">M8</span><div><div class="module-title">Site Architecture</div><div class="module-sub">Search engines understand relationships through structure</div></div></div>
+  <p>Architecture tells search engines what your site is about and which pages matter. A strong site has clear topical hubs, supporting pages, breadcrumbs, internal links, and URLs that humans can understand.</p>
+  <div class="tech-block"><div class="tech-block-label">Simple topical structure</div><pre>/seo/
+  /seo/technical-seo/
+  /seo/local-seo/
+  /seo/ai-search-optimization/
+  /seo/content-refresh/
+  /seo/schema-markup/
+
+/case-studies/
+  /case-studies/local-seo-dental-clinic/
+  /case-studies/technical-seo-saas-site/</pre></div>
+  <p>The point is not pretty folders. The point is semantic clarity. A crawler, a user, and an AI system should be able to infer the relationship between pages without detective work.</p>
+</section>
+
+<section class="module-section" id="m9"><div class="module-header"><span class="module-num">M9</span><div><div class="module-title">On-Page SEO</div><div class="module-sub">Make the page understandable at a glance</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Title</h4><p>Specific, descriptive, and honest. Do not overpromise.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>H1</h4><p>Clearly states the page topic. No mystery branding when clarity matters.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Intro</h4><p>Answer the core intent quickly, then expand.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Sections</h4><p>Use headings that map to real subquestions.</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Media</h4><p>Use images, video, charts, or examples when they make the answer better.</p></div></div></div>
+  <p>AI systems like extractable clarity. Humans like it too. That is the sweet spot.</p>
+</section>
+
+<section class="module-section" id="m10"><div class="module-header"><span class="module-num">M10</span><div><div class="module-title">Links And Authority</div><div class="module-sub">Reputation still travels through references</div></div></div>
+  <p>Links remain a major web-native way to express trust, discovery, and importance. But the future of authority is wider than backlinks. Mentions, reviews, citations, community references, author reputation, datasets, videos, podcasts, and third-party profiles all help machines and humans decide whether you are real.</p>
+  <div class="table-wrap"><table><thead><tr><th>Authority type</th><th>Example</th><th>Why it matters</th></tr></thead><tbody><tr><td>Backlink</td><td>Industry publication links to your guide</td><td>Discovery and reputation</td></tr><tr><td>Brand mention</td><td>Forum compares your company to competitors</td><td>Entity confidence</td></tr><tr><td>Review</td><td>Customers review location/service</td><td>Trust and local relevance</td></tr><tr><td>Source citation</td><td>Other articles cite your data</td><td>AI and human source-worthiness</td></tr></tbody></table></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part III</div><div class="part-title">New SEO: AEO, GEO, And AI Search</div><div class="part-sub">How to become the answer, not just a link below the answer</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M11 - M16</div></div>
+
+<section class="module-section" id="m11"><div class="module-header"><span class="module-num">M11</span><div><div class="module-title">AEO, GEO, And The Naming Mess</div><div class="module-sub">Answer Engine Optimization and Generative Engine Optimization</div></div></div>
+  <p>The industry is still naming the shift. AEO usually means optimizing for answer engines: featured snippets, voice answers, People Also Ask, assistants, and direct answers. GEO usually means optimizing for generative engines: AI Overviews, AI Mode, ChatGPT search, Perplexity, Copilot, and systems that synthesize sources.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">SEO</div><div class="kv-val">Help search engines crawl, index, understand, rank, and display your pages.</div></div><div class="kv-row"><div class="kv-key">AEO</div><div class="kv-val">Structure content so answer systems can extract a clear response.</div></div><div class="kv-row"><div class="kv-key">GEO</div><div class="kv-val">Make your site source-worthy for generative search and AI citations.</div></div><div class="kv-row"><div class="kv-key">Reality</div><div class="kv-val">They overlap. The best strategy is useful content with technical access, entity clarity, evidence, and trust.</div></div></div>
+</section>
+
+<section class="module-section" id="m12"><div class="module-header"><span class="module-num">M12</span><div><div class="module-title">Entity SEO</div><div class="module-sub">Machines need to know who and what you are</div></div></div>
+  <p>An entity is a thing with identity: a person, company, product, place, service, concept, event, or dataset. AI search is entity-hungry because it needs to connect facts. If your brand, authors, products, services, locations, and expertise are ambiguous, you make the machine work harder.</p>
+  <div class="feature-grid"><div class="feature-card"><div class="feature-card-label">Brand entity</div><h4>Who are you?</h4><p>Name, logo, about page, founders, locations, social profiles, organization schema.</p></div><div class="feature-card"><div class="feature-card-label">Author entity</div><h4>Who wrote this?</h4><p>Author bios, credentials, reviewed-by fields, publication history.</p></div><div class="feature-card"><div class="feature-card-label">Service entity</div><h4>What do you do?</h4><p>Clear service pages, examples, pricing context, FAQs, case studies.</p></div><div class="feature-card"><div class="feature-card-label">Place entity</div><h4>Where do you operate?</h4><p>Business Profile, local pages, consistent NAP, reviews, local proof.</p></div></div>
+</section>
+
+<section class="module-section" id="m13"><div class="module-header"><span class="module-num">M13</span><div><div class="module-title">Information Gain</div><div class="module-sub">Generic content is invisible in a world full of summaries</div></div></div>
+  <p>If your page says what every other page says, AI can summarize the topic without you. Your job is to contribute something the model and user cannot get everywhere else: original data, field experience, screenshots, tests, benchmarks, opinions with reasoning, case studies, decision trees, and examples from actual work.</p>
+  <div class="table-wrap"><table><thead><tr><th>Weak content</th><th>Stronger content</th></tr></thead><tbody><tr><td>"SEO is important for businesses."</td><td>"In our 42-location service audit, pages with service + city + proof blocks converted 31% higher than generic city pages."</td></tr><tr><td>"Use structured data."</td><td>"Here is the LocalBusiness + Service schema pattern we use, and when we avoid FAQ schema."</td></tr><tr><td>"AI search is changing SEO."</td><td>"Here are 12 prompts where ChatGPT cites competitors but not us, and the content gaps causing it."</td></tr></tbody></table></div>
+  <div class="callout callout-success"><div class="callout-icon">RULE</div><div class="callout-body">If a page could be generated by summarizing the top five results, it is not strong enough. Add evidence that came from your actual work.</div></div>
+</section>
+
+<section class="module-section" id="m14"><div class="module-header"><span class="module-num">M14</span><div><div class="module-title">Citation Design</div><div class="module-sub">Make your pages easy to quote, verify, and trust</div></div></div>
+  <p>AI answer engines need facts they can safely attach to sources. You can help by designing pages with citation-friendly blocks: concise definitions, tables, statistics with methodology, step-by-step processes, pros/cons, dates, version notes, and clear claims.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>State the claim</h4><p>Use precise language. Avoid mushy marketing claims.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Show the evidence</h4><p>Data, screenshots, examples, sources, test conditions, or author experience.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Explain the caveat</h4><p>Tell readers where the claim applies and where it does not.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Format for extraction</h4><p>Use tables, bullets, definitions, and descriptive headings without stripping personality.</p></div></div></div>
+</section>
+
+<section class="module-section" id="m15"><div class="module-header"><span class="module-num">M15</span><div><div class="module-title">Structured Data</div><div class="module-sub">Explicit clues for machines</div></div></div>
+  <p>Structured data is standardized markup that helps search systems understand the meaning of a page. It can enable rich results and clarify entities. It is not magic ranking dust, and it must match visible page content.</p>
+  <div class="tech-block"><div class="tech-block-label">Common schema targets</div><pre>Organization
+LocalBusiness
+Person
+Article / BlogPosting
+Product
+Service
+FAQPage
+HowTo
+BreadcrumbList
+Review / AggregateRating
+VideoObject</pre></div>
+  <div class="callout callout-warn"><div class="callout-icon">IMPORTANT</div><div class="callout-body">Google says there is no special schema required for AI Overviews or AI Mode. Use structured data because it clarifies the page and can support rich results, not because someone sold you "AI schema."</div></div>
+</section>
+
+<section class="module-section" id="m16"><div class="module-header"><span class="module-num">M16</span><div><div class="module-title">AI Crawlers And Robots.txt</div><div class="module-sub">Search inclusion, training use, and user-triggered browsing are different</div></div></div>
+  <p>AI discovery now involves more than Googlebot. OpenAI documents separate crawlers for search, training, ads validation, and user-triggered browsing. These controls are not the same. Blocking a training crawler is different from blocking a search crawler that may surface your site in ChatGPT search answers.</p>
+  <div class="table-wrap"><table><thead><tr><th>Bot/control</th><th>What it affects</th><th>Strategic note</th></tr></thead><tbody><tr><td>Googlebot</td><td>Google Search crawling and indexing</td><td>Usually allow for SEO visibility.</td></tr><tr><td>Google-Extended</td><td>Controls use for some Google generative AI model training/grounding use cases</td><td>Separate from normal Google Search crawling.</td></tr><tr><td>OAI-SearchBot</td><td>ChatGPT search result inclusion</td><td>Allow if you want to appear in ChatGPT search answers.</td></tr><tr><td>GPTBot</td><td>OpenAI model training crawl</td><td>Block or allow based on your content policy.</td></tr><tr><td>ChatGPT-User</td><td>User-triggered page visits</td><td>Robots.txt may not apply because the user initiated the action.</td></tr></tbody></table></div>
+  <div class="tech-block"><div class="tech-block-label">Example robots.txt split</div><pre>User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Googlebot
+Allow: /</pre></div>
+  <p>This is not legal advice. It is operational hygiene. Decide deliberately which systems can access what, then monitor logs to see what actually happens.</p>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part IV</div><div class="part-title">The Practical Playbook</div><div class="part-sub">How to build pages and systems that can win in both old and new search</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M17 - M22</div></div>
+
+<section class="module-section" id="m17"><div class="module-header"><span class="module-num">M17</span><div><div class="module-title">The SEO Content System</div><div class="module-sub">Stop publishing random posts</div></div></div>
+  <p>A modern SEO system has three layers: money pages, authority pages, and proof pages.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Money pages</div><div class="kv-val">Service, product, location, comparison, pricing, and demo pages. These convert demand.</div></div><div class="kv-row"><div class="kv-key">Authority pages</div><div class="kv-val">Guides, definitions, frameworks, research, templates, calculators, and industry reports. These earn trust and citations.</div></div><div class="kv-row"><div class="kv-key">Proof pages</div><div class="kv-val">Case studies, reviews, testimonials, before/after examples, teardown posts, benchmarks. These make claims believable.</div></div></div>
+  <p>AI search raises the value of authority and proof pages because answer engines need sources that make claims easier to support.</p>
+</section>
+
+<section class="module-section" id="m18"><div class="module-header"><span class="module-num">M18</span><div><div class="module-title">The AI-Ready Page Template</div><div class="module-sub">A structure that works for humans, crawlers, and answer engines</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Direct answer</h4><p>Give the short answer in the first screen. Do not bury the point.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Definition block</h4><p>One precise definition that can be safely quoted.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Context and caveats</h4><p>Explain when the answer changes.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Evidence</h4><p>Use data, examples, screenshots, source links, case studies, or methodology.</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Comparison</h4><p>Tables and pros/cons help both readers and answer engines.</p></div></div><div class="flow-step"><div class="flow-step-num">6</div><div class="flow-step-content"><h4>Next action</h4><p>Tell the user what to do after understanding the answer.</p></div></div></div>
+  <div class="tech-block"><div class="tech-block-label">Claim block pattern</div><pre>Claim: Local service pages should include service, city, proof, and conversion intent.
+Evidence: Show examples, screenshots, review excerpts, rankings, or conversion data.
+Caveat: Do not create doorway pages with duplicated content across every city.
+Action: Build unique pages only where you have real service relevance and proof.</pre></div>
+</section>
+
+<section class="module-section" id="m19"><div class="module-header"><span class="module-num">M19</span><div><div class="module-title">Local SEO In The AI Era</div><div class="module-sub">Local trust becomes machine-readable proof</div></div></div>
+  <p>For local businesses, SEO is not just the website. It is the website, Google Business Profile, Bing Places, Apple Business Connect, reviews, local citations, service area clarity, photos, menus/services/products, local landing pages, and reputation signals.</p>
+  <div class="table-wrap"><table><thead><tr><th>Asset</th><th>What to optimize</th></tr></thead><tbody><tr><td>Business Profile</td><td>Categories, services, hours, photos, products, posts, Q&A, booking links.</td></tr><tr><td>Reviews</td><td>Volume, freshness, specificity, response quality, service/location keywords naturally mentioned by customers.</td></tr><tr><td>Location pages</td><td>Real local proof, staff, photos, service area, FAQs, testimonials, directions, parking, nearby landmarks.</td></tr><tr><td>Citations</td><td>Consistent name, address, phone, website, categories across major directories.</td></tr><tr><td>Schema</td><td>LocalBusiness, PostalAddress, openingHours, geo, sameAs, aggregateRating if valid and visible.</td></tr></tbody></table></div>
+  <p>AI answers about local businesses will lean on whatever structured and semi-structured proof is easiest to verify. Keep the public facts clean.</p>
+</section>
+
+<section class="module-section" id="m20"><div class="module-header"><span class="module-num">M20</span><div><div class="module-title">Ecommerce SEO</div><div class="module-sub">Products need facts, not fluff</div></div></div>
+  <p>Ecommerce search is especially vulnerable to AI summarization because users ask comparison and fit questions: best product for a use case, cheapest reliable option, difference between models, sizing, compatibility, return policies, and reviews.</p>
+  <div class="feature-grid"><div class="feature-card"><div class="feature-card-label">Product pages</div><h4>Make facts complete</h4><p>Specs, variants, compatibility, availability, shipping, returns, images, video, FAQs.</p></div><div class="feature-card"><div class="feature-card-label">Category pages</div><h4>Help decisions</h4><p>Buying guides, filters, comparisons, top use cases, expert picks, review summaries.</p></div><div class="feature-card"><div class="feature-card-label">Reviews</div><h4>Surface real experience</h4><p>Use review snippets ethically. Highlight verified buyer patterns.</p></div><div class="feature-card"><div class="feature-card-label">Feeds</div><h4>Keep data clean</h4><p>Merchant feeds, product schema, price, stock, GTINs, and variant identifiers.</p></div></div>
+</section>
+
+<section class="module-section" id="m21"><div class="module-header"><span class="module-num">M21</span><div><div class="module-title">Programmatic SEO Without Making Trash</div><div class="module-sub">Scale pages only when each page deserves to exist</div></div></div>
+  <p>Programmatic SEO can still work, but AI search makes thin scaled pages easier to ignore. If you create 2,000 pages from a template, each page needs unique data, local proof, user value, or a real reason to exist.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Good</div><div class="kv-val">Unique inventory, location data, pricing, availability, comparisons, examples, reviews, maps, or calculators.</div></div><div class="kv-row"><div class="kv-key">Bad</div><div class="kv-val">Same paragraph with city/product swapped. Doorway pages. AI-generated filler with no proof.</div></div><div class="kv-row"><div class="kv-key">Test</div><div class="kv-val">Would a user be satisfied landing directly on this page, or would they immediately search again?</div></div></div>
+</section>
+
+<section class="module-section" id="m22"><div class="module-header"><span class="module-num">M22</span><div><div class="module-title">Measurement In A Zero-Click World</div><div class="module-sub">Clicks are still important, but they are not the whole story</div></div></div>
+  <p>AI answers can reduce clicks while increasing influence. A user may read an AI summary, see your brand cited, search your brand later, or convert through another channel. SEO measurement has to widen.</p>
+  <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Why it matters</th></tr></thead><tbody><tr><td>Organic clicks</td><td>Still the clearest direct traffic signal.</td></tr><tr><td>Impressions</td><td>Shows visibility even when CTR changes.</td></tr><tr><td>Branded search</td><td>AI and social discovery often reappear as brand demand.</td></tr><tr><td>AI citations</td><td>Track where AI systems cite or mention your pages.</td></tr><tr><td>Assisted conversions</td><td>SEO often begins the journey, not ends it.</td></tr><tr><td>Content decay</td><td>Shows when once-useful pages are losing relevance.</td></tr></tbody></table></div>
+  <div class="callout callout-info"><div class="callout-icon">TRACK</div><div class="callout-body">Search Console, Bing Webmaster Tools, server logs, analytics, rank tracking, brand search volume, and manual AI prompt tracking all matter. No single dashboard owns the full picture yet.</div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part V</div><div class="part-title">Advanced Strategy</div><div class="part-sub">Authority, brand, reviews, refresh cycles, tools, and a 90-day operating plan</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M23 - M28</div></div>
+
+<section class="module-section" id="m23"><div class="module-header"><span class="module-num">M23</span><div><div class="module-title">Topical Authority</div><div class="module-sub">Own the topic, not just the keyword</div></div></div>
+  <p>Topical authority means your site covers a subject deeply enough that users and systems can trust you across the whole problem space. This is not just publishing many articles. It is building a coherent knowledge system.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Define the topic map</h4><p>Core concepts, problems, alternatives, tools, mistakes, costs, examples, and FAQs.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Create hub pages</h4><p>Big guides that organize the topic and link to deeper pages.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Add proof pages</h4><p>Case studies, teardown posts, benchmarks, calculators, and examples.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Interlink intentionally</h4><p>Pages should reinforce each other, not compete randomly.</p></div></div></div>
+</section>
+
+<section class="module-section" id="m24"><div class="module-header"><span class="module-num">M24</span><div><div class="module-title">Brand Search Is The Moat</div><div class="module-sub">When users ask for you by name, algorithms have less ambiguity</div></div></div>
+  <p>Generic search is crowded. Brand search is clearer. A strong brand creates navigational demand, direct traffic, mentions, reviews, repeat visits, and trust signals that are harder to copy than a blog template.</p>
+  <div class="feature-grid"><div class="feature-card"><div class="feature-card-label">Build memory</div><h4>Repeatable concepts</h4><p>Name your frameworks, templates, tools, and signature processes.</p></div><div class="feature-card"><div class="feature-card-label">Build proof</div><h4>Show outcomes</h4><p>Case studies, public examples, testimonials, screenshots, and before/after evidence.</p></div><div class="feature-card"><div class="feature-card-label">Build distribution</div><h4>Leave the website</h4><p>YouTube, LinkedIn, podcasts, newsletters, communities, GitHub, directories.</p></div><div class="feature-card"><div class="feature-card-label">Build entity clarity</div><h4>Be consistent</h4><p>Same name, bios, handles, descriptions, logos, and links across the web.</p></div></div>
+</section>
+
+<section class="module-section" id="m25"><div class="module-header"><span class="module-num">M25</span><div><div class="module-title">Reviews, Communities, And UGC</div><div class="module-sub">AI search loves the messy human web, but you cannot fake it safely</div></div></div>
+  <p>Forums, Reddit, review sites, YouTube comments, community posts, and customer reviews often influence AI summaries because they contain lived experience. You should not manipulate them. You should earn real discussion by doing useful work, asking for reviews ethically, responding well, and participating where your audience already is.</p>
+  <div class="callout callout-danger"><div class="callout-icon">DON'T</div><div class="callout-body">Do not create fake reviews, fake Reddit threads, fake comparison pages, or fake third-party endorsements. AI systems may ingest them, but humans and platforms eventually punish fraud. Short-term visibility is not worth long-term trust loss.</div></div>
+  <p>Instead: build review request flows, answer community questions, publish transparent comparisons, and document real customer outcomes.</p>
+</section>
+
+<section class="module-section" id="m26"><div class="module-header"><span class="module-num">M26</span><div><div class="module-title">Refresh And Decay</div><div class="module-sub">Old pages lose trust when the world changes around them</div></div></div>
+  <p>In AI search, stale pages are risky because summaries need current facts. Refresh cycles should focus on pages where freshness changes the answer: pricing, tools, laws, model capabilities, product comparisons, statistics, screenshots, and best-practice recommendations.</p>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Refresh monthly</div><div class="kv-val">Fast-moving AI, software, pricing, regulatory, and benchmark pages.</div></div><div class="kv-row"><div class="kv-key">Refresh quarterly</div><div class="kv-val">Core service pages, comparisons, local pages, top guides.</div></div><div class="kv-row"><div class="kv-key">Refresh yearly</div><div class="kv-val">Evergreen definitions and stable tutorials, unless traffic drops.</div></div><div class="kv-row"><div class="kv-key">Do not fake</div><div class="kv-val">Changing the date without meaningful updates is not freshness.</div></div></div>
+</section>
+
+<section class="module-section" id="m27"><div class="module-header"><span class="module-num">M27</span><div><div class="module-title">SEO Tool Stack</div><div class="module-sub">What to monitor and why</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Layer</th><th>Tools</th><th>Use</th></tr></thead><tbody><tr><td>Indexing</td><td>Google Search Console, Bing Webmaster Tools</td><td>Coverage, queries, pages, sitemaps, errors.</td></tr><tr><td>Crawling</td><td>Screaming Frog, Sitebulb, server logs</td><td>Technical audits, internal links, status codes, canonical issues.</td></tr><tr><td>Content</td><td>Docs, CMS, content inventory, spreadsheet</td><td>Topic maps, refresh cycles, proof assets, briefs.</td></tr><tr><td>Rank/market</td><td>Ahrefs, Semrush, Sistrix, Similarweb</td><td>Competitors, keywords, links, SERP features.</td></tr><tr><td>AI visibility</td><td>Manual prompt set, Bing AI Performance if available, custom trackers</td><td>Citations, mentions, answer inclusion, competitor mentions.</td></tr><tr><td>Analytics</td><td>GA4, Plausible, PostHog, CRM attribution</td><td>Traffic quality, conversions, assisted revenue.</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="m28"><div class="module-header"><span class="module-num">M28</span><div><div class="module-title">The 90-Day SEO + AI Search Plan</div><div class="module-sub">What to do first when the map is big</div></div></div>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Days 1-15: Baseline</h4><p>Set up Search Console, Bing Webmaster Tools, analytics, sitemap, robots review, crawl audit, top page inventory, and AI prompt baseline.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Days 16-30: Technical cleanup</h4><p>Fix index blockers, canonicals, broken links, internal linking gaps, slow templates, duplicate pages, and missing metadata.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Days 31-45: Entity foundation</h4><p>Improve About, author bios, organization schema, service pages, location facts, sameAs profiles, and review flows.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Days 46-65: Content rebuild</h4><p>Upgrade top pages with direct answers, proof blocks, tables, examples, schema, media, internal links, and clear CTAs.</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Days 66-80: Authority push</h4><p>Publish one original asset: report, calculator, comparison, template, dataset, case study, or teardown worth citing.</p></div></div><div class="flow-step"><div class="flow-step-num">6</div><div class="flow-step-content"><h4>Days 81-90: Measure and iterate</h4><p>Compare rankings, traffic, conversions, brand search, AI citations, crawl logs, and page-level improvements. Build the next sprint.</p></div></div></div>
+  <div class="callout callout-success"><div class="callout-icon">END</div><div class="callout-body">The future-proof SEO strategy is not chasing every rumor. It is building a site that search engines can access, answer engines can cite, and humans can trust enough to act.</div></div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Part VI</div><div class="part-title">SEO Operations For Support Teams And VAs</div><div class="part-sub">SOPs, checklists, templates, and escalation rules for people doing the work</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M29 - M38</div></div>
+
+<section class="module-section" id="m29"><div class="module-header"><span class="module-num">M29</span><div><div class="module-title">The VA Role Map</div><div class="module-sub">What a support person can own, assist, or escalate</div></div></div>
+  <p>A VA or support specialist does not need to become a senior SEO strategist to be useful. They need a clear operating lane: collect data, follow checklists, update safe fields, prepare briefs, publish approved content, monitor issues, and escalate anything risky.</p>
+  <div class="table-wrap"><table><thead><tr><th>Task</th><th>VA can own</th><th>Needs approval</th><th>Escalate immediately</th></tr></thead><tbody><tr><td>Keyword collection</td><td>Export queries, group themes, collect competitor titles</td><td>Final keyword priorities</td><td>None usually</td></tr><tr><td>Metadata edits</td><td>Draft title tags and meta descriptions</td><td>Publishing on money pages</td><td>Brand/legal claims</td></tr><tr><td>Internal links</td><td>Suggest relevant links and anchors</td><td>Large sitewide changes</td><td>Links to wrong service, old offer, or legal/medical advice</td></tr><tr><td>Content publishing</td><td>Format, upload, add images, alt text, schema, links</td><td>Final publish</td><td>Broken layout, missing author, unsupported claims</td></tr><tr><td>Local SEO</td><td>Update hours, photos, services, review log</td><td>Category, address, phone, name changes</td><td>Suspension warning, duplicate listing, ownership issue</td></tr><tr><td>Technical SEO</td><td>Run checks and document issues</td><td>Implement fixes</td><td>Noindex, robots block, 5xx errors, hacked pages</td></tr></tbody></table></div>
+  <div class="callout callout-info"><div class="callout-icon">RULE</div><div class="callout-body">A VA should never guess on redirects, canonical tags, robots.txt, noindex, business name/address/phone, legal claims, medical claims, pricing claims, or mass content changes. Those are escalation items.</div></div>
+</section>
+
+<section class="module-section" id="m30"><div class="module-header"><span class="module-num">M30</span><div><div class="module-title">Weekly SEO Support Routine</div><div class="module-sub">The recurring checklist that keeps the machine alive</div></div></div>
+  <p>This is the weekly operating rhythm for a support SEO assistant. It is deliberately repetitive because SEO breaks quietly.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Monday: Search Console health</h4><p>Check indexing pages, manual actions, security issues, sitemap status, top query movement, and pages with sudden drops.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Tuesday: Content queue</h4><p>Update content tracker, collect missing assets, verify briefs, prep drafts, check internal links, and confirm assigned owners.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Wednesday: Local and reputation</h4><p>Check Google Business Profile, reviews, photos, Q&A, service updates, and local citation consistency.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Thursday: Competitor and AI visibility</h4><p>Run saved prompts, record cited sources, capture competitor pages, and note gaps in your content.</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Friday: Report and cleanup</h4><p>Send a short report: wins, issues, tasks completed, blockers, pages published, pages needing approval, urgent risks.</p></div></div></div>
+  <div class="tech-block"><div class="tech-block-label">Friday report template</div><pre>SEO Weekly Report - [Client / Site]
+
+1. Completed this week:
+- 
+
+2. Performance notes:
+- Top improving page:
+- Top declining page:
+- New indexing issues:
+
+3. Content status:
+- Drafts ready:
+- Published:
+- Waiting for approval:
+
+4. Local SEO:
+- New reviews:
+- GBP updates:
+- Issues:
+
+5. AI search visibility:
+- Prompts checked:
+- Our brand cited? yes/no
+- Competitors cited:
+
+6. Blockers / approvals needed:
+- </pre></div>
+</section>
+
+<section class="module-section" id="m31"><div class="module-header"><span class="module-num">M31</span><div><div class="module-title">Keyword Research SOP For VAs</div><div class="module-sub">How to collect and organize keywords without pretending to be the strategist</div></div></div>
+  <p>The VA's job is not to pick the whole strategy alone. The VA's job is to gather clean evidence so the strategist or owner can decide faster.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Start from existing data</h4><p>Export Search Console queries for the last 3 months. Include query, page, clicks, impressions, CTR, and position.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Group by intent</h4><p>Label each keyword as informational, commercial, local, transactional, support, branded, or competitor.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Find page match</h4><p>Mark whether the site already has a page for the keyword. If yes, paste the URL. If no, mark "gap."</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Check the SERP manually</h4><p>Search the keyword in an incognito window. Note what ranks: guides, local pack, videos, tools, category pages, forums, AI Overview.</p></div></div><div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Collect competitor examples</h4><p>Save the top 3 useful competitor URLs and write one sentence on why each page satisfies the query.</p></div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Column</th><th>Example</th></tr></thead><tbody><tr><td>Keyword</td><td>local seo checklist for dentists</td></tr><tr><td>Intent</td><td>Informational / local niche</td></tr><tr><td>Current URL</td><td>/seo/local-seo/ or GAP</td></tr><tr><td>SERP type</td><td>Guides + local agencies + PAA</td></tr><tr><td>AI answer?</td><td>Yes, cites 3 guides</td></tr><tr><td>Competitor URL</td><td>example.com/dental-local-seo-guide</td></tr><tr><td>Recommended action</td><td>Refresh existing guide with dental examples</td></tr></tbody></table></div>
+</section>
+
+<section class="module-section" id="m32"><div class="module-header"><span class="module-num">M32</span><div><div class="module-title">Page Audit SOP</div><div class="module-sub">The checklist for improving an existing page</div></div></div>
+  <p>Most support SEO work is not glamorous. It is making existing pages clearer, more trustworthy, easier to crawl, and easier to convert.</p>
+  <div class="table-wrap"><table><thead><tr><th>Check</th><th>Pass condition</th><th>VA action</th></tr></thead><tbody><tr><td>Title tag</td><td>Specific, under control, includes primary topic naturally</td><td>Draft improved version</td></tr><tr><td>Meta description</td><td>Clear value and reason to click</td><td>Draft 145-160 character version</td></tr><tr><td>H1</td><td>One clear H1 matching page intent</td><td>Flag if missing/duplicated</td></tr><tr><td>Intro</td><td>Answers the core question quickly</td><td>Suggest direct answer paragraph</td></tr><tr><td>Internal links</td><td>Links to and from related pages</td><td>Add suggestions with anchor text</td></tr><tr><td>Proof</td><td>Examples, screenshots, reviews, data, author expertise</td><td>List missing proof assets</td></tr><tr><td>CTA</td><td>Next step is obvious</td><td>Flag weak/missing CTA</td></tr><tr><td>Schema</td><td>Relevant schema exists and matches visible content</td><td>Flag missing or suspicious schema</td></tr><tr><td>Freshness</td><td>Facts, screenshots, pricing, tools are current</td><td>Mark stale items</td></tr></tbody></table></div>
+  <div class="tech-block"><div class="tech-block-label">Page audit note format</div><pre>Page: [URL]
+Target intent: [what the user wants]
+
+Quick diagnosis:
+- What works:
+- What is weak:
+- Missing proof:
+- Internal links to add:
+- Internal links from:
+- Suggested title:
+- Suggested meta:
+- Escalation needed? yes/no
+
+Priority:
+P1 = blocking / broken
+P2 = important improvement
+P3 = nice to have</pre></div>
+</section>
+
+<section class="module-section" id="m33"><div class="module-header"><span class="module-num">M33</span><div><div class="module-title">Content Brief SOP</div><div class="module-sub">How a VA prepares a page for a writer or AI-assisted draft</div></div></div>
+  <p>A content brief prevents generic SEO slop. It tells the writer what the page must accomplish, what evidence to include, what angle is different, and what not to say.</p>
+  <div class="tech-block"><div class="tech-block-label">SEO content brief template</div><pre>Page title:
+Target URL:
+Primary keyword:
+Secondary keywords:
+Search intent:
+Audience:
+Conversion goal:
+
+SERP notes:
+- Top ranking formats:
+- Common sections:
+- Missing angle we can own:
+
+Required sections:
+1.
+2.
+3.
+
+Evidence/proof needed:
+- Case study:
+- Screenshot:
+- Data/source:
+- Expert quote:
+- Product/service example:
+
+Internal links to include:
+-
+
+External sources to cite:
+-
+
+Schema target:
+Article / LocalBusiness / Product / FAQ / HowTo / none
+
+Do not claim:
+-
+
+CTA:
+- </pre></div>
+  <div class="callout callout-warn"><div class="callout-icon">AI</div><div class="callout-body">If using AI to draft, the VA should provide the brief, source notes, business facts, and examples. Do not ask AI to invent case studies, reviews, prices, credentials, or statistics.</div></div>
+</section>
+
+<section class="module-section" id="m34"><div class="module-header"><span class="module-num">M34</span><div><div class="module-title">Publishing SOP</div><div class="module-sub">How to publish without quietly damaging SEO</div></div></div>
+  <p>Publishing is where many SEO mistakes happen: wrong slug, missing canonical, giant images, no internal links, broken formatting, missing author, copied metadata, or accidentally noindexing the page.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Before upload</h4><p>Confirm approved title, URL slug, author, category, publish date, target keyword, CTA, and internal links.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>During upload</h4><p>Format headings, compress images, add alt text, add tables, add schema, add meta title/description.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Before publish</h4><p>Preview desktop and mobile. Test links. Check noindex is off. Check canonical is correct.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>After publish</h4><p>Add internal links from 2-5 relevant old pages. Submit URL in Search Console if appropriate. Log in tracker.</p></div></div></div>
+  <div class="kv"><div class="kv-row"><div class="kv-key">Safe slug</div><div class="kv-val">/seo/local-seo-checklist/</div></div><div class="kv-row"><div class="kv-key">Risky slug</div><div class="kv-val">/2026/06/10/final-draft-v2-new-seo-article-copy/</div></div><div class="kv-row"><div class="kv-key">Safe alt text</div><div class="kv-val">Screenshot of Google Search Console indexing report showing excluded pages.</div></div><div class="kv-row"><div class="kv-key">Bad alt text</div><div class="kv-val">SEO SEO best SEO agency SEO services SEO.</div></div></div>
+</section>
+
+<section class="module-section" id="m35"><div class="module-header"><span class="module-num">M35</span><div><div class="module-title">Local SEO SOP For Support Teams</div><div class="module-sub">The repeatable local visibility checklist</div></div></div>
+  <p>Local SEO support is detail work. The business must look real, active, consistent, and locally relevant everywhere a customer or machine checks.</p>
+  <div class="table-wrap"><table><thead><tr><th>Area</th><th>Weekly task</th><th>Monthly task</th></tr></thead><tbody><tr><td>Google Business Profile</td><td>Check reviews, Q&A, photos, hours, alerts</td><td>Add fresh photos, update services/products, check categories</td></tr><tr><td>Reviews</td><td>Log new reviews and response status</td><td>Summarize recurring themes and service keywords</td></tr><tr><td>Citations</td><td>Flag wrong NAP if found</td><td>Audit top directories for name, address, phone, URL</td></tr><tr><td>Location pages</td><td>Check forms/calls work</td><td>Add local proof: photos, testimonials, staff, FAQs</td></tr><tr><td>Competitors</td><td>Note new GBP posts/photos/review spikes</td><td>Compare categories, services, review velocity</td></tr></tbody></table></div>
+  <div class="callout callout-danger"><div class="callout-icon">STOP</div><div class="callout-body">Do not change business name, primary category, address, phone number, or website URL without approval. These changes can affect rankings, verification, and listing stability.</div></div>
+</section>
+
+<section class="module-section" id="m36"><div class="module-header"><span class="module-num">M36</span><div><div class="module-title">Reporting SOP</div><div class="module-sub">How to report SEO without drowning people in charts</div></div></div>
+  <p>A useful support report says what changed, why it matters, what was done, what is blocked, and what happens next. It does not dump screenshots without interpretation.</p>
+  <div class="table-wrap"><table><thead><tr><th>Metric</th><th>What VA should say</th><th>Bad reporting</th></tr></thead><tbody><tr><td>Clicks</td><td>"Organic clicks rose 12%, mostly from the local SEO guide."</td><td>"Clicks: 1,842."</td></tr><tr><td>Impressions</td><td>"Impressions grew but CTR fell, so titles may need testing."</td><td>"Impressions are up."</td></tr><tr><td>Indexing</td><td>"3 important pages are discovered but not indexed; requesting review."</td><td>"Coverage has warnings."</td></tr><tr><td>Rankings</td><td>"Two service pages moved from page 2 to page 1."</td><td>"Average position changed."</td></tr><tr><td>AI visibility</td><td>"ChatGPT cited competitor X for 4/10 prompts; our missing angle is pricing examples."</td><td>"AI search checked."</td></tr></tbody></table></div>
+  <div class="tech-block"><div class="tech-block-label">One-page monthly report</div><pre>Monthly SEO Summary - [Month]
+
+Headline:
+- [One sentence: what happened and why it matters]
+
+Wins:
+1.
+2.
+3.
+
+Risks:
+1.
+2.
+
+Work completed:
+-
+
+Top pages:
+- Improving:
+- Declining:
+- Needs refresh:
+
+AI search notes:
+- Prompts tested:
+- We were cited for:
+- Competitors were cited for:
+
+Next month:
+1.
+2.
+3.</pre></div>
+</section>
+
+<section class="module-section" id="m37"><div class="module-header"><span class="module-num">M37</span><div><div class="module-title">AI Search Visibility SOP</div><div class="module-sub">How a VA checks if answer engines see you</div></div></div>
+  <p>AI visibility tracking is immature, so support teams need a simple prompt set and a consistent logging process. The goal is not perfect science. The goal is directional visibility: who gets cited, what claims appear, and which content gaps repeat.</p>
+  <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Create 10-25 saved prompts</h4><p>Use real customer questions, comparison prompts, local prompts, and buying-intent prompts.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Run monthly</h4><p>Use the same prompts in ChatGPT search, Google AI features when available, Copilot/Bing, and any relevant answer engine.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Record citations</h4><p>Log whether your brand/page appears, which competitors appear, and what source URLs are cited.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Extract gaps</h4><p>If competitors are cited, note what their page has that yours lacks: data, table, definition, case study, comparison, author proof.</p></div></div></div>
+  <div class="tech-block"><div class="tech-block-label">Prompt tracking sheet columns</div><pre>Date
+Prompt
+Platform
+Our brand mentioned? yes/no
+Our URL cited? yes/no
+Competitor brands mentioned
+Cited URLs
+Answer summary
+Missing content angle
+Recommended action
+Screenshot link</pre></div>
+  <div class="callout callout-info"><div class="callout-icon">EXAMPLE</div><div class="callout-body">Prompt: "What is the best local SEO checklist for a dental clinic with three locations?" If the answer cites two agency guides and one Google help page, the VA logs those URLs and checks whether your site has a dental-specific local SEO checklist with original examples.</div></div>
+</section>
+
+<section class="module-section" id="m38"><div class="module-header"><span class="module-num">M38</span><div><div class="module-title">Escalation Rules And QA</div><div class="module-sub">How support teams avoid expensive SEO mistakes</div></div></div>
+  <p>SEO support work needs a red flag list. The fastest way to lose trust is to make an invisible technical change that hurts indexing, rankings, local visibility, or conversions.</p>
+  <div class="table-wrap"><table><thead><tr><th>Red flag</th><th>Why it matters</th><th>Action</th></tr></thead><tbody><tr><td>Noindex found on important page</td><td>Page may disappear from search</td><td>Escalate immediately with URL and screenshot</td></tr><tr><td>Robots.txt blocks important folder</td><td>Crawlers may not access content</td><td>Do not edit; escalate</td></tr><tr><td>Canonical points to wrong page</td><td>Search may ignore the page</td><td>Escalate with current canonical</td></tr><tr><td>Traffic drop over 30%</td><td>Could be technical, update, tracking, or demand issue</td><td>Document date, pages, queries, possible site changes</td></tr><tr><td>GBP suspension or verification alert</td><td>Local visibility risk</td><td>Escalate immediately</td></tr><tr><td>Hacked/spam pages indexed</td><td>Security and reputation issue</td><td>Escalate immediately</td></tr><tr><td>Mass redirect request</td><td>Can destroy rankings if wrong</td><td>Requires senior approval</td></tr><tr><td>Legal/medical/financial claim</td><td>High-stakes content risk</td><td>Requires expert review</td></tr></tbody></table></div>
+  <div class="tech-block"><div class="tech-block-label">Final QA checklist before sending work for approval</div><pre>[ ] Page URL works
+[ ] Page is not noindex
+[ ] Canonical looks correct
+[ ] Title and meta are filled
+[ ] H1 exists and matches topic
+[ ] Images compressed and alt text added
+[ ] Internal links added
+[ ] External links open correctly
+[ ] CTA works
+[ ] Mobile preview checked
+[ ] Claims supported by visible proof/source
+[ ] Tracker updated
+[ ] Approval requested with summary</pre></div>
+  <div class="pull-quote">A good SEO VA is not someone who knows every ranking factor. It is someone who can run the machine carefully, document reality, and know when not to touch the dangerous wires.</div>
+</section>
+
+<div class="part-header"><div><div class="part-num">Reference</div><div class="part-title">Cited References And Recommended Reading</div></div><div class="part-divider"></div></div>
+<section class="module-section" id="sources"><div class="module-header"><span class="module-num">SRC</span><div><div class="module-title">Sources</div><div class="module-sub">Primary references used to ground the guide</div></div></div>
+  <div class="source-index">
+    <div class="source-row"><div class="source-num">01</div><div class="source-title">Google Search Central - SEO Starter Guide: how SEO helps search engines understand content and users find sites.</div><a href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">02</div><div class="source-title">Google Search Central - AI features and your website: AI Overviews, AI Mode, query fan-out, eligibility, and no special AI markup requirement.</div><a href="https://developers.google.com/search/docs/appearance/ai-features" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">03</div><div class="source-title">Google Search Central - Creating helpful, reliable, people-first content: originality, expertise, E-E-A-T, and avoiding search-engine-first content.</div><a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">04</div><div class="source-title">Google Search Central - Structured data: standardized clues about page meaning and rich result eligibility.</div><a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">05</div><div class="source-title">OpenAI Crawlers documentation: OAI-SearchBot, GPTBot, ChatGPT-User, robots.txt controls, and search inclusion implications.</div><a href="https://developers.openai.com/api/docs/bots" target="_blank" class="source-link">open</a></div>
+    <div class="source-row"><div class="source-num">06</div><div class="source-title">IndexNow documentation: protocol for notifying participating search engines when content changes.</div><a href="https://www.indexnow.org/documentation" target="_blank" class="source-link">open</a></div>
+  </div>
+</section>
+</main>
+
+<footer class="page-footer"><div><span>SEO 101 - Grimoire 008</span><span style="margin:0 10px;opacity:.3">-</span><span>June 2026 - Old SEO + New AI Search + VA Playbook - 38 Modules</span></div><div style="display:flex;gap:1.5rem"><a href="../projects/">&larr; Back to Projects</a><a href="https://developers.google.com/search" target="_blank">Google Search Central</a></div></footer>
+<script>
+const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const pct = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+  bar.style.transform = `scaleX(${pct})`;
+}, { passive: true });
+const sections = Array.from(document.querySelectorAll('section[id]'));
+const links = document.querySelectorAll('.nav-link');
+let activeId = null;
+const THRESHOLD = 112;
+function updateNav() {
+  let found = null;
+  for (const s of sections) if (s.getBoundingClientRect().top <= THRESHOLD) found = s.id;
+  if (!found || found === activeId) return;
+  activeId = found;
+  links.forEach(l => l.classList.remove('active'));
+  const link = document.querySelector(`.nav-link[href="#${found}"]`);
+  if (link) { link.classList.add('active'); link.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+</script>
+</body>
+</html>
