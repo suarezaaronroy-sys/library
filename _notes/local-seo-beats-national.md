@@ -4,6 +4,7 @@ date: 2026-02-15
 category: Field Notes
 lede: "Rightmove and Zoopla own the national terms. The only realistic path for a new business is hyper-local long-tail. Here's the logic."
 related_grimoire: /grimoires/008-seo-101.html
+description: "Rightmove and Zoopla own the national terms. The only realistic path for a new business is hyper-local long-tail. Here's the logic."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html. Draft below from the published excerpt. -->
 

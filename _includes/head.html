@@ -1,6 +1,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% seo %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Person","@id":"{{ site.url }}{{ site.baseurl }}/#aaron","name":"Aaron Suarez","url":"{{ site.url }}{{ site.baseurl }}/","jobTitle":"Operational Systems Builder","sameAs":["{{ site.author.linkedin }}"],"knowsAbout":["CRM architecture","workflow automation","AI-native operations","payment processing","organizational design"]},
+ {"@type":"WebSite","name":"{{ site.title }} — The Working Library","url":"{{ site.url }}{{ site.baseurl }}/","author":{"@id":"{{ site.url }}{{ site.baseurl }}/#aaron"}}
+]}
+</script>
 <link rel="icon" href="{{ '/favicon.png' | relative_url }}" type="image/png">
 <link rel="apple-touch-icon" href="{{ '/favicon.png' | relative_url }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">

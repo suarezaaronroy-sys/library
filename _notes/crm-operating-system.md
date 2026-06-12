@@ -4,6 +4,7 @@ date: 2026-01-25
 category: CRM
 lede: "Most teams use their CRM as a filing cabinet. A well-architected CRM is an operating system for how your team works."
 related_grimoire: /grimoires/001-asmc-crm-engine.html
+description: "Most teams use their CRM as a filing cabinet. A well-architected CRM is an operating system for how your team works."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html. Draft below from the published excerpt. -->
 

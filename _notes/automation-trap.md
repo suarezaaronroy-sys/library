@@ -4,6 +4,7 @@ date: 2026-02-28
 category: Operations
 lede: "Automation amplifies what's already there. If the process is broken, automation just breaks it faster and at scale."
 related_grimoire: /grimoires/006-automations-101.html
+description: "Automation amplifies what's already there. If the process is broken, automation just breaks it faster and at scale."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html. Draft below from the published excerpt. -->
 

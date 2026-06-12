@@ -4,6 +4,7 @@ date: 2026-04-10
 category: Field Notes
 lede: "City-specific subject lines outperformed generic ones by 11 percentage points. Here's the breakdown from the Dual Wing campaign."
 related_grimoire: /grimoires/002-dual-wing-rental.html
+description: "City-specific subject lines outperformed generic ones by 11 percentage points. Here's the breakdown from the Dual Wing campaign."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html. Draft below from the published excerpt. -->
 

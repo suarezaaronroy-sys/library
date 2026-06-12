@@ -4,6 +4,7 @@ date: 2026-03-15
 category: Systems
 lede: "When teams keep asking the same questions, the issue is rarely memory — it's the environment around the work. And environments can be redesigned."
 related_grimoire: /grimoires/011-organizational-physics.html
+description: "When teams keep asking the same questions, the issue is rarely memory — it's the environment around the work. And environments can be redesigned."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html here.
      The lede above is the published excerpt; everything below is placeholder structure. -->

@@ -3,6 +3,7 @@ title: "Pipeline Stages That Lie to You."
 date: 2026-01-15
 category: CRM
 lede: "When \"Proposal Sent\" means three different things depending on who moved the deal — the stage isn't a stage. It's a conversation."
+description: "When \"Proposal Sent\" means three different things depending on who moved the deal — the stage isn't a stage. It's a conversation."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html. Draft below from the published excerpt. -->
 

@@ -4,6 +4,7 @@ date: 2026-03-01
 category: Operations
 lede: "The artifact passes. The reasoning doesn't. The next person starts over, makes wrong assumptions, or stalls waiting for context that should have been included."
 related_grimoire: /grimoires/010-orchestration-layer.html
+description: "The artifact passes. The reasoning doesn't. The next person starts over, makes wrong assumptions, or stalls waiting for context that should have been included."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html here. -->
 

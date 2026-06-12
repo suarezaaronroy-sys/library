@@ -20,6 +20,9 @@ asmc_url: https://asmultitaskcollective-prog.github.io/systems/
 google_analytics: G-GYPEWZXH03
 
 # ── Build ─────────────────────────────────────────────
+lang: en
+logo: /assets/og-default.png
+
 markdown: kramdown
 plugins:
   - jekyll-seo-tag
@@ -36,7 +39,7 @@ defaults:
   - scope: { path: "", type: "notes" }
     values: { layout: note }
   - scope: { path: "" }
-    values: { layout: default }
+    values: { layout: default, image: /assets/og-default.png }
 
 # Grimoires are self-contained HTML (no front matter) — Jekyll copies
 # them verbatim, Liquid never touches them. Drop the 0xx-*.html files

@@ -4,6 +4,7 @@ date: 2026-03-20
 category: Field Notes
 lede: "Almost everything useful about GoHighLevel lives behind a paywall. That's an operational problem — and operational problems are what I fix."
 related_grimoire: /grimoires/003-ghl-101.html
+description: "Almost everything useful about GoHighLevel lives behind a paywall. That's an operational problem — and operational problems are what I fix."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html. Draft below from the published excerpt. -->
 

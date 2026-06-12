@@ -4,6 +4,7 @@ date: 2026-02-20
 category: Systems
 lede: "Most documentation fails not because it's wrong — but because it's not built for the moment someone needs it."
 related_grimoire: /grimoires/011-organizational-physics.html
+description: "Most documentation fails not because it's wrong — but because it's not built for the moment someone needs it."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html. Draft below from the published excerpt. -->
 

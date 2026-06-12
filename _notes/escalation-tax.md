@@ -4,6 +4,7 @@ date: 2026-03-08
 category: Operations
 lede: "Ten interruptions a day costs more than ten answers — every escalation bills the switching time too. 10/day can mean 3+ hours of senior focus gone."
 related_grimoire: /grimoires/011-organizational-physics.html
+description: "Ten interruptions a day costs more than ten answers — every escalation bills the switching time too. 10/day can mean 3+ hours of senior focus gone."
 ---
 <!-- MIGRATE: paste the full note body from the old notes.html here. -->
 
