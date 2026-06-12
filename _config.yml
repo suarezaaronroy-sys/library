@@ -1,0 +1,48 @@
+# ── Site ──────────────────────────────────────────────
+title: Aaron Suarez
+tagline: Everything I build, I write down.
+description: >-
+  The working library of Aaron Suarez — operational systems builder.
+  Manuals, system documentation, and field notes I keep because I use
+  them: CRM, automation, payments, AI-native operations, and the
+  trilogy on how money moves, how work moves, why organizations behave.
+url: "https://suarezaaronroy-sys.github.io"   # swap to custom domain when ready
+baseurl: "/library"   # SEPARATE REPO: set to "/<repo-name>" until custom domain; "" for user-site or custom domain
+
+author:
+  name: Aaron Suarez
+  email: suarezaaronroy@gmail.com              # direct lane: roles, collaboration, the library
+  location: Valencia City, PH · remote-first
+  linkedin: https://www.linkedin.com/in/suarez-aaronroy/
+
+business_email: asmultitaskcollective@gmail.com  # selective B2B lane
+asmc_url: https://asmultitaskcollective-prog.github.io/systems/
+google_analytics: G-GYPEWZXH03
+
+# ── Build ─────────────────────────────────────────────
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Notes become real pages: /notes/<slug>/
+collections:
+  notes:
+    output: true
+    permalink: /notes/:slug/
+
+defaults:
+  - scope: { path: "", type: "notes" }
+    values: { layout: note }
+  - scope: { path: "" }
+    values: { layout: default }
+
+# Grimoires are self-contained HTML (no front matter) — Jekyll copies
+# them verbatim, Liquid never touches them. Drop the 0xx-*.html files
+# into /grimoires/ unchanged.
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

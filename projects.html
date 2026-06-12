@@ -1,0 +1,59 @@
+---
+layout: default
+title: The Library — Grimoires
+description: Twelve grimoires — built systems, field manuals, and the trilogy. Documented, cited, free, no gate.
+permalink: /projects/
+---
+<div class="shell page-pad">
+  <header class="page-header">
+    <div class="page-eyebrow">The Library</div>
+    <h1>Systems built. Documented. <em>Shipped.</em></h1>
+    <p class="lede">Working system documentation and field manuals, written from production use because I reference them myself — versioned, QA-checked, published openly. Grimoires 009–011 form the trilogy: how money moves, how work moves, why organizations behave.</p>
+    <input type="text" id="lib-filter" placeholder="Filter the shelf — try &quot;CRM&quot;, &quot;agents&quot;, &quot;payments&quot;…" aria-label="Filter library"
+      style="margin-top:1rem;width:min(440px,100%);font-family:var(--mono);font-size:.72rem;padding:.55rem .9rem;border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--ink);outline:none">
+  </header>
+
+  <div class="trilogy-band" style="margin-top:0">
+    <div class="t-label">The Trilogy</div>
+    <div class="t-row">
+      {% assign trilogy = site.data.grimoires | where: "tier", "trilogy" %}
+      {% for g in trilogy %}
+      <a class="t-cell" href="{{ g.href | relative_url }}"><b>{{ g.trilogy_label }} · {{ g.num }}</b><i>{{ g.title }}</i><span>{{ g.desc | truncate: 90 }}</span></a>
+      {% unless forloop.last %}<div class="t-arrow">→</div>{% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="section-h"><h2>Systems built</h2><span>client work · real numbers</span></div>
+  <div class="g-grid">
+    {% assign built = site.data.grimoires | where: "tier", "built" %}
+    {% for g in built %}{% include grimoire-card.html %}{% endfor %}
+  </div>
+
+  <div class="section-h"><h2>The trilogy, in full</h2><span>009 → 010 → 011</span></div>
+  <div class="g-grid">
+    {% for g in trilogy %}{% include grimoire-card.html %}{% endfor %}
+  </div>
+
+  <div class="section-h"><h2>Field manuals</h2><span>free · open · cited</span></div>
+  <div class="g-grid">
+    {% assign manuals = site.data.grimoires | where: "tier", "manual" %}
+    {% for g in manuals %}{% include grimoire-card.html %}{% endfor %}
+  </div>
+</div>
+{% include cta-band.html %}
+<script>
+(function(){
+  var f=document.getElementById('lib-filter'); if(!f) return;
+  f.addEventListener('input',function(){
+    var q=this.value.toLowerCase();
+    document.querySelectorAll('.g-card').forEach(function(c){
+      c.style.display = c.textContent.toLowerCase().indexOf(q)>-1 ? '' : 'none';
+    });
+  });
+  f.addEventListener('focus',function(){},{once:true});
+  addEventListener('keydown',function(e){
+    if(e.key==='/'&&document.activeElement!==f&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();f.focus()}
+  });
+})();
+</script>

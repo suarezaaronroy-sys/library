@@ -1,0 +1,11 @@
+{% if g.status == 'live' %}<a href="{{ g.href | relative_url }}" class="g-card theme-{{ g.theme }}">{% else %}<div class="g-card g-soon theme-{{ g.theme }}">{% endif %}
+  <div class="g-top">
+    <span class="g-num">{{ g.num }}</span>
+    {% if g.trilogy_label %}<span class="g-trilogy">{{ g.trilogy_label }}</span>{% endif %}
+    <span class="g-date">{{ g.date }}</span>
+  </div>
+  <h3 class="g-title">{{ g.title }}</h3>
+  <p class="g-desc">{{ g.desc }}</p>
+  {% if g.stats.size > 0 %}<div class="g-stats">{% for s in g.stats %}<span>{{ s }}</span>{% endfor %}</div>{% endif %}
+  <div class="g-foot">{% if g.status == 'live' %}<span class="g-open">Open grimoire →</span><span class="g-live">✓ live · free · no gate</span>{% else %}<span class="g-open">Coming soon</span><span class="g-live">○ in progress</span>{% endif %}</div>
+{% if g.status == 'live' %}</a>{% else %}</div>{% endif %}

@@ -1,0 +1,11 @@
+<footer class="footer">
+  <div class="shell footer-line">
+    <div>© <span id="yr"></span> {{ site.title }} · operational systems builder · <a href="{{ '/feed.xml' | relative_url }}" class="footer-link">RSS</a></div>
+    <div class="footer-links">
+      <span>{{ site.author.location }}</span>
+      <a href="mailto:{{ site.author.email }}" class="footer-link">Email</a>
+      <a href="{{ site.author.linkedin }}" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>

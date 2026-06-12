@@ -1,0 +1,11 @@
+---
+layout: default
+---
+<div class="shell page-pad">
+  <header class="page-header">
+    {% if page.eyebrow %}<div class="page-eyebrow">{{ page.eyebrow }}</div>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.lede %}<p class="lede">{{ page.lede }}</p>{% endif %}
+  </header>
+  <div class="prose">{{ content }}</div>
+</div>

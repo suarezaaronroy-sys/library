@@ -1,0 +1,27 @@
+---
+layout: default
+title: Notes — Operational thinking, written down
+description: Field observations from real operations — how breakdowns happen, why they repeat, and what the fix actually requires.
+permalink: /notes/
+---
+<div class="shell page-pad">
+  <header class="page-header">
+    <div class="page-eyebrow">Notes · Field Logs</div>
+    <h1>Operational thinking, <em>written down.</em></h1>
+    <p class="lede">My running commentary — field observations from real operations: how breakdowns happen, why they repeat, and what the fix actually requires. Pattern recognition, not theory. Each note is its own page.</p>
+  </header>
+  {% assign cats = site.notes | map: "category" | uniq %}
+  {% for cat in cats %}
+  <div class="section-h"><h2>{{ cat }}</h2><span>{{ site.notes | where: "category", cat | size }} notes</span></div>
+  <div class="note-list">
+    {% assign catnotes = site.notes | where: "category", cat | sort: "date" | reverse %}
+    {% for n in catnotes %}
+    <a class="note-row" href="{{ n.url | relative_url }}">
+      <div class="n-meta">{{ n.date | date: "%b %Y" }}</div>
+      <h3>{{ n.title }}</h3>
+      <p>{{ n.lede }}</p>
+    </a>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>

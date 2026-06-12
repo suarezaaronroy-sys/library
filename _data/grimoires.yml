@@ -1,0 +1,126 @@
+# ── Single source of truth for the library ─────────────────────────
+# Every page (home shelf, projects, footer) renders from this file.
+# To publish a new grimoire: add the HTML file to /grimoires/ and one
+# entry here. tier: built | manual | trilogy   status: live | soon
+- num: "001"
+  title: "ASMC Full Stack CRM Engine"
+  tier: built
+  theme: purple
+  date: "Apr 2026"
+  href: /grimoires/001-asmc-crm-engine.html
+  status: live
+  desc: "Full CRM automation for a construction business — lead capture to after-sales. v8.1, QA-verified with 13 documented corrections."
+  stats: ["76 custom fields", "24 Zaps", "v8.1 QA-verified"]
+
+- num: "002"
+  title: "Dual Wing Rental Marketing Engine"
+  tier: built
+  theme: teal
+  date: "Apr 2026"
+  href: /grimoires/002-dual-wing-rental.html
+  status: live
+  desc: "Dual-sided rental marketing + CRM (UK + US). 34.2% open rate and 18 consultations from a 340-contact cold list."
+  stats: ["34.2% open rate", "18 consults", "UK + US"]
+
+- num: "003"
+  title: "GHL 101: The Button-to-Button Manual"
+  tier: manual
+  theme: blue
+  date: "Updated Jun 2026"
+  href: /grimoires/003-ghl-101.html
+  status: live
+  desc: "Every GoHighLevel procedure as exact click-paths. 18 modules, 29 verified sources, 5 blueprints, full assessment. Pricing re-verified June 2026."
+  stats: ["18 modules", "29 sources", "50 tips"]
+
+- num: "004"
+  title: "n8n 101: AI Workflow Automation"
+  tier: manual
+  theme: orange
+  date: "May 2026"
+  href: /grimoires/004-n8n-101.html
+  status: live
+  desc: "AI-native automation: agents, RAG, WhatsApp, self-hosting. Built from real field failures — including the $800 Zapier bill."
+  stats: ["12 modules", "$0 per-exec fees"]
+
+- num: "005"
+  title: "Zapier 101: Business Automation Basics"
+  tier: manual
+  theme: teal
+  date: "Jun 2026"
+  href: /grimoires/005-zapier-101.html
+  status: live
+  desc: "Reliable no-code automation: triggers, paths, webhooks, error handling, and when to graduate to Make, n8n, or code."
+  stats: ["Zaps", "webhooks", "ops handoff"]
+
+- num: "006"
+  title: "Automations 101: The Absolute Guide"
+  tier: manual
+  theme: orange
+  date: "May 2026"
+  href: /grimoires/006-automations-101.html
+  status: live
+  desc: "25 production-grade automation patterns with idempotency, retries, DLQs, compliance wrappers, runbooks, and a symptom index."
+  stats: ["25 patterns", "37 sources", "35 diagrams"]
+
+- num: "007"
+  title: "Agentic AI 101: Practical AI Workflows"
+  tier: manual
+  theme: purple
+  date: "Jun 2026"
+  href: /grimoires/007-agentic-ai-101.html
+  status: live
+  desc: "Agent building blocks, human-in-the-loop approvals, evals, guardrails — and the gap between demos and dependable workflows."
+  stats: ["agents", "guardrails", "evals"]
+
+- num: "008"
+  title: "SEO 101: Old Search + AI Search"
+  tier: manual
+  theme: teal
+  date: "Jun 2026"
+  href: /grimoires/008-seo-101.html
+  status: live
+  desc: "Classic search fundamentals bridged to the AI answer-engine era: AEO/GEO, local SEO, VA-ready SOPs, 90-day operating plan."
+  stats: ["38 modules", "VA SOPs"]
+
+- num: "009"
+  title: "Payment Processing: How Money Moves"
+  tier: trilogy
+  trilogy_label: "Trilogy I"
+  theme: orange
+  date: "Jun 2026"
+  href: /grimoires/009-payment-processing.html
+  status: live
+  desc: "A payment-processing career distilled: merchant services, risk, funding, terminals, gateways, and AI-support-ready playbooks."
+  stats: ["84 chapters", "14 parts"]
+
+- num: "010"
+  title: "The Orchestration Layer: How Work Moves"
+  tier: trilogy
+  trilogy_label: "Trilogy II"
+  theme: teal
+  date: "Jun 2026"
+  href: /grimoires/010-orchestration-layer.html
+  status: live
+  desc: "From prompts to organizations: delegation, memory, knowledge, governance, observability — the AI revolution is coordination, not intelligence."
+  stats: ["35 chapters", "7 parts", "3 lenses"]
+
+- num: "011"
+  title: "Organizational Physics: Why Organizations Behave"
+  tier: trilogy
+  trilogy_label: "Trilogy III"
+  theme: purple
+  date: "Jun 2026"
+  href: /grimoires/011-organizational-physics.html
+  status: live
+  desc: "28 case files on why organizations keep producing the same problems — 143 indexed laws, 30 field notes, 12 cited sources."
+  stats: ["28 case files", "143 laws", "30 field notes"]
+
+- num: "012"
+  title: "Claude + OpenClaw 101: The Viral Combo"
+  tier: manual
+  theme: blue
+  date: "In progress"
+  href: ""
+  status: soon
+  desc: "Pairing Claude with OpenClaw for research, drafting, coding, and operator-grade AI workflows."
+  stats: []

@@ -1,0 +1,56 @@
+---
+layout: default
+title: Aaron Suarez — The Working Library
+description: My working library — the manuals, system docs, and field notes I keep because I use them. CRM, automation, payments, AI-native operations, organizational physics. Free, no gate.
+---
+<section class="hero shell">
+  <h1>Everything I build, <em>I write down.</em></h1>
+  <p class="lede">This is my working library — the manuals, system documentation, and field notes I keep because I use them. Twelve grimoires across CRM, automation, payments, AI-native operations, and organizational physics. If they're useful to you too, good: everything here is free, open, and ungated.</p>
+  <div class="hero-ctas">
+    <a class="btn-primary" href="{{ '/projects/' | relative_url }}">Open the library →</a>
+    <a class="btn-secondary" href="{{ '/about/' | relative_url }}">About me</a>
+  </div>
+  <div class="proof-line">
+    <span class="proof-pill"><b>{{ site.data.grimoires | where: "status", "live" | size }}</b> grimoires on the shelf</span>
+    <span class="proof-pill"><b>3-volume</b> trilogy: money · work · organizations</span>
+    <span class="proof-pill"><b>{{ site.notes | size }}</b> field notes</span>
+    <span class="proof-pill"><b>0</b> paywalls, gates, or email walls</span>
+  </div>
+</section>
+
+<div class="shell">
+  <div class="trilogy-band">
+    <div class="t-label">The Trilogy — flagship of the library</div>
+    <div class="t-row">
+      {% assign trilogy = site.data.grimoires | where: "tier", "trilogy" %}
+      {% for g in trilogy %}
+      <a class="t-cell" href="{{ g.href | relative_url }}"><b>{{ g.trilogy_label }} · {{ g.num }}</b><i>{{ g.title }}</i><span>{{ g.desc | truncate: 90 }}</span></a>
+      {% unless forloop.last %}<div class="t-arrow">→</div>{% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="section-h"><h2>Systems built</h2><span>client work · real numbers</span></div>
+  <div class="g-grid">
+    {% assign built = site.data.grimoires | where: "tier", "built" %}
+    {% for g in built %}{% include grimoire-card.html %}{% endfor %}
+  </div>
+
+  <div class="section-h"><h2>Field manuals</h2><span>free · open · cited</span></div>
+  <div class="g-grid">
+    {% assign manuals = site.data.grimoires | where: "tier", "manual" %}
+    {% for g in manuals %}{% include grimoire-card.html %}{% endfor %}
+  </div>
+
+  <div class="section-h"><h2>Recent notes</h2><span><a href="{{ '/notes/' | relative_url }}" style="color:var(--accent)">all notes →</a></span></div>
+  <div class="note-list">
+    {% assign recent = site.notes | sort: "date" | reverse %}
+    {% for n in recent limit: 3 %}
+    <a class="note-row" href="{{ n.url | relative_url }}">
+      <div class="n-meta">{{ n.category }} · {{ n.date | date: "%b %Y" }}</div>
+      <h3>{{ n.title }}</h3>
+      <p>{{ n.lede }}</p>
+    </a>
+    {% endfor %}
+  </div>
+</div>
