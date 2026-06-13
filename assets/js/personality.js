@@ -189,7 +189,7 @@
           '<span class="gp-card-emoji">🔬</span>' +
           '<div><strong>Are you a client?</strong><span>Organizational Physics — why systems break.</span></div>' +
         '</a>' +
-        '<a class="gp-card" href="/grimoires/001-ghl-crm-101.html">' +
+        '<a class="gp-card" href="/grimoires/003-ghl-101.html">' +
           '<span class="gp-card-emoji">⚙️</span>' +
           '<div><strong>Just browsing?</strong><span>GHL CRM 101 — 76 fields, 24 automations.</span></div>' +
         '</a>' +
