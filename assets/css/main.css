@@ -145,55 +145,62 @@ a.g-card:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8
 .reveal-pending{opacity:0;transform:translateY(20px)}
 .reveal-in{opacity:1!important;transform:translateY(0)!important;transition:opacity .55s ease,transform .55s ease}
 
-/* ghost vpet */
-#grimoire-ghost{position:fixed;bottom:20px;right:20px;z-index:998;cursor:pointer;width:72px;height:72px;filter:drop-shadow(0 4px 14px rgba(194,65,12,.16));transition:filter .2s ease,transform .12s ease}
+/* ghost vpet — bottom LEFT */
+#grimoire-ghost{position:fixed;bottom:20px;left:20px;z-index:998;cursor:pointer;width:72px;height:72px;filter:drop-shadow(0 4px 14px rgba(194,65,12,.16));transition:filter .2s ease,transform .12s ease}
 #grimoire-ghost:hover{filter:drop-shadow(0 6px 22px rgba(194,65,12,.32))}
 
-/* ── GHOST POPUP ─────────────────────────────────────────── */
-#ghost-popup-overlay {
+/* ── GHOST SPEECH BUBBLE ─────────────────────────────────── */
+#ghost-popup {
   position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: rgba(12, 10, 9, 0.72);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  bottom: 16px;
+  left: 100px;       /* sits right of the ghost */
+  z-index: 999;
+  width: 290px;
+  background: #1C1917;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.55);
   opacity: 0;
   pointer-events: none;
-  transition: opacity .25s ease;
+  transform: translateX(-8px) scale(.96);
+  transform-origin: bottom left;
+  transition: opacity .22s ease, transform .22s ease;
 }
-#ghost-popup-overlay.gp-visible {
+/* speech bubble tail pointing left toward ghost */
+#ghost-popup::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  bottom: 28px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid rgba(255,255,255,.12);
+}
+#ghost-popup::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  bottom: 29px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid #1C1917;
+}
+#ghost-popup.gp-visible {
   opacity: 1;
   pointer-events: auto;
-}
-#ghost-popup {
-  background: #1C1917;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 18px;
-  padding: 32px 28px 24px;
-  max-width: 480px;
-  width: 100%;
-  position: relative;
-  transform: translateY(12px) scale(.97);
-  transition: transform .28s ease;
-  box-shadow: 0 24px 80px rgba(0,0,0,.55);
-}
-#ghost-popup-overlay.gp-visible #ghost-popup {
   transform: none;
 }
 #ghost-popup-close {
   position: absolute;
-  top: 14px;
-  right: 16px;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: rgba(255,255,255,.08);
-  color: rgba(255,255,255,.5);
-  font-size: 18px;
+  top: 8px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.4);
+  font-size: 14px;
   line-height: 1;
   display: flex;
   align-items: center;
@@ -203,79 +210,55 @@ a.g-card:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8
   transition: background .14s, color .14s;
 }
 #ghost-popup-close:hover { background: rgba(255,255,255,.14); color: #fff; }
-#ghost-popup-icon {
-  font-size: 36px;
-  text-align: center;
-  margin-bottom: 10px;
-  animation: ghost-bob 2.4s ease-in-out infinite;
-}
-@keyframes ghost-bob {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-6px); }
-}
 #ghost-popup-hed {
   font-family: 'Fraunces', Georgia, serif;
-  font-size: 22px;
+  font-size: 15px;
   font-weight: 600;
   color: #F5F2EC;
-  text-align: center;
-  margin: 0 0 4px;
-  letter-spacing: -.02em;
+  margin: 0 24px 2px 0;
+  letter-spacing: -.015em;
+  line-height: 1.3;
 }
 #ghost-popup-sub {
-  font-size: 13px;
-  color: rgba(245,242,236,.4);
-  text-align: center;
-  margin: 0 0 20px;
+  font-size: 11.5px;
+  color: rgba(245,242,236,.38);
+  margin: 0 0 10px;
 }
 #ghost-popup-cards {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 .gp-card {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px 16px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 11px;
-  background: rgba(255,255,255,.04);
+  align-items: center;
+  gap: 9px;
+  padding: 9px 11px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 9px;
+  background: rgba(255,255,255,.03);
   text-decoration: none;
-  transition: background .15s, border-color .15s, transform .15s;
-  cursor: pointer;
+  transition: background .14s, border-color .14s, transform .14s;
 }
 .gp-card:hover {
-  background: rgba(255,255,255,.09);
-  border-color: rgba(245,158,11,.35);
-  transform: translateX(3px);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(245,158,11,.3);
+  transform: translateX(2px);
 }
-.gp-card-emoji {
-  font-size: 22px;
-  line-height: 1;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
+.gp-card-emoji { font-size: 17px; line-height: 1; flex-shrink: 0; }
 .gp-card strong {
   display: block;
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 600;
   color: #F5F2EC;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   letter-spacing: -.01em;
 }
-.gp-card span {
-  font-size: 12.5px;
-  color: rgba(245,242,236,.45);
-  line-height: 1.5;
-}
-#ghost-popup-footer {
-  text-align: center;
-  font-size: 12px;
-}
+.gp-card span { font-size: 11px; color: rgba(245,242,236,.4); line-height: 1.4; }
+#ghost-popup-footer { text-align: center; font-size: 11px; margin-top: 2px; }
 #ghost-popup-footer a {
-  color: rgba(245,158,11,.7);
+  color: rgba(245,158,11,.65);
   text-decoration: none;
   font-family: 'DM Mono', monospace;
   letter-spacing: .03em;
