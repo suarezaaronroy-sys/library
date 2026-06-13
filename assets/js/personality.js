@@ -181,18 +181,18 @@
       '<p id="ghost-popup-hed">Where do you want to start?</p>' +
       '<p id="ghost-popup-sub">Pick one — I\'ll open it for you.</p>' +
       '<div id="ghost-popup-cards">' +
-        '<a class="gp-card" href="/grimoires/014-remote-work-101.html">' +
+        '<div class="gp-card" onclick="location.href=\'/grimoires/014-remote-work-101.html\'" role="link" tabindex="0">' +
           '<span class="gp-card-emoji">🌏</span>' +
           '<div><strong>Are you new here?</strong><span>Remote Work 101 — Filipino VA field manual.</span></div>' +
-        '</a>' +
-        '<a class="gp-card" href="/grimoires/011-organizational-physics.html">' +
+        '</div>' +
+        '<div class="gp-card" onclick="location.href=\'/grimoires/011-organizational-physics.html\'" role="link" tabindex="0">' +
           '<span class="gp-card-emoji">🔬</span>' +
           '<div><strong>Are you a client?</strong><span>Organizational Physics — why systems break.</span></div>' +
-        '</a>' +
-        '<a class="gp-card" href="/grimoires/003-ghl-101.html">' +
+        '</div>' +
+        '<div class="gp-card" onclick="location.href=\'/grimoires/003-ghl-101.html\'" role="link" tabindex="0">' +
           '<span class="gp-card-emoji">⚙️</span>' +
           '<div><strong>Just browsing?</strong><span>GHL CRM 101 — 76 fields, 24 automations.</span></div>' +
-        '</a>' +
+        '</div>' +
       '</div>' +
       '<p id="ghost-popup-footer"><a href="/projects/">Browse all 14 grimoires →</a></p>';
     document.body.appendChild(bubble);
