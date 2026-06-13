@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Dark navy background square -->
+  <rect width="32" height="32" rx="5" fill="#0D1B2A"/>
+
+  <!-- Book covers — dark green -->
+  <path fill="#14532D" d="M2 6C2 4.9 2.9 4 4 4H15V26H4C2.9 26 2 25.1 2 24V6Z" />
+  <path fill="#14532D" d="M30 6C30 4.9 29.1 4 28 4H17V26H28C29.1 26 30 25.1 30 24V6Z" />
+
+  <!-- Open pages — off-white -->
+  <path fill="#F0FDF4" d="M4 6C4 5.4 4.4 5 5 5H15V24H5C4.4 24 4 23.6 4 23V6Z" />
+  <path fill="#F0FDF4" d="M28 6C28 5.4 27.6 5 27 5H17V24H27C27.6 24 28 23.6 28 23V6Z" />
+
+  <!-- Page lines — muted green-gray -->
+  <rect x="7" y="9"  width="5" height="1.5" rx="0.5" fill="#86EFAC" opacity="0.7"/>
+  <rect x="7" y="13" width="6" height="1.5" rx="0.5" fill="#86EFAC" opacity="0.7"/>
+  <rect x="7" y="17" width="4" height="1.5" rx="0.5" fill="#86EFAC" opacity="0.7"/>
+
+  <rect x="20" y="9"  width="5" height="1.5" rx="0.5" fill="#86EFAC" opacity="0.7"/>
+  <rect x="19" y="13" width="6" height="1.5" rx="0.5" fill="#86EFAC" opacity="0.7"/>
+  <rect x="21" y="17" width="4" height="1.5" rx="0.5" fill="#86EFAC" opacity="0.7"/>
+
+  <!-- Bookmark ribbon — bright green -->
+  <path fill="#22C55E" d="M15 4H17V19L16 17L15 19V4Z" />
+</svg>
