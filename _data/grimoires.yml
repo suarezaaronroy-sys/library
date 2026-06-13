@@ -119,8 +119,18 @@
   title: "Claude + OpenClaw 101: The Viral Combo"
   tier: manual
   theme: blue
-  date: "In progress"
-  href: ""
-  status: soon
-  desc: "Pairing Claude with OpenClaw for research, drafting, coding, and operator-grade AI workflows."
-  stats: []
+  date: "Jun 2026"
+  href: /grimoires/012-claude-openclaw-101.html
+  status: live
+  desc: "Persistent assistants, channels, memory, skills, permissions, and operator-grade execution. Worker's field manual for the Claude + OpenClaw stack."
+  stats: ["12 modules", "11 prompts", "8 blueprints"]
+
+- num: "013"
+  title: "Claude Cowork 101"
+  tier: manual
+  theme: teal
+  date: "Jun 2026"
+  href: /grimoires/013-claude-cowork-101.html
+  status: live
+  desc: "Worker-perspective field manual for Cowork-style delegation: files, folders, briefs, documents, and multi-step task workflows."
+  stats: ["13 modules", "14 prompts", "7 blueprints"]
