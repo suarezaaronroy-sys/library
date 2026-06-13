@@ -167,62 +167,45 @@
     });
   }
 
-  /* ── 5. GRIMOIRE GHOST + POPUP ──────────────────────────── */
+
+  /* ── 5. GRIMOIRE GHOST + SPEECH BUBBLE ─────────────────── */
   function initGhost() {
-    /* ── POPUP ── */
-    var overlay = document.createElement('div');
-    overlay.id = 'ghost-popup-overlay';
-    overlay.setAttribute('role', 'dialog');
-    overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-label', 'Where do you want to start?');
 
-    overlay.innerHTML = [
-      '<div id="ghost-popup">',
-      '  <button id="ghost-popup-close" aria-label="Close">&times;</button>',
-      '  <div id="ghost-popup-icon">👻</div>',
-      '  <p id="ghost-popup-hed">Where do you want to start?</p>',
-      '  <p id="ghost-popup-sub">Pick one — I\'ll open it for you.</p>',
-      '  <div id="ghost-popup-cards">',
-      '    <a class="gp-card" href="/grimoires/014-remote-work-101.html">',
-      '      <span class="gp-card-emoji">🌏</span>',
-      '      <strong>Are you new here?</strong>',
-      '      <span>Remote Work 101 — the Filipino VA field manual. Start here.</span>',
-      '    </a>',
-      '    <a class="gp-card" href="/grimoires/011-organizational-physics.html">',
-      '      <span class="gp-card-emoji">🔬</span>',
-      '      <strong>Are you a client?</strong>',
-      '      <span>Organizational Physics — why systems keep producing the same problems.</span>',
-      '    </a>',
-      '    <a class="gp-card" href="/grimoires/001-ghl-crm-101.html">',
-      '      <span class="gp-card-emoji">⚙️</span>',
-      '      <strong>Just browsing?</strong>',
-      '      <span>GHL CRM 101 — 76 fields, 24 automations, full QA layer.</span>',
-      '    </a>',
-      '  </div>',
-      '  <p id="ghost-popup-footer"><a href="/projects/">Browse all 14 grimoires →</a></p>',
-      '</div>'
-    ].join('\n');
+    /* speech bubble */
+    var bubble = document.createElement('div');
+    bubble.id = 'ghost-popup';
+    bubble.setAttribute('role', 'dialog');
+    bubble.setAttribute('aria-label', 'Where do you want to start?');
+    bubble.innerHTML =
+      '<button id="ghost-popup-close" aria-label="Close">&times;</button>' +
+      '<p id="ghost-popup-hed">Where do you want to start?</p>' +
+      '<p id="ghost-popup-sub">Pick one — I\'ll open it for you.</p>' +
+      '<div id="ghost-popup-cards">' +
+        '<a class="gp-card" href="/grimoires/014-remote-work-101.html">' +
+          '<span class="gp-card-emoji">🌏</span>' +
+          '<div><strong>Are you new here?</strong><span>Remote Work 101 — Filipino VA field manual.</span></div>' +
+        '</a>' +
+        '<a class="gp-card" href="/grimoires/011-organizational-physics.html">' +
+          '<span class="gp-card-emoji">🔬</span>' +
+          '<div><strong>Are you a client?</strong><span>Organizational Physics — why systems break.</span></div>' +
+        '</a>' +
+        '<a class="gp-card" href="/grimoires/001-ghl-crm-101.html">' +
+          '<span class="gp-card-emoji">⚙️</span>' +
+          '<div><strong>Just browsing?</strong><span>GHL CRM 101 — 76 fields, 24 automations.</span></div>' +
+        '</a>' +
+      '</div>' +
+      '<p id="ghost-popup-footer"><a href="/projects/">Browse all 14 grimoires →</a></p>';
+    document.body.appendChild(bubble);
 
-    document.body.appendChild(overlay);
-
-    function openPopup() {
-      overlay.classList.add('gp-visible');
-      document.body.style.overflow = 'hidden';
-    }
-    function closePopup() {
-      overlay.classList.remove('gp-visible');
-      document.body.style.overflow = '';
-    }
+    function openPopup()  { bubble.classList.add('gp-visible'); }
+    function closePopup() { bubble.classList.remove('gp-visible'); }
 
     document.getElementById('ghost-popup-close').addEventListener('click', closePopup);
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) closePopup();
-    });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closePopup();
     });
 
-    // auto-open once per session
+    /* auto-open once per session */
     if (!sessionStorage.getItem('gp-seen')) {
       setTimeout(function () {
         openPopup();
@@ -230,27 +213,25 @@
       }, 1800);
     }
 
-    /* ── GHOST (now opens popup on click) ── */
+    /* ghost canvas */
     var SIZE = 72;
     var wrap = document.createElement('div');
     wrap.id = 'grimoire-ghost';
-    wrap.setAttribute('title', 'Click to open the reading guide');
+    wrap.setAttribute('title', 'Click to open reading guide');
     wrap.setAttribute('role', 'button');
     wrap.setAttribute('tabindex', '0');
     wrap.setAttribute('aria-label', 'Open reading guide');
-
     var canvas = document.createElement('canvas');
-    canvas.width  = SIZE;
-    canvas.height = SIZE;
+    canvas.width = SIZE; canvas.height = SIZE;
     wrap.appendChild(canvas);
     document.body.appendChild(wrap);
 
-    var ctx = canvas.getContext('2d');
+    var ctx     = canvas.getContext('2d');
     var bounce  = { active: false, t: 0 };
     var excited = false;
 
     wrap.addEventListener('click', function () {
-      openPopup();
+      bubble.classList.contains('gp-visible') ? closePopup() : openPopup();
       if (!bounce.active) { bounce.active = true; bounce.t = 0; }
     });
     wrap.addEventListener('keydown', function (e) {
@@ -261,26 +242,20 @@
 
     function drawGhost(ms) {
       ctx.clearRect(0, 0, SIZE, SIZE);
-
       var floatY  = Math.sin(ms / 750) * 4.5;
       var blink   = (Math.floor(ms / 1000) % 7 === 0) && (Math.floor(ms / 80) % 5 < 1);
       var waveAmp = excited ? 4 : 1.4;
-
       ctx.save();
       ctx.translate(SIZE / 2, SIZE / 2 + floatY);
-
-      /* body */
       var R = 17, bodyH = 20;
       ctx.shadowColor = 'rgba(194,65,12,0.20)';
       ctx.shadowBlur  = 12;
       ctx.fillStyle   = '#F5F2EC';
       ctx.strokeStyle = 'rgba(28,25,23,0.10)';
       ctx.lineWidth   = 0.9;
-
       ctx.beginPath();
       ctx.arc(0, -bodyH / 2, R, Math.PI, 0);
       ctx.lineTo(R, bodyH / 2 + 1);
-
       var bumpW = (R * 2) / 6;
       for (var i = 6; i >= 0; i--) {
         var bx = -R + i * bumpW;
@@ -292,13 +267,9 @@
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.stroke();
-
-      /* eyes */
       var eyeY = -bodyH / 2 + 9;
       if (blink) {
-        ctx.strokeStyle = '#1C1917';
-        ctx.lineWidth   = 1.8;
-        ctx.lineCap     = 'round';
+        ctx.strokeStyle = '#1C1917'; ctx.lineWidth = 1.8; ctx.lineCap = 'round';
         ctx.beginPath(); ctx.moveTo(-8, eyeY); ctx.lineTo(-4, eyeY); ctx.stroke();
         ctx.beginPath(); ctx.moveTo( 4, eyeY); ctx.lineTo( 8, eyeY); ctx.stroke();
       } else {
@@ -309,8 +280,6 @@
         ctx.beginPath(); ctx.arc(-5.2, eyeY - 0.8, 0.9, 0, Math.PI * 2); ctx.fill();
         ctx.beginPath(); ctx.arc( 6.8, eyeY - 0.8, 0.9, 0, Math.PI * 2); ctx.fill();
       }
-
-      /* mouth */
       ctx.fillStyle = 'rgba(194,65,12,0.55)';
       ctx.beginPath();
       if (excited) {
@@ -319,10 +288,7 @@
         ctx.arc(0, -bodyH / 2 + 15, 1.8, 0, Math.PI * 2);
       }
       ctx.fill();
-
       ctx.restore();
-
-      /* sparkles */
       var sparks = [
         { dx: -25, dy: -15, ph: 0   },
         { dx:  26, dy: -19, ph: 1.3 },
@@ -338,25 +304,17 @@
         for (var arm = 0; arm < 4; arm++) {
           ctx.rotate(Math.PI / 2);
           ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.lineTo(0.8, 3.5);
-          ctx.lineTo(0, 7);
-          ctx.lineTo(-0.8, 3.5);
-          ctx.closePath();
-          ctx.fill();
+          ctx.moveTo(0, 0); ctx.lineTo(0.8, 3.5);
+          ctx.lineTo(0, 7); ctx.lineTo(-0.8, 3.5);
+          ctx.closePath(); ctx.fill();
         }
         ctx.restore();
       });
-
-      /* bounce */
       if (bounce.active) {
         bounce.t++;
         wrap.style.transform = 'translateY(' +
           (-Math.abs(Math.sin(bounce.t * 0.13)) * 16).toFixed(1) + 'px)';
-        if (bounce.t > 48) {
-          bounce.active = false;
-          wrap.style.transform = '';
-        }
+        if (bounce.t > 48) { bounce.active = false; wrap.style.transform = ''; }
       }
     }
 
