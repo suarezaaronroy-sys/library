@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  /* ── 1. DOT NOTEBOOK WALLPAPER ─────────────────────────── */
+  /* ── 1. DIAGONAL WALLPAPER ──────────────────────────────── */
   function initWallpaper() {
     var svgNS = 'http://www.w3.org/2000/svg';
     var svg = document.createElementNS(svgNS, 'svg');
@@ -20,18 +20,22 @@
     pat.setAttribute('id', 'grim-pat');
     pat.setAttribute('x', '0');
     pat.setAttribute('y', '0');
-    pat.setAttribute('width', '22');
-    pat.setAttribute('height', '22');
+    pat.setAttribute('width', '196');
+    pat.setAttribute('height', '40');
     pat.setAttribute('patternUnits', 'userSpaceOnUse');
+    pat.setAttribute('patternTransform', 'rotate(-45)');
 
-    var dot = document.createElementNS(svgNS, 'circle');
-    dot.setAttribute('cx', '11');
-    dot.setAttribute('cy', '11');
-    dot.setAttribute('r', '1');
-    dot.setAttribute('fill', '#1C1917');
-    dot.setAttribute('opacity', '0.09');
+    var txt = document.createElementNS(svgNS, 'text');
+    txt.setAttribute('x', '6');
+    txt.setAttribute('y', '28');
+    txt.setAttribute('font-family', 'monospace');
+    txt.setAttribute('font-size', '9');
+    txt.setAttribute('letter-spacing', '7');
+    txt.setAttribute('fill', '#1C1917');
+    txt.setAttribute('opacity', '0.038');
+    txt.textContent = 'GRIMOIRE .';
 
-    pat.appendChild(dot);
+    pat.appendChild(txt);
     defs.appendChild(pat);
 
     var rect = document.createElementNS(svgNS, 'rect');
@@ -44,7 +48,7 @@
     document.body.appendChild(svg);
   }
 
-  /* ── 2. TYPEWRITER/* ── 2. TYPEWRITER HERO ─────────────────────────────────── */
+  /* ── 2. TYPEWRITER HERO ─────────────────────────────────── */
   function initTypewriter() {
     var h1 = document.querySelector('.hero h1');
     if (!h1 || !h1.textContent.includes('Everything I build')) return;
@@ -163,14 +167,77 @@
     });
   }
 
-  /* ── 5. GRIMOIRE GHOST VPET ─────────────────────────────── */
+  /* ── 5. GRIMOIRE GHOST + POPUP ──────────────────────────── */
   function initGhost() {
+    /* ── POPUP ── */
+    var overlay = document.createElement('div');
+    overlay.id = 'ghost-popup-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Where do you want to start?');
+
+    overlay.innerHTML = [
+      '<div id="ghost-popup">',
+      '  <button id="ghost-popup-close" aria-label="Close">&times;</button>',
+      '  <div id="ghost-popup-icon">👻</div>',
+      '  <p id="ghost-popup-hed">Where do you want to start?</p>',
+      '  <p id="ghost-popup-sub">Pick one — I\'ll open it for you.</p>',
+      '  <div id="ghost-popup-cards">',
+      '    <a class="gp-card" href="/grimoires/014-remote-work-101.html">',
+      '      <span class="gp-card-emoji">🌏</span>',
+      '      <strong>Are you new here?</strong>',
+      '      <span>Remote Work 101 — the Filipino VA field manual. Start here.</span>',
+      '    </a>',
+      '    <a class="gp-card" href="/grimoires/011-organizational-physics.html">',
+      '      <span class="gp-card-emoji">🔬</span>',
+      '      <strong>Are you a client?</strong>',
+      '      <span>Organizational Physics — why systems keep producing the same problems.</span>',
+      '    </a>',
+      '    <a class="gp-card" href="/grimoires/001-ghl-crm-101.html">',
+      '      <span class="gp-card-emoji">⚙️</span>',
+      '      <strong>Just browsing?</strong>',
+      '      <span>GHL CRM 101 — 76 fields, 24 automations, full QA layer.</span>',
+      '    </a>',
+      '  </div>',
+      '  <p id="ghost-popup-footer"><a href="/projects/">Browse all 14 grimoires →</a></p>',
+      '</div>'
+    ].join('\n');
+
+    document.body.appendChild(overlay);
+
+    function openPopup() {
+      overlay.classList.add('gp-visible');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePopup() {
+      overlay.classList.remove('gp-visible');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('ghost-popup-close').addEventListener('click', closePopup);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closePopup();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePopup();
+    });
+
+    // auto-open once per session
+    if (!sessionStorage.getItem('gp-seen')) {
+      setTimeout(function () {
+        openPopup();
+        sessionStorage.setItem('gp-seen', '1');
+      }, 1800);
+    }
+
+    /* ── GHOST (now opens popup on click) ── */
     var SIZE = 72;
     var wrap = document.createElement('div');
     wrap.id = 'grimoire-ghost';
-    wrap.setAttribute('title', 'Grimoire Ghost — the library spirit');
-    wrap.setAttribute('role', 'img');
-    wrap.setAttribute('aria-label', 'Animated library ghost mascot');
+    wrap.setAttribute('title', 'Click to open the reading guide');
+    wrap.setAttribute('role', 'button');
+    wrap.setAttribute('tabindex', '0');
+    wrap.setAttribute('aria-label', 'Open reading guide');
 
     var canvas = document.createElement('canvas');
     canvas.width  = SIZE;
@@ -183,7 +250,11 @@
     var excited = false;
 
     wrap.addEventListener('click', function () {
+      openPopup();
       if (!bounce.active) { bounce.active = true; bounce.t = 0; }
+    });
+    wrap.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') openPopup();
     });
     wrap.addEventListener('mouseenter', function () { excited = true; });
     wrap.addEventListener('mouseleave', function () { excited = false; });
@@ -224,90 +295,4 @@
 
       /* eyes */
       var eyeY = -bodyH / 2 + 9;
-      if (blink) {
-        ctx.strokeStyle = '#1C1917';
-        ctx.lineWidth   = 1.8;
-        ctx.lineCap     = 'round';
-        ctx.beginPath(); ctx.moveTo(-8, eyeY); ctx.lineTo(-4, eyeY); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo( 4, eyeY); ctx.lineTo( 8, eyeY); ctx.stroke();
-      } else {
-        ctx.fillStyle = '#1C1917';
-        ctx.beginPath(); ctx.arc(-6, eyeY, 2.8, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc( 6, eyeY, 2.8, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#fff';
-        ctx.beginPath(); ctx.arc(-5.2, eyeY - 0.8, 0.9, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc( 6.8, eyeY - 0.8, 0.9, 0, Math.PI * 2); ctx.fill();
-      }
-
-      /* mouth */
-      ctx.fillStyle = 'rgba(194,65,12,0.55)';
-      ctx.beginPath();
-      if (excited) {
-        ctx.ellipse(0, -bodyH / 2 + 15, 3.5, 2.5, 0, 0, Math.PI * 2);
-      } else {
-        ctx.arc(0, -bodyH / 2 + 15, 1.8, 0, Math.PI * 2);
-      }
-      ctx.fill();
-
-      ctx.restore();
-
-      /* sparkles */
-      var sparks = [
-        { dx: -25, dy: -15, ph: 0   },
-        { dx:  26, dy: -19, ph: 1.3 },
-        { dx: -20, dy:  12, ph: 2.5 },
-        { dx:  22, dy:  11, ph: 0.7 },
-      ];
-      sparks.forEach(function (sp) {
-        var alpha = 0.22 + 0.55 * Math.sin(ms / 650 + sp.ph);
-        ctx.save();
-        ctx.translate(SIZE / 2 + sp.dx, SIZE / 2 + sp.dy + floatY * 0.35);
-        ctx.rotate(ms / 2400 + sp.ph);
-        ctx.fillStyle = 'rgba(194,65,12,' + alpha.toFixed(2) + ')';
-        for (var arm = 0; arm < 4; arm++) {
-          ctx.rotate(Math.PI / 2);
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.lineTo(0.8, 3.5);
-          ctx.lineTo(0, 7);
-          ctx.lineTo(-0.8, 3.5);
-          ctx.closePath();
-          ctx.fill();
-        }
-        ctx.restore();
-      });
-
-      /* bounce */
-      if (bounce.active) {
-        bounce.t++;
-        wrap.style.transform = 'translateY(' +
-          (-Math.abs(Math.sin(bounce.t * 0.13)) * 16).toFixed(1) + 'px)';
-        if (bounce.t > 48) {
-          bounce.active = false;
-          wrap.style.transform = '';
-        }
-      }
-    }
-
-    requestAnimationFrame(function loop(ts) {
-      drawGhost(ts || 0);
-      requestAnimationFrame(loop);
-    });
-  }
-
-  /* ── BOOT ──────────────────────────────────────────────── */
-  function boot() {
-    initWallpaper();
-    initTypewriter();
-    initCursorGlow();
-    initScrollReveal();
-    initGhost();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-
-}());
+      if (b
