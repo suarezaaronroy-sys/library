@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  /* ── 1. DIAGONAL WALLPAPER ──────────────────────────────── */
+  /* ── 1. DOT NOTEBOOK WALLPAPER ─────────────────────────── */
   function initWallpaper() {
     var svgNS = 'http://www.w3.org/2000/svg';
     var svg = document.createElementNS(svgNS, 'svg');
@@ -20,22 +20,18 @@
     pat.setAttribute('id', 'grim-pat');
     pat.setAttribute('x', '0');
     pat.setAttribute('y', '0');
-    pat.setAttribute('width', '196');
-    pat.setAttribute('height', '40');
+    pat.setAttribute('width', '22');
+    pat.setAttribute('height', '22');
     pat.setAttribute('patternUnits', 'userSpaceOnUse');
-    pat.setAttribute('patternTransform', 'rotate(-45)');
 
-    var txt = document.createElementNS(svgNS, 'text');
-    txt.setAttribute('x', '6');
-    txt.setAttribute('y', '28');
-    txt.setAttribute('font-family', 'monospace');
-    txt.setAttribute('font-size', '9');
-    txt.setAttribute('letter-spacing', '7');
-    txt.setAttribute('fill', '#1C1917');
-    txt.setAttribute('opacity', '0.038');
-    txt.textContent = 'GRIMOIRE .';
+    var dot = document.createElementNS(svgNS, 'circle');
+    dot.setAttribute('cx', '11');
+    dot.setAttribute('cy', '11');
+    dot.setAttribute('r', '1');
+    dot.setAttribute('fill', '#1C1917');
+    dot.setAttribute('opacity', '0.09');
 
-    pat.appendChild(txt);
+    pat.appendChild(dot);
     defs.appendChild(pat);
 
     var rect = document.createElementNS(svgNS, 'rect');
@@ -48,7 +44,7 @@
     document.body.appendChild(svg);
   }
 
-  /* ── 2. TYPEWRITER HERO ─────────────────────────────────── */
+  /* ── 2. TYPEWRITER/* ── 2. TYPEWRITER HERO ─────────────────────────────────── */
   function initTypewriter() {
     var h1 = document.querySelector('.hero h1');
     if (!h1 || !h1.textContent.includes('Everything I build')) return;
