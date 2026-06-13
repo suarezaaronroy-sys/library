@@ -35,11 +35,16 @@ a{color:inherit;text-decoration:none}
 .mode-banner-left{display:flex;align-items:center;gap:10px}.mode-dot{width:7px;height:7px;border-radius:50%;background:#BFDBFE;animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 .site-header{position:sticky;top:40px;z-index:200;background:rgba(245,242,236,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 2rem;height:52px;display:flex;align-items:center;justify-content:space-between}
 .header-left{display:flex;align-items:center;gap:1rem}.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3)}.header-back:hover{color:var(--accent)}.header-divider{width:1px;height:16px;background:var(--border)}.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,.2)}
-#progress-bar{position:fixed;top:var(--chrome);left:var(--sidebar);right:0;height:2px;z-index:150;background:linear-gradient(90deg,var(--blue),var(--teal));transform-origin:left;transform:scaleX(0);transition:transform .08s linear;pointer-events:none}
-.sidebar{position:fixed;top:var(--chrome);left:0;width:var(--sidebar);height:calc(100vh - var(--chrome));overflow-y:auto;border-right:1px solid var(--border);background:rgba(245,242,236,.98);backdrop-filter:blur(10px);z-index:100;padding:1rem 0 3rem;scrollbar-width:thin}
+#progress-bar{position:fixed;top:var(--chrome);left:0;right:0;height:2px;z-index:150;background:linear-gradient(90deg,var(--blue),var(--teal));transform-origin:left;transform:scaleX(0);transition:transform .08s linear;pointer-events:none}
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;max-width:1240px;margin:0 auto;min-height:calc(100vh - var(--chrome))}
+.sidebar {
+  position:sticky;
+  top:var(--chrome);
+  width:100%;
+  height:calc(100vh - var(--chrome));overflow-y:auto;border-right:1px solid var(--border);background:rgba(245,242,236,.98);backdrop-filter:blur(10px);z-index:100;padding:1rem 0 3rem;scrollbar-width:thin}
 .nav-group{margin-bottom:.15rem}.nav-group-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);padding:10px 16px 4px;display:block}.nav-group:not(:first-child) .nav-group-label{border-top:1px solid var(--border2);margin-top:.3rem}
 .nav-link{display:flex;align-items:center;gap:.5rem;padding:5px 16px;font-size:12px;color:var(--ink3);line-height:1.35;transition:.1s;border-left:2px solid transparent}.nav-link:hover{background:var(--bg2);color:var(--ink)}.nav-link.active{background:rgba(29,78,216,.06);color:var(--blue);border-left-color:var(--blue);font-weight:500}.nav-num{font-family:var(--mono);font-size:9px;color:var(--ink4);width:24px;flex-shrink:0}
-.main{margin-left:var(--sidebar);padding:2.8rem 3rem 8rem;max-width:900px;min-width:0}section[id]{scroll-margin-top:108px}
+.main{padding:2.8rem 3rem 8rem;max-width:900px;min-width:0}section[id]{scroll-margin-top:108px}
 .hero{margin-bottom:3.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}.hero h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3.1rem);font-weight:600;line-height:1.08;margin-bottom:.9rem;letter-spacing:-.025em}.hero h1 em{font-style:italic;font-weight:300;color:var(--blue)}.hero-sub{font-size:.98rem;color:var(--ink2);max-width:64ch;line-height:1.8;margin-bottom:1.8rem}
 .stat-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.8rem}.stat-pill{display:flex;align-items:center;gap:.4rem;padding:5px 12px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:11.5px;color:var(--ink2)}.stat-pill strong{font-weight:500;color:var(--ink)}
 .btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;padding:.65rem 1.1rem;border-radius:999px;border:1px solid;transition:.15s ease;font-weight:500;margin-right:.55rem}.btn.blue{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 14px rgba(29,78,216,.22)}.btn.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}
@@ -57,8 +62,8 @@ p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{
 .kv{background:#fff;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:.8rem 0}.kv-row{display:grid;grid-template-columns:175px 1fr;border-bottom:1px solid var(--border2)}.kv-row:last-child{border-bottom:none}.kv-key{padding:.5rem .85rem;font-family:var(--mono);font-size:.63rem;color:var(--ink4);background:var(--bg2);border-right:1px solid var(--border2)}.kv-val{padding:.5rem .85rem;font-size:.78rem;color:var(--ink2);line-height:1.5}
 .tech-block{margin:1rem 0}.tech-block-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink4);margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}.tech-block-label::after{content:'';flex:1;height:1px;background:var(--border2)}pre{background:var(--dark);border-radius:10px;padding:1.1rem 1.3rem;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.85;color:#D6D3D1;border:1px solid rgba(255,255,255,.05);margin:.35rem 0}.c{color:#A8A29E;font-style:italic}.k{color:#FDA4AF}.v{color:#86EFAC}.s{color:#FCD34D}.tl{color:#93C5FD}
 .source-index{display:grid;gap:.35rem;margin:.9rem 0}.source-row{display:grid;grid-template-columns:26px 1fr auto;gap:.6rem;align-items:start;padding:.5rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border2)}.source-num{font-family:var(--mono);font-size:.58rem;color:var(--ink4)}.source-title{font-size:.78rem;color:var(--ink2);line-height:1.45}.source-link{font-family:var(--mono);font-size:.58rem;color:var(--blue);white-space:nowrap}
-.page-footer{margin-left:var(--sidebar);padding:1.6rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink4)}.page-footer a{color:var(--accent)}
-@media(max-width:960px){:root{--sidebar:0px}.sidebar{display:none}.main{margin-left:0;padding:2rem 1.5rem 5rem}.page-footer{margin-left:0;padding:1.5rem;display:block}#progress-bar{left:0}.feature-grid,.showcase-stats{grid-template-columns:1fr}.kv-row{grid-template-columns:1fr}.kv-key{border-right:0;border-bottom:1px solid var(--border2)}}
+.page-footer{padding:1.6rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink4)}.page-footer a{color:var(--accent)}
+@media(max-width:960px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:2rem 1.5rem 5rem}.page-footer{padding:1.5rem;display:block}.feature-grid,.showcase-stats{grid-template-columns:1fr}.kv-row{grid-template-columns:1fr}.kv-key{border-right:0;border-bottom:1px solid var(--border2)}}
 </style>
 </head>
 <body>
@@ -66,6 +71,7 @@ p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{
 <div class="mode-banner"><div class="mode-banner-left"><div class="mode-dot"></div><span>Grimoire 007 - Agentic AI 101 - Free - No Gate - 2026 Edition</span></div><span style="font-size:10px;color:var(--dark-dim)">Two-Part Guide - Basic Build + Advanced Systems + n8n/GHL Example</span></div>
 <header class="site-header"><div class="header-left"><a href="../projects/" class="header-back">&larr; Projects</a><div class="header-divider"></div><span class="header-title">Agentic AI 101 - Building Systems That Think, Use Tools, And Act</span></div><span class="header-badge">Grimoire 007</span></header>
 
+<div class="layout">
 <nav class="sidebar">
   <div class="nav-group"><span class="nav-group-label">Orientation</span><a href="#m1" class="nav-link"><span class="nav-num">M1</span>Storm Map</a><a href="#m2" class="nav-link"><span class="nav-num">M2</span>What Is An Agent</a><a href="#m3" class="nav-link"><span class="nav-num">M3</span>Why It Went Viral</a><a href="#m4" class="nav-link"><span class="nav-num">M4</span>Not At Peak Yet</a><a href="#m5" class="nav-link"><span class="nav-num">M5</span>Power And Limits</a></div>
   <div class="nav-group"><span class="nav-group-label">Part A - Basic Build</span><a href="#m6" class="nav-link"><span class="nav-num">M6</span>Agent Stack</a><a href="#m7" class="nav-link"><span class="nav-num">M7</span>Smallest Useful Agent</a><a href="#m8" class="nav-link"><span class="nav-num">M8</span>Tools Beat Chat</a><a href="#m9" class="nav-link"><span class="nav-num">M9</span>Structured Outputs</a><a href="#m10" class="nav-link"><span class="nav-num">M10</span>Memory And RAG</a><a href="#m11" class="nav-link"><span class="nav-num">M11</span>Basic Safety</a><a href="#m12" class="nav-link"><span class="nav-num">M12</span>Basic Checklist</a></div>
@@ -340,6 +346,7 @@ else:
   </div>
 </section>
 </main>
+</div>
 
 <footer class="page-footer"><div><span>Agentic AI 101 - Grimoire 007</span><span style="margin:0 10px;opacity:.3">-</span><span>June 2026 - 2 Parts - 29 Modules</span></div><div style="display:flex;gap:1.5rem"><a href="../projects/">&larr; Back to Projects</a><a href="https://modelcontextprotocol.io" target="_blank">MCP Docs</a></div></footer>
 <script>
