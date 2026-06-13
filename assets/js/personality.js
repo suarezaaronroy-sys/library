@@ -295,4 +295,90 @@
 
       /* eyes */
       var eyeY = -bodyH / 2 + 9;
-      if (b
+      if (blink) {
+        ctx.strokeStyle = '#1C1917';
+        ctx.lineWidth   = 1.8;
+        ctx.lineCap     = 'round';
+        ctx.beginPath(); ctx.moveTo(-8, eyeY); ctx.lineTo(-4, eyeY); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo( 4, eyeY); ctx.lineTo( 8, eyeY); ctx.stroke();
+      } else {
+        ctx.fillStyle = '#1C1917';
+        ctx.beginPath(); ctx.arc(-6, eyeY, 2.8, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc( 6, eyeY, 2.8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.beginPath(); ctx.arc(-5.2, eyeY - 0.8, 0.9, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc( 6.8, eyeY - 0.8, 0.9, 0, Math.PI * 2); ctx.fill();
+      }
+
+      /* mouth */
+      ctx.fillStyle = 'rgba(194,65,12,0.55)';
+      ctx.beginPath();
+      if (excited) {
+        ctx.ellipse(0, -bodyH / 2 + 15, 3.5, 2.5, 0, 0, Math.PI * 2);
+      } else {
+        ctx.arc(0, -bodyH / 2 + 15, 1.8, 0, Math.PI * 2);
+      }
+      ctx.fill();
+
+      ctx.restore();
+
+      /* sparkles */
+      var sparks = [
+        { dx: -25, dy: -15, ph: 0   },
+        { dx:  26, dy: -19, ph: 1.3 },
+        { dx: -20, dy:  12, ph: 2.5 },
+        { dx:  22, dy:  11, ph: 0.7 },
+      ];
+      sparks.forEach(function (sp) {
+        var alpha = 0.22 + 0.55 * Math.sin(ms / 650 + sp.ph);
+        ctx.save();
+        ctx.translate(SIZE / 2 + sp.dx, SIZE / 2 + sp.dy + floatY * 0.35);
+        ctx.rotate(ms / 2400 + sp.ph);
+        ctx.fillStyle = 'rgba(194,65,12,' + alpha.toFixed(2) + ')';
+        for (var arm = 0; arm < 4; arm++) {
+          ctx.rotate(Math.PI / 2);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(0.8, 3.5);
+          ctx.lineTo(0, 7);
+          ctx.lineTo(-0.8, 3.5);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+
+      /* bounce */
+      if (bounce.active) {
+        bounce.t++;
+        wrap.style.transform = 'translateY(' +
+          (-Math.abs(Math.sin(bounce.t * 0.13)) * 16).toFixed(1) + 'px)';
+        if (bounce.t > 48) {
+          bounce.active = false;
+          wrap.style.transform = '';
+        }
+      }
+    }
+
+    requestAnimationFrame(function loop(ts) {
+      drawGhost(ts || 0);
+      requestAnimationFrame(loop);
+    });
+  }
+
+  /* ── BOOT ──────────────────────────────────────────────── */
+  function boot() {
+    initWallpaper();
+    initTypewriter();
+    initCursorGlow();
+    initScrollReveal();
+    initGhost();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+}());
