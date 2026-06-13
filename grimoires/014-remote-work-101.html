@@ -227,6 +227,61 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
 .if-lost .then-read{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:#78716C;font-family:var(--mono)}
 @media(max-width:640px){.resume-dashboard,.star-grid{grid-template-columns:1fr}}
 
+
+/* ── Second Expansion ───────────────────────────────── */
+.six-firsts{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1rem;margin:1.4rem 0}
+.first-card{border-radius:10px;overflow:hidden;border:1px solid rgba(28,25,23,.1)}
+.first-card-header{padding:.6rem 1rem;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;font-weight:700;text-transform:uppercase}
+.first-card-body{padding:1rem;font-size:13px;color:var(--ink2);line-height:1.65}
+.first-card-body b{color:var(--ink)}
+.first-card-body .template{margin-top:.7rem;padding:.6rem .8rem;background:rgba(21,128,61,.06);border-left:2px solid var(--accent);border-radius:0 6px 6px 0;font-size:12.5px;color:var(--ink);font-style:italic}
+.fc-mistake .first-card-header{background:#FEF2F2;color:#991B1B}
+.fc-confusion .first-card-header{background:#FFF7ED;color:#92400E}
+.fc-escalation .first-card-header{background:#FEFCE8;color:#713F12}
+.fc-praise .first-card-header{background:#F0FDF4;color:#15803D}
+.fc-angry .first-card-header{background:#FFF1F2;color:#BE123C}
+.fc-miss .first-card-header{background:#F5F3FF;color:#6D28D9}
+.ph-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.2rem 0}
+.ph-card{background:#FAFAF9;border:1px solid rgba(28,25,23,.1);border-radius:10px;padding:1.1rem}
+.ph-card-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.7rem}
+.ph-card ul{padding-left:1rem;font-size:12.5px;color:var(--ink2);line-height:1.8}
+.signal-table td:first-child{font-family:var(--mono);font-size:11px;font-weight:700}
+.signal-table tr:nth-child(1) td:first-child{color:#2563EB}
+.signal-table tr:nth-child(2) td:first-child{color:#D97706}
+.signal-table tr:nth-child(3) td:first-child{color:#DC2626}
+.tagalog-convo{background:#1C1917;border-radius:12px;padding:1.4rem 1.6rem;margin:1.2rem 0}
+.tagalog-convo .tc-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.9rem}
+.tc-line{display:flex;gap:.7rem;margin:.4rem 0;font-size:13px}
+.tc-speaker{font-family:var(--mono);font-size:10px;color:#78716C;min-width:60px;padding-top:2px;flex-shrink:0}
+.tc-text{color:#D6D3D1;line-height:1.5}
+.tc-note{margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:#78716C;font-style:italic}
+.tuesday-wrap{overflow-x:auto;margin:1.4rem 0;-webkit-overflow-scrolling:touch}
+.tuesday-wrap table{min-width:700px}
+.tuesday-wrap th{font-size:11px;white-space:nowrap}
+.tuesday-wrap td{font-size:12px;vertical-align:top;padding:.55rem .7rem;line-height:1.55}
+.tuesday-wrap td:first-child{font-family:var(--mono);font-size:11px;font-weight:700;white-space:nowrap}
+.td-l1 td:first-child{color:#78716C}
+.td-l2 td:first-child{color:#2563EB}
+.td-l3 td:first-child{color:#D97706}
+.td-l4 td:first-child{color:#7C3AED}
+.td-l5 td:first-child{color:#15803D}
+.level-up-box{background:#F5F2EC;border:1px solid rgba(28,25,23,.1);border-radius:10px;padding:1.1rem 1.3rem;margin:.8rem 0}
+.level-up-box .lub-header{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.6rem}
+.level-up-box .lub-trigger{font-size:13px;color:var(--ink2);margin:.25rem 0;padding-left:.5rem;border-left:2px solid var(--accent)}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem;margin:1.2rem 0}
+.spec-card{background:#FAFAF9;border:1px solid rgba(28,25,23,.1);border-radius:10px;padding:1rem}
+.spec-card-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:.4rem}
+.spec-card h5{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:.3rem}
+.spec-card .rate{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);margin:.3rem 0}
+.spec-card p{font-size:12px;color:var(--ink3);line-height:1.5}
+.referral-box{background:#052E16;border-radius:12px;padding:1.4rem 1.6rem;margin:1.2rem 0;border:1px solid rgba(34,197,94,.2)}
+.referral-box h4{font-family:var(--serif);font-size:16px;font-weight:600;color:#86EFAC;margin-bottom:.7rem}
+.referral-box p{font-size:13.5px;color:#D1FAE5;line-height:1.65}
+.pov-box{background:var(--bg2);border-radius:10px;padding:1.1rem 1.3rem;margin:1rem 0}
+.pov-box h5{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.6rem}
+.pov-box ol{padding-left:1.2rem;font-size:13px;color:var(--ink2);line-height:1.8}
+@media(max-width:600px){.ph-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1054,6 +1109,78 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   <div class="callout callout-success">
     <strong>The month-one goal:</strong> By the end of 30 days, your manager should be able to give you a task without spending significant time explaining context. That's the bar. Not mastery. Orientation.
   </div>
+
+  <h3 class="section-h">The Six Firsts</h3>
+  <p>Every first 30 days contains the same six experiences. The workers who navigate them well aren't luckier — they prepared for the scenarios before they arrived.</p>
+
+  <div class="six-firsts">
+
+    <div class="first-card fc-mistake">
+      <div class="first-card-header">First Mistake</div>
+      <div class="first-card-body">
+        <b>The scenario:</b> Something went out wrong. Something was missed. Something was done backwards. You find out after the fact — or the client finds it first.<br><br>
+        <b>What most people do:</b> Fix it quietly. Hope nobody noticed. Move on.<br><br>
+        <b>What actually works:</b> Report it immediately. Acknowledge exactly what happened. State the fix. State what you're doing to prevent it.
+        <div class="template">"I made an error on [task]. [What happened]. I've fixed it by [specific action]. To prevent this going forward, I'm [specific change]."</div>
+        The cover-up is always worse than the mistake. Always.
+      </div>
+    </div>
+
+    <div class="first-card fc-confusion">
+      <div class="first-card-header">First Confusion</div>
+      <div class="first-card-body">
+        <b>The scenario:</b> Instructions that don't match. A directive that could mean three different things. Conflicting information from two sources.<br><br>
+        <b>What most people do:</b> Guess. Execute on the assumption. Hope it was right.<br><br>
+        <b>What actually works:</b> Ask ONE specific question. Not "I'm confused." Specific: "When you say update the contacts list — should I update both the CRM and the spreadsheet, or just the CRM?"<br><br>
+        If you can't phrase the question specifically, you don't understand the confusion well enough yet. Think first. Then ask.
+      </div>
+    </div>
+
+    <div class="first-card fc-escalation">
+      <div class="first-card-header">First Escalation</div>
+      <div class="first-card-body">
+        <b>The scenario:</b> Something is beyond your scope. A client issue that needs your manager. A situation that's deteriorating and you can't fix it alone.<br><br>
+        <b>What most people do:</b> Try to handle it past the point they can — then escalate too late when it's already exploded.<br><br>
+        <b>What actually works:</b> Escalate early, with context, with what you've already tried.
+        <div class="template">"Client X is asking for Y, which is outside my scope. I've tried A and B. I think this needs your call because [specific reason]."</div>
+        Knowing when to escalate — and how — is a skill, not a failure.
+      </div>
+    </div>
+
+    <div class="first-card fc-praise">
+      <div class="first-card-header">First Praise</div>
+      <div class="first-card-body">
+        <b>The scenario:</b> Your manager or client says you did well. Good job on X. This was really helpful.<br><br>
+        <b>What most people do:</b> Dismiss it ("oh it was nothing"), or use it as permission to coast.<br><br>
+        <b>What actually works:</b> Accept it simply. Then use it as data. "Thank you — was it the speed, the format, or something else that was most helpful?"<br><br>
+        Praise tells you what the client actually values — not what you assumed they valued. Use it. It's information.
+      </div>
+    </div>
+
+    <div class="first-card fc-angry">
+      <div class="first-card-header">First Angry Client</div>
+      <div class="first-card-body">
+        <b>The scenario:</b> They're upset. Maybe justified, maybe not. Maybe it's genuinely your fault. Maybe they're having a terrible week and you're available.<br><br>
+        <b>What most people do:</b> Match their energy (bad) or over-apologize in a way that sounds like excuse-making (also bad).<br><br>
+        <b>What actually works:</b> Stay calm. Acknowledge their experience. Clarify what happened factually. State next steps.
+        <div class="template">"I understand you're frustrated — that's fair. Here's what happened: [facts]. Here's what I'm doing to fix it: [action]. I'll update you by [time]."</div>
+        No emotions. No defense. No excuses. Acknowledgment + facts + action + timeline.
+      </div>
+    </div>
+
+    <div class="first-card fc-miss">
+      <div class="first-card-header">First Deadline Miss</div>
+      <div class="first-card-body">
+        <b>The scenario:</b> Something is going to be late. You know before it happens.<br><br>
+        <b>What most people do:</b> Hope they make it anyway. Or wait until after the deadline to apologize.<br><br>
+        <b>What actually works:</b> The moment you know you're going to miss — message. Not after. The moment you know.
+        <div class="template">"The X report will run past Friday. I'm hitting [specific issue]. New ETA: Monday morning. If that doesn't work, let me know what to deprioritize."</div>
+        The announcement before the miss is professional. The explanation after is damage control. Be the person delivering news, not excuses.
+      </div>
+    </div>
+
+  </div>
+
   <a href="#c30" class="speedrun-shortcut">⚡ First client survival flowchart → The Speedrun</a>
 </div>
 
@@ -1103,6 +1230,70 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
       <p>In remote work, silence after a missed deadline is actively damaging. The client's imagination fills the gap with the worst-case scenario. A brief message — even just "I'm running behind, new ETA is X" — resets the clock.</p>
     </div>
   </div>
+
+
+  <h3 class="section-h">The 90-Day Trust Arc</h3>
+
+  <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:1rem auto">
+    <rect width="700" height="200" fill="transparent"/>
+    <text x="350" y="16" font-family="DM Mono,monospace" font-size="9" fill="#78716C" letter-spacing="1" text-anchor="middle">TRUST LEVEL OVER 90 DAYS — WHAT CLIENTS ACTUALLY EXPERIENCE</text>
+    <!-- Y axis -->
+    <line x1="60" y1="25" x2="60" y2="165" stroke="#D6D3D1" stroke-width="1"/>
+    <text x="14" y="30" font-family="DM Mono,monospace" font-size="8" fill="#A8A29E" transform="rotate(-90,14,80)">TRUST LEVEL</text>
+    <!-- X axis -->
+    <line x1="60" y1="165" x2="660" y2="165" stroke="#D6D3D1" stroke-width="1"/>
+    <text x="130" y="180" font-family="DM Mono,monospace" font-size="8" fill="#A8A29E" text-anchor="middle">Day 1</text>
+    <text x="260" y="180" font-family="DM Mono,monospace" font-size="8" fill="#A8A29E" text-anchor="middle">Day 30</text>
+    <text x="460" y="180" font-family="DM Mono,monospace" font-size="8" fill="#A8A29E" text-anchor="middle">Day 60</text>
+    <text x="620" y="180" font-family="DM Mono,monospace" font-size="8" fill="#A8A29E" text-anchor="middle">Day 90</text>
+    <!-- Trust curve (good worker) -->
+    <polyline points="130,140 180,135 260,115 310,110 350,100 410,82 460,70 540,55 620,40" fill="none" stroke="#15803D" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- Trust curve (unreliable) -->
+    <polyline points="130,140 180,142 230,148 260,135 290,150 350,145 410,155 460,158 620,160" fill="none" stroke="#EF4444" stroke-width="2" stroke-linejoin="round" stroke-dasharray="4,3"/>
+    <!-- Event markers on good curve -->
+    <circle cx="260" cy="115" r="4" fill="#15803D"/>
+    <text x="265" y="108" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">First proactive</text>
+    <text x="265" y="118" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">update sent</text>
+    <circle cx="410" cy="82" r="4" fill="#15803D"/>
+    <text x="415" y="75" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">First problem</text>
+    <text x="415" y="85" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">caught + flagged</text>
+    <!-- Legend -->
+    <line x1="420" y1="155" x2="445" y2="155" stroke="#15803D" stroke-width="2.5"/>
+    <text x="450" y="158" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">Reliable pattern</text>
+    <line x1="540" y1="155" x2="565" y2="155" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,3"/>
+    <text x="570" y="158" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">Inconsistent</text>
+  </svg>
+  <p class="svg-caption">FIGURE 16.1 — Trust compounds with consistency. One bad week resets more than one good week built.</p>
+
+  <p>The 90-day arc has three distinct phases. Most people only plan for the first one.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Phase</th><th>Days</th><th>Your job</th><th>What the client is evaluating</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Orientation</b></td>
+          <td style="font-family:var(--mono);font-size:11px">1–30</td>
+          <td>Learn the environment. Ask specific questions. Don't pretend to understand.</td>
+          <td>Are they oriented, or are they guessing?</td>
+        </tr>
+        <tr>
+          <td><b>Proving</b></td>
+          <td style="font-family:var(--mono);font-size:11px">31–60</td>
+          <td>Deliver consistently. Update proactively. Catch at least one problem before it escalates.</td>
+          <td>Can I actually trust this person to run independently?</td>
+        </tr>
+        <tr>
+          <td><b>Establishing</b></td>
+          <td style="font-family:var(--mono);font-size:11px">61–90</td>
+          <td>Demonstrate ownership. Begin identifying improvements. Operate with minimal management.</td>
+          <td>Should I give this person more scope?</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Workers who skip orientation and go straight to "proving" usually prove the wrong things. They look busy before they understand what matters. They suggest improvements before they understand the environment. The first 30 days is not the time to impress. It's the time to orient.</p>
 
   <div class="aaronism">
     Reliability scales further than talent. There are thousands of talented remote workers. There are very few reliably talented ones. The combination is where the real leverage is.
@@ -1180,6 +1371,54 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   <h3 class="section-h">Learning Under Pressure</h3>
   <p>Most professional growth does not happen in ideal circumstances. It happens when something breaks and you have to fix it. When a client needs something you haven't done before. When you're behind and you have to figure it out faster than feels comfortable.</p>
   <p>This is not a design flaw in remote work. It's how the career develops. The professionals who grow fastest are the ones who treat pressure as information about what they need to learn, not as evidence that they're in the wrong career.</p>
+
+  <h3 class="section-h">What the Competence Curve Actually Looks Like</h3>
+
+  <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:1rem auto">
+    <rect width="700" height="240" fill="transparent"/>
+    <text x="350" y="16" font-family="DM Mono,monospace" font-size="9" fill="#78716C" letter-spacing="1" text-anchor="middle">COMPETENCE vs. CONFIDENCE — THE DUNNING-KRUGER REALITY</text>
+    <!-- Axes -->
+    <line x1="60" y1="30" x2="60" y2="195" stroke="#D6D3D1" stroke-width="1"/>
+    <line x1="60" y1="195" x2="660" y2="195" stroke="#D6D3D1" stroke-width="1"/>
+    <text x="18" y="115" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle" transform="rotate(-90,18,115)">CONFIDENCE LEVEL</text>
+    <text x="360" y="215" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">ACTUAL COMPETENCE →</text>
+    <!-- Confidence curve (blue dashed) -->
+    <path d="M80,170 Q150,60 200,55 Q280,50 320,100 Q380,150 440,155 Q520,158 640,90" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="5,3"/>
+    <!-- Competence curve (green solid — diagonal) -->
+    <line x1="80" y1="190" x2="640" y2="50" stroke="#15803D" stroke-width="2"/>
+    <!-- Labels on the curve -->
+    <text x="200" y="44" font-family="DM Mono,monospace" font-size="8" fill="#2563EB" text-anchor="middle">Peak of</text>
+    <text x="200" y="54" font-family="DM Mono,monospace" font-size="8" fill="#2563EB" text-anchor="middle">Overconfidence</text>
+    <circle cx="200" cy="55" r="3.5" fill="#2563EB"/>
+    <text x="330" y="108" font-family="DM Mono,monospace" font-size="8" fill="#2563EB" text-anchor="middle">← You are</text>
+    <text x="330" y="118" font-family="DM Mono,monospace" font-size="8" fill="#2563EB" text-anchor="middle">probably here</text>
+    <circle cx="310" cy="100" r="3.5" fill="#2563EB"/>
+    <text x="560" y="108" font-family="DM Mono,monospace" font-size="8" fill="#15803D" text-anchor="middle">This is growth</text>
+    <circle cx="530" cy="105" r="3.5" fill="#15803D"/>
+    <!-- Legend -->
+    <line x1="120" y1="228" x2="145" y2="228" stroke="#2563EB" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="150" y="231" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">Confidence</text>
+    <line x1="230" y1="228" x2="255" y2="228" stroke="#15803D" stroke-width="2"/>
+    <text x="260" y="231" font-family="DM Mono,monospace" font-size="7.5" fill="#57534E">Actual competence (always rising)</text>
+  </svg>
+  <p class="svg-caption">FIGURE 17.1 — Feeling less qualified mid-career is normal. It usually means you're growing, not regressing.</p>
+
+  <h3 class="section-h">The Isolation Hit</h3>
+  <p>Most people don't expect this one. Around week three or month two — after the novelty of working from home has worn off — something shifts. You realize the office small talk you didn't think you'd miss is actually covering a function you didn't know you needed: ambient proof that other humans exist, are struggling with the same things, and aren't judging you.</p>
+  <p>The remote work version doesn't have that. Every interaction is intentional. Every conversation is scheduled. The background noise of shared experience — the colleague who looks just as confused as you do in the meeting — is gone.</p>
+  <p>This is the isolation hit. It passes for most people. But ignoring it makes it worse. The useful response: schedule at least one non-work human interaction per day. Not a work call — a call with someone who doesn't care about your tasks. Walk somewhere with other people. Work from a café occasionally. The environment is adjustable even when the job isn't.</p>
+
+  <h3 class="section-h">The Comparison Trap</h3>
+  <p>Someone in your network lands a higher rate. Someone posts about their first year earnings. Someone gets a better client in month two than you've gotten in month six.</p>
+  <p>The comparison trap: using other people's visible milestones as evidence about your own progress. The problem is that milestones aren't evenly distributed, visible success is usually selected for, and the person you're comparing yourself to is probably doing the same comparison with someone further along than them.</p>
+  <p>The only comparison that generates useful information: you at month one versus you at month six. Is your work better? Is your communication clearer? Are your rates higher? Has your client base grown? Those are the metrics. Other people's timelines are not data about your trajectory.</p>
+
+  <div class="aaronism">
+    The feeling of falling behind is almost never evidence that you are actually behind. It's evidence that you're aware enough to see the gap — which is the first condition of closing it.
+    <cite>― Recurring principle</cite>
+  </div>
+
+
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -1358,9 +1597,151 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
     <div class="dialogue-verdict">The conversation feels uncomfortable to have once. Not having it creates discomfort every single workday. The math is obvious — it just requires a few minutes of friction upfront to prevent years of smaller frictions.</div>
   </div>
 
+
+  <h3 class="section-h">The "Nandito Ka Naman" Problem</h3>
+
+  <p>Working from home introduces a friction point that most remote work books can't write about, because most remote work books aren't written for Filipinos working from homes where three generations share a space and "working from home" is still a new concept.</p>
+
+  <p>The phrase is "Nandito ka naman eh" — "You're here anyway." As if physical presence means availability. As if the laptop being open is compatible with explaining the plumber's bill, accompanying lola to the pharmacy, or helping a sibling with their module.</p>
+
+  <div class="tagalog-convo">
+    <div class="tc-label">Scenario — The 10 AM Problem</div>
+    <div class="tc-line"><span class="tc-speaker">Nanay</span><span class="tc-text">Nandito ka naman, puwede mo nang pagbuksan yung gate para sa plumber, di ba?</span></div>
+    <div class="tc-line"><span class="tc-speaker">You</span><span class="tc-text">Ma, may meeting po ako ngayon ng 10 hanggang 11. After non sige.</span></div>
+    <div class="tc-line"><span class="tc-speaker">Nanay</span><span class="tc-text">Sandali lang naman yun. Bukas lang ng gate.</span></div>
+    <div class="tc-line"><span class="tc-speaker">You</span><span class="tc-text">[internal: this will become a 30-minute conversation about the kitchen sink]</span></div>
+    <div class="tc-note">The gate is never just the gate. Protect your meeting blocks. Be kind but specific: not "I'm busy" — "I'm in a client call from 10 to 11, I'll be available after." Then follow through.</div>
+  </div>
+
+  <p>The solution is not to move out. The solution is to negotiate — clearly, consistently, and without guilt. You are not choosing work over family. You are choosing to keep the job that supports the family. Make that explicit when you need to.</p>
+
+  <p><b>What actually works at home:</b></p>
+  <ul>
+    <li>A closed door signals "in a meeting." The family learns this. Be consistent.</li>
+    <li>Headphones on = working. Headphones off = available. Make the signal physical.</li>
+    <li>Post a weekly schedule on the refrigerator. "Meeting blocks: Monday/Wednesday 9–11 AM, Tuesday/Thursday 8–10 PM." It makes the constraint visible and less personal.</li>
+    <li>Pre-announce. The morning before a big meeting: "Mag-iingay po ba kayo ngayong hapon? May client call ako ng 2." Giving them a heads-up is different from an in-the-moment conflict.</li>
+  </ul>
+
+  <h3 class="section-h">Signal Stacking — Your Internet Backup System</h3>
+  <p>Your internet connection is a three-layer system. One layer is not enough. The specific combination matters.</p>
+
+  <div class="table-wrap">
+    <table class="signal-table">
+      <thead><tr><th>Tier</th><th>Connection type</th><th>Provider options</th><th>When you use it</th><th>The rule</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>PRIMARY</td>
+          <td>Fiber / DSL at home</td>
+          <td>PLDT, Converge, Globe At Home</td>
+          <td>Every normal work day</td>
+          <td>Must be fast enough for video calls (10 Mbps minimum)</td>
+        </tr>
+        <tr>
+          <td>SECONDARY</td>
+          <td>LTE hotspot</td>
+          <td>Globe / Smart pocket wifi</td>
+          <td>When fiber drops or slows</td>
+          <td>Must be on a DIFFERENT network than your primary</td>
+        </tr>
+        <tr>
+          <td>EMERGENCY</td>
+          <td>Phone data (SIM)</td>
+          <td>Different from secondary</td>
+          <td>Critical meetings only</td>
+          <td>Dedicated, not the SIM you use for social media</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-warning">
+    <strong>The critical rule:</strong> Your secondary and emergency connections must be on different networks. If Globe fiber goes down and you switch to your Globe pocket wifi — that's the same infrastructure. It may also be down. Smart as backup to Globe. TNT as backup to Smart. Network diversity matters.
+  </div>
+
+  <div class="ph-grid">
+    <div class="ph-card">
+      <div class="ph-card-title">Power Bank Protocol (Brownout Prep)</div>
+      <ul>
+        <li>Laptop charged to 80%+ by 9 AM daily</li>
+        <li>Phone at 80%+ before each meeting block</li>
+        <li>Power bank (10,000+ mAh) charged overnight</li>
+        <li>Pocket wifi device charged separately from phone</li>
+        <li>Know which café is your nearest fallback</li>
+        <li>Café's wifi tested (not just assumed)</li>
+        <li>Client's WhatsApp saved for off-channel contact</li>
+      </ul>
+    </div>
+    <div class="ph-card">
+      <div class="ph-card-title">Red Flags in Your Current Setup</div>
+      <ul>
+        <li>Only one internet connection (no backup)</li>
+        <li>Secondary on same network as primary</li>
+        <li>No power bank larger than 5,000 mAh</li>
+        <li>Haven't tested hotspot speed under load</li>
+        <li>No designated fallback location</li>
+        <li>No offline copy of your meeting notes</li>
+        <li>Client doesn't know your backup protocol</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="section-h">Explaining Philippine Infrastructure to Foreign Clients</h3>
+  <p>This is a conversation you'll have early in every client relationship. How you handle it determines whether infrastructure becomes an asterisk on your reliability or just a managed variable.</p>
+
+  <div class="tagalog-convo">
+    <div class="tc-label">Dialogue — The Reliability Question</div>
+    <div class="tc-line"><span class="tc-speaker">Client</span><span class="tc-text">Is your internet reliable? We have a lot of video calls.</span></div>
+    <div class="tc-line"><span class="tc-speaker">❌ Weak</span><span class="tc-text">Yes po, reliable naman. Minsan may problema pero kakayanin naman.</span></div>
+    <div class="tc-line"><span class="tc-speaker">✓ Strong</span><span class="tc-text">I run fiber at home with a mobile data backup on a separate network. I've had zero missed meetings in the past three months. My protocol if there's ever an outage is to message you immediately, switch to mobile, and rejoin within two minutes. It hasn't been needed, but the protocol is in place.</span></div>
+    <div class="tc-note">The difference: the weak answer invites doubt. The strong answer demonstrates a system. Clients don't need you to have perfect infrastructure — they need to know you've planned for imperfection.</div>
+  </div>
+
   <h3 class="section-h">Time Zones as a Reality</h3>
   <p>Most remote clients are in the US, UK, or Australia. This means your workday may start at 9pm or 10pm Philippine time. This is not a temporary inconvenience — it's a structural feature of international remote work.</p>
   <p>Before you accept a role, understand the required overlap hours. Protect your sleep architecture. Night-shift work patterns require intentional management of sleep, sunlight, and social schedule. Workers who treat this as an afterthought develop health and performance problems that cost them their careers.</p>
+
+  <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:1.2rem auto">
+    <rect width="700" height="180" fill="transparent"/>
+    <text x="350" y="16" font-family="DM Mono,monospace" font-size="9" fill="#78716C" letter-spacing="1" text-anchor="middle">OVERLAP WINDOW — PHILIPPINE TIME vs CLIENT TIME ZONES</text>
+    <!-- Grid -->
+    <line x1="40" y1="130" x2="680" y2="130" stroke="#D6D3D1" stroke-width="1"/>
+    <!-- Hour labels (PH time) -->
+    <text x="40" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">6AM</text>
+    <text x="120" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">9AM</text>
+    <text x="200" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">12PM</text>
+    <text x="280" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">3PM</text>
+    <text x="360" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">6PM</text>
+    <text x="440" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">9PM</text>
+    <text x="520" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">12AM</text>
+    <text x="600" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">3AM</text>
+    <text x="680" y="145" font-family="DM Mono,monospace" font-size="7.5" fill="#A8A29E" text-anchor="middle">6AM</text>
+    <text x="350" y="158" font-family="DM Mono,monospace" font-size="8" fill="#57534E" text-anchor="middle">← Philippine Standard Time (UTC+8) →</text>
+    <!-- Labels -->
+    <text x="35" y="44" font-family="DM Mono,monospace" font-size="8" fill="#57534E">PH work</text>
+    <!-- PH normal work day: 9AM-6PM = x120 to x360 -->
+    <rect x="120" y="30" width="240" height="16" rx="3" fill="#BBF7D0"/>
+    <text x="240" y="42" font-family="DM Mono,monospace" font-size="7.5" fill="#14532D" text-anchor="middle">Standard PH work hours</text>
+    <!-- US Eastern: 9AM-6PM ET = 9PM-6AM PH = x440 to x680 -->
+    <text x="35" y="68" font-family="DM Mono,monospace" font-size="8" fill="#57534E">US East</text>
+    <rect x="440" y="54" width="240" height="16" rx="3" fill="#BFDBFE"/>
+    <text x="560" y="66" font-family="DM Mono,monospace" font-size="7.5" fill="#1D4ED8" text-anchor="middle">US Eastern business hours (9AM–6PM ET)</text>
+    <!-- US West: 9AM-6PM PT = 12AM-9AM PH = x520 to ... wraps -->
+    <text x="35" y="92" font-family="DM Mono,monospace" font-size="8" fill="#57534E">US West</text>
+    <rect x="520" y="78" width="160" height="16" rx="3" fill="#E9D5FF"/>
+    <text x="600" y="90" font-family="DM Mono,monospace" font-size="7.5" fill="#7C3AED" text-anchor="middle">US Pacific (12AM–9AM PH)</text>
+    <!-- Overlap zone: 9PM-11PM PH = 8AM-10AM ET = good overlap -->
+    <rect x="440" y="30" width="80" height="100" rx="3" fill="rgba(21,128,61,.08)"/>
+    <text x="480" y="110" font-family="DM Mono,monospace" font-size="7.5" fill="#15803D" text-anchor="middle">Overlap</text>
+    <text x="480" y="120" font-family="DM Mono,monospace" font-size="7.5" fill="#15803D" text-anchor="middle">window</text>
+    <!-- UK: 9AM-6PM BST = 4PM-1AM PH = x320 to x520 roughly -->
+    <text x="35" y="116" font-family="DM Mono,monospace" font-size="8" fill="#57534E">UK/AUS</text>
+    <rect x="320" y="102" width="200" height="16" rx="3" fill="#FED7AA"/>
+    <text x="420" y="114" font-family="DM Mono,monospace" font-size="7.5" fill="#C2410C" text-anchor="middle">UK/AU overlap (varies by role)</text>
+  </svg>
+  <p class="svg-caption">FIGURE 19.1 — Most US client roles require PH work hours of 9PM–2AM. Plan your sleep accordingly.</p>
+
+
 </div>
 
 <div class="chapter" id="c20">
@@ -1604,6 +1985,95 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   </svg>
   <p class="svg-caption">FIGURE 24.1 — Each transition is driven by a specific behavior shift, not time served</p>
 
+  <h3 class="section-h">The Tuesday Test — Detailed Breakdown</h3>
+  <p>Here's what each level actually looks like — not on a good day, not during a presentation — on a random Tuesday.</p>
+
+  <div class="tuesday-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>Morning</th>
+          <th>Midday</th>
+          <th>Afternoon / Evening</th>
+          <th>Conversations they're having</th>
+          <th>Problems they're solving</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="td-l1">
+          <td>L1 Task Follower</td>
+          <td>Opens task queue. Waits to see what's assigned.</td>
+          <td>Works on the assigned task. Asks 2–3 clarifying questions mid-task.</td>
+          <td>Submits work. Waits for feedback. Waits for next task.</td>
+          <td>"What do you need me to do?" "Can you clarify this part?"</td>
+          <td>How to complete this task correctly.</td>
+        </tr>
+        <tr class="td-l2">
+          <td>L2 Reliable Worker</td>
+          <td>Reviews queue. Prioritizes by deadline. Sends morning brief without being asked.</td>
+          <td>Completes task. Documents the process while doing it. Sends update before client asks.</td>
+          <td>Flags a potential issue noticed while working. Suggests priority for tomorrow.</td>
+          <td>"Here's my progress. Here's what I'm doing next. Let me know if priorities changed."</td>
+          <td>How to deliver this consistently, and what comes next.</td>
+        </tr>
+        <tr class="td-l3">
+          <td>L3 Problem Solver</td>
+          <td>Reviews tasks AND recent patterns. Notices something that's been recurring.</td>
+          <td>Completes assigned work, AND investigates the recurring issue on the side. Finds the root cause.</td>
+          <td>Brings client a solution: "I noticed we keep running into X. I built a template that eliminates the step that causes it."</td>
+          <td>"I noticed something. Here's what I found. Here's what I did. Here's why it was happening."</td>
+          <td>What is creating friction in this system, and how do I fix it before it's a client problem?</td>
+        </tr>
+        <tr class="td-l4">
+          <td>L4 System Owner</td>
+          <td>Reviews system health metrics, not just task queue. Checks for gaps and exceptions.</td>
+          <td>Optimizes a process. Trains a team member on the SOP they documented last month.</td>
+          <td>Identifies a coverage gap. Proposes a structural solution before client notices the problem.</td>
+          <td>"The system is working. Here's the weekly report. Here's what I'm improving next. Here's what I'll need from you."</td>
+          <td>How do I make this reliable enough that I don't need to think about it daily?</td>
+        </tr>
+        <tr class="td-l5">
+          <td>L5 System Designer</td>
+          <td>Thinks about what's coming in three months that the client hasn't asked for yet.</td>
+          <td>Designs a framework. Writes a proposal. Consults on a decision someone else is stuck on.</td>
+          <td>Reviews work by others. Identifies leverage points. Architects the next phase of the system.</td>
+          <td>"Here's what I'm seeing in the business. Here's where the gaps are. Here's what I recommend building next."</td>
+          <td>How do I design systems so problems don't reach people — they get resolved before anyone notices?</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="section-h">The Level-Up Triggers</h3>
+  <p>You don't move between levels by waiting. Each transition is triggered by a specific behavioral shift. Here's what it looks like:</p>
+
+  <div class="level-up-box">
+    <div class="lub-header">L1 → L2: From follower to reliable</div>
+    <div class="lub-trigger">You start sending updates before being asked</div>
+    <div class="lub-trigger">You meet three deadlines in a row without any issues</div>
+    <div class="lub-trigger">You flag a problem before it becomes a client crisis</div>
+  </div>
+  <div class="level-up-box">
+    <div class="lub-header">L2 → L3: From reliable to problem solver</div>
+    <div class="lub-trigger">You catch a pattern — not just an incident — and address the root cause</div>
+    <div class="lub-trigger">You bring a solution alongside a problem (not just the problem)</div>
+    <div class="lub-trigger">You make a decision in ambiguity and it turns out to be the right call</div>
+  </div>
+  <div class="level-up-box">
+    <div class="lub-header">L3 → L4: From problem solver to system owner</div>
+    <div class="lub-trigger">You build a process that someone else can run when you're not there</div>
+    <div class="lub-trigger">You start thinking about the system, not just the task</div>
+    <div class="lub-trigger">You report on outcomes, not just activities</div>
+  </div>
+  <div class="level-up-box">
+    <div class="lub-header">L4 → L5: From system owner to system designer</div>
+    <div class="lub-trigger">You see what's coming before it arrives and design for it</div>
+    <div class="lub-trigger">You enable others to do what only you could do before</div>
+    <div class="lub-trigger">Your value is no longer your hours — it's your judgment</div>
+  </div>
+
+
 </div>
 
 <div class="chapter" id="c25">
@@ -1658,6 +2128,67 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
     <cite>― Recurring principle</cite>
   </div>
 
+
+  <h3 class="section-h">Specialization vs. Generalization — The Rate Gap</h3>
+  <p>The same underlying skill base commands dramatically different rates depending on how it's positioned. This isn't perception — it's the actual market for your labor.</p>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-card-label">Generic</div>
+      <h5>Virtual Assistant</h5>
+      <div class="rate">$3–$7/hr</div>
+      <p>"Can do anything for anyone." Highly replaceable. Competes on price.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-card-label">Focused</div>
+      <h5>E-commerce Admin VA</h5>
+      <div class="rate">$8–$14/hr</div>
+      <p>Specific industry, known workflows. Harder to replace. Fewer competing applicants.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-card-label">Specialized</div>
+      <h5>CRM Specialist (GHL)</h5>
+      <div class="rate">$14–$22/hr</div>
+      <p>Platform expertise. Client dependency increases. Rate negotiation shifts in your favor.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-card-label">Expert</div>
+      <h5>Automation Specialist</h5>
+      <div class="rate">$22–$40/hr</div>
+      <p>High leverage. Solves expensive problems. Clients feel the impact of your absence.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-card-label">Strategic</div>
+      <h5>Operations Consultant</h5>
+      <div class="rate">$40–$80/hr</div>
+      <p>No longer selling time. Selling systems, judgment, and outcomes.</p>
+    </div>
+  </div>
+
+  <p>The path from the first card to the last is not about working harder. It's about the same hours producing more visible, specific, measurable value — and being positioned accordingly.</p>
+
+  <div class="myth-reality">
+    <div class="myth-box">
+      <div class="myth-label">The Generalist Trap</div>
+      <p>Staying general to avoid turning down opportunities. "I don't want to narrow myself."</p>
+    </div>
+    <div class="reality-box2">
+      <div class="reality-label2">Reality</div>
+      <p>Generalism doesn't widen opportunities at the mid-level and above — it narrows them. Clients with specific problems don't want someone who can do anything. They want someone who has solved exactly their problem before. Specialization focuses your opportunities rather than limiting them.</p>
+    </div>
+  </div>
+
+  <div class="myth-reality">
+    <div class="myth-box">
+      <div class="myth-label">The Niche Trap</div>
+      <p>Over-specializing into something too narrow or too obscure to have a real market.</p>
+    </div>
+    <div class="reality-box2">
+      <div class="reality-label2">Reality</div>
+      <p>The test is simple: are there enough clients in this specific niche who have this specific problem and will pay to solve it? "GoHighLevel specialist for insurance agencies in the Southeast US" is narrow — but that market exists, is growing, and has money. "Pinterest specialist for artisan soap brands" may be too narrow.</p>
+    </div>
+  </div>
+
   <h3 class="section-h">Knowledge Management</h3>
   <p>The professionals who build fastest are the ones who learn something once and make sure they can access it reliably forever. Their notes from three years ago are still useful. Their SOPs from two clients ago are still relevant. Their knowledge doesn't disappear — it accumulates.</p>
   <p>This is Chapter 9 applied to a career arc rather than a single job.</p>
@@ -1689,6 +2220,59 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
     <p>Six months later, the agency gives the high-profile clients to the second VA. Not because her skills are better. Because her reliability makes the account managers' lives easier and the clients less anxious. The first VA is still good — she just requires more oversight, more follow-up, and creates more uncertainty. That uncertainty has a cost.</p>
     <p>Talent gets you hired. Reliability determines what you're actually trusted with.</p>
   </div>
+
+
+  <h3 class="section-h">The Referral Machine</h3>
+
+  <div class="referral-box">
+    <h4>When you're genuinely difficult to replace, you stop applying for jobs.</h4>
+    <p>Clients refer you. Other professionals in their network ask if you're available. Your name gets used as a reference point: "Find someone like her." Your next client comes from your current client — not from Upwork.</p>
+    <p>This is the exit from the constant application cycle. It doesn't happen at level 1 or 2. It starts at level 3 and compounds at level 4 and 5. The referral machine is built on one mechanism: giving clients the experience of having their problems solved reliably, consistently, and with less friction than expected.</p>
+  </div>
+
+  <h3 class="section-h">The Proof of Value Habit</h3>
+  <p>Once a month — on the last day of the month, five minutes — write three answers in a note file:</p>
+
+  <div class="pov-box">
+    <h5>Monthly Value Review (5 Minutes)</h5>
+    <ol>
+      <li>What did I deliver this month that wouldn't have happened without me?</li>
+      <li>What problems did I solve that weren't explicitly in my job description?</li>
+      <li>What am I doing now that I couldn't do six months ago?</li>
+    </ol>
+  </div>
+
+  <p>This document has three uses: it's your negotiation anchor when you ask for a raise, it's your portfolio material when you look for a new client, and it's the record you'll wish you had when you're trying to remember what you accomplished in your first year.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Scenario</th><th>Easy to replace</th><th>Difficult to replace</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Client needs to hire someone</td>
+          <td>They post a job ad at the same rate you're at</td>
+          <td>They message their network first asking for someone with your specific skills</td>
+        </tr>
+        <tr>
+          <td>A better offer comes along for you</td>
+          <td>They say "okay, good luck" and immediately start looking</td>
+          <td>They counter. They restructure the role. They try to retain you.</td>
+        </tr>
+        <tr>
+          <td>You make a mistake</td>
+          <td>It damages the relationship significantly</td>
+          <td>It's discussed and resolved. The track record absorbs it.</td>
+        </tr>
+        <tr>
+          <td>You ask for a rate increase</td>
+          <td>They hesitate. They compare you to market rate.</td>
+          <td>They ask what the number is. They're already expecting it.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The difference between these scenarios is not luck. It's the accumulated weight of reliability, ownership, communication, and initiative — over time. None of these are dramatic. They're ordinary. That's exactly why most people don't do them consistently enough to matter.</p>
 
   <div class="aaronism">
     Communication is part of the work — not something that happens around the work. In a remote environment where your client can't see you working, your communication <em>is</em> the visible part of your work. It shapes their entire experience of you.
