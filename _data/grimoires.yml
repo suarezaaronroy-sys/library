@@ -134,3 +134,13 @@
   status: live
   desc: "Worker-perspective field manual for Cowork-style delegation: files, folders, briefs, documents, and multi-step task workflows."
   stats: ["13 modules", "14 prompts", "7 blueprints"]
+
+- num: "014"
+  title: "Remote Work 101: From First Job to Remote Professional"
+  tier: manual
+  theme: green
+  date: "Jun 2026"
+  href: /grimoires/014-remote-work-101.html
+  status: live
+  desc: "The front gate — 29 chapters on remote careers, professional foundations, first-job survival, the Philippine reality, and the career ladder. Field manual, no fluff."
+  stats: ["29 chapters", "9 parts", "6 checklists"]
