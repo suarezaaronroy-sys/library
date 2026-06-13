@@ -169,6 +169,64 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
 .svg-caption{font-family:var(--mono);font-size:10px;color:var(--ink3);text-align:center;margin-top:.5rem;letter-spacing:.04em}
 @media(max-width:640px){.myth-reality,.tuesday-grid{grid-template-columns:1fr}}
 
+
+/* ── Speedrun Chapter ───────────────────────────────── */
+.speedrun-chapter{border:2px solid var(--accent);border-radius:16px;overflow:hidden;margin:3.5rem 0}
+.speedrun-header{background:linear-gradient(135deg,#052E16,#14532D);padding:2.5rem 2rem;position:relative;overflow:hidden}
+.speedrun-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2322c55e' fill-opacity='0.05'%3E%3Ccircle cx='20' cy='20' r='1.5'/%3E%3C/g%3E%3C/svg%3E")}
+.speedrun-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent2);margin-bottom:.6rem;position:relative}
+.speedrun-header h2{font-family:var(--serif);font-size:2rem;font-weight:700;color:#fff;line-height:1.1;margin-bottom:.5rem;position:relative}
+.speedrun-subtitle{font-family:var(--mono);font-size:12px;color:#86EFAC;letter-spacing:.04em;margin-bottom:1rem;position:relative}
+.speedrun-disclaimer{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:.9rem 1.1rem;font-size:13px;color:#D1FAE5;line-height:1.6;position:relative}
+.speedrun-body{padding:2rem}
+.speedrun-stage{margin:2.5rem 0}
+.speedrun-stage-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.speedrun-stage-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.speedrun-stage-header h3{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--ink);margin:0}
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem;margin:1rem 0}
+.skill-card{border-radius:10px;padding:1rem 1.1rem;border:1px solid transparent}
+.skill-card-admin{background:#EFF6FF;border-color:#BFDBFE}.skill-card-support{background:#F0FDFA;border-color:#99F6E4}.skill-card-marketing{background:#FAF5FF;border-color:#E9D5FF}.skill-card-ops{background:#FFF7ED;border-color:#FED7AA}.skill-card-tech{background:#F0FDF4;border-color:#BBF7D0}.skill-card-creative{background:#FFF1F2;border-color:#FECDD3}
+.skill-card-label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.skill-card-admin .skill-card-label{color:#1D4ED8}.skill-card-support .skill-card-label{color:#0D9488}.skill-card-marketing .skill-card-label{color:#7C3AED}.skill-card-ops .skill-card-label{color:#C2410C}.skill-card-tech .skill-card-label{color:#15803D}.skill-card-creative .skill-card-label{color:#BE123C}
+.skill-card h5{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:.5rem}
+.skill-card ul{padding-left:1rem;font-size:12px;color:var(--ink2);line-height:1.7;list-style:disc}
+.quest-log{background:#1C1917;border-radius:12px;padding:1.5rem;margin:1.5rem 0}
+.quest-log-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:1rem}
+.quest-item{display:flex;align-items:center;gap:.8rem;padding:.5rem .4rem;border-radius:6px;cursor:pointer;transition:background .12s;user-select:none}
+.quest-item:hover{background:rgba(255,255,255,.05)}
+.quest-check{width:20px;height:20px;border:1.5px solid var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--accent2);flex-shrink:0;transition:all .15s;font-family:var(--mono)}
+.quest-text{font-family:var(--mono);font-size:12px;color:#D6D3D1;flex:1;transition:color .15s}
+.quest-hint{font-family:var(--mono);font-size:10px;color:#78716C}
+.quest-item.done .quest-check{background:var(--accent);border-color:var(--accent);color:#fff}
+.quest-item.done .quest-text{color:#78716C;text-decoration:line-through}
+.quest-progress{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.08);font-family:var(--mono);font-size:11px;color:#78716C}
+.quest-bar{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:.4rem;overflow:hidden}
+.quest-bar-fill{height:100%;background:var(--accent2);border-radius:2px;transition:width .3s}
+.speedrun-crosslink{font-family:var(--mono);font-size:11px;color:var(--ink3);margin:.8rem 0;padding:.5rem .7rem;background:rgba(21,128,61,.06);border-radius:6px;border-left:2px solid var(--accent)}
+.speedrun-crosslink a{color:var(--accent);text-decoration:none}
+.speedrun-shortcut{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(21,128,61,.06);border:1px solid rgba(21,128,61,.2);border-radius:6px;padding:.35rem .7rem;margin-top:1rem;text-decoration:none}
+.resume-dashboard{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.resume-col{background:#FAFAF9;border:1px solid rgba(28,25,23,.1);border-radius:10px;padding:1.1rem}
+.resume-col-title{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:.8rem}
+.resume-item{display:flex;align-items:center;gap:.6rem;padding:.25rem 0;font-size:13px;color:var(--ink2)}
+.resume-item .ri-check{color:var(--accent);font-weight:700}
+.score-box{margin-top:1rem;padding:.8rem 1rem;border-radius:8px;font-family:var(--mono);font-size:12px}
+.score-ready{background:#F0FDF4;border:1px solid #BBF7D0;color:#15803D}
+.score-improve{background:#FFF7ED;border:1px solid #FED7AA;color:#C2410C}
+.star-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1rem 0}
+.star-card{background:var(--bg2);border-radius:10px;padding:1rem;text-align:center}
+.star-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem}
+.star-card h5{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:.3rem}
+.star-card p{font-size:12px;color:var(--ink3);line-height:1.5}
+.nav-speedrun{background:rgba(21,128,61,.12)!important;border:1px solid rgba(21,128,61,.25)!important;border-radius:6px!important;color:var(--accent)!important;font-weight:600!important;margin-bottom:.5rem!important}
+.nav-speedrun:hover{background:rgba(21,128,61,.2)!important}
+.if-lost{background:#1C1917;border-radius:12px;padding:1.6rem 1.8rem;margin:1.5rem 0}
+.if-lost h4{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:1rem}
+.if-lost ol{padding-left:1.2rem;display:grid;gap:.5rem;color:#D6D3D1;font-size:13.5px;line-height:1.6}
+.if-lost ol li strong{color:#fff}
+.if-lost .then-read{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:#78716C;font-family:var(--mono)}
+@media(max-width:640px){.resume-dashboard,.star-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -191,6 +249,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   <div class="nav-section">
     <div class="nav-section-label">Start Here</div>
     <a href="#overview" class="nav-link active">Overview</a>
+    <a href="#c30" class="nav-link nav-speedrun">⚡ The Speedrun</a>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Part I · The World</div>
@@ -249,6 +308,10 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
     <a href="#c29" class="nav-link">Ch 29 — Designing Your Career</a>
   </div>
   <div class="nav-section">
+    <div class="nav-section-label">Ch 30</div>
+    <a href="#c30" class="nav-link">⚡ The Speedrun</a>
+  </div>
+  <div class="nav-section">
     <div class="nav-section-label">Appendices</div>
     <a href="#toolkit" class="nav-link">Remote Worker Toolkit</a>
     <a href="#checklists" class="nav-link">Checklists</a>
@@ -275,6 +338,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   <div class="hero-actions">
     <a href="#c1" class="btn-hero solid">Start reading →</a>
     <a href="#c15" class="btn-hero ghost">Skip to: First Job</a>
+    <a href="#c30" class="btn-hero" style="background:rgba(21,128,61,.15);border:1px solid rgba(21,128,61,.4);color:var(--accent)">⚡ Speedrun →</a>
     <a href="#c4" class="btn-hero ghost">Skip to: Career Paths</a>
   </div>
 </section>
@@ -873,6 +937,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
     <li><b>One page is usually enough</b> until you have 5+ years of relevant experience.</li>
     <li><b>Remove irrelevant experience.</b> A job at a fast food restaurant doesn't help your VA application unless you can draw a direct line between skills.</li>
   </ul>
+  <a href="#c30" class="speedrun-shortcut">⚡ Resume checklist + readiness score → The Speedrun</a>
 
   <h3 class="section-h">LinkedIn</h3>
   <p>For remote work, LinkedIn matters more as a signal of professionalism than as a job board. Many clients will look at your LinkedIn after reading your application. A complete, professional profile with a clear headline and real connections reads better than an empty one.</p>
@@ -931,6 +996,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   <h3 class="section-h">Handling Experience Gaps</h3>
   <p>Most people starting out don't have the experience the posting asks for. That doesn't mean the application is hopeless — it means you have to redirect the conversation.</p>
   <p>When asked about experience you don't have: don't apologize for it, don't pretend you have it, and don't say "I'm a fast learner" without evidence. Say what you have done that's adjacent, explain how those skills transfer, and show that you've already started building toward the gap. "I haven't done X professionally, but I've been studying it — here's what I've built on my own" is a much stronger position than "I can definitely learn it."</p>
+  <a href="#c30" class="speedrun-shortcut">⚡ Full interview checklist + STAR guide → The Speedrun</a>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -988,6 +1054,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   <div class="callout callout-success">
     <strong>The month-one goal:</strong> By the end of 30 days, your manager should be able to give you a task without spending significant time explaining context. That's the bar. Not mastery. Orientation.
   </div>
+  <a href="#c30" class="speedrun-shortcut">⚡ First client survival flowchart → The Speedrun</a>
 </div>
 
 <div class="chapter" id="c16">
@@ -1742,6 +1809,566 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
 <!-- ═══════════════════════════════════════════════════════════
      APPENDICES
 ═══════════════════════════════════════════════════════════ -->
+
+<div class="chapter speedrun-chapter" id="c30">
+  <div class="speedrun-header">
+    <div class="speedrun-eyebrow">Chapter 30 · Skip Everything</div>
+    <h2>The Speedrun</h2>
+    <p class="speedrun-subtitle">The Shortest Practical Path to Your First Remote Job</p>
+    <div class="speedrun-disclaimer">
+      <strong style="color:#fff">Read this if:</strong> you need a job soon, you don't want to read 300 pages first, you already understand the risks, and you want the shortest route from zero to employed.<br><br>
+      This chapter sacrifices depth for speed. The rest of the Grimoire explains why. This chapter tells you what to do.
+    </div>
+  </div>
+
+  <div class="speedrun-body">
+
+    <!-- ── THE BATTLE MAP ─────────────────────────────── -->
+    <svg viewBox="0 0 700 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:0 auto 2rem">
+      <rect width="700" height="540" fill="#0A0A0A" rx="12"/>
+      <text x="350" y="30" font-family="DM Mono,monospace" font-size="10" fill="#15803D" letter-spacing="2" text-anchor="middle">THE BATTLE MAP — ZERO TO EMPLOYED</text>
+      <!-- Stage nodes -->
+      <!-- 1 NO SKILL -->
+      <rect x="235" y="45" width="230" height="38" rx="8" fill="#292524"/>
+      <text x="350" y="69" font-family="DM Sans,sans-serif" font-size="14" fill="#78716C" text-anchor="middle" font-weight="500">NO SKILL</text>
+      <line x1="350" y1="83" x2="350" y2="100" stroke="#374151" stroke-width="1.5" marker-end="url(#sp-arr)"/>
+      <!-- 2 PICK SKILL -->
+      <rect x="215" y="100" width="270" height="38" rx="8" fill="#14532D"/>
+      <text x="350" y="124" font-family="DM Sans,sans-serif" font-size="14" fill="#86EFAC" text-anchor="middle" font-weight="600">① PICK ONE SKILL</text>
+      <line x1="350" y1="138" x2="350" y2="155" stroke="#15803D" stroke-width="1.5" marker-end="url(#sp-arr-g)"/>
+      <!-- 3 BUILD EVIDENCE -->
+      <rect x="215" y="155" width="270" height="38" rx="8" fill="#14532D"/>
+      <text x="350" y="179" font-family="DM Sans,sans-serif" font-size="14" fill="#86EFAC" text-anchor="middle" font-weight="600">② BUILD EVIDENCE</text>
+      <line x1="350" y1="193" x2="350" y2="210" stroke="#15803D" stroke-width="1.5" marker-end="url(#sp-arr-g)"/>
+      <!-- 4 CREATE RESUME -->
+      <rect x="215" y="210" width="270" height="38" rx="8" fill="#14532D"/>
+      <text x="350" y="234" font-family="DM Sans,sans-serif" font-size="14" fill="#86EFAC" text-anchor="middle" font-weight="600">③ CREATE RESUME</text>
+      <line x1="350" y1="248" x2="350" y2="265" stroke="#15803D" stroke-width="1.5" marker-end="url(#sp-arr-g)"/>
+      <!-- 5 APPLY -->
+      <rect x="215" y="265" width="270" height="38" rx="8" fill="#166534"/>
+      <text x="350" y="289" font-family="DM Sans,sans-serif" font-size="14" fill="#DCFCE7" text-anchor="middle" font-weight="700">④ APPLY (DAILY)</text>
+      <line x1="350" y1="303" x2="350" y2="320" stroke="#22C55E" stroke-width="1.5" marker-end="url(#sp-arr-g2)"/>
+      <!-- 6 INTERVIEW -->
+      <rect x="215" y="320" width="270" height="38" rx="8" fill="#166534"/>
+      <text x="350" y="344" font-family="DM Sans,sans-serif" font-size="14" fill="#DCFCE7" text-anchor="middle" font-weight="700">⑤ INTERVIEW</text>
+      <line x1="350" y1="358" x2="350" y2="375" stroke="#22C55E" stroke-width="1.5" marker-end="url(#sp-arr-g2)"/>
+      <!-- 7 LAND CLIENT -->
+      <rect x="195" y="375" width="310" height="38" rx="8" fill="#15803D"/>
+      <text x="350" y="399" font-family="DM Sans,sans-serif" font-size="15" fill="#fff" text-anchor="middle" font-weight="700">⑥ LAND FIRST CLIENT</text>
+      <line x1="350" y1="413" x2="350" y2="430" stroke="#22C55E" stroke-width="2" marker-end="url(#sp-arr-g2)"/>
+      <!-- 8 SURVIVE 90 -->
+      <rect x="195" y="430" width="310" height="38" rx="8" fill="#15803D"/>
+      <text x="350" y="454" font-family="DM Sans,sans-serif" font-size="15" fill="#fff" text-anchor="middle" font-weight="700">⑦ SURVIVE FIRST 90 DAYS</text>
+      <line x1="350" y1="468" x2="350" y2="485" stroke="#22C55E" stroke-width="2" marker-end="url(#sp-arr-g2)"/>
+      <!-- 9 SPECIALIZE -->
+      <rect x="175" y="485" width="350" height="42" rx="10" fill="#052E16"/>
+      <text x="350" y="503" font-family="DM Sans,sans-serif" font-size="11" fill="#86EFAC" text-anchor="middle">THEN</text>
+      <text x="350" y="521" font-family="DM Sans,sans-serif" font-size="16" fill="#22C55E" text-anchor="middle" font-weight="700">⑧ SPECIALIZE</text>
+      <!-- Defs -->
+      <defs>
+        <marker id="sp-arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#374151"/></marker>
+        <marker id="sp-arr-g" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#15803D"/></marker>
+        <marker id="sp-arr-g2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#22C55E"/></marker>
+      </defs>
+    </svg>
+    <p class="svg-caption">THE SPEEDRUN — complete this map, then read the rest</p>
+
+    <!-- ── QUEST LOG ──────────────────────────────────── -->
+    <div class="quest-log" id="speedrun-quest">
+      <div class="quest-log-title">Quest Log — Your First Remote Job</div>
+      <div class="quest-item" onclick="toggleQuest(this,0)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Pick One Skill</span>
+        <span class="quest-hint">→ Stage 1</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,1)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Build 3 Portfolio Pieces</span>
+        <span class="quest-hint">→ Stage 2</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,2)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Create Resume</span>
+        <span class="quest-hint">→ Stage 3</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,3)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Create LinkedIn Profile</span>
+        <span class="quest-hint">→ Stage 3</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,4)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Apply to 5 Jobs Today</span>
+        <span class="quest-hint">→ Stage 4</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,5)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Prepare Interview Answers</span>
+        <span class="quest-hint">→ Stage 5</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,6)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Land First Client</span>
+        <span class="quest-hint">→ Stage 6</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,7)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Complete First 30 Days</span>
+        <span class="quest-hint">→ Ch 15</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,8)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Complete First 90 Days</span>
+        <span class="quest-hint">→ Ch 16</span>
+      </div>
+      <div class="quest-item" onclick="toggleQuest(this,9)">
+        <div class="quest-check"></div>
+        <span class="quest-text">Choose Specialization</span>
+        <span class="quest-hint">→ Ch 24</span>
+      </div>
+      <div class="quest-progress">
+        <span id="quest-count">0 / 10 complete</span>
+        <div class="quest-bar"><div class="quest-bar-fill" id="quest-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- ── STAGE 1: PICK ONE SKILL ────────────────────── -->
+    <div class="speedrun-stage">
+      <div class="speedrun-stage-header">
+        <div class="speedrun-stage-num">1</div>
+        <h3>Pick One Skill</h3>
+      </div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:1rem">Do not learn ten things. Pick one. Master the basics. Move.</p>
+
+      <div class="skill-grid">
+        <div class="skill-card skill-card-admin">
+          <div class="skill-card-label">Admin</div>
+          <h5>Virtual Assistant</h5>
+          <ul>
+            <li>Gmail + Calendar</li>
+            <li>Google Docs + Sheets</li>
+            <li>Scheduling tools</li>
+          </ul>
+        </div>
+        <div class="skill-card skill-card-support">
+          <div class="skill-card-label">Support</div>
+          <h5>Customer Support</h5>
+          <ul>
+            <li>Email support</li>
+            <li>Chat / ticket systems</li>
+            <li>De-escalation</li>
+          </ul>
+        </div>
+        <div class="skill-card skill-card-marketing">
+          <div class="skill-card-label">Marketing</div>
+          <h5>Social Media VA</h5>
+          <ul>
+            <li>Canva basics</li>
+            <li>Scheduling tools</li>
+            <li>Content calendars</li>
+          </ul>
+        </div>
+        <div class="skill-card skill-card-ops">
+          <div class="skill-card-label">Operations</div>
+          <h5>Project Coordinator</h5>
+          <ul>
+            <li>ClickUp / Asana</li>
+            <li>Task tracking</li>
+            <li>SOPs</li>
+          </ul>
+        </div>
+        <div class="skill-card skill-card-tech">
+          <div class="skill-card-label">Technical</div>
+          <h5>CRM Assistant</h5>
+          <ul>
+            <li>GoHighLevel basics</li>
+            <li>Pipeline management</li>
+            <li>Contact workflows</li>
+          </ul>
+        </div>
+        <div class="skill-card skill-card-creative">
+          <div class="skill-card-label">Creative</div>
+          <h5>Design / Video VA</h5>
+          <ul>
+            <li>Canva / CapCut</li>
+            <li>Brand templates</li>
+            <li>Content editing</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Career path matrix -->
+      <div class="table-wrap" style="margin-top:1rem">
+        <table>
+          <thead><tr><th>If you like…</th><th>Start with</th><th>Target role</th><th>Full context</th></tr></thead>
+          <tbody>
+            <tr><td>Organization</td><td>Admin tools</td><td>Virtual Assistant</td><td><a href="#c5" style="color:var(--accent);font-family:var(--mono);font-size:11px">→ Ch 5</a></td></tr>
+            <tr><td>Helping people</td><td>Email + chat</td><td>Customer Support</td><td><a href="#c5" style="color:var(--accent);font-family:var(--mono);font-size:11px">→ Ch 5</a></td></tr>
+            <tr><td>Systems + process</td><td>Project tools</td><td>Operations Assistant</td><td><a href="#c5" style="color:var(--accent);font-family:var(--mono);font-size:11px">→ Ch 5</a></td></tr>
+            <tr><td>Tech + automation</td><td>CRM basics</td><td>CRM Admin</td><td><a href="#c5" style="color:var(--accent);font-family:var(--mono);font-size:11px">→ Ch 5</a></td></tr>
+            <tr><td>Design + visuals</td><td>Canva + editing</td><td>Creative VA</td><td><a href="#c5" style="color:var(--accent);font-family:var(--mono);font-size:11px">→ Ch 5</a></td></tr>
+            <tr><td>Content + writing</td><td>Social + Canva</td><td>Social Media VA</td><td><a href="#c5" style="color:var(--accent);font-family:var(--mono);font-size:11px">→ Ch 5</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="speedrun-crosslink">Need deeper context on skills? <a href="#c6">Chapter 6 — Skills That Matter Everywhere ↑</a></div>
+    </div>
+
+    <!-- ── STAGE 2: BUILD EVIDENCE ────────────────────── -->
+    <div class="speedrun-stage">
+      <div class="speedrun-stage-header">
+        <div class="speedrun-stage-num">2</div>
+        <h3>Build Evidence</h3>
+      </div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:1rem">You do not need experience. You need proof that you can do the work. Create 3 portfolio pieces before you apply to anything.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Your path</th><th>Portfolio piece 1</th><th>Portfolio piece 2</th><th>Portfolio piece 3</th></tr></thead>
+          <tbody>
+            <tr><td><b>Admin</b></td><td>Meeting notes template</td><td>Sample SOP document</td><td>Organized calendar setup</td></tr>
+            <tr><td><b>Support</b></td><td>5 sample email responses</td><td>Escalation example</td><td>FAQ document</td></tr>
+            <tr><td><b>Marketing</b></td><td>30-day content calendar</td><td>3 Canva posts</td><td>Platform audit</td></tr>
+            <tr><td><b>Operations</b></td><td>Sample project tracker</td><td>Process flowchart</td><td>Weekly report template</td></tr>
+            <tr><td><b>Technical</b></td><td>CRM pipeline screenshot</td><td>Automation diagram</td><td>Contact cleanup SOP</td></tr>
+            <tr><td><b>Creative</b></td><td>3 branded graphics</td><td>Short video edit</td><td>Content package</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="speedrun-crosslink">How to build evidence with no clients yet? <a href="#c11">Chapter 11 — Becoming Employable ↑</a></div>
+    </div>
+
+    <!-- ── STAGE 3: RESUME ────────────────────────────── -->
+    <div class="speedrun-stage">
+      <div class="speedrun-stage-header">
+        <div class="speedrun-stage-num">3</div>
+        <h3>Resume + Profile Checklist</h3>
+      </div>
+      <div class="resume-dashboard">
+        <div class="resume-col">
+          <div class="resume-col-title">Resume</div>
+          <div class="resume-item"><span class="ri-check">✓</span> One page only</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Clear job title at top</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Relevant skills listed</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Portfolio link included</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Uses numbers where possible</div>
+          <div class="resume-item"><span class="ri-check">✓</span> No spelling mistakes</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Tailored to the role</div>
+          <div class="score-box score-ready">7 / 7 → You're ready to apply</div>
+          <div class="score-box score-improve" style="margin-top:.4rem">Under 5 → Improve before applying</div>
+        </div>
+        <div class="resume-col">
+          <div class="resume-col-title">LinkedIn + Contact</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Professional photo</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Complete profile</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Clear headline (what you do)</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Experience section filled</div>
+          <div class="resume-item"><span class="ri-check">✓</span> Contact info visible</div>
+          <div class="resume-col-title" style="margin-top:1rem">Email</div>
+          <div class="resume-item"><span class="ri-check">✓</span> yourname@gmail.com</div>
+          <div class="resume-item" style="color:#EF4444">✗ kawaiibabe2003@yahoo.com</div>
+        </div>
+      </div>
+      <div class="speedrun-crosslink">Full resume strategy? <a href="#c12">Chapter 12 — Resumes and Profiles ↑</a></div>
+    </div>
+
+    <!-- ── STAGE 4: APPLY ─────────────────────────────── -->
+    <div class="speedrun-stage">
+      <div class="speedrun-stage-header">
+        <div class="speedrun-stage-num">4</div>
+        <h3>The Application Funnel</h3>
+      </div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:1rem">Most beginners give up after 10 rejections. This diagram shows why that's too early.</p>
+
+      <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:1rem auto">
+        <rect width="700" height="220" fill="transparent"/>
+        <!-- Funnel bars -->
+        <!-- 100 Applied -->
+        <rect x="20" y="20" width="130" height="60" rx="6" fill="#292524"/>
+        <text x="85" y="48" font-family="DM Mono,monospace" font-size="22" fill="#F5F5F4" text-anchor="middle" font-weight="700">100</text>
+        <text x="85" y="66" font-family="DM Sans,sans-serif" font-size="11" fill="#78716C" text-anchor="middle">Applied</text>
+        <!-- arrow -->
+        <text x="165" y="55" font-family="DM Mono,monospace" font-size="18" fill="#374151" text-anchor="middle">→</text>
+        <!-- 20 Responses -->
+        <rect x="195" y="30" width="110" height="50" rx="6" fill="#14532D"/>
+        <text x="250" y="54" font-family="DM Mono,monospace" font-size="20" fill="#86EFAC" text-anchor="middle" font-weight="700">20</text>
+        <text x="250" y="70" font-family="DM Sans,sans-serif" font-size="11" fill="#86EFAC" text-anchor="middle">Responses</text>
+        <!-- arrow -->
+        <text x="320" y="55" font-family="DM Mono,monospace" font-size="18" fill="#374151" text-anchor="middle">→</text>
+        <!-- 8 Interviews -->
+        <rect x="345" y="38" width="90" height="44" rx="6" fill="#166534"/>
+        <text x="390" y="60" font-family="DM Mono,monospace" font-size="18" fill="#DCFCE7" text-anchor="middle" font-weight="700">8</text>
+        <text x="390" y="74" font-family="DM Sans,sans-serif" font-size="11" fill="#DCFCE7" text-anchor="middle">Interviews</text>
+        <!-- arrow -->
+        <text x="448" y="55" font-family="DM Mono,monospace" font-size="18" fill="#374151" text-anchor="middle">→</text>
+        <!-- 2 Offers -->
+        <rect x="465" y="44" width="75" height="36" rx="6" fill="#15803D"/>
+        <text x="502" y="64" font-family="DM Mono,monospace" font-size="16" fill="#fff" text-anchor="middle" font-weight="700">2</text>
+        <text x="502" y="76" font-family="DM Sans,sans-serif" font-size="11" fill="#D1FAE5" text-anchor="middle">Offers</text>
+        <!-- arrow -->
+        <text x="552" y="55" font-family="DM Mono,monospace" font-size="18" fill="#374151" text-anchor="middle">→</text>
+        <!-- 1 Job -->
+        <rect x="568" y="48" width="110" height="30" rx="6" fill="#052E16"/>
+        <text x="623" y="66" font-family="DM Mono,monospace" font-size="14" fill="#22C55E" text-anchor="middle" font-weight="700">1 JOB ✓</text>
+        <!-- Line divider -->
+        <line x1="20" y1="105" x2="680" y2="105" stroke="#292524" stroke-width="1"/>
+        <!-- Reality note -->
+        <text x="350" y="130" font-family="DM Sans,sans-serif" font-size="13" fill="#78716C" text-anchor="middle">This is normal. This is not failure.</text>
+        <text x="350" y="150" font-family="DM Mono,monospace" font-size="11" fill="#22C55E" text-anchor="middle">Apply daily. The funnel fills over time.</text>
+        <rect x="100" y="165" width="500" height="38" rx="8" fill="#1C1917"/>
+        <text x="350" y="182" font-family="DM Sans,sans-serif" font-size="12" fill="#D6D3D1" text-anchor="middle">Most people quit after 10 applications.</text>
+        <text x="350" y="197" font-family="DM Sans,sans-serif" font-size="12" fill="#86EFAC" text-anchor="middle">The job usually appears somewhere between 30 and 80.</text>
+      </svg>
+      <p class="svg-caption">FIGURE 30.1 — The application funnel is a numbers game. Play the numbers.</p>
+
+      <div class="table-wrap" style="margin-top:1rem">
+        <table>
+          <thead><tr><th>Where to apply</th><th>Competition</th><th>Best for</th></tr></thead>
+          <tbody>
+            <tr><td>OnlineJobs.ph</td><td>High</td><td>Philippine-specific VA roles</td></tr>
+            <tr><td>Upwork</td><td>Very high</td><td>Building first portfolio quickly</td></tr>
+            <tr><td>We Work Remotely</td><td>High</td><td>Quality roles across categories</td></tr>
+            <tr><td>Remote.co</td><td>High</td><td>Legitimate remote-first companies</td></tr>
+            <tr><td>Direct outreach</td><td>Low</td><td>Best ratio, slowest to build</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="speedrun-crosslink">Where to find legitimate work and red flags to skip? <a href="#c13">Chapter 13 — Finding Work ↑</a></div>
+    </div>
+
+    <!-- ── STAGE 5: INTERVIEW ─────────────────────────── -->
+    <div class="speedrun-stage">
+      <div class="speedrun-stage-header">
+        <div class="speedrun-stage-num">5</div>
+        <h3>Interview Speedrun</h3>
+      </div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:1rem">Every interview evaluates three things. Everything else is packaging around these three.</p>
+
+      <div class="star-grid">
+        <div class="star-card">
+          <div class="star-label">They ask</div>
+          <h5>Can you communicate?</h5>
+          <p>Do you answer clearly, listen well, and stay on topic?</p>
+        </div>
+        <div class="star-card">
+          <div class="star-label">They ask</div>
+          <h5>Can you learn?</h5>
+          <p>Can you adapt when the situation changes? Do you show evidence of figuring things out?</p>
+        </div>
+        <div class="star-card">
+          <div class="star-label">They ask</div>
+          <h5>Can you be trusted?</h5>
+          <p>Can they leave you alone and expect results — without constant follow-up?</p>
+        </div>
+      </div>
+
+      <!-- STAR method visual -->
+      <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:1.5rem auto">
+        <rect width="700" height="130" fill="transparent"/>
+        <text x="350" y="20" font-family="DM Mono,monospace" font-size="10" fill="#78716C" letter-spacing="1" text-anchor="middle">STAR METHOD — USE FOR EVERY EXPERIENCE QUESTION</text>
+        <!-- 4 boxes -->
+        <rect x="20" y="35" width="150" height="70" rx="8" fill="#F5F2EC" stroke="#D6D3D1"/>
+        <text x="95" y="62" font-family="DM Mono,monospace" font-size="12" fill="#15803D" text-anchor="middle" font-weight="700">S — Situation</text>
+        <text x="95" y="78" font-family="DM Sans,sans-serif" font-size="11" fill="#78716C" text-anchor="middle">Set the scene.</text>
+        <text x="95" y="92" font-family="DM Sans,sans-serif" font-size="11" fill="#78716C" text-anchor="middle">Brief context only.</text>
+        <text x="187" y="72" font-family="DM Mono,monospace" font-size="14" fill="#A8A29E" text-anchor="middle">→</text>
+        <rect x="195" y="35" width="150" height="70" rx="8" fill="#F5F2EC" stroke="#D6D3D1"/>
+        <text x="270" y="62" font-family="DM Mono,monospace" font-size="12" fill="#15803D" text-anchor="middle" font-weight="700">T — Task</text>
+        <text x="270" y="78" font-family="DM Sans,sans-serif" font-size="11" fill="#78716C" text-anchor="middle">What was your</text>
+        <text x="270" y="92" font-family="DM Sans,sans-serif" font-size="11" fill="#78716C" text-anchor="middle">specific role?</text>
+        <text x="362" y="72" font-family="DM Mono,monospace" font-size="14" fill="#A8A29E" text-anchor="middle">→</text>
+        <rect x="370" y="35" width="150" height="70" rx="8" fill="#F5F2EC" stroke="#D6D3D1"/>
+        <text x="445" y="62" font-family="DM Mono,monospace" font-size="12" fill="#15803D" text-anchor="middle" font-weight="700">A — Action</text>
+        <text x="445" y="78" font-family="DM Sans,sans-serif" font-size="11" fill="#78716C" text-anchor="middle">What did you</text>
+        <text x="445" y="92" font-family="DM Sans,sans-serif" font-size="11" fill="#78716C" text-anchor="middle">actually do?</text>
+        <text x="537" y="72" font-family="DM Mono,monospace" font-size="14" fill="#A8A29E" text-anchor="middle">→</text>
+        <rect x="545" y="35" width="150" height="70" rx="8" fill="#F0FDF4" stroke="#BBF7D0"/>
+        <text x="620" y="62" font-family="DM Mono,monospace" font-size="12" fill="#15803D" text-anchor="middle" font-weight="700">R — Result</text>
+        <text x="620" y="78" font-family="DM Sans,sans-serif" font-size="11" fill="#15803D" text-anchor="middle">What happened?</text>
+        <text x="620" y="92" font-family="DM Sans,sans-serif" font-size="11" fill="#15803D" text-anchor="middle">Use numbers.</text>
+      </svg>
+      <p class="svg-caption">FIGURE 30.2 — Answer every "tell me about a time" question with this structure</p>
+
+      <!-- Interview checklist -->
+      <div class="checklist" style="margin-top:1.2rem">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.7rem">Interview Day Checklist</div>
+        <ul style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem;list-style:none;padding:0;font-size:13px;color:var(--ink2)">
+          <li>☐ Test microphone (day before)</li>
+          <li>☐ Test camera (day before)</li>
+          <li>☐ Stable internet confirmed</li>
+          <li>☐ Quiet space arranged</li>
+          <li>☐ Resume open on screen</li>
+          <li>☐ Job posting open for reference</li>
+          <li>☐ Company researched</li>
+          <li>☐ Join 5 minutes early</li>
+          <li>☐ 2-3 questions ready to ask</li>
+          <li>☐ Follow-up email sent after</li>
+        </ul>
+      </div>
+      <div class="speedrun-crosslink">Full interview chapter with failure stories and worked examples? <a href="#c14">Chapter 14 — Interviews ↑</a></div>
+    </div>
+
+    <!-- ── STAGE 6: FIRST CLIENT ──────────────────────── -->
+    <div class="speedrun-stage">
+      <div class="speedrun-stage-header">
+        <div class="speedrun-stage-num">6</div>
+        <h3>First Client Survival Flow</h3>
+      </div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:1rem">Your goal is not a dream client. Your goal is first evidence. Take the opportunity seriously.</p>
+
+      <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:1rem auto">
+        <rect width="700" height="330" fill="transparent"/>
+        <text x="350" y="20" font-family="DM Mono,monospace" font-size="10" fill="#78716C" letter-spacing="1" text-anchor="middle">FIRST CLIENT — HOW TO HANDLE EVERY TASK</text>
+        <!-- Receive Task -->
+        <rect x="255" y="35" width="190" height="36" rx="8" fill="#1C1917"/>
+        <text x="350" y="58" font-family="DM Sans,sans-serif" font-size="13" fill="#F5F5F4" text-anchor="middle" font-weight="600">Receive Task</text>
+        <line x1="350" y1="71" x2="350" y2="95" stroke="#374151" stroke-width="1.5" marker-end="url(#fc-arr)"/>
+        <!-- Understand? -->
+        <rect x="245" y="95" width="210" height="36" rx="8" fill="#F5F2EC" stroke="#D6D3D1"/>
+        <text x="350" y="118" font-family="DM Sans,sans-serif" font-size="13" fill="#1C1917" text-anchor="middle">Understand what's needed?</text>
+        <!-- YES branch -->
+        <line x1="455" y1="113" x2="540" y2="113" stroke="#22C55E" stroke-width="1.5" marker-end="url(#fc-g)"/>
+        <text x="496" y="108" font-family="DM Mono,monospace" font-size="9" fill="#22C55E">YES</text>
+        <rect x="540" y="95" width="140" height="36" rx="8" fill="#F0FDF4" stroke="#BBF7D0"/>
+        <text x="610" y="118" font-family="DM Sans,sans-serif" font-size="12" fill="#15803D" text-anchor="middle">Do the work</text>
+        <!-- NO branch -->
+        <line x1="245" y1="113" x2="160" y2="113" stroke="#EF4444" stroke-width="1.5" marker-end="url(#fc-r)"/>
+        <text x="202" y="108" font-family="DM Mono,monospace" font-size="9" fill="#EF4444">NO</text>
+        <rect x="20" y="95" width="140" height="36" rx="8" fill="#FEF2F2" stroke="#FECACA"/>
+        <text x="90" y="110" font-family="DM Sans,sans-serif" font-size="12" fill="#7F1D1D" text-anchor="middle">Ask ONE</text>
+        <text x="90" y="124" font-family="DM Sans,sans-serif" font-size="12" fill="#7F1D1D" text-anchor="middle">specific question</text>
+        <!-- Both reconnect to Document -->
+        <line x1="610" y1="131" x2="610" y2="175" stroke="#22C55E" stroke-width="1.5"/>
+        <line x1="610" y1="175" x2="440" y2="175" stroke="#22C55E" stroke-width="1.5"/>
+        <line x1="350" y1="175" x2="350" y2="185" stroke="#374151" stroke-width="1.5" marker-end="url(#fc-arr)"/>
+        <line x1="440" y1="175" x2="350" y2="175" stroke="#374151" stroke-width="1"/>
+        <line x1="90" y1="131" x2="90" y2="175" stroke="#374151" stroke-width="1.5"/>
+        <line x1="90" y1="175" x2="250" y2="175" stroke="#374151" stroke-width="1.5"/>
+        <!-- Document -->
+        <rect x="245" y="185" width="210" height="36" rx="8" fill="#14532D"/>
+        <text x="350" y="208" font-family="DM Sans,sans-serif" font-size="13" fill="#86EFAC" text-anchor="middle" font-weight="600">Document what you did</text>
+        <line x1="350" y1="221" x2="350" y2="241" stroke="#15803D" stroke-width="1.5" marker-end="url(#fc-g)"/>
+        <!-- Update Client -->
+        <rect x="235" y="241" width="230" height="36" rx="8" fill="#14532D"/>
+        <text x="350" y="264" font-family="DM Sans,sans-serif" font-size="13" fill="#86EFAC" text-anchor="middle" font-weight="600">Send unprompted update</text>
+        <line x1="350" y1="277" x2="350" y2="297" stroke="#15803D" stroke-width="1.5" marker-end="url(#fc-g)"/>
+        <!-- Complete -->
+        <rect x="245" y="297" width="210" height="26" rx="8" fill="#052E16"/>
+        <text x="350" y="314" font-family="DM Sans,sans-serif" font-size="13" fill="#22C55E" text-anchor="middle" font-weight="700">Complete ✓</text>
+        <defs>
+          <marker id="fc-arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#374151"/></marker>
+          <marker id="fc-g" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#15803D"/></marker>
+          <marker id="fc-r" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#EF4444"/></marker>
+        </defs>
+      </svg>
+      <p class="svg-caption">FIGURE 30.3 — Every task follows this loop. Especially the first 30 days.</p>
+
+      <div class="checklist" style="margin-top:1.2rem">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.7rem">First Client Survival Checklist</div>
+        <ul style="display:grid;gap:.35rem;list-style:none;padding:0;font-size:13px;color:var(--ink2)">
+          <li>☐ Take notes on everything in week one</li>
+          <li>☐ Ask specific questions, not vague ones</li>
+          <li>☐ Give unprompted updates (don't wait to be asked)</li>
+          <li>☐ Meet every deadline — communicate before missing one</li>
+          <li>☐ Document the process while you do it</li>
+          <li>☐ Respond promptly during agreed hours</li>
+          <li>☐ Admit mistakes early, not after the damage compounds</li>
+          <li>☐ Keep learning even when the task feels comfortable</li>
+        </ul>
+      </div>
+      <div class="speedrun-crosslink">The full first 30 days — what to actually do day by day? <a href="#c15">Chapter 15 — The First 30 Days ↑</a></div>
+      <div class="speedrun-crosslink" style="margin-top:.5rem">The first 90 days — building trust that sticks? <a href="#c16">Chapter 16 — The First 90 Days ↑</a></div>
+    </div>
+
+    <!-- ── CAREER LADDER SPEEDRUN ─────────────────────── -->
+    <div class="speedrun-stage">
+      <div class="speedrun-stage-header">
+        <div class="speedrun-stage-num">+</div>
+        <h3>The Career Ladder (Speedrun Version)</h3>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Level</th><th>Title</th><th>Tuesday looks like</th><th>How to get here</th></tr></thead>
+          <tbody>
+            <tr><td style="font-family:var(--mono);font-size:11px;color:var(--ink3)">1</td><td><b>Task Follower</b></td><td>Receives task → completes it → waits</td><td>Show up. Deliver.</td></tr>
+            <tr><td style="font-family:var(--mono);font-size:11px;color:var(--ink3)">2</td><td><b>Reliable Worker</b></td><td>Completes task + sends update + flags issue</td><td>Consistency over time</td></tr>
+            <tr><td style="font-family:var(--mono);font-size:11px;color:var(--ink3)">3</td><td><b>Problem Solver</b></td><td>Notices problem → investigates → brings fix</td><td>Curiosity + ownership</td></tr>
+            <tr><td style="font-family:var(--mono);font-size:11px;color:var(--ink3)">4</td><td><b>System Owner</b></td><td>Prevents problems before they reach anyone</td><td>Systems thinking</td></tr>
+            <tr><td style="font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:700">5</td><td><b style="color:var(--accent)">System Designer</b></td><td>Makes problems structurally impossible</td><td>Judgment + experience</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <svg viewBox="0 0 700 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:1.2rem auto">
+        <rect width="700" height="90" fill="transparent"/>
+        <text x="350" y="16" font-family="DM Mono,monospace" font-size="9" fill="#78716C" letter-spacing="1" text-anchor="middle">VALUE LADDER — HOW INCOME ACTUALLY MOVES</text>
+        <rect x="20" y="28" width="106" height="48" rx="6" fill="#292524"/>
+        <text x="73" y="49" font-family="DM Mono,monospace" font-size="9" fill="#78716C" text-anchor="middle">TASKS</text>
+        <text x="73" y="65" font-family="DM Sans,sans-serif" font-size="10" fill="#57534E" text-anchor="middle">Lowest rate</text>
+        <text x="140" y="55" font-family="DM Mono,monospace" font-size="13" fill="#A8A29E" text-anchor="middle">→</text>
+        <rect x="155" y="24" width="106" height="52" rx="6" fill="#1C2B1A"/>
+        <text x="208" y="47" font-family="DM Mono,monospace" font-size="9" fill="#86EFAC" text-anchor="middle">RELIABILITY</text>
+        <text x="208" y="64" font-family="DM Sans,sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">+rates follow</text>
+        <text x="275" y="52" font-family="DM Mono,monospace" font-size="13" fill="#15803D" text-anchor="middle">→</text>
+        <rect x="290" y="19" width="106" height="56" rx="6" fill="#14532D"/>
+        <text x="343" y="43" font-family="DM Mono,monospace" font-size="9" fill="#D1FAE5" text-anchor="middle">PROBLEM</text>
+        <text x="343" y="55" font-family="DM Mono,monospace" font-size="9" fill="#D1FAE5" text-anchor="middle">SOLVING</text>
+        <text x="343" y="68" font-family="DM Sans,sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">Mid range</text>
+        <text x="410" y="52" font-family="DM Mono,monospace" font-size="13" fill="#15803D" text-anchor="middle">→</text>
+        <rect x="425" y="14" width="106" height="62" rx="6" fill="#166534"/>
+        <text x="478" y="42" font-family="DM Mono,monospace" font-size="9" fill="#DCFCE7" text-anchor="middle">OWNERSHIP</text>
+        <text x="478" y="57" font-family="DM Sans,sans-serif" font-size="10" fill="#A7F3D0" text-anchor="middle">Higher floor</text>
+        <text x="478" y="69" font-family="DM Sans,sans-serif" font-size="10" fill="#A7F3D0" text-anchor="middle">less oversight</text>
+        <text x="544" y="52" font-family="DM Mono,monospace" font-size="13" fill="#22C55E" text-anchor="middle">→</text>
+        <rect x="558" y="8" width="122" height="74" rx="6" fill="#15803D"/>
+        <text x="619" y="38" font-family="DM Mono,monospace" font-size="9" fill="#fff" text-anchor="middle">SYSTEM</text>
+        <text x="619" y="50" font-family="DM Mono,monospace" font-size="9" fill="#fff" text-anchor="middle">DESIGN</text>
+        <text x="619" y="65" font-family="DM Sans,sans-serif" font-size="10" fill="#D1FAE5" text-anchor="middle">Premium work</text>
+        <text x="619" y="77" font-family="DM Sans,sans-serif" font-size="10" fill="#D1FAE5" text-anchor="middle">fewer clients</text>
+      </svg>
+      <p class="svg-caption">FIGURE 30.4 — Income doesn't follow hours worked. It follows value delivered.</p>
+      <div class="speedrun-crosslink">Full Tuesday Test + career stage mechanics? <a href="#c24">Chapter 24 — The Career Ladder ↑</a></div>
+    </div>
+
+    <!-- ── IF COMPLETELY LOST ─────────────────────────── -->
+    <div class="if-lost">
+      <h4>If You're Completely Lost — Start Here</h4>
+      <ol>
+        <li><strong>Learn professional communication.</strong> Everything in the remote world runs on written and verbal clarity.</li>
+        <li><strong>Learn documentation.</strong> One good SOP impresses more than one good interview.</li>
+        <li><strong>Pick one path.</strong> Admin, Support, Marketing, Operations, Technical, or Creative.</li>
+        <li><strong>Build three portfolio pieces.</strong> Evidence first. Job application second.</li>
+        <li><strong>Create a professional resume.</strong> One page. Relevant skills. Portfolio link. Real email.</li>
+        <li><strong>Apply every day.</strong> The funnel fills slowly. Keep filling it.</li>
+        <li><strong>Interview as many times as you can.</strong> Every interview is practice regardless of outcome.</li>
+        <li><strong>Land your first client.</strong> Your only goal: be reliable, communicate well, and document everything.</li>
+        <li><strong>Survive the first 90 days.</strong> Show up. Deliver. Update without being asked.</li>
+        <li><strong>Then go back and read the rest of the Grimoire.</strong></li>
+      </ol>
+      <div class="then-read">
+        Getting in is only the first challenge. Staying in — and advancing — is where the real game begins.
+      </div>
+    </div>
+
+    <!-- ── CHAPTER NAVIGATION HINTS ──────────────────── -->
+    <div style="margin-top:2rem;padding:1.2rem 1.5rem;background:var(--bg2);border-radius:12px;border:1px solid rgba(28,25,23,.08)">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.8rem">Where to go next in this Grimoire</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.5rem;font-size:12px">
+        <div><a href="#c7" style="color:var(--accent)">→ Ch 7</a> <span style="color:var(--ink3)">Full communication mechanics</span></div>
+        <div><a href="#c9" style="color:var(--accent)">→ Ch 9</a> <span style="color:var(--ink3)">Documentation deep dive</span></div>
+        <div><a href="#c11" style="color:var(--accent)">→ Ch 11</a> <span style="color:var(--ink3)">Building evidence without clients</span></div>
+        <div><a href="#c13" style="color:var(--accent)">→ Ch 13</a> <span style="color:var(--ink3)">Finding legitimate work</span></div>
+        <div><a href="#c15" style="color:var(--accent)">→ Ch 15</a> <span style="color:var(--ink3)">The first 30 days</span></div>
+        <div><a href="#c17" style="color:var(--accent)">→ Ch 17</a> <span style="color:var(--ink3)">What nobody tells you</span></div>
+        <div><a href="#c19" style="color:var(--accent)">→ Ch 19</a> <span style="color:var(--ink3)">Philippine-specific realities</span></div>
+        <div><a href="#c24" style="color:var(--accent)">→ Ch 24</a> <span style="color:var(--ink3)">The full career ladder</span></div>
+      </div>
+    </div>
+
+  </div><!-- end .speedrun-body -->
+</div>
+
 <div class="part-header" id="toolkit">
   <div class="part-label">Appendices</div>
   <h2>Reference Materials</h2>
@@ -1985,6 +2612,24 @@ document.addEventListener('keydown', e => {
   if(e.target.tagName === 'INPUT') return;
   if(e.key === '/') { e.preventDefault(); document.getElementById('nav-filter').focus(); }
 });
+
+// Speedrun Quest Log (in-memory only)
+var questDone = {};
+function toggleQuest(el, idx) {
+  questDone[idx] = !questDone[idx];
+  if (questDone[idx]) {
+    el.classList.add('done');
+    el.querySelector('.quest-check').textContent = '✓';
+  } else {
+    el.classList.remove('done');
+    el.querySelector('.quest-check').textContent = '';
+  }
+  var count = Object.values(questDone).filter(Boolean).length;
+  var total = document.querySelectorAll('.quest-item').length;
+  document.getElementById('quest-count').textContent = count + ' / ' + total + ' complete';
+  document.getElementById('quest-fill').style.width = (count / total * 100) + '%';
+}
+
 </script>
 </body>
 </html>
