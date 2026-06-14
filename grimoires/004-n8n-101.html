@@ -1095,6 +1095,8 @@ Timestamp | Workflow | Error | URL | Resolved</pre>
   <div class="reflection"><div class="reflection-label">↺ The naming convention that saved my sanity</div><p>Every workflow gets a prefix: <code>[lead]</code>, <code>[util]</code>, <code>[report]</code>, <code>[alert]</code>, <code>[maint]</code>. Filter the workflow list by prefix. When debugging you immediately know what category you're in. When onboarding someone new, they understand the architecture before opening a single workflow.</p></div>
 </section>
 
+<div class="callout callout-info"><div class="callout-icon">006</div><div class="callout-body"><strong>Know the pattern before you build the workflow.</strong> <a href="/library/grimoires/006-automations-101.html" style="color:#1D4ED8">Grimoire 006 (Automations 101)</a> covers 25 production patterns that map directly to what you’re about to build in n8n. The architecture decisions in G006 determine whether your workflows are maintainable three months from now or a debugging nightmare.</div></div>
+
 <!-- PART III -->
 <div class="part-header">
   <div><div class="part-num">Part III</div><div class="part-title">AI Workflows</div><div class="part-sub">Agents, RAG, classification, and the production patterns that actually work</div></div>
@@ -1131,6 +1133,8 @@ Timestamp | Workflow | Error | URL | Resolved</pre>
   </div>
   <div class="power-tip"><div class="power-tip-label">⚡ System prompt engineering for agents</div><p>Good agent system prompts have four parts: (1) Role definition, (2) Constraints ("Only answer using the knowledge base tool"), (3) Escalation rule ("If confidence &lt; 0.7, escalate to human"), (4) Output format ("Always respond in under 200 words"). Without explicit constraints, the agent will improvise — fine in demos, dangerous in production.</p></div>
 </section>
+
+<div class="callout callout-tip" style="background:#F5F3FF;border-left:3px solid #7C3AED;color:#4C1D95"><div class="callout-icon">007</div><div class="callout-body"><strong>The AI Agent node is one step away from a full agentic system.</strong> <a href="/library/grimoires/007-agentic-ai-101.html" style="color:#7C3AED">Grimoire 007 (Agentic AI 101)</a> covers what happens when your n8n agent needs to grow — multi-agent systems, supervisor design, observability, evals, and when to reach for a dedicated framework instead.</div></div>
 
 <section class="module-section" id="m12">
   <div class="module-header"><span class="module-num">M12</span><div><div class="module-title">RAG pipelines — giving your AI a knowledge base</div><div class="module-sub">Ingestion, chunking, embedding, retrieval — the full pipeline built in n8n</div></div></div>
@@ -1749,17 +1753,17 @@ const parsed = safeJson($json.llm_output);</pre>
       <a href="/library/grimoires/005-zapier-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#0D9488';this.style.boxShadow='0 2px 12px #0D948822'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:#0D9488;margin-bottom:.4rem">005</div>
         <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">Zapier 101: Business Automation</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">Triggers, Zaps, paths, webhooks, error handling, and when to upgrade.</div>
+        <div style="font-size:12px;color:#78716C;line-height:1.5">The Zapier alternative — managed infrastructure, no self-hosting. Different cost curve, same automation fundamentals.</div>
       </a>
       <a href="/library/grimoires/006-automations-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#C2410C';this.style.boxShadow='0 2px 12px #C2410C22'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:#C2410C;margin-bottom:.4rem">006</div>
         <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">Automations 101: The Absolute Guide</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">25 production-grade patterns — idempotency, retries, DLQs, runbooks.</div>
+        <div style="font-size:12px;color:#78716C;line-height:1.5">The pattern library behind everything you build in n8n. Start here when your workflows need architecture decisions, not just more nodes.</div>
       </a>
       <a href="/library/grimoires/007-agentic-ai-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#7C3AED';this.style.boxShadow='0 2px 12px #7C3AED22'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:#7C3AED;margin-bottom:.4rem">007</div>
         <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">Agentic AI 101: Practical AI Workflows</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">Agent architectures, guardrails, evals, and dependable production workflows.</div>
+        <div style="font-size:12px;color:#78716C;line-height:1.5">Where n8n agents grow up. G004 teaches the AI Agent node. G007 teaches what to build around it.</div>
       </a>
     </div>
   </div>

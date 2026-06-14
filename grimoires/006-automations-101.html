@@ -125,7 +125,7 @@ pre{background:var(--dark);border-radius:8px;padding:1.25rem 1.5rem;overflow-x:a
     <section class="hero" id="overview">
       <div class="hero-eyebrow">Grimoire 006 · Automation Pattern Reference · May 2026</div>
       <h1>Automations 101: <em>The Absolute Guide</em></h1>
-      <p class="hero-sub">A pipeline-driven reference for straightforward vs production-grade business automations across industries. Built from the complete Markdown source corpus: foundation chapters, 25 automation patterns, cross-cutting controls, appendices, runbooks, and a symptom index.</p>
+      <p class="hero-sub">Before you open n8n, Zapier, or any agent framework — read this first. The tool is not the system. The architecture is. Twenty-five production patterns built from real client work: the idempotency failures, the 3am webhook fires, the systems that actually recovered. Most automation guides teach you what buttons to click. This one teaches you what to design before you click anything.</p>
       <div class="stat-row">
         <div class="stat-pill"><strong>25</strong> patterns</div>
         <div class="stat-pill"><strong>19</strong> pipeline stages</div>
@@ -162,7 +162,7 @@ pre{background:var(--dark);border-radius:8px;padding:1.25rem 1.5rem;overflow-x:a
       
       <h2 class="section-h">A Pipeline‑Driven Reference for Straightforward vs Production‑Grade Automations Across Industries</h2>
 <h2 class="section-h">Foreword</h2>
-<p>Every business runs on processes. And every process has a point where it slows down, breaks, or gets forgotten. That’s where automation belongs.</p>
+<p>Every business runs on processes. Most of those processes have at least one step where something slows down, breaks, or quietly stops happening — and nobody notices for two weeks. That is where automation belongs.</p>
 <p>But automation is not a magic wand. AI is not the engine. <strong>AI is a cog</strong> – one piece in a larger machine of idempotent workflows, handoff validation, logging, and human judgment.</p>
 <p>This book is not a collection of “cool automations.” It is a <strong>reference thesaurus</strong> organized by the glues that hold your business pipeline together. For each automation pattern, you will find:</p>
 <ul><li>The straightforward way (fast, fragile, good for prototypes)</li></ul>
@@ -209,6 +209,7 @@ pre{background:var(--dark);border-radius:8px;padding:1.25rem 1.5rem;overflow-x:a
 <h2 class="section-h">Part 0 – How to Use This Book</h2>
 <h2 class="section-h">Chapter 0 – The Automation Pattern Reference Model</h2>
 <p><strong>Reading time:</strong> 10 minutes <strong>Audience:</strong> All readers</p>
+<div class="callout callout-tip" style="background:#F5F3FF;border-left:3px solid #7C3AED;color:#4C1D95;margin-bottom:1.2rem"><div class="callout-icon">🔧</div><div class="callout-body"><strong>This is the design layer.</strong> Once you have the pattern, <a href="/library/grimoires/004-n8n-101.html" style="color:#7C3AED;text-decoration:underline">Grimoire 004 (n8n)</a> shows you how to build it, <a href="/library/grimoires/005-zapier-101.html" style="color:#7C3AED;text-decoration:underline">Grimoire 005 (Zapier)</a> covers the managed path, and <a href="/library/grimoires/007-agentic-ai-101.html" style="color:#7C3AED;text-decoration:underline">Grimoire 007 (Agentic AI)</a> picks up when the workflow needs to reason.</div></div>
 <p>This book is a <strong>reference</strong>. You are not expected to read it cover to cover. Instead, you will:</p>
 <ol><li><strong>Identify the automation pattern</strong> you need (e.g., “capture leads”, “send reminders”, “approve contract”).</li></ol>
 <ol><li><strong>Turn to that pattern</strong> in Part II.</li></ol>
@@ -8768,17 +8769,17 @@ Cost of wrong decision?
       <a href="/library/grimoires/004-n8n-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#C2410C';this.style.boxShadow='0 2px 12px #C2410C22'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:#C2410C;margin-bottom:.4rem">004</div>
         <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">n8n 101: AI Workflow Automation</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">AI-native automation with agents, RAG, WhatsApp, and self-hosting.</div>
+        <div style="font-size:12px;color:#78716C;line-height:1.5">Where you build the patterns from this grimoire, using n8n. G006 is the design layer. G004 is the implementation.</div>
       </a>
       <a href="/library/grimoires/005-zapier-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#0D9488';this.style.boxShadow='0 2px 12px #0D948822'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:#0D9488;margin-bottom:.4rem">005</div>
         <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">Zapier 101: Business Automation</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">Triggers, Zaps, paths, webhooks, error handling, and when to upgrade.</div>
+        <div style="font-size:12px;color:#78716C;line-height:1.5">The Zapier path to the same patterns. Easier to start, different cost curve. G006 for what to build. G005 for how.</div>
       </a>
       <a href="/library/grimoires/007-agentic-ai-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#7C3AED';this.style.boxShadow='0 2px 12px #7C3AED22'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:#7C3AED;margin-bottom:.4rem">007</div>
         <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">Agentic AI 101: Practical AI Workflows</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">Agent architectures, guardrails, evals, and dependable production workflows.</div>
+        <div style="font-size:12px;color:#78716C;line-height:1.5">When the workflow needs to reason, not just route. G006 is the automation foundation. G007 is the layer on top.</div>
       </a>
       <a href="/library/grimoires/014-remote-work-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#15803D';this.style.boxShadow='0 2px 12px rgba(21,128,61,.1)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:#15803D;margin-bottom:.4rem">014</div>
