@@ -91,7 +91,7 @@
   href: /grimoires/009-payment-processing.html
   status: live
   desc: "A payment-processing career distilled: merchant services, risk, funding, terminals, gateways, and AI-support-ready playbooks."
-  stats: ["84 chapters", "14 parts"]
+  stats: ["89 chapters", "15 parts"]
 
 - num: "010"
   title: "The Orchestration Layer: How Work Moves"
@@ -137,6 +137,7 @@
 
 - num: "014"
   title: "Remote Work 101: From First Job to Remote Professional"
+  featured: true
   tier: manual
   theme: green
   date: "Jun 2026"
