@@ -3,6 +3,7 @@
 <meta property="og:title" content="The Orchestration Layer: How Work Moves — Grimoire 010">
 <meta property="og:description" content="How to orchestrate AI workflows and teams — delegation, memory, governance, and why the AI revolution is a coordination problem, not an intelligence problem.">
 <meta property="og:url" content="https://suarezaaronroy-sys.github.io/library/grimoires/010-orchestration-layer.html">
+  <link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/010-orchestration-layer.html">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "The Orchestration Layer: How Work Moves \u2014 Grimoire 010", "author": {"@type": "Person", "name": "Aaron Suarez"}, "datePublished": "2026-06-01", "articleSection": "AI-native Operations", "proficiencyLevel": "Beginner to Advanced"}</script><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -732,7 +733,8 @@ p{margin:.82rem 0;color:var(--ink2)}
 </footer>
 <script>
 (function(){
-  var sections=document.querySelectorAll('section[id],article[id]');
+  var navIds=new Set(Array.from(document.querySelectorAll('.nav-link[href^="#"]')).map(function(a){return a.getAttribute('href').slice(1)}));
+  var sections=Array.from(document.querySelectorAll('section[id],article[id]')).filter(function(s){return navIds.has(s.id)});
   var navLinks=document.querySelectorAll('.nav-link');
   var spy=new IntersectionObserver(function(es){es.forEach(function(e){
     if(e.isIntersecting){

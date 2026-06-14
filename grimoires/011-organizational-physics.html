@@ -2313,7 +2313,8 @@ p{margin:.82rem 0;color:var(--ink2)}
 </footer>
 <script>
 (function(){
-  var sections=document.querySelectorAll('section[id],article[id]');
+  var navIds=new Set(Array.from(document.querySelectorAll('.nav-link[href^="#"]')).map(function(a){return a.getAttribute('href').slice(1)}));
+  var sections=Array.from(document.querySelectorAll('section[id],article[id]')).filter(function(s){return navIds.has(s.id)});
   var navLinks=document.querySelectorAll('.nav-link');
   var spy=new IntersectionObserver(function(es){es.forEach(function(e){
     if(e.isIntersecting){
@@ -2346,4 +2347,5 @@ p{margin:.82rem 0;color:var(--ink2)}
 <meta property="og:title" content="Organizational Physics: Why Organizations Behave — Grimoire 011">
 <meta property="og:description" content="Why organizations keep producing the same problems — 28 case files, 143 indexed organizational laws, 30 field notes on dysfunction and entropy.">
 <meta property="og:url" content="https://suarezaaronroy-sys.github.io/library/grimoires/011-organizational-physics.html">
+  <link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/011-organizational-physics.html">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Organizational Physics: Why Organizations Behave \u2014 Grimoire 011", "author": {"@type": "Person", "name": "Aaron Suarez"}, "datePublished": "2026-06-01", "articleSection": "Organizational Systems", "proficiencyLevel": "Beginner to Advanced"}</script>
