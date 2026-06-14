@@ -59,6 +59,7 @@ p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{
   <div class="nav-group"><span class="nav-group-label">Part XII - Scripts</span><a href="#c57" class="nav-link"><span class="nav-num">C57</span>Missing Deposit</a><a href="#c58" class="nav-link"><span class="nav-num">C58</span>Fees Script</a><a href="#c59" class="nav-link"><span class="nav-num">C59</span>Decline Script</a><a href="#c60" class="nav-link"><span class="nav-num">C60</span>Hold Script</a><a href="#c61" class="nav-link"><span class="nav-num">C61</span>Terminal Script</a><a href="#c62" class="nav-link"><span class="nav-num">C62</span>Ticket Notes</a></div>
   <div class="nav-group"><span class="nav-group-label">Part XIII - Agent KB</span><a href="#c63" class="nav-link"><span class="nav-num">C63</span>Intent Map</a><a href="#c64" class="nav-link"><span class="nav-num">C64</span>Data Fields</a><a href="#c65" class="nav-link"><span class="nav-num">C65</span>Never Say</a><a href="#c66" class="nav-link"><span class="nav-num">C66</span>Templates</a><a href="#c67" class="nav-link"><span class="nav-num">C67</span>30-Day Training</a><a href="#c68" class="nav-link"><span class="nav-num">C68</span>Glossary</a><a href="#c69" class="nav-link"><span class="nav-num">C69</span>Decision Tree</a><a href="#c70" class="nav-link"><span class="nav-num">C70</span>Final Operating System</a></div>
   <div class="nav-group"><span class="nav-group-label">Part XIV - Technical Survival</span><a href="#c71" class="nav-link"><span class="nav-num">C71</span>Base Architecture</a><a href="#c72" class="nav-link"><span class="nav-num">C72</span>POS + Terminal</a><a href="#c73" class="nav-link"><span class="nav-num">C73</span>Website Checkout</a><a href="#c74" class="nav-link"><span class="nav-num">C74</span>Hosted vs Embedded</a><a href="#c75" class="nav-link"><span class="nav-num">C75</span>Varsheet</a><a href="#c76" class="nav-link"><span class="nav-num">C76</span>API Keys</a><a href="#c77" class="nav-link"><span class="nav-num">C77</span>Webhooks</a><a href="#c78" class="nav-link"><span class="nav-num">C78</span>Test Mode</a><a href="#c79" class="nav-link"><span class="nav-num">C79</span>Reconciliation</a><a href="#c80" class="nav-link"><span class="nav-num">C80</span>Integrations</a><a href="#c81" class="nav-link"><span class="nav-num">C81</span>Go-Live</a><a href="#c82" class="nav-link"><span class="nav-num">C82</span>Noob Mistakes</a><a href="#c83" class="nav-link"><span class="nav-num">C83</span>Integration Ticket</a><a href="#c84" class="nav-link"><span class="nav-num">C84</span>Future Agent</a></div>
+  <div class="nav-group"><span class="nav-group-label">Part XV - Know-How</span><a href="#c85" class="nav-link"><span class="nav-num">C85</span>ACH &amp; eCheck</a><a href="#c86" class="nav-link"><span class="nav-num">C86</span>3D Secure</a><a href="#c87" class="nav-link"><span class="nav-num">C87</span>International</a><a href="#c88" class="nav-link"><span class="nav-num">C88</span>MATCH / TMF</a><a href="#c89" class="nav-link"><span class="nav-num">C89</span>Integration Stack</a></div>
   <div class="nav-group"><span class="nav-group-label">Reference</span><a href="#sources" class="nav-link"><span class="nav-num">SRC</span>Sources</a></div>
 </nav>
 <main class="main">
@@ -66,7 +67,7 @@ p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{
   <div class="hero-eyebrow">Grimoire 009 - Merchant Services - June 2026</div>
   <h1>Payment Processing: <em>The Industry I Didn't Know I Was Learning</em></h1>
   <p class="hero-sub">The culmination of a payment processing career: support calls, merchant statements, angry funding tickets, risk holds, terminal failures, onboarding mysteries, bank logic, processor language, and the slow realization that moving money is really the business of managing trust. This one starts as a story because that is how the industry teaches you.</p>
-  <div class="stat-row"><div class="stat-pill"><strong>14</strong> parts</div><div class="stat-pill"><strong>84</strong> chapters</div><div class="stat-pill"><strong>Support</strong> field manual</div><div class="stat-pill"><strong>Technical</strong> survival guide</div><div class="stat-pill"><strong>AI agent</strong> ready</div></div>
+  <div class="stat-row"><div class="stat-pill"><strong>15</strong> parts</div><div class="stat-pill"><strong>89</strong> chapters</div><div class="stat-pill"><strong>Support</strong> field manual</div><div class="stat-pill"><strong>Technical</strong> survival guide</div><div class="stat-pill"><strong>AI agent</strong> ready</div></div>
   <a href="#c1" class="btn orange">Begin The Story &rarr;</a><a href="#c32" class="btn ghost">Support Manual</a><a href="#c40" class="btn ghost">Follow The Money</a>
   <div class="story-card"><div class="story-label">The merchant who wanted his money</div><div class="story-text">My understanding of payment processing once looked like this: customer pays, business gets money. Simple. Then a merchant called. His terminal said approved. His POS said approved. His batch was closed. His bank account showed nothing. And I had absolutely no idea where his money was.</div></div>
   <div class="pull-quote">Payment processing is not a product. It is an ecosystem. Most people only see the final two seconds of it.</div>
@@ -192,21 +193,69 @@ Merchants</pre></div>
   <div class="flow"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Find volume</h4><p>Total card sales processed for the statement period.</p></div></div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Find total fees</h4><p>All processing and monthly charges combined.</p></div></div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Calculate effective rate</h4><p>Total fees divided by total volume. This is a blunt but useful starting point.</p></div></div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Separate pass-through from markup</h4><p>Interchange and assessments are not the same as provider profit.</p></div></div></div>
 </section>
 
-<section class="module-section" id="c18"><div class="module-header"><span class="module-num">C18</span><div><div class="module-title">Surcharging</div><div class="module-sub">Why merchants love it and customers hate it</div></div></div>
-  <p>Surcharging adds a fee when a customer pays by credit card, where allowed and compliant. Merchants like it because it offsets card acceptance costs. Customers dislike it because it makes the cost visible at the worst possible moment: checkout.</p>
-  <div class="callout callout-danger"><div class="callout-icon">LEGAL</div><div class="callout-body">Surcharge rules vary by jurisdiction, card brand, card type, signage, disclosure, and cap requirements. Never tell a merchant "just add 4%" without compliance review.</div></div>
+<section class="module-section" id="c18"><div class="module-header"><span class="module-num">C18</span><div><div class="module-title">Surcharging</div><div class="module-sub">How it actually works — mechanics, compliance, and the debit rule everyone forgets</div></div></div>
+  <p>Surcharging adds a fee to credit card transactions, shifting processing cost from the merchant to the customer. Merchants love it because it eliminates their largest operating expense. Customers dislike it because cost becomes visible at the worst moment: checkout. Done right, it is legal in most of the US. Done wrong, it is a compliance incident.</p>
+  <p><strong>How it works operationally:</strong> The POS or gateway is programmed to automatically detect credit card transactions and apply the surcharge. The fee appears as a separate line item. The merchant receives the full item price. Debit and prepaid card transactions <em>cannot</em> be surcharged — federal law prohibits it, even if the debit card runs as credit.</p>
+  <div class="table-wrap"><table><thead><tr><th>Rule</th><th>Detail</th></tr></thead><tbody>
+    <tr><td>Maximum surcharge</td><td>3% in most states. Card brand max: Mastercard 4%, Visa 3% — processors enforce 3% at POS for compliance uniformity.</td></tr>
+    <tr><td>Debit/prepaid</td><td>Cannot be surcharged. Federal law. No exceptions.</td></tr>
+    <tr><td>Card brand uniformity</td><td>Same surcharge rate must apply across all card brands — cannot charge more for Amex than Visa.</td></tr>
+    <tr><td>Signage required</td><td>Sign at entrance AND at checkout/POS. Not optional.</td></tr>
+    <tr><td>Receipt disclosure</td><td>Surcharge must appear as a separate line item on the receipt.</td></tr>
+    <tr><td>Refunds</td><td>If you refund the purchase, you refund the surcharge too.</td></tr>
+  </tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>State status</th><th>Jurisdictions</th></tr></thead><tbody>
+    <tr><td><strong>Banned</strong></td><td>Connecticut, Massachusetts, Puerto Rico</td></tr>
+    <tr><td><strong>Capped at 2%</strong></td><td>Colorado, Oklahoma</td></tr>
+    <tr><td><strong>Allowed with local rules</strong></td><td>California, Florida, Kansas, Maine, New York, Texas</td></tr>
+    <tr><td><strong>Generally allowed (3% cap)</strong></td><td>Most other states</td></tr>
+  </tbody></table></div>
+  <div class="callout callout-danger"><div class="callout-icon">LEGAL</div><div class="callout-body">Never tell a merchant "just add 4%" without compliance review. Rate, signage, and disclosure rules vary by state. Violations can trigger card brand fines, higher chargeback rates, and account termination.</div></div>
+  <p><strong>Best fit:</strong> High-risk merchants offsetting elevated rates, small retail, B2B-heavy businesses with high rewards card volume, enterprise processing large amounts on business credit cards.</p>
 </section>
 
-<section class="module-section" id="c19"><div class="module-header"><span class="module-num">C19</span><div><div class="module-title">Cash Discount Programs</div><div class="module-sub">Why this is not the same thing as surcharging</div></div></div>
-  <p>A cash discount program presents a regular price and offers a discount for cash, depending on implementation and legal context. The consumer psychology is different: one feels like a penalty for cards; the other feels like a reward for cash. The compliance details matter.</p>
+<section class="module-section" id="c19"><div class="module-header"><span class="module-num">C19</span><div><div class="module-title">Cash Discount Programs</div><div class="module-sub">The psychology flip that changes how customers see the fee</div></div></div>
+  <p>A cash discount program posts a <em>regular price</em> that already absorbs the card acceptance cost — then offers a discount to customers who pay with cash. The merchant still recovers their processing cost, but the framing flips: instead of a penalty for using a card, it feels like a reward for using cash.</p>
+  <p><strong>Why the framing matters:</strong> Consumer psychology responds differently to gains vs losses. A $3 surcharge on a $100 sale feels punitive. A $3 discount for cash on a $103 listed price feels like a deal. Same math. Very different reaction at checkout.</p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Surcharging</div><div class="kv-val">Post the cash price ($100). Add a fee for credit ($103). Customer sees: penalty for card.</div></div>
+    <div class="kv-row"><div class="kv-key">Cash Discount</div><div class="kv-val">Post the card price ($103). Offer a discount for cash ($100). Customer sees: reward for cash.</div></div>
+    <div class="kv-row"><div class="kv-key">Net result</div><div class="kv-val">Merchant recovers processing cost in both cases. Cash discount can sidestep some state surcharging restrictions since it is structured as a discount, not a fee added at checkout.</div></div>
+  </div>
+  <div class="callout callout-warn"><div class="callout-icon">NOTE</div><div class="callout-body">Cash discount still has compliance requirements. The posted price must be the card price. A merchant who posts the cash price and then adds a fee at checkout is surcharging, not cash discounting — regardless of what they call it. Signage and disclosure still apply.</div></div>
+  <p><strong>Best fit:</strong> Service businesses, salons, auto shops, markets — any environment where cash-paying customers are common and posting a slightly higher listed price is acceptable.</p>
 </section>
 
-<section class="module-section" id="c20"><div class="module-header"><span class="module-num">C20</span><div><div class="module-title">Dual Pricing</div><div class="module-sub">The modern evolution of visible payment cost</div></div></div>
-  <p>Dual pricing shows different cash and card prices before checkout. It can be clearer for consumers than surprise fees and more honest for merchants than hiding acceptance costs. Like surcharging and cash discounting, execution and compliance matter.</p>
+<section class="module-section" id="c20"><div class="module-header"><span class="module-num">C20</span><div><div class="module-title">Dual Pricing</div><div class="module-sub">Two prices shown before checkout — no surprise at the register</div></div></div>
+  <p>Dual pricing displays two prices side-by-side on the menu, shelf tag, or POS screen: one for cash, one for card. The customer sees both before deciding how to pay. No surprise at checkout — the card price reflects the merchant's cost of card acceptance, built into the price itself.</p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Cash price</div><div class="kv-val">$9.50</div></div>
+    <div class="kv-row"><div class="kv-key">Card price</div><div class="kv-val">$9.79</div></div>
+    <div class="kv-row"><div class="kv-key">Difference</div><div class="kv-val">~3% — the processing cost, absorbed into the card price</div></div>
+  </div>
+  <p><strong>Why merchants prefer it over surcharging:</strong> No surprise at checkout means less friction and fewer complaints. The customer self-selects before they reach the register. Gas stations have operated this way for decades — "cash price / credit price" on the pump — which is why most consumers already understand the concept even in other environments.</p>
+  <p><strong>Best fit:</strong> Quick-service restaurants, gas stations, high-volume low-margin retail — any business where price is visible before checkout and cash is a realistic option.</p>
+  <div class="callout callout-info"><div class="callout-icon">ADMIN</div><div class="callout-body">For admin setup: the POS must be programmed to display dual prices and apply the correct rate at payment. Ensure the card price covers fees plus any remaining costs — dual pricing only eliminates processing cost, not monthly service fees, PCI fees, or chargebacks.</div></div>
 </section>
 
-<section class="module-section" id="c21"><div class="module-header"><span class="module-num">C21</span><div><div class="module-title">The Dream Of Zero Cost Processing</div><div class="module-sub">Marketing claim vs industry reality</div></div></div>
-  <p>"Zero cost" usually means shifting cost, not deleting cost. Someone pays: the merchant, the customer, the provider through margin tradeoffs, or the business through conversion friction. The more honest phrase is "cost recovery," not magic.</p>
+<section class="module-section" id="c21"><div class="module-header"><span class="module-num">C21</span><div><div class="module-title">The Dream Of Zero Cost Processing</div><div class="module-sub">Cost recovery, not magic — but the math can actually work</div></div></div>
+  <p>"Zero cost processing" is a marketing term for a real operational decision: shifting credit card processing fees from the merchant to the customer. The cost does not disappear — it moves. But for many merchants, that move is the right call.</p>
+  <p><strong>The three mechanisms (all are "zero cost" programs):</strong></p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Surcharging</div><div class="kv-val">Add a fee to credit card transactions at checkout. Debit exempt. Capped at 3%. Banned in CT, MA, PR.</div></div>
+    <div class="kv-row"><div class="kv-key">Cash Discount</div><div class="kv-val">Post card price, offer cash discount. Avoids some surcharging restrictions via framing.</div></div>
+    <div class="kv-row"><div class="kv-key">Dual Pricing</div><div class="kv-val">Show both prices upfront. Customer selects payment method knowing both prices before checkout.</div></div>
+  </div>
+  <p><strong>Costs that remain even with zero-cost processing:</strong></p>
+  <ul>
+    <li>Monthly service fees (account maintenance, reporting, support)</li>
+    <li>PCI compliance fees</li>
+    <li>Equipment and terminal costs</li>
+    <li>Chargeback fees (per dispute, regardless of outcome)</li>
+    <li>ACH/eCheck fees if using bank-based payment options</li>
+  </ul>
+  <div class="callout callout-warn"><div class="callout-icon">ADMIN</div><div class="callout-body">When setting up a zero-cost program, confirm the POS handles it correctly. Common failure: system applies the surcharge to debit cards. This is a federal compliance violation. Always test with both a credit and a debit card before go-live.</div></div>
+  <div class="story-card"><div class="story-label">The business case</div><div class="story-text">A merchant processing $100K/month at 3% pays $3,000/month in fees. Under a compliant surcharging program, that $3,000 moves to the customers who choose to pay by credit card. The math works more often than merchants expect — friction tradeoffs vary by business type, but the net is usually positive for the merchant who sets it up correctly.</div></div>
 </section>
 
 <div class="part-header"><div><div class="part-num">Part VI</div><div class="part-title">Merchant Onboarding</div><div class="part-sub">Why signing up is not the same as being approved to move money</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C22 - C26</div></div>
@@ -233,8 +282,34 @@ Merchants</pre></div>
   <div class="kv"><div class="kv-row"><div class="kv-key">Business model</div><div class="kv-val">What is being sold and how is it fulfilled?</div></div><div class="kv-row"><div class="kv-key">Ticket size</div><div class="kv-val">Higher tickets increase dispute exposure.</div></div><div class="kv-row"><div class="kv-key">Delivery timing</div><div class="kv-val">Future delivery creates risk if the merchant fails before fulfilling.</div></div><div class="kv-row"><div class="kv-key">History</div><div class="kv-val">Chargebacks, processing volume, refunds, and prior terminations matter.</div></div></div>
 </section>
 
-<section class="module-section" id="c25"><div class="module-header"><span class="module-num">C25</span><div><div class="module-title">High Risk Merchants</div><div class="module-sub">Why risk matters before the first transaction</div></div></div>
-  <p>Some businesses are considered higher risk because of chargeback history, regulatory exposure, delayed fulfillment, subscription behavior, reputation, fraud patterns, or product category. Travel, supplements, coaching, subscriptions, CBD, ticketing, adult, and certain digital offers often receive more scrutiny.</p>
+<section class="module-section" id="c25"><div class="module-header"><span class="module-num">C25</span><div><div class="module-title">High Risk Merchants</div><div class="module-sub">Rates, triggers, MATCH/TMF, and how to actually get approved</div></div></div>
+  <p>High-risk classification is a risk assessment, not a judgment. Banks and processors see a statistical pattern across certain industries: higher chargebacks, regulatory exposure, delayed fulfillment, or fraud-adjacent behavior. The classification determines what the merchant pays, what controls apply, and whether they get approved at all.</p>
+  <p><strong>Rate range: 3.25%–3.99%</strong> (vs 2.5–2.9% for standard merchants). The spread exists because the acquiring bank absorbs more exposure and charges accordingly.</p>
+  <p><strong>What triggers high-risk classification:</strong></p>
+  <ul>
+    <li>Chargeback ratio above 1% of monthly transactions — the threshold where banks get nervous</li>
+    <li>Industry is regulated, controversial, or has unpredictable sales patterns</li>
+    <li>High percentage of card-not-present (CNP) transactions</li>
+    <li>Subscription or trial-offer billing models</li>
+    <li>Large average ticket sizes with delayed fulfillment</li>
+    <li>International sales exposure</li>
+    <li>Prior terminations or credit issues</li>
+    <li>MATCH/TMF listing (see C88)</li>
+  </ul>
+  <div class="table-wrap"><table><thead><tr><th>Industry</th><th>Why flagged</th></tr></thead><tbody>
+    <tr><td>CBD, Cannabis, Vape, Tobacco</td><td>Regulatory ambiguity, age verification requirements, bank reputational risk</td></tr>
+    <tr><td>Adult businesses</td><td>Reputational risk, chargeback exposure</td></tr>
+    <tr><td>Nutraceuticals / supplements</td><td>Trial-offer chargeback history across the industry</td></tr>
+    <tr><td>Credit repair / MLM</td><td>FTC regulation, refund and dispute rates</td></tr>
+    <tr><td>Drop shipping</td><td>Fulfillment liability when supplier fails</td></tr>
+    <tr><td>Medical billing</td><td>Insurance complexity, delayed payment cycles, high ticket</td></tr>
+    <tr><td>Jet / Charter / Travel</td><td>High-ticket, advance deposits, future delivery risk</td></tr>
+    <tr><td>Firearms dealers (FFL)</td><td>Card network pressure, processor list shrinking</td></tr>
+    <tr><td>Bail bonds, pawn shops</td><td>Regulatory, reputational, transaction variety</td></tr>
+    <tr><td>Peptides (research products)</td><td>Grey area regulatory; MATCH/TMF merchants now being served (April 2026)</td></tr>
+  </tbody></table></div>
+  <p><strong>Rate negotiation levers:</strong> Chargeback ratio history (lower = better), industry type, international sales volume, subscription vs one-time model, average ticket size, and documented financial stability. Transparency with the underwriter helps — providing detailed business information proactively usually gets better terms than forcing underwriters to dig.</p>
+  <div class="callout callout-danger"><div class="callout-icon">MATCH/TMF</div><div class="callout-body">MATCH (Mastercard Alert to Control High-Risk Merchants) and TMF (Terminated Merchant File, Visa's equivalent) are industry blacklists. Being listed means most standard processors will reject the application. Specialized high-risk processors with the right bank relationships can still place MATCH/TMF merchants — but rates will be higher and documentation requirements more intensive. See C88 for full detail.</div></div>
 </section>
 
 <section class="module-section" id="c26"><div class="module-header"><span class="module-num">C26</span><div><div class="module-title">Holds And Reserves</div><div class="module-sub">Why processors sometimes say "not yet"</div></div></div>
@@ -244,16 +319,55 @@ Merchants</pre></div>
 
 <div class="part-header"><div><div class="part-num">Part VII</div><div class="part-title">Hardware And Infrastructure</div><div class="part-sub">The counter, the cloud, and the bridge between them</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C27 - C31</div></div>
 
-<section class="module-section" id="c27"><div class="module-header"><span class="module-num">C27</span><div><div class="module-title">The Terminal On The Counter</div><div class="module-sub">EMV, NFC, tap-to-pay, and the tiny machine everyone blames</div></div></div>
-  <p>The terminal is the visible edge of the payment system. It reads cards, encrypts data, prompts for PIN or signature when needed, communicates with the processor or POS, and displays the result. When anything fails, the terminal gets blamed because it is the thing the merchant can see.</p>
+<section class="module-section" id="c27"><div class="module-header"><span class="module-num">C27</span><div><div class="module-title">The Terminal On The Counter</div><div class="module-sub">EMV, NFC, tap-to-pay, and the hardware categories behind "swipe your card"</div></div></div>
+  <p>The terminal is the visible edge of the payment system. It reads cards, encrypts data, prompts for PIN or signature, communicates with the processor or POS, and returns the result. When anything fails, the terminal gets blamed because it is the only thing the merchant can see. Most of the time, the terminal did its job — the problem is upstream.</p>
+  <p><strong>How it reads cards:</strong></p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Magstripe (swipe)</div><div class="kv-val">The old stripe on the back. Least secure. Still exists as fallback for chip failures.</div></div>
+    <div class="kv-row"><div class="kv-key">EMV (chip)</div><div class="kv-val">Europay-Mastercard-Visa chip standard. Generates a unique transaction code per use — cannot be cloned like magstripe. Required since 2015 liability shift.</div></div>
+    <div class="kv-row"><div class="kv-key">NFC (tap/contactless)</div><div class="kv-val">Near-field communication. Apple Pay, Google Pay, tap-enabled cards. Fastest at checkout. EMV-level security.</div></div>
+  </div>
+  <p><strong>Hardware categories:</strong></p>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">Countertop terminal</div><h4>Fixed desk unit</h4><p>Ingenico Desk 1500, Verifone, PAX. Wired connection, sits at register. Most common in traditional retail.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Wireless terminal</div><h4>Mobile terminal</h4><p>Clover Flex, Ingenico AXIUM. Battery-powered, Wi-Fi or cellular. Used tableside, in warehouses, at pop-ups.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Mobile reader</div><h4>Phone/tablet attachment</h4><p>Clover Go, SwipeSimple. Bluetooth or audio jack. Works with a smartphone app. Field reps, service businesses.</p></div>
+    <div class="feature-card"><div class="feature-card-label">PIN pad</div><h4>Customer-facing input</h4><p>Separate from the merchant display. Customer enters PIN or signs directly. Used in retail where merchant and customer displays are split.</p></div>
+  </div>
+  <div class="callout callout-warn"><div class="callout-icon">SUPPORT</div><div class="callout-body">The 2015 EMV liability shift matters for support tickets: before EMV, card networks covered counterfeit fraud losses. After the shift, if a merchant accepts a chip card via magstripe (because they did not upgrade), the merchant is liable for counterfeit fraud. A swipe-only terminal is not just outdated — it is a live liability exposure.</div></div>
 </section>
 
-<section class="module-section" id="c28"><div class="module-header"><span class="module-num">C28</span><div><div class="module-title">POS Systems</div><div class="module-sub">The software layer that became its own industry</div></div></div>
-  <p>Point-of-sale systems like Clover, Toast, Square, Lightspeed, and many vertical tools do more than accept payment. They manage menus, inventory, employees, orders, tips, taxes, reporting, loyalty, and customer profiles. That is why POS became its own industry: the payment is one event inside an operational system.</p>
+<section class="module-section" id="c28"><div class="module-header"><span class="module-num">C28</span><div><div class="module-title">POS Systems</div><div class="module-sub">The software layer that became its own industry — and why the choice matters</div></div></div>
+  <p>A POS system is the full operational layer of a physical payment environment: inventory, staff, orders, tips, reporting, loyalty, menus, tables, customer profiles, and payment acceptance — all in one platform. The payment is one event inside a larger business management system. Choosing a POS means choosing an ecosystem.</p>
+  <p><strong>The Clover ecosystem</strong> is the most commonly deployed through traditional merchant services. Different hardware for different environments:</p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Clover Station Solo</div><div class="kv-val">Full countertop POS; large tiltable touchscreen, integrated printer. Standard retail and restaurant.</div></div>
+    <div class="kv-row"><div class="kv-key">Clover Station Duo 2</div><div class="kv-val">Dual screen: merchant-facing and customer-facing. Speeds checkout in high-volume environments.</div></div>
+    <div class="kv-row"><div class="kv-key">Clover Mini</div><div class="kv-val">Compact countertop unit. Same functionality, smaller footprint. Tight counter space.</div></div>
+    <div class="kv-row"><div class="kv-key">Clover Flex</div><div class="kv-val">Handheld wireless. Built-in printer, camera, scanner. Tableside ordering, mobile retail, field use.</div></div>
+    <div class="kv-row"><div class="kv-key">Clover Kiosk</div><div class="kv-val">Self-service ordering and payment. Customer-facing. QSR, food halls, high-volume quick service.</div></div>
+    <div class="kv-row"><div class="kv-key">Clover Go</div><div class="kv-val">Bluetooth mobile reader. Phone/tablet. Lowest cost. Field reps, markets, pop-ups.</div></div>
+  </div>
+  <p><strong>Other POS systems by use case:</strong></p>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">Retail (multi-SKU)</div><h4>LightSpeed, coreSTORE</h4><p>Inventory management for high-SKU retail. coreSTORE built for independent retailers and FFL dealers (firearms licensing).</p></div>
+    <div class="feature-card"><div class="feature-card-label">Restaurant</div><h4>Toast, Union POS, MYR</h4><p>Table management, ticket routing, tip handling. Toast is cloud-native. Clover also serves restaurants with the right app configuration.</p></div>
+    <div class="feature-card"><div class="feature-card-label">High-SKU independent</div><h4>Bodega AI</h4><p>AI-native POS preloaded with 200,000+ SKUs. Built for convenience stores and high-volume independent retail where manual SKU entry is impractical.</p></div>
+    <div class="feature-card"><div class="feature-card-label">Omnichannel</div><h4>ConnectPOS</h4><p>Bridges online stores (Shopify, Magento) with physical locations. One inventory, one order history, across both channels.</p></div>
+  </div>
+  <div class="callout callout-info"><div class="callout-icon">ADMIN</div><div class="callout-body">POS choice is not just hardware — it is a software lock-in decision. Clover apps live in the Clover ecosystem. Migrating away from a POS means migrating inventory data, staff records, customer profiles, and historical sales data. Always clarify the POS before setting up any integration or adding software to the account.</div></div>
 </section>
 
-<section class="module-section" id="c29"><div class="module-header"><span class="module-num">C29</span><div><div class="module-title">Gateways</div><div class="module-sub">The digital bridge</div></div></div>
-  <p>A payment gateway connects digital transaction requests to processing rails. In ecommerce, the gateway is often the layer that handles checkout communication, tokenization, authorization requests, captures, refunds, and integrations with carts or apps.</p>
+<section class="module-section" id="c29"><div class="module-header"><span class="module-num">C29</span><div><div class="module-title">Gateways</div><div class="module-sub">The digital bridge — and why the choice of gateway is actually a use-case decision</div></div></div>
+  <p>A payment gateway connects digital transaction requests to processing rails. In ecommerce, it handles checkout communication, tokenization, authorization requests, captures, refunds, recurring billing, fraud filtering, and integrations with carts, CRMs, and apps. Not all gateways are equivalent — the right choice depends on the merchant type, risk profile, and existing platform stack.</p>
+  <p><strong>The three you encounter most in merchant services:</strong></p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">Authorize.net</div><div class="kv-val"><strong>The standard choice.</strong> Most widely deployed gateway in traditional merchant services. Works with virtually every ecommerce platform. Strong fraud detection (Advanced Fraud Detection Suite). Recurring billing built in. Not high-risk-native — standard merchants, broad compatibility.</div></div>
+    <div class="kv-row"><div class="kv-key">NMI (Network Merchants Inc)</div><div class="kv-val"><strong>The ISO/agent channel pick.</strong> Built for the reseller world. ISOs and agents use NMI because it supports white-labeling, sub-merchant management, and complex routing. Recurring billing, fraud tools, virtual terminal. If a processor works with agents, NMI is often in the stack.</div></div>
+    <div class="kv-row"><div class="kv-key">FluidPay</div><div class="kv-val"><strong>The high-risk / CNP-capable choice.</strong> Designed for card-not-present environments where standard gateways decline. Better tolerance for high-risk industries. Used when Authorize.net or NMI can't support the merchant category or triggers too many declines.</div></div>
+  </div>
+  <p><strong>Other notable gateways:</strong> accept.blue (recurring-focused), BlueSnap (global, subscription-capable), PayTrace (B2B / Level 2–3 data), Heartland, Cybersource (enterprise/Visa-owned), USAePay (high-risk friendly).</p>
+  <div class="callout callout-info"><div class="callout-icon">ADMIN</div><div class="callout-body">Gateway and processor are often bundled but are technically separate layers. A merchant might use Authorize.net as the gateway while their processor is a different company entirely. When troubleshooting, always confirm which layer the error is coming from — gateway decline vs processor decline vs issuer decline have different resolution paths.</div></div>
 </section>
 
 <section class="module-section" id="c30"><div class="module-header"><span class="module-num">C30</span><div><div class="module-title">Why Stripe Changed Everything</div><div class="module-sub">APIs, developer-first infrastructure, and embedded payments</div></div></div>
@@ -822,6 +936,110 @@ Escalation needed from:</pre></div>
   <p>An AI support agent can triage integration tickets, ask for missing identifiers, classify likely failure layers, draft replies, and assemble escalation notes. It should not request secrets, modify live keys, disable webhooks, change bank accounts, alter descriptors, or tell a merchant to reprocess payments without human approval.</p>
   <div class="kv"><div class="kv-row"><div class="kv-key">Agent can do</div><div class="kv-val">Classify issue, collect safe fields, explain architecture, draft troubleshooting steps, create escalation summary.</div></div><div class="kv-row"><div class="kv-key">Agent must not do</div><div class="kv-val">Handle raw card data, store secrets, promise funding, approve risk releases, change payment settings without authorization.</div></div><div class="kv-row"><div class="kv-key">Agent should ask</div><div class="kv-val">Which environment, which processor, which transaction ID, which webhook event, which order ID, what changed recently?</div></div></div>
   <div class="pull-quote">Processor docs teach the buttons. The base architecture teaches survival.</div>
+</section>
+
+
+<div class="part-header"><div><div class="part-num">Part XV</div><div class="part-title">Extended Payment Types &amp; Admin Know-How</div><div class="part-sub">ACH, 3DS, international rails, MATCH/TMF, and the integration stack — the knowledge that separates admin from operator</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">C85 - C89</div></div>
+
+<section class="module-section" id="c85"><div class="module-header"><span class="module-num">C85</span><div><div class="module-title">ACH &amp; eCheck</div><div class="module-sub">Bank-to-bank payments — lower cost, slower clock, different risk profile</div></div></div>
+  <p>ACH (Automated Clearing House) and eCheck are both bank-to-bank payment methods. They bypass card networks entirely, which is why their fees are significantly lower. The tradeoff: settlement is slower (1–3 business days vs same/next day for cards) and disputes — called returns in ACH language — work differently.</p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">ACH</div><div class="kv-val">Electronic bank-to-bank transfer through the ACH network. Used for recurring billing, payroll, invoices, B2B payments. Customer provides routing and account number. Funds move in batches, not real-time.</div></div>
+    <div class="kv-row"><div class="kv-key">eCheck</div><div class="kv-val">Electronic version of a paper check. Converts check information into an electronic transaction. Faster than mailing a check, more secure than paper, same underlying ACH rails.</div></div>
+    <div class="kv-row"><div class="kv-key">Key difference</div><div class="kv-val">ACH is initiated electronically from the start. eCheck starts as a check (physical or digital) and converts to electronic. Both clear through ACH rails. The distinction is mostly in how the payment was initiated.</div></div>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th></th><th>Credit/Debit Card</th><th>ACH / eCheck</th></tr></thead><tbody>
+    <tr><td>Fees</td><td>2–4% per transaction</td><td>Flat fee, typically $0.25–$1.50</td></tr>
+    <tr><td>Settlement</td><td>Same day or next day</td><td>1–3 business days</td></tr>
+    <tr><td>Disputes</td><td>Chargebacks (60–120 day window)</td><td>Returns (shorter window, different rules)</td></tr>
+    <tr><td>Best for</td><td>Retail, ecommerce, in-person</td><td>B2B, high-ticket, recurring, invoicing</td></tr>
+  </tbody></table></div>
+  <p><strong>When to use ACH/eCheck over cards:</strong></p>
+  <ul>
+    <li>High-ticket B2B transactions (a $50,000 invoice on a card costs $1,500+ in fees; on ACH, a few dollars)</li>
+    <li>Recurring monthly charges where card-on-file has expiration risk</li>
+    <li>Customers or clients who prefer not to use credit cards</li>
+    <li>Industries where card acceptance is restricted or high-risk</li>
+  </ul>
+  <div class="callout callout-warn"><div class="callout-icon">RISK</div><div class="callout-body">ACH returns carry similar financial consequences to chargebacks. R01 (insufficient funds), R02 (account closed), R10 (unauthorized) are the most common return codes. High return rates get accounts flagged or terminated the same way high chargeback rates do.</div></div>
+</section>
+
+<section class="module-section" id="c86"><div class="module-header"><span class="module-num">C86</span><div><div class="module-title">3D Secure (3DS)</div><div class="module-sub">The authentication layer that shifts chargeback liability from merchant to issuing bank</div></div></div>
+  <p>3D Secure is a payment authentication protocol that adds an identity verification step to online transactions. The "3D" refers to the three parties involved: the merchant's acquiring bank, the customer's issuing bank, and the card network. When authentication completes successfully, a critical legal shift occurs: <strong>liability for fraudulent chargebacks moves from the merchant to the cardholder's issuing bank.</strong></p>
+  <p>This is not just a security feature. It is a financial protection mechanism.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><h4>Customer enters payment details</h4><p>Standard checkout: card number, expiry, CVV. Hosted payment page, invoice, shopping cart.</p></div></div>
+    <div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><h4>Risk check runs in the background</h4><p>3DS evaluates the transaction: device, IP, behavior, purchase history. Most legitimate transactions pass silently — no friction for the customer.</p></div></div>
+    <div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><h4>Challenge triggered if needed</h4><p>High-risk transactions prompt the customer to verify: SMS code, biometric, temporary PIN. Most customers only see this for flagged transactions.</p></div></div>
+    <div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><h4>Issuing bank authenticates</h4><p>The customer's bank confirms identity and sends authentication data back through the network.</p></div></div>
+    <div class="flow-step"><div class="flow-step-num">5</div><div class="flow-step-content"><h4>Transaction approved — liability shifted</h4><p>Once authenticated: any subsequent fraud chargeback is the issuing bank's problem, not the merchant's. Merchant is protected.</p></div></div>
+  </div>
+  <div class="callout callout-success"><div class="callout-icon">KEY INSIGHT</div><div class="callout-body">The liability shift is the whole point. Without 3DS, a fraudulent online transaction results in the merchant losing both the goods and the payment (plus a chargeback fee). With 3DS authentication completed, the merchant wins the chargeback automatically because the issuing bank authenticated the transaction. Fewer chargebacks = lower chargeback ratio = better processing terms.</div></div>
+  <p><strong>Where 3DS is legally required:</strong> Europe under PSD2 / Strong Customer Authentication (SCA). Merchants selling to European customers without 3DS are out of compliance.</p>
+  <p><strong>Who benefits most:</strong> eCommerce merchants with high CNP fraud exposure, subscription businesses, online gaming, hospitality, charter/airline, digital services, any merchant with a chargeback problem.</p>
+  <div class="callout callout-info"><div class="callout-icon">ADMIN</div><div class="callout-body">3DS requires integration between the gateway and a 3DS provider. This is not automatic — it must be enabled and tested. Confirm with the processor which provider is in the stack before promising merchants liability protection.</div></div>
+</section>
+
+<section class="module-section" id="c87"><div class="module-header"><span class="module-num">C87</span><div><div class="module-title">International Payment Processing</div><div class="module-sub">Why domestic-only routing fails global merchants — and what regional acquiring actually means</div></div></div>
+  <p>A merchant selling to international customers through a domestic-only payment setup will see higher decline rates than they should. The reason: when a card issued in Germany is processed through a US-only acquiring bank, the transaction looks suspicious to the German issuing bank. Regional routing — processing through a local acquiring entity — fixes this.</p>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">What it is</div><div class="kv-val">Routing transactions through acquiring banks in the same region as the customer's card issuer. A UK customer's card processed through a UK acquiring entity gets better approval rates than through a Florida bank.</div></div>
+    <div class="kv-row"><div class="kv-key">Countries</div><div class="kv-val">Specialized providers cover 60–70+ countries. Key regions: US, UK, EU (Netherlands, Lithuania entities), Australia, Canada, Hong Kong, Singapore, Japan, New Zealand, Malaysia, Brazil, Israel.</div></div>
+    <div class="kv-row"><div class="kv-key">Currencies</div><div class="kv-val">130+ currencies typically supported. Settlement in USD or local currency depending on the bank relationship and merchant preference.</div></div>
+    <div class="kv-row"><div class="kv-key">Volume requirements</div><div class="kv-val">Some international acquiring solutions require minimum monthly processing volume. Varies by bank, industry, and risk level.</div></div>
+    <div class="kv-row"><div class="kv-key">Non-US businesses</div><div class="kv-val">A foreign business can sometimes qualify for a US merchant account depending on country of registration, business model, and processing history.</div></div>
+  </div>
+  <p><strong>When a merchant needs international processing:</strong></p>
+  <ul>
+    <li>Selling products or services to customers in other countries</li>
+    <li>Experiencing abnormally high decline rates from international cards</li>
+    <li>Running a global subscription with customers across time zones</li>
+    <li>Digital services, travel, charter, cross-border B2B</li>
+  </ul>
+  <div class="callout callout-warn"><div class="callout-icon">ADMIN</div><div class="callout-body">Multi-currency processing and settlement are different features. A merchant can accept payments in EUR while settling in USD — the conversion happens at the acquiring bank level. Clarify settlement currency upfront. FX conversion fees apply and vary by processor and bank.</div></div>
+</section>
+
+<section class="module-section" id="c88"><div class="module-header"><span class="module-num">C88</span><div><div class="module-title">MATCH / TMF</div><div class="module-sub">The industry blacklist — what it is, how merchants end up there, and what getting off actually looks like</div></div></div>
+  <p>MATCH (Mastercard Alert to Control High-Risk Merchants) and TMF (Terminated Merchant File — Visa's equivalent) are shared industry databases maintained by card networks. When a processor terminates a merchant for cause, they are required to report them. Any acquiring bank that checks MATCH/TMF before approving a new merchant account will see the listing and typically decline.</p>
+  <p>Being on MATCH/TMF is effectively an industry blacklist for standard processing. Options narrow significantly — but they do not disappear entirely.</p>
+  <p><strong>Common reasons for MATCH/TMF listing:</strong></p>
+  <ul>
+    <li>Excessive chargebacks (above network thresholds — typically 1% for Mastercard, 0.9% for Visa's standard program)</li>
+    <li>Fraud or processing fraudulent transactions</li>
+    <li>Violation of card network rules (surcharge violations, prohibited transaction types)</li>
+    <li>PCI non-compliance resulting in a data breach</li>
+    <li>Money laundering or illegal transactions</li>
+    <li>Merchant identity misrepresentation</li>
+  </ul>
+  <div class="kv">
+    <div class="kv-row"><div class="kv-key">How long listed</div><div class="kv-val">5 years from the termination date. After 5 years, the listing expires. Early removal requires the reporting processor to submit a removal request — which they rarely do willingly.</div></div>
+    <div class="kv-row"><div class="kv-key">Standard processors</div><div class="kv-val">Will decline a MATCH/TMF merchant on application review. Non-negotiable for most tier-1 processors and banks.</div></div>
+    <div class="kv-row"><div class="kv-key">Specialized processors</div><div class="kv-val">High-risk specialists with specific bank relationships can place MATCH/TMF merchants. Rates will be higher, underwriting more intensive, volume limits may apply.</div></div>
+    <div class="kv-row"><div class="kv-key">Dispute a listing</div><div class="kv-val">Merchants can dispute inaccurate MATCH listings with Mastercard directly. Requires documentation that the listing was incorrect or the reason code was misapplied.</div></div>
+  </div>
+  <div class="story-card"><div class="story-label">The field reality</div><div class="story-text">A merchant who doesn't disclose their MATCH/TMF status on a new application is committing misrepresentation — which is itself a MATCH-able offense. The ones who come in honestly, explain what happened, and show what changed get placed eventually. The ones who try to hide it get terminated again when underwriting catches it.</div></div>
+  <div class="callout callout-info"><div class="callout-icon">APRIL 2026</div><div class="callout-body">The peptide research product industry saw expanded MATCH/TMF merchant placement availability in April 2026 as specialized processors expanded their bank relationships to serve this category. This is an example of how niche high-risk markets open as bank relationships develop.</div></div>
+</section>
+
+<section class="module-section" id="c89"><div class="module-header"><span class="module-num">C89</span><div><div class="module-title">The Integration Stack</div><div class="module-sub">How accounting, CRM, ecommerce, POS, and gateways connect — and why it matters for an admin</div></div></div>
+  <p>A payment by itself is a transaction. A payment inside an integrated stack is a business event that updates multiple systems simultaneously. The difference between a merchant who fights with their data every month and one who runs clean is almost always integration depth — how well their payment layer talks to everything else.</p>
+  <p><strong>The four integration layers:</strong></p>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-card-label">Accounting</div><h4>QuickBooks, Xero, Wave, FreshBooks</h4><p>Payment data flows to the accounting system. Invoices auto-mark paid. Revenue categorized. Reconciliation is automatic, not manual. Real impact: a QuickBooks-integrated merchant saves 20+ hours/month of manual data entry and around $15K/year in labor.</p></div>
+    <div class="feature-card"><div class="feature-card-label">CRM</div><h4>Salesforce, HubSpot, HighLevel, Zoho</h4><p>Payment events update deal stages, customer records, renewal dates, and support history. A paid invoice closes a CRM opportunity. A failed payment creates a follow-up task. Without this, CRM data drifts from payment reality.</p></div>
+    <div class="feature-card"><div class="feature-card-label">eCommerce</div><h4>Shopify, WooCommerce, BigCommerce, Magento</h4><p>Gateway connects to the storefront checkout. Payment status triggers order fulfillment, access grants, email confirmations, inventory adjustments. The gateway is the connector — wrong gateway means broken checkout.</p></div>
+    <div class="feature-card"><div class="feature-card-label">EMR / ERP / Vertical</div><h4>Medical, dental, vet, auto, construction</h4><p>Healthcare: Dentrix, Chirotouch, DrChrono, WebPT. Auto: Shopmonkey, Tekmetric. Construction: Viewpoint Vista. Payments inside vertical systems serve compliance and workflow — the payment data needs to match the patient record or work order.</p></div>
+  </div>
+  <p><strong>The admin's job in the integration stack:</strong></p>
+  <ul>
+    <li>Know which gateway is in use before touching any integration setting</li>
+    <li>Never change API keys or webhook endpoints without checking what depends on them</li>
+    <li>Understand that a failed integration is often reported as a payment problem — the actual issue is downstream</li>
+    <li>Document the full stack: gateway + processor + POS + accounting + CRM + ecommerce platform for every merchant</li>
+    <li>Test payment events through the full chain: payment success should trigger all downstream updates, not just confirm on the gateway dashboard</li>
+  </ul>
+  <div class="callout callout-success"><div class="callout-icon">OPERATOR LENS</div><div class="callout-body">The difference between "I process payments" and "I run a payment operation" is integration depth. An operator knows that the Authorize.net key change at 11am broke the QuickBooks sync, which is why the deposit from last Thursday still shows as open in accounting. Following money through the stack — not just confirming it cleared the gateway — is the skill that makes an ops person indispensable.</div></div>
+  <div class="pull-quote">A payment that cleared but didn't update the CRM, the inventory, and the accounting system is not a successful transaction. It is a problem that hasn't been discovered yet.</div>
 </section>
 
 <div class="part-header"><div><div class="part-num">Reference</div><div class="part-title">Cited References And Recommended Reading</div></div><div class="part-divider"></div></div>
