@@ -89,10 +89,20 @@ a{color:inherit;text-decoration:none}
 a.g-card:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8px 22px rgba(28,25,23,.07)}
 .g-soon{opacity:.65;border-style:dashed}
 .g-grid-featured{grid-template-columns:1fr}
-.g-grid-featured .g-card{flex-direction:row;align-items:flex-start;gap:1.5rem;padding:1.4rem 1.6rem}
-.g-grid-featured .g-card .g-title{font-size:1.18rem}
-.g-grid-featured .g-card .g-desc{font-size:.85rem}
-.g-grid-featured .g-card .g-stats{margin-top:.5rem}
+.g-grid-featured .g-card{
+  display:grid;
+  grid-template-areas:"num title stats foot" "num desc stats foot";
+  grid-template-columns:72px 1fr 180px 160px;
+  grid-template-rows:auto auto;
+  align-items:start;
+  gap:.2rem 1.6rem;
+  padding:1.4rem 1.6rem
+}
+.g-grid-featured .g-top{grid-area:num;padding-top:.15rem}
+.g-grid-featured .g-title{grid-area:title;font-size:1.18rem;margin:0}
+.g-grid-featured .g-desc{grid-area:desc;font-size:.84rem;margin:0}
+.g-grid-featured .g-stats{grid-area:stats;align-self:center;margin:0;flex-direction:column}
+.g-grid-featured .g-foot{grid-area:foot;align-self:center;flex-direction:column;align-items:flex-start;gap:.35rem;border:none;padding:0;margin:0}
 .start-here-band{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;margin:2rem 0}
 .sh-label{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:.9rem}
 .sh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
@@ -102,7 +112,7 @@ a.g-card:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8
 .sh-cell strong{font-family:var(--serif);font-size:.92rem;font-weight:600;color:var(--ink);line-height:1.2}
 .sh-num{font-family:var(--mono);font-size:.62rem;color:var(--accent);margin-top:.1rem}
 @media(max-width:760px){.sh-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.sh-grid{grid-template-columns:1fr}.g-grid-featured .g-card{flex-direction:column}}
+@media(max-width:480px){.sh-grid{grid-template-columns:1fr}.g-grid-featured .g-card{grid-template-areas:"num title" "desc desc" "stats stats" "foot foot";grid-template-columns:72px 1fr}}
 .g-top{display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem}
 .g-num{font-family:var(--serif);font-size:1.3rem;font-weight:600;letter-spacing:-.02em}
 .theme-purple .g-num{color:var(--purple)}.theme-teal .g-num{color:var(--teal)}.theme-blue .g-num{color:var(--blue)}.theme-orange .g-num{color:var(--accent)}.theme-green .g-num{color:var(--green)}
