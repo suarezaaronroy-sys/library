@@ -14,7 +14,7 @@
 <meta property="og:description" content="A field guide to remote work, freelancing, virtual assistance, and building a career online. No shortcuts. No guarantees. Just the map.">
 <meta property="og:url" content="https://suarezaaronroy-sys.github.io/library/grimoires/014-remote-work-101.html">
 <script type="application/ld+json">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Remote Work 101: From First Job to Remote Professional","author":{"@type":"Person","name":"Aaron Suarez"},"datePublished":"2026-06-13","genre":"Career Guide","numberOfPages":"300","inLanguage":"en","isAccessibleForFree":true}
+{"@context":"https://schema.org","@type":"Book","name":"Remote Work 101: From First Job to Remote Professional","author":{"@type":"Person","name":"Aaron Suarez"},"datePublished":"2026-06-13","genre":"Career Guide","numberOfPages":"300","inLanguage":"en","isAccessibleForFree":true}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -170,6 +170,28 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
 @media(max-width:640px){.myth-reality,.tuesday-grid{grid-template-columns:1fr}}
 
 
+/* ── Chapter 0: Start Here ──────────────────────────────── */
+.c0-block{background:var(--surface,#fafaf8);border:1px solid var(--border2,#e5e0d8);border-radius:14px;padding:1.5rem;margin-bottom:1.2rem}
+.c0-block h3{font-family:var(--serif,'Georgia',serif);font-size:1.05rem;font-weight:600;margin-bottom:1rem;color:var(--ink,#1a1a18)}
+.c0-q{font-size:14px;font-weight:700;margin-bottom:.7rem;color:var(--ink2,#3a3a36)}
+.c0-choices{display:flex;flex-direction:column;gap:.4rem}
+.c0-choice{display:flex;justify-content:space-between;align-items:center;background:var(--bg,#fff);border:1px solid var(--border2,#e5e0d8);border-radius:8px;padding:.55rem .85rem;font-size:13px;gap:1rem}
+.c0-choice .c0-choice-label{font-weight:600;color:var(--ink,#1a1a18)}
+.c0-choice .c0-choice-dest{font-family:var(--mono,'Courier New',monospace);font-size:11px;color:var(--accent,#22c55e);text-decoration:none;flex-shrink:0}
+.c0-choice .c0-choice-dest:hover{text-decoration:underline}
+.c0-week{margin-bottom:1rem}
+.c0-week-label{font-family:var(--mono,'Courier New',monospace);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink4,#9a9a90);margin-bottom:.4rem}
+.c0-tasks{display:flex;flex-direction:column;gap:.25rem}
+.c0-task{display:flex;align-items:flex-start;gap:.6rem;font-size:13px;color:var(--ink2,#3a3a36)}
+.c0-task input[type=checkbox]{margin-top:2px;accent-color:var(--accent,#22c55e);flex-shrink:0}
+.c0-table{width:100%;border-collapse:collapse;font-size:13px}
+.c0-table th{text-align:left;padding:.4rem .6rem;font-size:10px;font-family:var(--mono,'Courier New',monospace);text-transform:uppercase;letter-spacing:.08em;color:var(--ink4,#9a9a90);border-bottom:1px solid var(--border2,#e5e0d8)}
+.c0-table td{padding:.55rem .6rem;border-bottom:1px solid var(--border2,#e5e0d8);color:var(--ink2,#3a3a36)}
+.c0-table tr:last-child td{border-bottom:none}
+.c0-table a{color:var(--accent,#22c55e);font-weight:600;text-decoration:none}
+.c0-table a:hover{text-decoration:underline}
+.c0-mandate{background:linear-gradient(135deg,rgba(21,128,61,.08),rgba(21,128,61,.03));border:1px solid rgba(21,128,61,.25);border-radius:10px;padding:1.2rem 1.4rem;text-align:center;font-family:var(--mono,'Courier New',monospace);font-size:12px;line-height:1.9;color:var(--ink2,#3a3a36)}
+.c0-mandate strong{display:block;font-size:16px;color:var(--ink,#1a1a18);margin-bottom:.3rem}
 /* ── Speedrun Chapter ───────────────────────────────── */
 .speedrun-chapter{border:2px solid var(--accent);border-radius:16px;overflow:hidden;margin:3.5rem 0}
 .speedrun-header{background:linear-gradient(135deg,#052E16,#14532D);padding:2.5rem 2rem;position:relative;overflow:hidden}
@@ -308,6 +330,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
   <div class="nav-section">
     <div class="nav-section-label">Start Here</div>
     <a href="#overview" class="nav-link active">Overview</a>
+    <a href="#c0" class="nav-link" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.3);border-radius:6px;color:#b8860b;font-weight:600;margin-bottom:.5rem">🗺️ Start Here</a>
     <a href="#c30" class="nav-link nav-speedrun">⚡ The Speedrun</a>
   </div>
   <div class="nav-section">
@@ -382,7 +405,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
 <section id="overview" class="hero">
   <div class="hero-eyebrow">Grimoire 014 · Field Manual</div>
   <h1>Remote Work 101<br><em>From First Job to Remote Professional</em></h1>
-  <p class="hero-sub">Most people think remote work is a job. It isn't. Remote work is an environment. Inside that environment are hundreds of jobs, industries, tools, and career paths. This Grimoire exists to make that environment visible — not to sell you on it, not to motivate you into it, but to hand you an honest map of the terrain before you walk in.</p>
+  <p class="hero-sub">Overwhelmed? <a href="#c0" style="color:var(--accent);font-weight:700">Start at Chapter 0</a> — it tells you exactly what to do first. Need income fast? <a href="#c30" style="color:var(--accent);font-weight:700">Hit the Speedrun</a>. Want the full picture? Start at Chapter 1. Same book, three doors — pick the one that fits where you are right now.</p>
   <div class="stat-row">
     <div class="stat-pill">📖 <strong>9 parts</strong></div>
     <div class="stat-pill">📑 <strong>29 chapters</strong></div>
@@ -395,12 +418,157 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
     <strong>Who this is not for:</strong> People looking for shortcuts, passive income systems, or motivational content. That is a different kind of book. This one is a field manual.
   </div>
   <div class="hero-actions">
-    <a href="#c1" class="btn-hero solid">Start reading →</a>
+    <a href="#c0" class="btn-hero solid" style="background:var(--accent);color:#fff;border-color:var(--accent)">🗺️ Start Here →</a>
+    <a href="#c1" class="btn-hero ghost">Start reading →</a>
     <a href="#c15" class="btn-hero ghost">Skip to: First Job</a>
     <a href="#c30" class="btn-hero" style="background:rgba(21,128,61,.15);border:1px solid rgba(21,128,61,.4);color:var(--accent)">⚡ Speedrun →</a>
     <a href="#c4" class="btn-hero ghost">Skip to: Career Paths</a>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 0 — START HERE
+═══════════════════════════════════════════════════════════ -->
+<div class="chapter" id="c0">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 0</div>
+    <h2>Start Here If You're Overwhelmed</h2>
+    <p class="chapter-lede">This page is for people who opened a 29-chapter field manual and immediately thought: <em>where do I even begin?</em> Answer three questions. Get your path. Ignore everything else for now.</p>
+  </div>
+
+  <!-- DECISION TREE -->
+  <div class="c0-block">
+    <h3>🗺️ Three Questions. One Direction.</h3>
+
+    <div style="margin-bottom:1.2rem">
+      <div class="c0-q">Question 1 — Do you need income urgently (within 30 days)?</div>
+      <div class="c0-choices">
+        <div class="c0-choice">
+          <span class="c0-choice-label">✅ Yes — I need a job fast</span>
+          <a class="c0-choice-dest" href="#c30">→ Skip to: The Speedrun</a>
+        </div>
+        <div class="c0-choice">
+          <span class="c0-choice-label">🟡 No — I have time to learn properly</span>
+          <span style="font-size:12px;color:var(--ink4)">→ Continue to Question 2</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem">
+      <div class="c0-q">Question 2 — Do you already have office or professional experience?</div>
+      <div class="c0-choices">
+        <div class="c0-choice">
+          <span class="c0-choice-label">✅ Yes — I've worked in an office or professional setting</span>
+          <a class="c0-choice-dest" href="#c4">→ Skip to: Career Paths → First 90 Days</a>
+        </div>
+        <div class="c0-choice">
+          <span class="c0-choice-label">❌ No — I'm starting from scratch</span>
+          <a class="c0-choice-dest" href="#c7">→ Start at: Communication → Documentation</a>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="c0-q">Question 3 — What kind of work sounds most like you?</div>
+      <div class="c0-choices">
+        <div class="c0-choice">
+          <span class="c0-choice-label">📋 Organized — I love systems and keeping things running</span>
+          <a class="c0-choice-dest" href="#c4">→ VA Path</a>
+        </div>
+        <div class="c0-choice">
+          <span class="c0-choice-label">🤝 People — I like helping, supporting, solving problems</span>
+          <a class="c0-choice-dest" href="#c4">→ Support Path</a>
+        </div>
+        <div class="c0-choice">
+          <span class="c0-choice-label">⚙️ Technical — I want to learn tools and build systems</span>
+          <a class="c0-choice-dest" href="#c4">→ CRM / Ops Path</a>
+        </div>
+        <div class="c0-choice">
+          <span class="c0-choice-label">✏️ Creative — Writing, design, content, ideas</span>
+          <a class="c0-choice-dest" href="#c4">→ Content / Creative Path</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4-WEEK QUEST LOG -->
+  <div class="c0-block">
+    <h3>📅 The 4-Week First Quest</h3>
+    <p style="font-size:13px;color:var(--ink3);margin-bottom:1.2rem">If you don't know where to start, do this. Nothing else. In order.</p>
+
+    <div class="c0-week">
+      <div class="c0-week-label">Week 1 — Build the base</div>
+      <div class="c0-tasks">
+        <label class="c0-task"><input type="checkbox"> Create a professional email (firstname.lastname@gmail.com)</label>
+        <label class="c0-task"><input type="checkbox"> Set up a LinkedIn profile with a real photo</label>
+        <label class="c0-task"><input type="checkbox"> Learn Gmail — filters, labels, professional signature</label>
+        <label class="c0-task"><input type="checkbox"> Learn Google Docs — formatting, comments, sharing</label>
+        <label class="c0-task"><input type="checkbox"> Learn Google Sheets — basic formulas, clean data</label>
+        <label class="c0-task"><input type="checkbox"> <a href="#c7" style="color:var(--accent)">Read Chapter 7</a> — Professional Communication</label>
+      </div>
+    </div>
+
+    <div class="c0-week">
+      <div class="c0-week-label">Week 2 — Build your presence</div>
+      <div class="c0-tasks">
+        <label class="c0-task"><input type="checkbox"> <a href="#c8" style="color:var(--accent)">Read Chapter 8</a> — Documentation</label>
+        <label class="c0-task"><input type="checkbox"> <a href="#c9" style="color:var(--accent)">Read Chapter 9</a> — Tools</label>
+        <label class="c0-task"><input type="checkbox"> Write your resume (1 page, honest, no fluff)</label>
+        <label class="c0-task"><input type="checkbox"> Fill out your LinkedIn profile completely</label>
+        <label class="c0-task"><input type="checkbox"> Pick one career path from the table below</label>
+      </div>
+    </div>
+
+    <div class="c0-week">
+      <div class="c0-week-label">Week 3 — Build proof</div>
+      <div class="c0-tasks">
+        <label class="c0-task"><input type="checkbox"> Create one portfolio sample relevant to your path</label>
+        <label class="c0-task"><input type="checkbox"> Write one SOP sample (Step-by-step process document)</label>
+        <label class="c0-task"><input type="checkbox"> Organize your samples into one Google Drive folder</label>
+      </div>
+    </div>
+
+    <div class="c0-week">
+      <div class="c0-week-label">Week 4 — Apply</div>
+      <div class="c0-tasks">
+        <label class="c0-task"><input type="checkbox"> Apply to 20 jobs (OnlineJobs.ph, Upwork, LinkedIn)</label>
+        <label class="c0-task"><input type="checkbox"> Track every application in a spreadsheet</label>
+        <label class="c0-task"><input type="checkbox"> Prepare 5 answers to common interview questions</label>
+        <label class="c0-task"><input type="checkbox"> Follow up on any applications that got a response</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATH TABLE -->
+  <div class="c0-block">
+    <h3>🔀 Which Path Fits You?</h3>
+    <table class="c0-table">
+      <thead>
+        <tr><th>If you enjoy…</th><th>Your path</th><th>Start reading</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Organization, scheduling, email</td><td>Virtual Assistant</td><td><a href="#c4">Ch 4 → VA</a></td></tr>
+        <tr><td>Helping customers, solving problems</td><td>Customer Support</td><td><a href="#c4">Ch 4 → Support</a></td></tr>
+        <tr><td>Spreadsheets, processes, systems</td><td>Operations / Admin</td><td><a href="#c4">Ch 4 → Ops</a></td></tr>
+        <tr><td>CRMs, automations, pipelines</td><td>CRM Specialist</td><td><a href="#c4">Ch 4 → CRM</a></td></tr>
+        <tr><td>Writing, research, ideas</td><td>Content / Research</td><td><a href="#c4">Ch 4 → Content</a></td></tr>
+        <tr><td>Design, visuals, social media</td><td>Creative / Marketing</td><td><a href="#c4">Ch 4 → Creative</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- THE MANDATE -->
+  <div class="c0-mandate">
+    <strong>The Only Rule That Matters Right Now</strong>
+    Don't learn everything.<br>
+    Pick one path.<br>
+    Become useful at it.<br>
+    Get hired.<br>
+    Then keep learning.<br><br>
+    <span style="color:var(--ink4);font-size:11px">The rest of this Grimoire will be here when you need it.</span>
+  </div>
+
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════
      PART I — THE WORLD OF REMOTE WORK
