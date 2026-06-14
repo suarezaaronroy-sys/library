@@ -1931,7 +1931,8 @@ window.addEventListener('scroll', () => {
   bar.style.transform = `scaleX(${pct})`;
 }, { passive: true });
 
-const sections = Array.from(document.querySelectorAll('section[id]'));
+const navIds = new Set(Array.from(document.querySelectorAll('.nav-link[href^="#"]')).map(a => a.getAttribute('href').slice(1)));
+const sections = Array.from(document.querySelectorAll('section[id]')).filter(s => navIds.has(s.id));
 const links = document.querySelectorAll('.nav-link');
 let activeId = null;
 const THRESHOLD = 112;

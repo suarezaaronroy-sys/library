@@ -87,13 +87,13 @@ p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{
 </nav>
 
 <main class="main">
-<section class="hero" id="why">
+<div class="hero" id="why">
   <div class="hero-eyebrow">Grimoire 007 - Knowledge System - June 2026</div>
   <h1>Agentic AI 101: <em>The All-In-One Guide Through The Storm</em></h1>
   <p class="hero-sub">Every chatbot vendor is now an agent vendor. Every workflow tool added an AI node. Everyone is selling autonomous AI employees. This guide cuts through the noise — what agents actually are, where they replace real work versus where they become expensive demos, and how to build one that survives production. Start with one useful agent that does one narrow job reliably. Earn the right to go multi-agent from there. 29 modules. Basic build guide first. Advanced patterns after.</p>
   <div class="stat-row"><div class="stat-pill"><strong>2</strong> parts</div><div class="stat-pill"><strong>29</strong> modules</div><div class="stat-pill"><strong>Basic</strong> build guide</div><div class="stat-pill"><strong>Advanced</strong> multi-agent guide</div><div class="stat-pill"><strong>n8n + GHL</strong> concrete build</div></div>
   <a href="#m1" class="btn blue">Start Module 1 &rarr;</a><a href="#m6" class="btn ghost">Basic Build</a><a href="#m18" class="btn ghost">Advanced Guide</a>
-</section>
+</div>
 
 <div class="callout callout-warn" style="margin-bottom:2rem"><div class="callout-icon">⚠</div><div class="callout-body"><strong>Shelf-life warning.</strong> This is one of the fastest-moving areas in software right now. Framework names change. Tooling recommendations shift every quarter. This guide is roughly 80% grounded in what works in production today, and 20% directional — patterns that are early but real enough to be worth knowing. Where something is speculative, it's labeled. <strong>Read this for the mental models. Check the docs before you ship.</strong></div></div>
 <div class="part-header"><div><div class="part-num">Orientation</div><div class="part-title">What Agentic AI Actually Is</div><div class="part-sub">Definition, virality, power, limits, and why the peak is probably ahead</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M1 - M5</div></div>
@@ -408,7 +408,8 @@ window.addEventListener('scroll', () => {
   const pct = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
   bar.style.transform = `scaleX(${pct})`;
 }, { passive: true });
-const sections = Array.from(document.querySelectorAll('section[id]'));
+const navIds = new Set(Array.from(document.querySelectorAll('.nav-link[href^="#"]')).map(a => a.getAttribute('href').slice(1)));
+const sections = Array.from(document.querySelectorAll('section[id]')).filter(s => navIds.has(s.id));
 const links = document.querySelectorAll('.nav-link');
 let activeId = null;
 const THRESHOLD = 112;

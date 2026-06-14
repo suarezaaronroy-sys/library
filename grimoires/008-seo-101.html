@@ -88,13 +88,13 @@ p{margin-bottom:.75rem;color:var(--ink2);font-size:14px;line-height:1.78}strong{
 </nav>
 
 <main class="main">
-<section class="hero" id="why">
+<div class="hero" id="why">
   <div class="hero-eyebrow">Grimoire 008 - Search System - June 2026</div>
   <h1>SEO 101: <em>Old Search, New Search, And The AI Answer Engine Era</em></h1>
   <p class="hero-sub">Search did not die. It moved the finish line. The page that used to rank first now has to survive being cited, summarized, and skipped in the same breath — all by an AI that may never send the click. This guide covers the fundamentals that still run everything underneath, the new rules for AI answer engines, and a full VA playbook for running the whole thing operationally. Read it once. Then use the SOPs in Part VI to run it.</p>
   <div class="stat-row"><div class="stat-pill"><strong>38</strong> modules</div><div class="stat-pill"><strong>Old</strong> SEO fundamentals</div><div class="stat-pill"><strong>New</strong> AI search playbook</div><div class="stat-pill"><strong>VA</strong> SOPs</div><div class="stat-pill"><strong>90-day</strong> action plan</div></div>
   <a href="#m1" class="btn teal">Start Module 1 &rarr;</a><a href="#m11" class="btn ghost">New SEO</a><a href="#m28" class="btn ghost">90-Day Plan</a>
-</section>
+</div>
 
 <div class="part-header"><div><div class="part-num">Part I</div><div class="part-title">The Shift</div><div class="part-sub">Why SEO is not dead, but the old mental model is too small</div></div><div class="part-divider"></div><div style="font-family:var(--mono);font-size:11px;color:var(--dark-dim)">M1 - M4</div></div>
 
@@ -530,7 +530,8 @@ window.addEventListener('scroll', () => {
   const pct = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
   bar.style.transform = `scaleX(${pct})`;
 }, { passive: true });
-const sections = Array.from(document.querySelectorAll('section[id]'));
+const navIds = new Set(Array.from(document.querySelectorAll('.nav-link[href^="#"]')).map(a => a.getAttribute('href').slice(1)));
+const sections = Array.from(document.querySelectorAll('section[id]')).filter(s => navIds.has(s.id));
 const links = document.querySelectorAll('.nav-link');
 let activeId = null;
 const THRESHOLD = 112;
