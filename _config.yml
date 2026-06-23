@@ -46,6 +46,7 @@ defaults:
 # into /grimoires/ unchanged.
 exclude:
   - README.md
+  - grimoires/README.md
   - Gemfile
   - Gemfile.lock
   - vendor
