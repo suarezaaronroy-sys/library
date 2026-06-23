@@ -145,3 +145,12 @@
   status: live
   desc: "The front gate — 29 chapters on remote careers, professional foundations, first-job survival, the Philippine reality, and the career ladder. Field manual, no fluff."
   stats: ["30 chapters", "9 parts", "6 checklists"]
+- num: "015"
+  title: "The GHL Admin's Build: Marketing & Integrations"
+  tier: manual
+  theme: orange
+  date: "Jun 2026"
+  href: /grimoires/015-ghl-admin-build.html
+  status: soon
+  desc: "GHL isn't a CRM — it's a marketing engine. The company-agnostic build, the fork where it varies by business, and the 12-month roadmap. A proposal disguised as a manual."
+  stats: ["5-part engine", "the fork", "email-gated"]
