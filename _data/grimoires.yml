@@ -154,3 +154,13 @@
   status: soon
   desc: "GHL isn't a CRM — it's a marketing engine. The company-agnostic build, the fork where it varies by business, and the 12-month roadmap. A proposal disguised as a manual."
   stats: ["5-part engine", "the fork", "email-gated"]
+
+- num: "016"
+  title: "Lessons from a Bespoke Project Business"
+  tier: manual
+  theme: teal
+  date: "Jun 2026"
+  href: /grimoires/016-lessons-from-a-bespoke-project-business.html
+  status: soon
+  desc: "What bespoke project work really teaches: the pipeline lies, payment isn't fulfilment, and the five entities hiding inside one job. A 10-stage operating doctrine, company-agnostic."
+  stats: ["10-stage pipeline", "5 entity layers", "What I Did"]

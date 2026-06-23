@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lessons from a Bespoke Project Business - Grimoire 016 | Aaron Suarez</title>
+<meta name="description" content="A public-facing What I Did grimoire documenting lessons from a bespoke project business: lead intake, survey, quote, deposit, final measure, supplier order, installation, finance, warranty, and exception controls.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/016-lessons-from-a-bespoke-project-business.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lessons from a Bespoke Project Business - Grimoire 016">
+<meta property="og:description" content="What a bespoke project business teaches about pipeline lies, supplier work, installation, remedials, finance, and daily coordination.">
+<meta property="og:url" content="https://suarezaaronroy-sys.github.io/library/grimoires/016-lessons-from-a-bespoke-project-business.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","headline":"Lessons from a Bespoke Project Business","author":{"@type":"Person","name":"Aaron Suarez"},"datePublished":"2026-06-23","articleSection":"Operations","proficiencyLevel":"Operator to Manager","isAccessibleForFree":true}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYPEWZXH03"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GYPEWZXH03',{page_title:'Grimoire 016 - Bespoke Project',page_path:'/grimoires/016-lessons-from-a-bespoke-project-business.html'});</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F5F2EC;--bg2:#EDE9E0;--bg3:#E5E0D5;
+  --ink:#1C1917;--ink2:#44403C;--ink3:#78716C;--ink4:#A8A29E;
+  --accent:#0F766E;--accent2:#14B8A6;
+  --orange:#C2410C;--orange-bg:#FFEDD5;
+  --amber:#B45309;--amber-bg:#FEF3C7;
+  --blue:#1D4ED8;--blue-bg:#DBEAFE;
+  --green:#15803D;--green-bg:#DCFCE7;
+  --red:#B91C1C;--red-bg:#FEE2E2;
+  --purple:#7C3AED;--purple-bg:#EDE9FE;
+  --border:rgba(28,25,23,.12);--border2:rgba(28,25,23,.06);
+  --dark:#1C1917;--dark2:#292524;--dark-fg:#F5F2EC;--dark-muted:#A8A29E;--dark-dim:#78716C;
+  --mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;
+  --sidebar:270px;--chrome:92px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.72;font-weight:300;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at 5% 0%,rgba(15,118,110,.06),transparent 38%),radial-gradient(ellipse at 95% 8%,rgba(194,65,12,.035),transparent 35%)}
+a{color:inherit;text-decoration:none}
+code{font-family:var(--mono);font-size:.85em;background:var(--bg2);border:1px solid var(--border2);border-radius:4px;padding:.08em .35em}
+.mode-banner{position:sticky;top:0;z-index:300;background:var(--dark);color:var(--dark-fg);padding:0 2rem;height:40px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:11px}
+.mode-banner-left{display:flex;align-items:center;gap:10px}.mode-dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.site-header{position:sticky;top:40px;z-index:200;background:rgba(245,242,236,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 2rem;height:52px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:1rem}.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:.3rem;transition:.14s}.header-back:hover{color:var(--accent)}.header-divider{width:1px;height:16px;background:var(--border)}.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:var(--green-bg);color:var(--green);border:1px solid rgba(21,128,61,.2)}
+#progress-bar{position:fixed;top:92px;left:0;right:0;height:2px;z-index:250;background:linear-gradient(90deg,var(--accent),var(--orange));transform-origin:left;transform:scaleX(0);pointer-events:none}
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:calc(100vh - var(--chrome));max-width:1280px;margin:0 auto}
+.sidebar{position:sticky;top:var(--chrome);height:calc(100vh - var(--chrome));overflow-y:auto;border-right:1px solid var(--border);padding:1.2rem 0 2rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;background:rgba(255,255,255,.3)}
+.nav-search{margin:0 1rem .9rem;position:relative}.nav-search input{width:100%;font-family:var(--mono);font-size:11px;padding:7px 10px 7px 26px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--ink);outline:none}.nav-search input:focus{border-color:var(--accent)}.nav-search::before{content:"\2315";position:absolute;left:10px;top:5px;color:var(--ink4);font-size:13px}
+.nav-section{margin-bottom:1rem;padding:0 1rem}.nav-section-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px;padding:0 8px}
+.nav-link{display:block;padding:3px 8px;font-size:11.5px;color:var(--ink3);border-radius:5px;line-height:1.4;transition:.14s}.nav-link:hover{background:var(--bg2);color:var(--ink)}.nav-link.active{background:rgba(15,118,110,.09);color:var(--accent);font-weight:500}
+.main{padding:2.8rem 3rem 6rem;max-width:930px;min-width:0}
+.hero{margin-bottom:3rem;padding-bottom:2.6rem;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-family:var(--serif);font-size:clamp(2.05rem,4.5vw,3.35rem);font-weight:600;line-height:1.06;margin-bottom:.9rem;letter-spacing:-.025em}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--accent)}
+.hero-sub{font-size:.98rem;color:var(--ink2);max-width:66ch;line-height:1.78;margin-bottom:1.6rem}
+.stat-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.6rem}
+.stat-pill{display:flex;align-items:center;gap:.5rem;padding:6px 13px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:12px;color:var(--ink2)}.stat-pill strong{font-weight:500;color:var(--ink)}
+.hero-actions{display:flex;gap:.65rem;flex-wrap:wrap}
+.btn-hero{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.72rem;padding:.7rem 1.2rem;border-radius:999px;border:1px solid;cursor:pointer;transition:.15s ease;font-weight:500}
+.btn-hero.solid{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(15,118,110,.2)}.btn-hero.solid:hover{background:#115E59;transform:translateY(-1px)}
+.btn-hero.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}.btn-hero.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.visual-panel{margin:1.4rem 0;border:1px solid var(--border);border-radius:14px;background:#fff;overflow:hidden;box-shadow:0 12px 34px rgba(28,25,23,.05)}
+.visual-head{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:.9rem 1.05rem;border-bottom:1px solid var(--border2);background:linear-gradient(90deg,rgba(15,118,110,.08),rgba(194,65,12,.05))}
+.visual-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}.visual-note{font-family:var(--mono);font-size:10px;color:var(--ink4);text-align:right}.visual-body{padding:1rem 1.05rem}
+.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}.audience-card{border:1px solid var(--border2);border-radius:10px;padding:.95rem;background:rgba(255,255,255,.76);position:relative;min-height:160px}.audience-icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:.65rem;background:var(--bg2);border:1px solid var(--border);font-family:var(--mono);font-size:15px;color:var(--accent);font-weight:500}.audience-card h3{font-family:var(--serif);font-size:1rem;line-height:1.18;margin-bottom:.35rem}.audience-card p{font-size:12.5px;line-height:1.55;color:var(--ink3);margin-bottom:.55rem}.mini-list{display:grid;gap:.28rem;margin-top:.5rem}.mini-list span{font-family:var(--mono);font-size:10px;color:var(--ink3);padding:.28rem .45rem;border-radius:5px;background:var(--bg2);border:1px solid var(--border2)}
+.pipeline-visual{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem}.pipe-node{position:relative;border:1px solid var(--border);border-radius:9px;background:#fff;padding:.72rem .62rem;min-height:86px}.pipe-node::after{content:"";position:absolute;right:-.45rem;top:50%;width:.34rem;height:1px;background:var(--border)}.pipe-node:nth-child(5)::after,.pipe-node:nth-child(10)::after{display:none}.pipe-num{font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:.25rem}.pipe-node b{display:block;font-family:var(--serif);font-size:.9rem;line-height:1.15;margin-bottom:.2rem}.pipe-node span{display:block;font-size:11px;color:var(--ink3);line-height:1.35}
+.swimlane{display:grid;gap:.6rem}.lane{display:grid;grid-template-columns:105px 1fr;gap:.65rem;align-items:center}.lane-label{font-family:var(--mono);font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em}.lane-track{display:flex;gap:.45rem;align-items:center;min-width:0}.lane-chip{font-family:var(--mono);font-size:10px;line-height:1.25;padding:.42rem .55rem;border-radius:999px;background:var(--bg2);border:1px solid var(--border2);color:var(--ink2);white-space:nowrap}.lane-chip.hot{background:rgba(15,118,110,.08);border-color:rgba(15,118,110,.22);color:var(--accent)}.lane-chip.warn{background:var(--amber-bg);border-color:rgba(180,83,9,.24);color:#78350F}
+.truth-stack{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:stretch}.stack-diagram{display:grid;gap:.45rem}.stack-layer{display:grid;grid-template-columns:92px 1fr;gap:.65rem;align-items:center;padding:.65rem .75rem;border-radius:9px;border:1px solid var(--border);background:#fff}.stack-layer b{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}.stack-layer span{font-size:12px;color:var(--ink3);line-height:1.45}.matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}.matrix-cell{border:1px solid var(--border2);border-radius:8px;background:#fff;padding:.7rem}.matrix-cell b{display:block;font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:.35rem}.matrix-cell span{display:block;font-size:12px;color:var(--ink3);line-height:1.45}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}.lesson-card{border:1px solid var(--border2);border-radius:10px;background:#fff;padding:1rem}.lesson-card h3{font-family:var(--serif);font-size:1rem;margin-bottom:.5rem}.lesson-card p{font-size:12.5px;color:var(--ink3);line-height:1.55}.flowline{display:grid;gap:.35rem;margin-top:.65rem}.flow-step{font-family:var(--mono);font-size:10px;color:var(--ink2);background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:.38rem .5rem}.flow-stop{background:var(--red-bg);border-color:rgba(185,28,28,.18);color:#7F1D1D}.flow-ok{background:var(--green-bg);border-color:rgba(21,128,61,.18);color:#14532D}.coord-stack{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem}.coord-layer{border:1px solid var(--border);border-radius:9px;background:#fff;padding:.72rem .62rem;text-align:center}.coord-layer b{display:block;font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:.25rem}.coord-layer span{display:block;font-size:11.5px;line-height:1.4;color:var(--ink3)}
+.part-header{margin:3.5rem 0 2rem;padding:1.8rem 2rem;background:var(--dark);border-radius:14px;color:var(--dark-fg)}
+.part-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:.6rem}
+.part-header h2{font-family:var(--serif);font-size:1.55rem;font-weight:600;line-height:1.15}.part-header p{font-size:13px;color:var(--dark-muted);margin-top:.5rem;line-height:1.65}
+.chapter{margin-bottom:3.2rem;padding-bottom:2.7rem;border-bottom:1px solid var(--border2)}.chapter:last-child{border-bottom:none}
+.chapter-header{margin-bottom:1.35rem}.chapter-num{font-family:var(--mono);font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.chapter h2{font-family:var(--serif);font-size:1.5rem;font-weight:600;line-height:1.18;margin-bottom:.4rem}.chapter-lede{font-size:15px;color:var(--ink2);line-height:1.78;max-width:62ch}
+h3.section-h{font-family:var(--serif);font-size:1.08rem;font-weight:600;margin:1.8rem 0 .75rem;color:var(--ink)}
+h4.sub-h{font-family:var(--mono);font-size:.76rem;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin:1.3rem 0 .5rem}
+p{margin-bottom:.85rem;color:var(--ink2);font-size:14.5px;line-height:1.78}p:last-child{margin-bottom:0}
+ul.body-list{margin:.5rem 0 .9rem 1.2rem;display:grid;gap:.3rem}ul.body-list li{font-size:14px;color:var(--ink2);line-height:1.65}ul.body-list li::marker{color:var(--accent)}
+ol.steps{counter-reset:step;margin:.7rem 0 1rem;display:grid;gap:.4rem}
+ol.steps li{list-style:none;position:relative;padding:.6rem .9rem .6rem 2.7rem;background:#fff;border:1px solid var(--border2);border-radius:7px;font-size:13.5px;color:var(--ink2);line-height:1.6}
+ol.steps li::before{counter-increment:step;content:counter(step);position:absolute;left:.78rem;top:.66rem;width:1.25rem;height:1.25rem;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.58rem;display:grid;place-items:center}ol.steps li b{font-weight:500;color:var(--ink)}
+.checklist{margin:.7rem 0 1rem;display:grid;gap:.35rem}.checklist li{list-style:none;padding:.55rem .9rem .55rem 2.45rem;background:#fff;border:1px solid var(--border2);border-radius:7px;font-size:13.5px;color:var(--ink2);line-height:1.55;position:relative}.checklist li::before{content:"[ ]";position:absolute;left:.85rem;top:.52rem;font-size:12px;color:var(--ink4)}
+.callout{border-radius:8px;padding:1rem 1.25rem;margin:1.1rem 0;font-size:13.5px;line-height:1.65}.callout-warn{background:var(--amber-bg);border-left:3px solid var(--amber);color:#78350F}.callout-danger{background:var(--red-bg);border-left:3px solid var(--red);color:#7F1D1D}.callout-info{background:var(--blue-bg);border-left:3px solid var(--blue);color:#1E3A8A}.callout-success{background:var(--green-bg);border-left:3px solid var(--green);color:#14532D}.callout-dark{background:var(--dark2);border-left:3px solid var(--accent2);color:var(--dark-muted)}.callout strong{font-weight:600}
+.table-wrap{overflow-x:auto;margin:1.1rem 0}table{width:100%;border-collapse:collapse;font-size:13px}th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2)}td{padding:9px 12px;border-bottom:1px solid var(--border2);color:var(--ink2);vertical-align:top;line-height:1.55}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin:1rem 0}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin:1rem 0}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem}.card-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.35rem}.card h4{font-family:var(--serif);font-size:.98rem;font-weight:600;margin-bottom:.3rem}.card p{font-size:.8rem;color:var(--ink3);line-height:1.58}
+pre{background:var(--dark);border-radius:8px;padding:1.2rem 1.4rem;overflow-x:auto;margin:1rem 0;font-family:var(--mono);font-size:12px;line-height:1.72;color:#D6D3D1;white-space:pre-wrap}
+.stage-card{border:1px solid var(--border);border-radius:12px;background:#fff;margin:1rem 0;overflow:hidden}.stage-head{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1rem 1.15rem;background:var(--bg2);border-bottom:1px solid var(--border2)}.stage-head strong{font-family:var(--serif);font-size:1.05rem}.stage-head span{font-family:var(--mono);font-size:.62rem;color:var(--accent)}.stage-body{padding:1rem 1.15rem}.gate{margin-top:.8rem;padding:.85rem 1rem;border-radius:8px;background:rgba(15,118,110,.07);border-left:3px solid var(--accent);font-size:13.5px;color:var(--ink2)}
+.page-footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink4);flex-wrap:wrap;gap:1rem}.footer-link-page{color:var(--accent)}.footer-link-page:hover{text-decoration:underline}
+#resume-toast{position:fixed;bottom:18px;right:18px;z-index:400;background:var(--dark);color:var(--dark-fg);border-radius:10px;padding:.8rem 1.1rem;font-family:var(--mono);font-size:11px;display:none;align-items:center;gap:.8rem;box-shadow:0 8px 30px rgba(28,25,23,.3)}
+#resume-toast a{color:#5EEAD4;text-decoration:underline}#resume-toast button{background:none;border:none;color:var(--dark-dim);cursor:pointer;font-size:14px}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:2rem 1.25rem 4rem}.grid-2,.grid-3,.audience-grid,.truth-stack,.matrix,.lesson-grid{grid-template-columns:1fr}.coord-stack{grid-template-columns:1fr}.pipeline-visual{grid-template-columns:repeat(2,1fr)}.pipe-node::after{display:none}.lane{grid-template-columns:1fr}.lane-track{overflow-x:auto;padding-bottom:.2rem}.mode-banner>span:last-child{display:none}.header-title{display:none}}
+@media(max-width:560px){.pipeline-visual{grid-template-columns:1fr}.visual-head{align-items:flex-start;flex-direction:column}.visual-note{text-align:left}.audience-card{min-height:0}}
+@media print{.mode-banner,.site-header,.sidebar,#progress-bar,#resume-toast,.hero-actions{display:none!important}.layout{display:block;max-width:none}.main{max-width:none;padding:0}body{background:#fff;font-size:11pt}.chapter{break-inside:avoid-page}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body>
+<div class="mode-banner">
+  <div class="mode-banner-left"><div class="mode-dot"></div><span>Grimoire 016 &middot; Lessons from a Bespoke Project Business</span></div>
+  <span style="font-size:10px;color:var(--dark-dim)">10-stage pipeline &middot; 5 entity layers &middot; stacked statuses &middot; public-facing edition</span>
+</div>
+<header class="site-header">
+  <div class="header-left">
+    <a href="/library/projects/" class="header-back">&lt;- Projects</a>
+    <div class="header-divider"></div>
+    <span class="header-title">Lessons from a Bespoke Project Business</span>
+  </div>
+  <span class="header-badge">Grimoire 016 &middot; What I Did</span>
+</header>
+<div id="progress-bar"></div>
+<div class="layout">
+<nav class="sidebar" aria-label="Grimoire navigation">
+  <div class="nav-search"><input type="text" id="nav-filter" placeholder="Filter sections..." aria-label="Filter navigation"></div>
+  <div class="nav-section">
+    <div class="nav-section-label">Start</div>
+    <a href="#overview" class="nav-link active">Overview</a>
+    <a href="#doctrine" class="nav-link">Operating Doctrine</a>
+    <a href="#systems" class="nav-link">System Map</a>
+    <a href="#roles" class="nav-link">Roles</a>
+    <a href="#record" class="nav-link">Job Record</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Pipeline</div>
+    <a href="#lead" class="nav-link">1 - Lead</a>
+    <a href="#survey" class="nav-link">2 - Survey / Estimate</a>
+    <a href="#quote" class="nav-link">3 - Quote</a>
+    <a href="#contract" class="nav-link">4 - Contract + Deposit</a>
+    <a href="#preorder" class="nav-link">5 - Pre-Order Control</a>
+    <a href="#order" class="nav-link">6 - Supplier Order</a>
+    <a href="#delivery" class="nav-link">7 - Delivery</a>
+    <a href="#install" class="nav-link">8 - Installation</a>
+    <a href="#finance" class="nav-link">9 - Final Finance</a>
+    <a href="#close" class="nav-link">10 - Warranty / Close</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Controls</div>
+    <a href="#payments" class="nav-link">Payment Controls</a>
+    <a href="#communications" class="nav-link">Comms System</a>
+    <a href="#exceptions" class="nav-link">Exceptions</a>
+    <a href="#accounts" class="nav-link">Accounts Inbox</a>
+    <a href="#daily" class="nav-link">Daily Board</a>
+    <a href="#implementation" class="nav-link">Implementation</a>
+    <a href="#sources" class="nav-link">Sources</a>
+  </div>
+</nav>
+<main class="main" id="top">
+  <section class="hero" id="overview">
+    <div class="hero-eyebrow">Grimoire 016 &middot; June 2026 &middot; What I Did Documentation</div>
+    <h1>Lessons from a Bespoke Project Business: <em>The Pipeline Lies</em></h1>
+    <p class="hero-sub">A public-facing What I Did grimoire about what bespoke project work really teaches: customer service, scheduling, sales, procurement, operations, finance, risk, communication, and why software is only the interface.</p>
+    <div class="stat-row">
+      <div class="stat-pill"><strong>10</strong> pipeline stages</div>
+      <div class="stat-pill"><strong>5</strong> entity layers</div>
+      <div class="stat-pill"><strong>4</strong> measure levels</div>
+      <div class="stat-pill"><strong>50</strong> reply patterns</div>
+      <div class="stat-pill"><strong>0</strong> raw contacts published</div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-hero solid" href="#lead">Start the pipeline</a>
+      <a class="btn-hero ghost" href="#exceptions">Open exception playbooks</a>
+      <a class="btn-hero ghost" href="#daily">Daily review board</a>
+    </div>
+    <div class="callout callout-info"><strong>Public boundary:</strong> this grimoire documents the operating model I built from anonymized field patterns. Client names, raw email evidence, supplier contact details, personal data, and private commercial notes are intentionally excluded.</div>
+    <div class="visual-panel" aria-label="The pipeline lies">
+      <div class="visual-head">
+        <div class="visual-kicker">The pipeline lies</div>
+        <div class="visual-note">Customer view is linear; office reality is stacked</div>
+      </div>
+      <div class="visual-body">
+        <div class="lesson-grid">
+          <div class="lesson-card">
+            <h3>Customer view</h3>
+            <p>From the outside, a bespoke project looks like one clean sequence.</p>
+            <div class="flowline">
+              <span class="flow-step">Enquiry</span>
+              <span class="flow-step">Estimate</span>
+              <span class="flow-step">Survey</span>
+              <span class="flow-step">Quote</span>
+              <span class="flow-step">Deposit</span>
+              <span class="flow-step">Final measurement</span>
+              <span class="flow-step">Supplier order</span>
+              <span class="flow-step">Installation</span>
+              <span class="flow-step">Final payment</span>
+              <span class="flow-step">Warranty</span>
+            </div>
+          </div>
+          <div class="lesson-card">
+            <h3>Office view</h3>
+            <p>Inside the business, the same project carries multiple stakeholders, statuses, systems, promises, and risks at once.</p>
+            <div class="flowline">
+              <span class="flow-step">20+ statuses</span>
+              <span class="flow-step">Multiple stakeholders</span>
+              <span class="flow-step">Several systems</span>
+              <span class="flow-step">Suppliers</span>
+              <span class="flow-step">Accounts</span>
+              <span class="flow-step">Installers</span>
+              <span class="flow-step">Remedials</span>
+            </div>
+          </div>
+          <div class="lesson-card">
+            <h3>The biggest mistake</h3>
+            <p>Payment does not mean the project is ready to order. Money moving only unlocks the next controlled check.</p>
+            <div class="flowline">
+              <span class="flow-step">Quote</span>
+              <span class="flow-step flow-ok">Deposit paid</span>
+              <span class="flow-step flow-stop">Stop: not order-ready</span>
+              <span class="flow-step">Final specification</span>
+              <span class="flow-step">Measurements locked</span>
+              <span class="flow-step flow-ok">Order placed</span>
+            </div>
+          </div>
+          <div class="lesson-card">
+            <h3>Reality is not linear</h3>
+            <p>Most systems imply a simple path. Real work is a stack of simultaneous states.</p>
+            <div class="flowline">
+              <span class="flow-step flow-ok">Approved</span>
+              <span class="flow-step flow-ok">Paid</span>
+              <span class="flow-step flow-ok">Materials ordered</span>
+              <span class="flow-step flow-ok">Delivery confirmed</span>
+              <span class="flow-step flow-ok">Installation scheduled</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="visual-panel" aria-label="Coordination system not CRM problem">
+      <div class="visual-head">
+        <div class="visual-kicker">A coordination system, not a CRM problem</div>
+        <div class="visual-note">The business is the work; software is the interface</div>
+      </div>
+      <div class="visual-body">
+        <div class="coord-stack">
+          <div class="coord-layer"><b>Customer</b><span>Email, phone, messaging, website</span></div>
+          <div class="coord-layer"><b>Systems</b><span>CRM, accounting, payments, tasks, calendar</span></div>
+          <div class="coord-layer"><b>Teams</b><span>Sales, technical, operations, finance</span></div>
+          <div class="coord-layer"><b>Vendors</b><span>Manufacturing, supply, delivery truth</span></div>
+          <div class="coord-layer"><b>Aftercare</b><span>Completion, warranty, remedials</span></div>
+        </div>
+        <div class="callout callout-success"><strong>Core lesson:</strong> people think they are learning software. They are actually learning service, scheduling, sales, procurement, operations, project management, change management, risk management, and communication.</div>
+      </div>
+    </div>
+    <div class="visual-panel" aria-label="Three audiences for this grimoire">
+      <div class="visual-head">
+        <div class="visual-kicker">Three ways into this grimoire</div>
+        <div class="visual-note">Client buyer &middot; platform builder &middot; new operator</div>
+      </div>
+      <div class="visual-body">
+        <div class="audience-grid">
+          <div class="audience-card">
+            <div class="audience-icon">01</div>
+            <h3>Client hiring admin staff</h3>
+            <p>Use this to understand what the admin role actually controls: not just inbox replies, but stage movement, follow-up discipline, finance handoffs, supplier chases, and risk visibility.</p>
+            <div class="mini-list"><span>What to hire for</span><span>What to delegate</span><span>What needs oversight</span></div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">02</div>
+            <h3>Job-platform / CRM builder</h3>
+            <p>Use this as a field note from a user review: pipeline stages are not statuses, supplier work needs its own tracking, and remedials are not just comments on a closed job.</p>
+            <div class="mini-list"><span>Data model pain</span><span>Status design advice</span><span>Workflow requirements</span></div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">03</div>
+            <h3>New VA or admin operator</h3>
+            <p>Use this as the job map. Your job is to keep the truth visible: who is waiting, what is blocked, what promise was made, and what must happen next.</p>
+            <div class="mini-list"><span>Daily rhythm</span><span>What the work means</span><span>Where mistakes happen</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="visual-panel" aria-label="Bespoke project workflow map">
+      <div class="visual-head">
+        <div class="visual-kicker">The operating spine</div>
+        <div class="visual-note">One stage at a time; many statuses at once</div>
+      </div>
+      <div class="visual-body">
+        <div class="pipeline-visual">
+          <div class="pipe-node"><div class="pipe-num">01</div><b>Lead</b><span>Capture enough to route.</span></div>
+          <div class="pipe-node"><div class="pipe-num">02</div><b>Survey</b><span>Make the unknown visible.</span></div>
+          <div class="pipe-node"><div class="pipe-num">03</div><b>Quote</b><span>Price the right version.</span></div>
+          <div class="pipe-node"><div class="pipe-num">04</div><b>Contract</b><span>Turn approval into control.</span></div>
+          <div class="pipe-node"><div class="pipe-num">05</div><b>Pre-Order</b><span>Lock manufacture readiness.</span></div>
+          <div class="pipe-node"><div class="pipe-num">06</div><b>Order</b><span>Track supplier truth.</span></div>
+          <div class="pipe-node"><div class="pipe-num">07</div><b>Delivery</b><span>Check before install.</span></div>
+          <div class="pipe-node"><div class="pipe-num">08</div><b>Install</b><span>Execute on site.</span></div>
+          <div class="pipe-node"><div class="pipe-num">09</div><b>Finance</b><span>Reconcile what happened.</span></div>
+          <div class="pipe-node"><div class="pipe-num">10</div><b>Close</b><span>Resolve service obligations.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="doctrine">
+    <div class="chapter-header">
+      <div class="chapter-num">Doctrine</div>
+      <h2>The Job Is Not Sold Until It Can Be Fulfilled</h2>
+      <p class="chapter-lede">A bespoke project business is not a simple payment-and-delivery operation. It is a measurement, specification, procurement or manufacture, installation, service, and reconciliation workflow.</p>
+    </div>
+    <p>The core operating risk is false certainty. A customer can accept a quote, a deposit can be paid, and a job can still be unsafe to order because the final measurement, specification, supplier lead time, or installation readiness is not locked.</p>
+    <div class="callout callout-dark"><strong>Operating law:</strong> payment unlocks the next controlled stage. Payment does not prove the job is manufacture-ready.</div>
+    <h3 class="section-h">The full lifecycle</h3>
+    <ol class="steps">
+      <li><b>Customer enquiry arrives.</b> Capture identity, contact route, address, work type, photos, measurements, and urgency.</li>
+      <li><b>Office triages the route.</b> Decide whether to ask for more information, give a rough estimate, book a survey, or decline/redirect.</li>
+      <li><b>Survey or estimate path begins.</b> Rough info can support an estimate; site uncertainty pushes the job to survey.</li>
+      <li><b>Surveyor confirms technical detail.</b> Measurements, constraints, product type, access, and feasibility become quote inputs.</li>
+      <li><b>Quote is issued and versioned.</b> The exact quote version matters because later changes become variations.</li>
+      <li><b>Quote is followed up.</b> The office keeps the decision loop moving without harassing the customer.</li>
+      <li><b>Customer accepts.</b> Written acceptance triggers sold/contract setup, not supplier ordering.</li>
+      <li><b>Contract and deposit invoice are created.</b> CRM/job record, invoice references, payment links, and bank-transfer references must align.</li>
+      <li><b>Payment is matched.</b> Card, bank, or payment-provider activity is reconciled to the correct invoice and contract.</li>
+      <li><b>Final measurement locks the specification.</b> Exact dimensions, finish, materials, components, access, and install details are confirmed.</li>
+      <li><b>Pre-order control clears variations.</b> Scope changes, price changes, customer-supplied items, and split invoices are resolved.</li>
+      <li><b>Supplier order is placed.</b> Order acknowledgement, supplier reference, delivery expectation, and documents are saved.</li>
+      <li><b>Delivery is checked.</b> Materials are matched against the order; missing or damaged items are escalated.</li>
+      <li><b>Installation is scheduled and confirmed.</b> Product confidence, installer availability, customer access, and prep instructions align.</li>
+      <li><b>Work is completed or snags are logged.</b> Completion photos/notes and remedial items feed final finance decisions.</li>
+      <li><b>Final balance is invoiced and reconciled.</b> Credits, refunds, extras, and payment references must match the contract.</li>
+      <li><b>Warranty, review, and closure are handled.</b> The job closes only when support obligations and CRM status are clear.</li>
+    </ol>
+    <h3 class="section-h">Pipeline is not status</h3>
+    <p>The pipeline answers where the job is. Status answers what is currently blocking, advancing, or complicating it. These are separate truths. Mixing them is how a stage field becomes a junk drawer.</p>
+    <div class="grid-2">
+      <div class="card"><div class="card-label">Stage</div><p>One primary location in the journey: Lead, Survey, Quote, Contract, Pre-Order, Order, Delivery, Install, Finance, or Close.</p></div>
+      <div class="card"><div class="card-label">Status / Tags</div><p>Many simultaneous conditions: awaiting customer, awaiting supplier, deposit paid, delivery issue, remedial open, finance query, review not requested.</p></div>
+    </div>
+    <pre>Stage:
+Install
+
+Parallel statuses:
+Install complete
+Final invoice unpaid
+Remedial open
+Waiting supplier part
+Review not requested</pre>
+    <div class="visual-panel" aria-label="Parallel status example">
+      <div class="visual-head">
+        <div class="visual-kicker">Why pipelines alone fail</div>
+        <div class="visual-note">One job can be true in several ways</div>
+      </div>
+      <div class="visual-body">
+        <div class="swimlane">
+          <div class="lane"><div class="lane-label">Stage</div><div class="lane-track"><span class="lane-chip hot">Install</span></div></div>
+          <div class="lane"><div class="lane-label">Execution</div><div class="lane-track"><span class="lane-chip">Install complete</span><span class="lane-chip warn">Snag open</span></div></div>
+          <div class="lane"><div class="lane-label">Supplier</div><div class="lane-track"><span class="lane-chip warn">Waiting part</span><span class="lane-chip">Delivery unknown</span></div></div>
+          <div class="lane"><div class="lane-label">Finance</div><div class="lane-track"><span class="lane-chip warn">Final invoice unpaid</span><span class="lane-chip">Payment not matched</span></div></div>
+          <div class="lane"><div class="lane-label">Reputation</div><div class="lane-track"><span class="lane-chip">Review not requested</span><span class="lane-chip">Customer sentiment unknown</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="callout callout-success"><strong>Implementation rule:</strong> one job should have one primary stage, but it may need several live status labels. Stage moves by gate. Status changes by fact.</div>
+  </section>
+
+  <section class="chapter" id="systems">
+    <div class="chapter-header">
+      <div class="chapter-num">System Map</div>
+      <h2>The Stack: Where Each Kind of Truth Lives</h2>
+      <p class="chapter-lede">The operating system depends on keeping operational truth, payment truth, communication truth, and bookkeeping truth connected without pretending they are the same thing.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>System</th><th>What it owns</th><th>Operating rule</th></tr>
+      <tr><td>Job platform / CRM</td><td>Leads, quotes, contracts, appointments, invoices, payment notifications, job notes.</td><td>Treat as the operational source of truth. Keep CRM-linked email copied when replying.</td></tr>
+      <tr><td>Payment provider</td><td>Card/open-banking payment links and payment events.</td><td>Payment activity is evidence, not final accounting truth, until matched to invoice and contract.</td></tr>
+      <tr><td>Bookkeeping/accounting</td><td>Supplier bills, receipts, aged receivables, bank-feed questions, customer/supplier reconciliation.</td><td>Finance actions must name invoice, amount, date, reference, and owner.</td></tr>
+      <tr><td>Task layer</td><td>Internal follow-ups: deliveries, overdue deposits, call-backs, missing documents, remedials.</td><td>Every active follow-up needs owner and date.</td></tr>
+      <tr><td>Phone/call capture</td><td>New calls, voicemails, customer chases, callback messages.</td><td>Convert every call into either a new lead or an update on an existing lead/contract.</td></tr>
+      <tr><td>Review channels</td><td>Trusted public proof after successful work.</td><td>Request reviews after happy completion and payment, not during unresolved remedial work.</td></tr>
+    </table></div>
+    <div class="callout callout-warn"><strong>Duplicate-system warning:</strong> if a job started in an older quoting or appointment tool, confirm whether it has moved to the current job platform before creating a new quote, invoice, or appointment.</div>
+  </section>
+
+  <section class="chapter" id="roles">
+    <div class="chapter-header">
+      <div class="chapter-num">Ownership</div>
+      <h2>Roles Are Control Points</h2>
+      <p class="chapter-lede">The process breaks when everything is "with the office" or "with the team." The process holds when every decision has an owner.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="card-label">Admin / Office</div><h4>Flow controller</h4><p>Inbox triage, lead capture, appointments, quote follow-up, customer updates, payment chasing, job notes, and handoff discipline.</p></div>
+      <div class="card"><div class="card-label">Survey / Technical</div><h4>Feasibility owner</h4><p>Measurements, product choices, site constraints, final measure, remedial diagnosis, and whether a job is safe to order.</p></div>
+      <div class="card"><div class="card-label">Accounts</div><h4>Money truth owner</h4><p>Invoice references, payment matching, supplier statements, missing invoices, refunds, credits, and reconciliation evidence.</p></div>
+      <div class="card"><div class="card-label">Installer / Job Owner</div><h4>Delivery truth owner</h4><p>On-site completion, access issues, missing parts, damage, customer readiness, snags, photos, and remedial needs.</p></div>
+    </div>
+    <div class="visual-panel" aria-label="Audience role lens">
+      <div class="visual-head">
+        <div class="visual-kicker">What each audience should notice</div>
+        <div class="visual-note">Same system, different job-to-be-done</div>
+      </div>
+      <div class="visual-body">
+        <div class="matrix">
+          <div class="matrix-cell"><b>Client hiring admin</b><span>Hire for operational judgement: triage, ownership, follow-up, supplier chasing, finance discipline, and calm customer updates.</span></div>
+          <div class="matrix-cell"><b>Platform developer</b><span>Build fields for parallel statuses, supplier tracking, remedials, measurement confidence, owner, and next action. Do not force all truth into stage.</span></div>
+          <div class="matrix-cell"><b>New VA</b><span>Your daily work is not "answer emails." It is making hidden risk visible before customers, suppliers, installers, or accounts collide.</span></div>
+        </div>
+      </div>
+    </div>
+    <h3 class="section-h">The handoff sentence</h3>
+    <pre>Owner:
+What changed:
+What is needed:
+By when:
+Where the source documents are:
+Customer promise already made:
+Risk if missed:</pre>
+  </section>
+
+  <section class="chapter" id="record">
+    <div class="chapter-header">
+      <div class="chapter-num">Data Model</div>
+      <h2>The Shadow Job Record</h2>
+      <p class="chapter-lede">When the CRM is hard to reason about quickly, keep a lightweight shadow record that points back to the official source of truth.</p>
+    </div>
+    <h3 class="section-h">The five entities hiding inside one job</h3>
+    <p>A job platform may show one visible contract, but operations are cleaner when the company thinks in five linked entities. A single customer journey can contain all five at once.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Entity</th><th>What it represents</th><th>Control question</th></tr>
+      <tr><td>Lead</td><td>Sales possibility before commercial commitment.</td><td>Do we have enough information to route, quote, survey, or decline?</td></tr>
+      <tr><td>Contract</td><td>Commercial agreement, quote version, deposit, and customer commitment.</td><td>What exactly did the customer buy, and under which version?</td></tr>
+      <tr><td>Install</td><td>Execution event: materials, schedule, access, installer, completion, and snags.</td><td>Can the work actually happen on site as promised?</td></tr>
+      <tr><td>Remedial</td><td>Service issue after or around installation, including warranty and snag work.</td><td>What issue remains, who owns it, and what closes it?</td></tr>
+      <tr><td>Finance</td><td>Deposit, final balance, refunds, credits, supplier bills, and reconciliation.</td><td>What money truth is proven, disputed, or still unmatched?</td></tr>
+    </table></div>
+    <div class="callout callout-warn"><strong>CRM constraint:</strong> if the system forces these into one contract record, preserve the split with tags, fields, notes, and review-board headings. Do not let one stage field carry five jobs.</div>
+    <div class="visual-panel" aria-label="Five entity layers">
+      <div class="visual-head">
+        <div class="visual-kicker">The hidden data model</div>
+        <div class="visual-note">Five linked truths inside one visible job</div>
+      </div>
+      <div class="visual-body">
+        <div class="truth-stack">
+          <div class="stack-diagram">
+            <div class="stack-layer"><b>Lead</b><span>Who asked, what they need, and whether the work is real.</span></div>
+            <div class="stack-layer"><b>Contract</b><span>What was sold, which quote version, and what money is due.</span></div>
+            <div class="stack-layer"><b>Install</b><span>What must happen on site, with which materials and constraints.</span></div>
+            <div class="stack-layer"><b>Remedial</b><span>What still needs service after the main work is done.</span></div>
+            <div class="stack-layer"><b>Finance</b><span>What has been invoiced, paid, matched, credited, or disputed.</span></div>
+          </div>
+          <div class="matrix">
+            <div class="matrix-cell"><b>Client sees</b><span>A reliable admin system, fewer chases, clearer handoffs, and visible risk.</span></div>
+            <div class="matrix-cell"><b>Builder sees</b><span>A warning that one pipeline column cannot carry stage, status, supplier, service, and finance truth.</span></div>
+            <div class="matrix-cell"><b>VA sees</b><span>A daily map: find the missing truth, name the owner, and set the next action.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>Customer:
+Phone:
+Email:
+Site address:
+Lead source:
+CRM lead number:
+Contract number:
+Quote reference/version:
+Invoice references:
+Supplier/order references:
+Owner:
+Current stage:
+Lead status:
+Contract status:
+Install status:
+Supplier status:
+Remedial status:
+Finance status:
+Measurement confidence:
+Next action:
+Next action owner:
+Follow-up date:
+Risk/notes:</pre>
+    <div class="callout callout-success"><strong>Rule:</strong> the shadow record must not become a second CRM. It is a control surface. It exists to make next action, risk, and gate status visible.</div>
+    <h3 class="section-h">Stacked status examples</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Primary stage</th><th>Possible parallel statuses</th><th>Daily-review meaning</th></tr>
+      <tr><td>Pre-Order</td><td>Deposit paid, final measure required, variation pending, awaiting customer decision.</td><td>Do not order until the lock is real.</td></tr>
+      <tr><td>Order</td><td>PO placed, awaiting acknowledgement, supplier query, manufacturing, price check.</td><td>Supplier truth is still moving.</td></tr>
+      <tr><td>Install</td><td>Install complete, snag open, return visit needed, final invoice pending.</td><td>Execution and finance can diverge.</td></tr>
+      <tr><td>Finance</td><td>Final invoice unpaid, payment unmatched, credit due, remedial open.</td><td>Money cannot close the service obligation by itself.</td></tr>
+    </table></div>
+  </section>
+
+  <div class="part-header">
+    <div class="part-label">The Pipeline</div>
+    <h2>Ten Stages, Ten Gates</h2>
+    <p>A job moves forward only when the gate at the end of its current stage is true. If the gate is not true, the job needs a next action, not optimism.</p>
+  </div>
+
+  <section class="chapter" id="lead">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 1 - Lead</strong><span>New enquiry to qualified route</span></div>
+      <div class="stage-body">
+        <p>Lead intake captures enough information to decide the route. The aim is not to quote instantly; the aim is to avoid losing, duplicating, or misclassifying the job.</p>
+        <ul class="checklist">
+          <li>Customer name, phone, email, and site address are captured or requested.</li>
+          <li>Work type is broadly identified: installation, replacement, repair, service, warranty, commercial, landlord, or other.</li>
+          <li>Photos and rough measurements are requested where they help estimate.</li>
+          <li>Urgency, safety, security, and repeat-customer status are known.</li>
+          <li>Lead is created or located in the CRM.</li>
+        </ul>
+        <div class="gate"><strong>Gate:</strong> move forward only when the customer route is clear: estimate, survey, technical review, remedial triage, or polite decline.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="survey">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 2 - Survey / Estimate</strong><span>Information to price responsibly</span></div>
+      <div class="stage-body">
+        <p>The estimate path is for rough qualification. The survey path is for uncertainty, complexity, or customer preference. Both paths must preserve the measurement basis.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Route</th><th>Use when</th><th>Control</th></tr>
+          <tr><td>Estimate</td><td>Customer can provide useful photos, rough width/height, and enough context for a non-final price.</td><td>State that price may change after survey/final measure.</td></tr>
+          <tr><td>Survey</td><td>Scope is complex, measurements are unreliable, access matters, or customer wants a visit.</td><td>Confirm surveyor, date/time, address, and CRM appointment.</td></tr>
+          <tr><td>Technical review</td><td>Repair feasibility, unusual materials, structural/access constraints, warranty/remedial issue.</td><td>Assign a technical owner before promising outcome.</td></tr>
+        </table></div>
+        <h3 class="section-h">Measurement confidence ladder</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Level</th><th>Meaning</th><th>Allowed decision</th></tr>
+          <tr><td>Customer rough dimensions</td><td>Useful for qualification only. Customer-provided sizes may be incomplete or inaccurate.</td><td>Rough estimate, photo request, survey recommendation.</td></tr>
+          <tr><td>Estimate dimensions</td><td>Office or estimator has enough basis for a non-final price.</td><td>Estimate with caveat; do not manufacture.</td></tr>
+          <tr><td>Survey dimensions</td><td>Site visit or technical review supports a proper quote.</td><td>Quote, revise quote, or request final measure.</td></tr>
+          <tr><td>Final manufacture dimensions</td><td>Exact order-ready dimensions and specification are locked.</td><td>Supplier order may proceed after finance and variation checks.</td></tr>
+        </table></div>
+        <div class="gate"><strong>Gate:</strong> move forward only when enough information exists to quote responsibly, the measurement confidence level is known, and any uncertainty is logged where the next person can find it.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="quote">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 3 - Quote</strong><span>Priced offer to written acceptance</span></div>
+      <div class="stage-body">
+        <p>The quote is the priced commitment. It must preserve scope, version, terms, expiry/validity, and measurement basis. A changed quote is not an edit in the air; it is a versioned business event.</p>
+        <ul class="checklist">
+          <li>Correct customer and address.</li>
+          <li>Correct product, location, material, finish, components, accessories, and install inclusion.</li>
+          <li>Measurement basis is known: rough estimate, survey, or final measurement.</li>
+          <li>Quote reference/version and terms are saved.</li>
+          <li>Follow-up date is set if customer does not reply.</li>
+          <li>Customer acceptance is recorded in writing before sold/contract setup.</li>
+        </ul>
+        <div class="gate"><strong>Gate:</strong> move forward only when exact quote version, customer approval, and any bank/insurance dependency are known.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="contract">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 4 - Contract + Deposit</strong><span>Acceptance to payment control</span></div>
+      <div class="stage-body">
+        <p>Accepted work must become a contract/work order with the correct quote version. Deposit invoice, payment link, bank-reference instruction, and reconciliation must tie to the same job.</p>
+        <ol class="steps">
+          <li><b>Confirm acceptance.</b> Verify the customer accepted the correct quote version.</li>
+          <li><b>Create or update contract.</b> Keep lead, quote, and contract linked.</li>
+          <li><b>Raise deposit invoice.</b> Include invoice number, quote reference, payment link, and bank-reference instruction.</li>
+          <li><b>Match payment.</b> Connect provider event or bank transfer to invoice and contract.</li>
+          <li><b>Trigger next stage.</b> Usually final measurement, specification lock, or installation scheduling - not automatic ordering.</li>
+        </ol>
+        <div class="gate"><strong>Gate:</strong> move forward only when the contract exists, scope matches the approved quote, and payment is received/reconciled if required.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="preorder">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 5 - Pre-Order Control</strong><span>The manufacture-readiness lock</span></div>
+      <div class="stage-body">
+        <p>This is the most important control in the company. The job is not order-ready until final measurement and specification details are locked and variations are cleared.</p>
+        <div class="grid-2">
+          <div class="card"><div class="card-label">Spec lock</div><p>Dimensions, style, material, finish, components, accessories, trims, thresholds, and access requirements.</p></div>
+          <div class="card"><div class="card-label">Risk lock</div><p>Customer-supplied items, price increases, lead-time changes, split invoices, technical conflicts, and measurement discrepancies.</p></div>
+        </div>
+        <h3 class="section-h">Manufacture-readiness checks</h3>
+        <ul class="checklist">
+          <li>Final manufacture dimensions are known or explicitly not required.</li>
+          <li>Quote version, contract scope, and customer decisions still match.</li>
+          <li>Variation price, credit, refund, or additional invoice is resolved.</li>
+          <li>Supplier lead-time or price risk has been checked where relevant.</li>
+          <li>Customer-supplied accessories or special requirements are specified.</li>
+          <li>Installer/access constraints are visible before ordering.</li>
+        </ul>
+        <div class="gate"><strong>Gate:</strong> move forward only when payment control is complete, final measure/spec are complete where required, and any variation has written approval and finance action.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="order">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 6 - Supplier Order</strong><span>Order placed to acknowledged</span></div>
+      <div class="stage-body">
+        <p>Supplier ordering is the irreversible/costly fulfilment event. The order must be traceable and every supplier response must feed the job record.</p>
+        <ul class="checklist">
+          <li>Supplier selected and order drafted from locked specification.</li>
+          <li>Purchase/order approval is clear before the order is placed.</li>
+          <li>Supplier order placed and reference recorded.</li>
+          <li>Order acknowledgement saved.</li>
+          <li>Price, lead time, expected delivery, and supplier queries are logged.</li>
+          <li>Delivery follow-up task is created.</li>
+        </ul>
+        <h3 class="section-h">Supplier micro-pipeline</h3>
+        <pre>PO created
+PO approved
+PO placed
+PO acknowledged
+Manufacturing / waiting supplier
+Delivery confirmed
+Delivered
+Checked</pre>
+        <div class="callout callout-info"><strong>Supplier truth:</strong> an order can be commercially sold, financially paid, and still not operationally safe because the supplier has not acknowledged, manufactured, delivered, or resolved a query.</div>
+        <div class="gate"><strong>Gate:</strong> move forward only when the supplier order is acknowledged, reference recorded, delivery expectation known, and documents saved.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="delivery">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 7 - Delivery</strong><span>Materials available to install-ready</span></div>
+      <div class="stage-body">
+        <p>A delivered item is not automatically an install-ready item. Materials must be checked against the order for missing parts, damage, wrong specification, and storage/labeling clarity.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Check</th><th>Question</th><th>If no</th></tr>
+          <tr><td>Completeness</td><td>Are the main product, components, hardware, trims, and accessories present?</td><td>Supplier chase and install-risk note.</td></tr>
+          <tr><td>Condition</td><td>Is anything damaged, cracked, missing, or visibly wrong?</td><td>Photograph, report, and remake/replacement task.</td></tr>
+          <tr><td>Match</td><td>Does delivery match final spec and supplier acknowledgement?</td><td>Escalate before install is confirmed.</td></tr>
+          <tr><td>Readiness</td><td>Can installer find the correct items on the day?</td><td>Label/store and update install notes.</td></tr>
+        </table></div>
+        <h3 class="section-h">Delivery tracking statuses</h3>
+        <pre>Awaiting supplier acknowledgement
+Acknowledged / manufacturing
+Delivery date requested
+Delivery date confirmed
+Delivered - unchecked
+Delivered - checked
+Delivery issue - missing
+Delivery issue - damaged
+Delivery issue - wrong spec
+Install-ready</pre>
+        <div class="gate"><strong>Gate:</strong> move forward only when blocking missing/damaged/wrong items are resolved or deliberately accepted as non-blocking.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="install">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 8 - Installation</strong><span>Confirmed date to practical completion</span></div>
+      <div class="stage-body">
+        <p>Installation is where office promises meet the site. Confirming installation requires material confidence, installer availability, customer availability, access, and prep instructions.</p>
+        <h3 class="section-h">Customer prep checklist</h3>
+        <ul class="checklist">
+          <li>Remove ornaments, photos, fragile items, curtains, and blinds near work areas where possible.</li>
+          <li>Move small furniture; clarify responsibility for heavy or fragile items.</li>
+          <li>Warn about noise, tools, dust sheets, carpet protection, and temporary exposure to cold/drafts.</li>
+          <li>Keep children, pets, and vulnerable occupants away from work zones.</li>
+          <li>Confirm access, parking, power, alarms, locks, sensors, and special instructions.</li>
+        </ul>
+        <div class="gate"><strong>Gate:</strong> move to finance only when completion status, snags, remedials, photos/notes, customer update, and invoice readiness are clear.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="finance">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 9 - Final Finance</strong><span>Final invoice to paid-in-full</span></div>
+      <div class="stage-body">
+        <p>Final finance reconciles the job. It is not just sending an invoice; it is checking completion status, variation history, credits/refunds, and payment matching.</p>
+        <ul class="checklist">
+          <li>Final invoice references correct quote/contract.</li>
+          <li>Outstanding amount reflects variations, credits, refunds, or extras.</li>
+          <li>Payment link and bank-reference instruction are included.</li>
+          <li>Payment is matched against invoice and contract.</li>
+          <li>Any disputed, split, missing, or failed payment is tracked as an accounts action.</li>
+        </ul>
+        <div class="gate"><strong>Gate:</strong> move to close only when final payment is reconciled or a named exception remains open with owner and date.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="close">
+    <div class="stage-card">
+      <div class="stage-head"><strong>Stage 10 - Warranty / Close</strong><span>Support, review, and archive</span></div>
+      <div class="stage-body">
+        <p>Closure is not silence. Closure means the customer has been supported, any remedial issue has a home, warranty/guarantee information is handled where needed, and the CRM state matches reality.</p>
+        <ul class="checklist">
+          <li>Review request sent only when customer sentiment supports it.</li>
+          <li>Warranty/guarantee information sent or stored if required.</li>
+          <li>Remedials closed or split into a separate active issue.</li>
+          <li>Manufacturer/supplier part chases closed or assigned.</li>
+          <li>CRM contract status updated to reflect closure.</li>
+        </ul>
+        <h3 class="section-h">Remedial service lifecycle</h3>
+        <pre>Install complete
+Snag or issue logged
+Issue classified: install / supplier / manufacturer / customer / chargeable
+Photos, video, or site evidence requested
+Parts or supplier answer requested
+Return visit scheduled
+Return visit complete
+Customer updated
+Resolved
+Close</pre>
+        <div class="callout callout-warn"><strong>Service rule:</strong> a remedial is not a note on a closed job. It is a service entity with owner, evidence, next action, and closure condition.</div>
+        <div class="gate"><strong>Gate:</strong> close only when unresolved service obligations are either completed or explicitly tracked outside the closed contract.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="part-header">
+    <div class="part-label">Controls</div>
+    <h2>The Processes That Prevent Expensive Mistakes</h2>
+    <p>The pipeline is the spine. These are the organs: finance, communications, exceptions, accounts, and daily management.</p>
+  </div>
+
+  <section class="chapter" id="payments">
+    <div class="chapter-header">
+      <div class="chapter-num">Finance Control</div>
+      <h2>Payment Is Evidence, Not Fulfilment Certainty</h2>
+      <p class="chapter-lede">A payment notification must be matched before it changes the job stage.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Payment event</th><th>Check</th><th>Stage effect</th></tr>
+      <tr><td>Deposit invoice sent</td><td>Invoice number, quote reference, payment link, and bank-reference instruction are correct.</td><td>Awaiting deposit.</td></tr>
+      <tr><td>Provider says paid</td><td>Match event to invoice and contract; confirm amount and payer route.</td><td>Deposit paid only after reconciliation.</td></tr>
+      <tr><td>Customer says paid</td><td>Ask for reference/time/date if not visible; check bank/provider before confirming.</td><td>No stage movement until matched.</td></tr>
+      <tr><td>Final invoice sent</td><td>Completion/remedial/variation state is known and invoice reflects correct balance.</td><td>Final finance active.</td></tr>
+      <tr><td>Refund/credit due</td><td>Keep original quote/invoice/payment history; issue formal credit/refund path.</td><td>Variation finance active.</td></tr>
+    </table></div>
+    <div class="callout callout-danger"><strong>Never:</strong> treat "paid" as "ready to order" without final measurement/spec lock.</div>
+  </section>
+
+  <section class="chapter" id="communications">
+    <div class="chapter-header">
+      <div class="chapter-num">Communications</div>
+      <h2>The Template System</h2>
+      <p class="chapter-lede">The correspondence system is not about sounding polished. It is about protecting stage truth.</p>
+    </div>
+    <p>The template library contains 50 working reply patterns. Publicly, the useful lesson is the category map:</p>
+    <div class="grid-3">
+      <div class="card"><div class="card-label">Lead</div><h4>Ask for the right inputs</h4><p>Address, photos, dimensions, work type, preferred contact route, and estimate-vs-survey choice.</p></div>
+      <div class="card"><div class="card-label">Appointment</div><h4>Keep provisional language</h4><p>Survey and install slots are not firm until confirmed by the customer and the working schedule.</p></div>
+      <div class="card"><div class="card-label">Quote</div><h4>Preserve version history</h4><p>Every follow-up should refer back to the relevant quote and invite a decision or question.</p></div>
+      <div class="card"><div class="card-label">Payment</div><h4>Name the reference</h4><p>Invoices, payment links, bank references, and confirmation messages should point to the same job.</p></div>
+      <div class="card"><div class="card-label">Supplier risk</div><h4>No false promises</h4><p>Price increases, lead times, delivery dates, and product availability require supplier confirmation.</p></div>
+      <div class="card"><div class="card-label">Warranty</div><h4>Acknowledge, then assess</h4><p>Ask for photos/video, link to original job, assign technical owner, and avoid promising outcome too early.</p></div>
+    </div>
+    <h3 class="section-h">A safe message pattern</h3>
+    <pre>Hi [Name],
+
+Thanks for [context].
+
+Current status:
+What we need / what we are checking:
+What we can confirm:
+What we cannot promise yet:
+Next update / next action:
+
+Kind regards,
+The team</pre>
+  </section>
+
+  <section class="chapter" id="exceptions">
+    <div class="chapter-header">
+      <div class="chapter-num">Exception Playbooks</div>
+      <h2>Where Margin, Trust, and Time Get Lost</h2>
+      <p class="chapter-lede">Most expensive mistakes are not normal pipeline events. They are exceptions handled as if they were normal.</p>
+    </div>
+    <h3 class="section-h">Customer changes scope after payment</h3>
+    <ol class="steps">
+      <li><b>Pause ordering if possible.</b> Do not keep moving while the agreed scope is unstable.</li>
+      <li><b>Find the order/manufacture status.</b> Not placed, placed, acknowledged, manufactured, or delivered are different realities.</li>
+      <li><b>Get the requested change in writing.</b> Vague phone changes create dispute risk.</li>
+      <li><b>Ask technical owner for feasibility.</b> The office should not invent feasibility.</li>
+      <li><b>Calculate price and lead-time impact.</b> Higher price, lower price, no change, delay, or impossible.</li>
+      <li><b>Issue variation/revised quote.</b> Preserve original quote and invoice history.</li>
+      <li><b>Handle money.</b> Additional invoice, credit note, refund, offset, or no-balance note.</li>
+      <li><b>Update job record.</b> Supplier, installer, customer, and accounts need the same truth.</li>
+    </ol>
+    <h3 class="section-h">Payment not matched</h3>
+    <p>Check provider status, bank feed, amount, invoice number, customer reference, payment time/date, and payer identity. Confirm only once matched.</p>
+    <h3 class="section-h">Customer-supplied accessory</h3>
+    <p>Require make/model/specification before ordering. Explain that wrong accessory requirements can create remake, delay, and warranty ambiguity.</p>
+    <h3 class="section-h">Customer asks for faster installation</h3>
+    <p>Check supplier lead time, delivery confidence, installer capacity, and whether the current product/order status permits an earlier date. Never promise speed before checking the constraint layer.</p>
+    <h3 class="section-h">Remedial or warranty issue</h3>
+    <p>Acknowledge quickly, request photos/video, link original job, assign technical/install owner, classify warranty vs chargeable vs supplier/manufacturer issue, and keep the customer updated.</p>
+    <h3 class="section-h">Supplier delay or manufacturing uncertainty</h3>
+    <p>Separate what is known from what is hoped. Record supplier reference, acknowledgement state, last chase date, promised update date, affected install date, customer promise already made, and whether a backup product/date/installer plan exists.</p>
+  </section>
+
+  <section class="chapter" id="accounts">
+    <div class="chapter-header">
+      <div class="chapter-num">Accounts</div>
+      <h2>Supplier Statements Are Not Automatic Payment Requests</h2>
+      <p class="chapter-lede">The accounts inbox must separate customer finance, supplier finance, bookkeeping support, and general bills.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Email type</th><th>Action</th><th>Control</th></tr>
+      <tr><td>Customer invoice/payment</td><td>Match to quote, contract, invoice number, and payment route.</td><td>Update job stage only after reconciliation.</td></tr>
+      <tr><td>Supplier invoice</td><td>Save/forward to bookkeeping process and link to purchase/order where relevant.</td><td>Do not lose invoice evidence inside email threads.</td></tr>
+      <tr><td>Supplier statement</td><td>Reconcile against paid/unpaid invoices.</td><td>Note paid date, amount, reference, and statement period.</td></tr>
+      <tr><td>Missing invoice query</td><td>Request copy from supplier or explain transaction.</td><td>Track until resolved.</td></tr>
+      <tr><td>Bookkeeper question</td><td>Return document, context, or classification.</td><td>Keep answer tied to transaction reference.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="chapter" id="daily">
+    <div class="chapter-header">
+      <div class="chapter-num">Daily Operation</div>
+      <h2>The Morning Review Board</h2>
+      <p class="chapter-lede">The daily board exists to make hidden risk visible before customers chase or installers arrive unprepared.</p>
+    </div>
+    <pre>TODAY'S BESPOKE PROJECT REVIEW
+
+New leads needing first response:
+-
+Leads awaiting customer info:
+-
+Surveys due today/tomorrow:
+-
+Quotes needing follow-up:
+-
+Accepted quotes needing contract/deposit setup:
+-
+Paid jobs needing final measure:
+-
+Jobs approved to order:
+-
+Supplier orders in manufacturing:
+-
+Supplier orders needing chase:
+-
+Deliveries due / overdue:
+-
+Delivered but unchecked:
+-
+Installs due today/tomorrow:
+-
+Remedials open:
+-
+Final invoices unpaid:
+-
+Parallel status collisions:
+-
+Accounts/supplier queries:
+-</pre>
+    <div class="callout callout-success"><strong>Daily rule:</strong> every item on the board needs exactly one owner and one next action date. If a line has neither, it is not a board; it is a wish list.</div>
+  </section>
+
+  <section class="chapter" id="implementation">
+    <div class="chapter-header">
+      <div class="chapter-num">Implementation</div>
+      <h2>How To Turn This Into Operating Reality</h2>
+      <p class="chapter-lede">The manual becomes useful only when it is reduced into fields, gates, templates, and daily rituals.</p>
+    </div>
+    <ol class="steps">
+      <li><b>Define required CRM fields.</b> Primary stage, stacked statuses, owner, next action, quote version, deposit status, measurement confidence, supplier order ref, delivery date, install date, remedial flag.</li>
+      <li><b>Separate the five entities.</b> Lead, contract, install, remedial, and finance can share one CRM contract, but the review board must keep their truths apart.</li>
+      <li><b>Create stage gate checklists.</b> Put each gate in the stage where the work happens, not in a separate handbook no one opens.</li>
+      <li><b>Add a supplier subpipeline.</b> Track PO created, approved, placed, acknowledged, manufacturing, delivery confirmed, delivered, and checked.</li>
+      <li><b>Add a remedial lifecycle.</b> Track issue logged, classified, evidence requested, parts/supplier answer, return visit, resolved, and closed.</li>
+      <li><b>Map templates to stages.</b> One folder or CRM template library should match lead, survey, quote, deposit, final measure, supplier risk, install, finance, and warranty.</li>
+      <li><b>Build the daily review board.</b> Filter by overdue, due today, waiting customer, waiting supplier, waiting accounts, and install risk.</li>
+      <li><b>Assign owners by decision type.</b> Office, technical, accounts, installer, or management approval.</li>
+      <li><b>Run a two-week correction loop.</b> Every time a job gets stuck, add the missing field, checklist item, or template phrase.</li>
+      <li><b>Audit closed jobs monthly.</b> Check quote version, payment matching, final measure, supplier reference, install notes, final payment, and remedial closure.</li>
+    </ol>
+    <h3 class="section-h">Minimal stage list</h3>
+    <pre>Lead
+Survey
+Quote
+Contract
+Pre-Order
+Order
+Delivery
+Install
+Finance
+Close</pre>
+    <h3 class="section-h">Minimal stacked status labels</h3>
+    <pre>Awaiting customer
+Awaiting surveyor
+Awaiting supplier
+Awaiting acknowledgement
+Manufacturing
+Deposit due
+Deposit paid
+Final measure required
+Spec locked
+Variation pending
+Delivery confirmed
+Delivered unchecked
+Delivery issue
+Install scheduled
+Install complete
+Remedial open
+Return visit required
+Finance query
+Final invoice due
+Paid in full
+Review not requested</pre>
+    <h3 class="section-h">Reusable bespoke project pattern</h3>
+    <p>This model is intentionally industry-agnostic. Use it for kitchens, roofing, solar, joinery, cabinets, bathrooms, fitted furniture, specialist repairs, or any bespoke project or product that requires survey, specification, manufacture or procurement, installation, finance, and service. The details change; the control pattern holds.</p>
+  </section>
+
+  <section class="chapter" id="sources">
+    <div class="chapter-header">
+      <div class="chapter-num">Sources</div>
+      <h2>What This Grimoire Was Built From</h2>
+      <p class="chapter-lede">This is a public-safe synthesis, not a raw evidence dump.</p>
+    </div>
+    <ul class="body-list">
+      <li>Anonymized mailbox-pattern review covering lead intake, quote follow-up, payments, supplier chases, customer changes, and remedials.</li>
+      <li>Anonymized SOP draft covering quoting, deposits, final measurement, ordering, installation, accounts, and service work.</li>
+      <li>Shadow pipeline design with ten stage gates, five entity layers, and a daily review board.</li>
+      <li>Template-library architecture for customer, team handoff, finance, variation, supplier, and warranty reply patterns.</li>
+      <li>Public-facing synthesis of what I built; raw contact details, client identity, and private commercial evidence are not included.</li>
+    </ul>
+    <div class="callout callout-info"><strong>Public version note:</strong> this page documents the reusable operating system, not the private client workspace. The public grimoire stays process-focused by design.</div>
+  </section>
+
+  <section style="border-top:1px solid var(--border);padding:2.4rem 0 0;margin-top:1rem">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:1.1rem">Related Grimoires</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem">
+      <a href="/library/grimoires/015-ghl-admin-build.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#0F766E';this.style.boxShadow='0 2px 12px rgba(15,118,110,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#0F766E;margin-bottom:.4rem">015</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">The GHL Admin's Build</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">The marketing-engine build that runs the pipeline this grimoire describes.</div>
+      </a>
+      <a href="/library/grimoires/003-ghl-101.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#1D4ED8';this.style.boxShadow='0 2px 12px rgba(29,78,216,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#1D4ED8;margin-bottom:.4rem">003</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">GHL 101: Button-to-Button Manual</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">How to encode these stages and gates as click-paths inside a CRM.</div>
+      </a>
+      <a href="/library/grimoires/001-asmc-crm-engine.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#7C3AED';this.style.boxShadow='0 2px 12px rgba(124,58,237,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#7C3AED;margin-bottom:.4rem">001</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">ASMC Full Stack CRM Engine</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">A receipt - a real bespoke-trade CRM built end to end: 76 fields, 24 Zaps.</div>
+      </a>
+      <a href="/library/grimoires/002-dual-wing-rental.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#C2410C';this.style.boxShadow='0 2px 12px rgba(194,65,12,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#C2410C;margin-bottom:.4rem">002</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">Dual Wing Rental Marketing Engine</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">Lead intake and follow-up discipline applied to a dual-market pipeline.</div>
+      </a>
+    </div>
+  </section>
+
+</main>
+</div>
+<footer class="page-footer">
+  <a class="footer-link-page" href="/library/projects/">&lt;- Back to Library</a>
+  <span>Grimoire 016 &middot; Lessons from a Bespoke Project Business &middot; Public-facing edition</span>
+  <a class="footer-link-page" href="#top">Top</a>
+</footer>
+<div id="resume-toast"><span>Continue where you left off?</span><a id="resume-link" href="#">Resume</a><button id="resume-dismiss" aria-label="Dismiss">x</button></div>
+<script>
+(function(){
+  var progress=document.getElementById('progress-bar');
+  var links=[].slice.call(document.querySelectorAll('.nav-link'));
+  var sections=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    progress.style.transform='scaleX('+(max? h.scrollTop/max : 0)+')';
+    var current=sections[0];
+    sections.forEach(function(s){ if(s.getBoundingClientRect().top<140) current=s; });
+    links.forEach(function(a){ a.classList.toggle('active', current && a.getAttribute('href')==='#'+current.id); });
+    if(current) localStorage.setItem('g016-last','#'+current.id);
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  var filter=document.getElementById('nav-filter');
+  if(filter){
+    filter.addEventListener('input',function(){
+      var q=this.value.toLowerCase();
+      links.forEach(function(a){ a.style.display=a.textContent.toLowerCase().indexOf(q)>-1?'block':'none'; });
+    });
+    addEventListener('keydown',function(e){
+      if(e.key==='/'&&document.activeElement!==filter&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();filter.focus();}
+    });
+  }
+  var last=localStorage.getItem('g016-last');
+  var toast=document.getElementById('resume-toast');
+  var resume=document.getElementById('resume-link');
+  var dismiss=document.getElementById('resume-dismiss');
+  if(last && last !== '#overview' && document.querySelector(last)){
+    resume.href=last;
+    toast.style.display='flex';
+  }
+  if(dismiss) dismiss.onclick=function(){toast.style.display='none';localStorage.removeItem('g016-last');};
+})();
+</script>
+</body>
+</html>
