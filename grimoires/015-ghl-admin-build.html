@@ -23,210 +23,139 @@
 :root{
   --bg:#F5F2EC;--bg2:#EDE9E0;--bg3:#E5E0D5;
   --ink:#1C1917;--ink2:#44403C;--ink3:#78716C;--ink4:#A8A29E;
-  --accent:#C2410C;--accent2:#EA580C;
-  --teal:#0D9488;--teal-bg:#CCFBF1;
+  --accent:#4338CA;--accent2:#6366F1;
+  --orange:#C2410C;--orange-bg:#FFEDD5;
   --amber:#B45309;--amber-bg:#FEF3C7;
   --blue:#1D4ED8;--blue-bg:#DBEAFE;
   --green:#15803D;--green-bg:#DCFCE7;
   --red:#B91C1C;--red-bg:#FEE2E2;
-  --purple:#7C3AED;
+  --purple:#7C3AED;--purple-bg:#EDE9FE;
   --border:rgba(28,25,23,.12);--border2:rgba(28,25,23,.06);
   --dark:#1C1917;--dark2:#292524;--dark-fg:#F5F2EC;--dark-muted:#A8A29E;--dark-dim:#78716C;
   --mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;
+  --sidebar:270px;--chrome:92px;
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;font-weight:300;overflow-x:hidden;
-  background-image:radial-gradient(ellipse at 5% 0%,rgba(29,78,216,.04),transparent 38%),radial-gradient(ellipse at 95% 8%,rgba(13,148,136,.03),transparent 35%)}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.72;font-weight:300;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at 5% 0%,rgba(67,56,202,.06),transparent 38%),radial-gradient(ellipse at 95% 8%,rgba(124,58,237,.045),transparent 35%)}
 a{color:inherit;text-decoration:none}
 code{font-family:var(--mono);font-size:.85em;background:var(--bg2);border:1px solid var(--border2);border-radius:4px;padding:.08em .35em}
 .mode-banner{position:sticky;top:0;z-index:300;background:var(--dark);color:var(--dark-fg);padding:0 2rem;height:40px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:11px}
-.mode-banner-left{display:flex;align-items:center;gap:10px}
-.mode-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-.site-header{position:sticky;top:40px;z-index:200;background:rgba(245,242,236,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 2rem;height:52px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:1rem}
-.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:.3rem;transition:.14s}
-.header-back:hover{color:var(--accent)}
-.header-divider{width:1px;height:16px;background:var(--border)}
-.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}
-.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,.2)}
-#progress-bar{position:fixed;top:92px;left:0;right:0;height:2px;z-index:250;background:linear-gradient(90deg,var(--blue),var(--teal));transform-origin:left;transform:scaleX(0);pointer-events:none}
-.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 92px);max-width:1220px;margin:0 auto}
-.sidebar{position:sticky;top:92px;height:calc(100vh - 92px);overflow-y:auto;border-right:1px solid var(--border);padding:1.2rem 0 2rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;background:rgba(255,255,255,.3)}
-.nav-search{margin:0 1rem .9rem;position:relative}
-.nav-search input{width:100%;font-family:var(--mono);font-size:11px;padding:7px 10px 7px 26px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--ink);outline:none}
-.nav-search input:focus{border-color:var(--blue)}
-.nav-search::before{content:"⌕";position:absolute;left:9px;top:5px;color:var(--ink4);font-size:13px}
-.nav-search kbd{position:absolute;right:7px;top:7px;font-family:var(--mono);font-size:9px;color:var(--ink4);border:1px solid var(--border);border-radius:3px;padding:0 4px;background:var(--bg2)}
-.nav-section{margin-bottom:1.2rem;padding:0 1rem}
-.nav-section-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px;padding:0 8px}
-.nav-link{display:block;padding:4px 8px;font-size:12px;color:var(--ink3);border-radius:5px;line-height:1.4;transition:.14s}
-.nav-link:hover{background:var(--bg2);color:var(--ink)}
-.nav-link.active{background:var(--bg3);color:var(--blue);font-weight:500}
-.main{padding:2.8rem 3rem 6rem;max-width:880px;min-width:0}
+.mode-banner-left{display:flex;align-items:center;gap:10px}.mode-dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.site-header{position:sticky;top:40px;z-index:200;background:rgba(245,242,236,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 2rem;height:52px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:1rem}.header-back{font-family:var(--mono);font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:.3rem;transition:.14s}.header-back:hover{color:var(--accent)}.header-divider{width:1px;height:16px;background:var(--border)}.header-title{font-family:var(--mono);font-size:11px;color:var(--ink2)}.header-badge{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;background:#E0E7FF;color:#4338CA;border:1px solid rgba(67,56,202,.2)}
+#progress-bar{position:fixed;top:92px;left:0;right:0;height:2px;z-index:250;background:linear-gradient(90deg,var(--accent),var(--purple));transform-origin:left;transform:scaleX(0);pointer-events:none}
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:calc(100vh - var(--chrome));max-width:1280px;margin:0 auto}
+.sidebar{position:sticky;top:var(--chrome);height:calc(100vh - var(--chrome));overflow-y:auto;border-right:1px solid var(--border);padding:1.2rem 0 2rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;background:rgba(255,255,255,.3)}
+.nav-search{margin:0 1rem .9rem;position:relative}.nav-search input{width:100%;font-family:var(--mono);font-size:11px;padding:7px 10px 7px 26px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--ink);outline:none}.nav-search input:focus{border-color:var(--accent)}.nav-search::before{content:"\2315";position:absolute;left:10px;top:5px;color:var(--ink4);font-size:13px}
+.nav-section{margin-bottom:1rem;padding:0 1rem}.nav-section-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px;padding:0 8px}
+.nav-link{display:block;padding:3px 8px;font-size:11.5px;color:var(--ink3);border-radius:5px;line-height:1.4;transition:.14s}.nav-link:hover{background:var(--bg2);color:var(--ink)}.nav-link.active{background:rgba(67,56,202,.09);color:var(--accent);font-weight:500}
+.main{padding:2.8rem 3rem 6rem;max-width:930px;min-width:0}
 .hero{margin-bottom:3rem;padding-bottom:2.6rem;border-bottom:1px solid var(--border)}
-.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
-.hero h1{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.9rem);font-weight:600;line-height:1.1;margin-bottom:.9rem;letter-spacing:-.025em}
-.hero h1 em{font-style:italic;font-weight:300;color:var(--blue)}
-.hero-sub{font-size:.96rem;color:var(--ink2);max-width:60ch;line-height:1.75;margin-bottom:1.6rem}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-family:var(--serif);font-size:clamp(2.05rem,4.5vw,3.35rem);font-weight:600;line-height:1.06;margin-bottom:.9rem;letter-spacing:-.025em}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--accent)}
+.hero-sub{font-size:.98rem;color:var(--ink2);max-width:66ch;line-height:1.78;margin-bottom:1.6rem}
 .stat-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.6rem}
-.stat-pill{display:flex;align-items:center;gap:.5rem;padding:6px 13px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:12px;color:var(--ink2)}
-.stat-pill strong{font-weight:500;color:var(--ink)}
+.stat-pill{display:flex;align-items:center;gap:.5rem;padding:6px 13px;border-radius:40px;border:1px solid var(--border);background:#fff;font-size:12px;color:var(--ink2)}.stat-pill strong{font-weight:500;color:var(--ink)}
 .hero-actions{display:flex;gap:.65rem;flex-wrap:wrap}
 .btn-hero{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.72rem;padding:.7rem 1.2rem;border-radius:999px;border:1px solid;cursor:pointer;transition:.15s ease;font-weight:500}
-.btn-hero.blue{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 12px rgba(29,78,216,.2)}
-.btn-hero.blue:hover{background:#1741ba;transform:translateY(-1px)}
-.btn-hero.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}
-.btn-hero.ghost:hover{border-color:var(--blue);color:var(--blue)}
-.module-section{margin-bottom:3.2rem;padding-bottom:2.8rem;border-bottom:1px solid var(--border2)}
-.module-section:last-of-type{border-bottom:none}
-.module-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.3rem}
-.module-num{font-family:var(--mono);font-size:10px;color:var(--ink4);padding:4px 8px;border:1px solid var(--border);border-radius:4px;white-space:nowrap;margin-top:4px}
-.module-title{font-family:var(--serif);font-size:1.35rem;font-weight:600;line-height:1.2;margin-bottom:3px}
-.module-sub{font-size:13px;color:var(--ink3)}
-h2.section-h{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin:1.7rem 0 .8rem}
-p{margin-bottom:.75rem;color:var(--ink2);font-size:14px}
-p:last-child{margin-bottom:0}
-.path{display:inline-flex;flex-wrap:wrap;align-items:center;gap:.25rem;font-family:var(--mono);font-size:.7rem;background:#fff;border:1px solid var(--border);border-radius:6px;padding:.32rem .6rem;color:var(--ink2);margin:.1rem 0}
-.path b{color:var(--blue);font-weight:500}
-.path i{color:var(--ink4);font-style:normal}
-.steps{counter-reset:step;margin:.7rem 0 1rem;display:grid;gap:.4rem}
-.steps li{list-style:none;position:relative;padding:.55rem .8rem .55rem 2.5rem;background:#fff;border:1px solid var(--border2);border-radius:7px;font-size:13px;color:var(--ink2);line-height:1.6}
-.steps li::before{counter-increment:step;content:counter(step);position:absolute;left:.75rem;top:.66rem;width:1.15rem;height:1.15rem;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--mono);font-size:.58rem;display:grid;place-items:center}
-.steps li b{font-weight:500;color:var(--ink)}
-.callout{border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:13px;line-height:1.65}
-.callout-warn{background:var(--amber-bg);border-left:3px solid var(--amber);color:#78350F}
-.callout-danger{background:var(--red-bg);border-left:3px solid var(--red);color:#7F1D1D}
-.callout-info{background:var(--blue-bg);border-left:3px solid var(--blue);color:#1E3A8A}
-.callout-success{background:var(--teal-bg);border-left:3px solid var(--teal);color:#134E4A}
-.callout strong{font-weight:500}
-.table-wrap{overflow-x:auto;margin:1rem 0}
-table{width:100%;border-collapse:collapse;font-size:12.5px}
-th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2)}
-td{padding:9px 12px;border-bottom:1px solid var(--border2);color:var(--ink2);vertical-align:top;line-height:1.5}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--bg2)}
-pre{background:var(--dark);border-radius:8px;padding:1.2rem 1.4rem;overflow-x:auto;margin:1rem 0;font-family:var(--mono);font-size:12px;line-height:1.75;color:#D6D3D1}
-pre .c{color:#78716C;font-style:italic}
-pre .k{color:#FDA4AF}
-pre .v{color:#86EFAC}
-pre .s{color:#FCD34D}
-pre .w{color:#F8FAFC;font-weight:500}
-pre .tl{color:#93C5FD}
-.power-tip{background:var(--dark2);border:1px solid rgba(245,242,236,.08);border-left:3px solid var(--accent2);border-radius:8px;padding:1rem 1.25rem;margin:1rem 0}
-.power-tip-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
-.power-tip p{color:#D6D3D1;font-size:13px;line-height:1.65;margin-bottom:.4rem}
-.power-tip p strong{color:#F5F2EC;font-weight:500}
-.power-tip p:last-child{margin-bottom:0}
-.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin:1rem 0}
-.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem}
-.feature-card-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:.35rem}
-.feature-card h4{font-size:.86rem;font-weight:500;margin-bottom:.3rem;line-height:1.3}
-.feature-card p{font-size:.78rem;color:var(--ink3);line-height:1.55;margin-bottom:0}
-.badge{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px;vertical-align:middle}
-.badge-new{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,.2)}
-.badge-update{background:var(--green-bg);color:var(--green);border:1px solid rgba(21,128,61,.2)}
-.badge-warn{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(180,83,9,.2)}
-.source-cite{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.6rem;color:var(--blue);padding:.14rem .44rem;border-radius:4px;background:var(--blue-bg);border:1px solid rgba(29,78,216,.18);transition:.13s;vertical-align:middle;margin-right:.35rem}
-.source-cite:hover{background:rgba(29,78,216,.15)}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1rem 0}
-.pricing-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem}
-.pricing-card.featured{border-color:rgba(29,78,216,.3);box-shadow:0 0 0 2px rgba(29,78,216,.08)}
-.pricing-name{font-family:var(--mono);font-size:.7rem;font-weight:500;margin-bottom:.3rem}
-.pricing-price{font-family:var(--mono);font-size:1.4rem;font-weight:500;color:var(--blue);line-height:1;margin-bottom:.25rem}
-.pricing-period{font-family:var(--mono);font-size:.6rem;color:var(--ink4)}
-.pricing-items{margin-top:.7rem;display:grid;gap:.25rem}
-.pricing-item{font-size:.76rem;color:var(--ink3);display:flex;align-items:flex-start;gap:.35rem;line-height:1.45}
-.pricing-item::before{content:"✓";color:var(--green);font-family:var(--mono);font-size:.7rem;flex-shrink:0;margin-top:.08rem}
-.showcase{background:var(--dark);border-radius:14px;padding:1.8rem 2rem;margin:1.6rem 0}
-.showcase-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.9rem}
-.showcase h3{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:.5rem;color:var(--dark-fg)}
-.showcase p{font-size:13px;color:var(--dark-muted);line-height:1.65}
-.showcase p strong{color:#D6D3D1;font-weight:400}
-.showcase-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.1rem 0}
-.showcase-stat{background:rgba(245,242,236,.06);border:1px solid rgba(245,242,236,.1);border-radius:8px;padding:14px}
-.ss-val{font-family:var(--mono);font-size:1.5rem;font-weight:500;color:var(--dark-fg);line-height:1;margin-bottom:4px}
-.ss-val.positive{color:#86EFAC}.ss-val.blue{color:#93C5FD}.ss-val.amber{color:#FCD34D}
-.ss-label{font-size:11px;color:var(--dark-dim);line-height:1.4}
-details{margin:.6rem 0;border:1px solid var(--border);border-radius:8px;background:#fff}
-details summary{cursor:pointer;padding:.7rem 1rem;font-family:var(--mono);font-size:.72rem;color:var(--ink2);list-style:none;display:flex;align-items:center;gap:.5rem}
-details summary::before{content:"▸";color:var(--blue);transition:.15s}
-details[open] summary::before{transform:rotate(90deg)}
-details .d-body{padding:0 1rem 1rem;font-size:13px;color:var(--ink2)}
-.quiz-q{margin:1rem 0;padding:1rem 1.1rem;background:#fff;border:1px solid var(--border2);border-radius:8px}
-.quiz-q p{font-size:13.5px;margin-bottom:.5rem}
-.quiz-q p b{font-weight:500}
-.quiz-opts{display:grid;gap:.25rem;font-size:13px;color:var(--ink3);margin-left:.3rem}
-.source-index{display:grid;gap:.45rem;margin:1rem 0}
-.source-row{display:grid;grid-template-columns:28px 1fr auto;gap:.65rem;align-items:start;padding:.6rem .8rem;background:var(--bg2);border-radius:7px;border:1px solid var(--border2)}
-.source-num{font-family:var(--mono);font-size:.62rem;color:var(--ink4);font-weight:500;padding-top:.1rem}
-.source-title{font-size:.8rem;color:var(--ink2);line-height:1.45}
-.source-link{font-family:var(--mono);font-size:.58rem;color:var(--blue);white-space:nowrap}
-.reflect{background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.15);border-left:3px solid var(--purple);border-radius:8px;padding:1rem 1.25rem;margin:1rem 0}
-.reflect-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:.5rem}
-.reflect p{font-size:13px;line-height:1.65;margin-bottom:.4rem}
-.reflect p:last-child{margin-bottom:0}
+.btn-hero.solid{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(15,118,110,.2)}.btn-hero.solid:hover{background:#115E59;transform:translateY(-1px)}
+.btn-hero.ghost{background:transparent;color:var(--ink3);border-color:var(--border)}.btn-hero.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.visual-panel{margin:1.4rem 0;border:1px solid var(--border);border-radius:14px;background:#fff;overflow:hidden;box-shadow:0 12px 34px rgba(28,25,23,.05)}
+.visual-head{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:.9rem 1.05rem;border-bottom:1px solid var(--border2);background:linear-gradient(90deg,rgba(15,118,110,.08),rgba(194,65,12,.05))}
+.visual-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}.visual-note{font-family:var(--mono);font-size:10px;color:var(--ink4);text-align:right}.visual-body{padding:1rem 1.05rem}
+.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}.audience-card{border:1px solid var(--border2);border-radius:10px;padding:.95rem;background:rgba(255,255,255,.76);position:relative;min-height:160px}.audience-icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:.65rem;background:var(--bg2);border:1px solid var(--border);font-family:var(--mono);font-size:15px;color:var(--accent);font-weight:500}.audience-card h3{font-family:var(--serif);font-size:1rem;line-height:1.18;margin-bottom:.35rem}.audience-card p{font-size:12.5px;line-height:1.55;color:var(--ink3);margin-bottom:.55rem}.mini-list{display:grid;gap:.28rem;margin-top:.5rem}.mini-list span{font-family:var(--mono);font-size:10px;color:var(--ink3);padding:.28rem .45rem;border-radius:5px;background:var(--bg2);border:1px solid var(--border2)}
+.pipeline-visual{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem}.pipe-node{position:relative;border:1px solid var(--border);border-radius:9px;background:#fff;padding:.72rem .62rem;min-height:86px}.pipe-node::after{content:"";position:absolute;right:-.45rem;top:50%;width:.34rem;height:1px;background:var(--border)}.pipe-node:nth-child(5)::after,.pipe-node:nth-child(10)::after{display:none}.pipe-num{font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:.25rem}.pipe-node b{display:block;font-family:var(--serif);font-size:.9rem;line-height:1.15;margin-bottom:.2rem}.pipe-node span{display:block;font-size:11px;color:var(--ink3);line-height:1.35}
+.swimlane{display:grid;gap:.6rem}.lane{display:grid;grid-template-columns:105px 1fr;gap:.65rem;align-items:center}.lane-label{font-family:var(--mono);font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em}.lane-track{display:flex;gap:.45rem;align-items:center;min-width:0}.lane-chip{font-family:var(--mono);font-size:10px;line-height:1.25;padding:.42rem .55rem;border-radius:999px;background:var(--bg2);border:1px solid var(--border2);color:var(--ink2);white-space:nowrap}.lane-chip.hot{background:rgba(15,118,110,.08);border-color:rgba(15,118,110,.22);color:var(--accent)}.lane-chip.warn{background:var(--amber-bg);border-color:rgba(180,83,9,.24);color:#78350F}
+.truth-stack{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:stretch}.stack-diagram{display:grid;gap:.45rem}.stack-layer{display:grid;grid-template-columns:92px 1fr;gap:.65rem;align-items:center;padding:.65rem .75rem;border-radius:9px;border:1px solid var(--border);background:#fff}.stack-layer b{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}.stack-layer span{font-size:12px;color:var(--ink3);line-height:1.45}.matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}.matrix-cell{border:1px solid var(--border2);border-radius:8px;background:#fff;padding:.7rem}.matrix-cell b{display:block;font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:.35rem}.matrix-cell span{display:block;font-size:12px;color:var(--ink3);line-height:1.45}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}.lesson-card{border:1px solid var(--border2);border-radius:10px;background:#fff;padding:1rem}.lesson-card h3{font-family:var(--serif);font-size:1rem;margin-bottom:.5rem}.lesson-card p{font-size:12.5px;color:var(--ink3);line-height:1.55}.flowline{display:grid;gap:.35rem;margin-top:.65rem}.flow-step{font-family:var(--mono);font-size:10px;color:var(--ink2);background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:.38rem .5rem}.flow-stop{background:var(--red-bg);border-color:rgba(185,28,28,.18);color:#7F1D1D}.flow-ok{background:var(--green-bg);border-color:rgba(21,128,61,.18);color:#14532D}.coord-stack{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem}.coord-layer{border:1px solid var(--border);border-radius:9px;background:#fff;padding:.72rem .62rem;text-align:center}.coord-layer b{display:block;font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:.25rem}.coord-layer span{display:block;font-size:11.5px;line-height:1.4;color:var(--ink3)}
+.part-header{margin:3.5rem 0 2rem;padding:1.8rem 2rem;background:var(--dark);border-radius:14px;color:var(--dark-fg)}
+.part-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:.6rem}
+.part-header h2{font-family:var(--serif);font-size:1.55rem;font-weight:600;line-height:1.15}.part-header p{font-size:13px;color:var(--dark-muted);margin-top:.5rem;line-height:1.65}
+.chapter{margin-bottom:3.2rem;padding-bottom:2.7rem;border-bottom:1px solid var(--border2)}.chapter:last-child{border-bottom:none}
+.chapter-header{margin-bottom:1.35rem}.chapter-num{font-family:var(--mono);font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.chapter h2{font-family:var(--serif);font-size:1.5rem;font-weight:600;line-height:1.18;margin-bottom:.4rem}.chapter-lede{font-size:15px;color:var(--ink2);line-height:1.78;max-width:62ch}
+h3.section-h{font-family:var(--serif);font-size:1.08rem;font-weight:600;margin:1.8rem 0 .75rem;color:var(--ink)}
+h4.sub-h{font-family:var(--mono);font-size:.76rem;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin:1.3rem 0 .5rem}
+p{margin-bottom:.85rem;color:var(--ink2);font-size:14.5px;line-height:1.78}p:last-child{margin-bottom:0}
+ul.body-list{margin:.5rem 0 .9rem 1.2rem;display:grid;gap:.3rem}ul.body-list li{font-size:14px;color:var(--ink2);line-height:1.65}ul.body-list li::marker{color:var(--accent)}
+ol.steps{counter-reset:step;margin:.7rem 0 1rem;display:grid;gap:.4rem}
+ol.steps li{list-style:none;position:relative;padding:.6rem .9rem .6rem 2.7rem;background:#fff;border:1px solid var(--border2);border-radius:7px;font-size:13.5px;color:var(--ink2);line-height:1.6}
+ol.steps li::before{counter-increment:step;content:counter(step);position:absolute;left:.78rem;top:.66rem;width:1.25rem;height:1.25rem;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.58rem;display:grid;place-items:center}ol.steps li b{font-weight:500;color:var(--ink)}
+.checklist{margin:.7rem 0 1rem;display:grid;gap:.35rem}.checklist li{list-style:none;padding:.55rem .9rem .55rem 2.45rem;background:#fff;border:1px solid var(--border2);border-radius:7px;font-size:13.5px;color:var(--ink2);line-height:1.55;position:relative}.checklist li::before{content:"[ ]";position:absolute;left:.85rem;top:.52rem;font-size:12px;color:var(--ink4)}
+.callout{border-radius:8px;padding:1rem 1.25rem;margin:1.1rem 0;font-size:13.5px;line-height:1.65}.callout-warn{background:var(--amber-bg);border-left:3px solid var(--amber);color:#78350F}.callout-danger{background:var(--red-bg);border-left:3px solid var(--red);color:#7F1D1D}.callout-info{background:var(--blue-bg);border-left:3px solid var(--blue);color:#1E3A8A}.callout-success{background:var(--green-bg);border-left:3px solid var(--green);color:#14532D}.callout-dark{background:var(--dark2);border-left:3px solid var(--accent2);color:var(--dark-muted)}.callout strong{font-weight:600}
+.table-wrap{overflow-x:auto;margin:1.1rem 0}table{width:100%;border-collapse:collapse;font-size:13px}th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2)}td{padding:9px 12px;border-bottom:1px solid var(--border2);color:var(--ink2);vertical-align:top;line-height:1.55}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg2)}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;margin:1rem 0}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin:1rem 0}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem}.card-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.35rem}.card h4{font-family:var(--serif);font-size:.98rem;font-weight:600;margin-bottom:.3rem}.card p{font-size:.8rem;color:var(--ink3);line-height:1.58}
+pre{background:var(--dark);border-radius:8px;padding:1.2rem 1.4rem;overflow-x:auto;margin:1rem 0;font-family:var(--mono);font-size:12px;line-height:1.72;color:#D6D3D1;white-space:pre-wrap}
+.stage-card{border:1px solid var(--border);border-radius:12px;background:#fff;margin:1rem 0;overflow:hidden}.stage-head{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1rem 1.15rem;background:var(--bg2);border-bottom:1px solid var(--border2)}.stage-head strong{font-family:var(--serif);font-size:1.05rem}.stage-head span{font-family:var(--mono);font-size:.62rem;color:var(--accent)}.stage-body{padding:1rem 1.15rem}.gate{margin-top:.8rem;padding:.85rem 1rem;border-radius:8px;background:rgba(15,118,110,.07);border-left:3px solid var(--accent);font-size:13.5px;color:var(--ink2)}
+.page-footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink4);flex-wrap:wrap;gap:1rem}.footer-link-page{color:var(--accent)}.footer-link-page:hover{text-decoration:underline}
 #resume-toast{position:fixed;bottom:18px;right:18px;z-index:400;background:var(--dark);color:var(--dark-fg);border-radius:10px;padding:.8rem 1.1rem;font-family:var(--mono);font-size:11px;display:none;align-items:center;gap:.8rem;box-shadow:0 8px 30px rgba(28,25,23,.3)}
-#resume-toast a{color:#93C5FD;text-decoration:underline}
-#resume-toast button{background:none;border:none;color:var(--dark-dim);cursor:pointer;font-size:14px}
-.page-footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink4);flex-wrap:wrap;gap:1rem}
-.footer-link-page{color:var(--accent)}
-.footer-link-page:hover{text-decoration:underline}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:2rem 1.25rem 4rem}.mode-banner>span:last-child{display:none}.header-title{display:none}}
-@media(max-width:600px){.feature-grid,.pricing-grid{grid-template-columns:1fr}.showcase-stats{grid-template-columns:1fr 1fr}}
-@media print{
-  .mode-banner,.site-header,.sidebar,#progress-bar,#resume-toast,.hero-actions{display:none!important}
-  .layout{display:block;max-width:none}
-  .main{max-width:none;padding:0}
-  body{background:#fff;font-size:11pt}
-  .module-section{break-inside:avoid-page}
-  pre{white-space:pre-wrap}
-  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#666}
-  .source-cite::after,.source-link::after{content:""!important}
-}
+#resume-toast a{color:#5EEAD4;text-decoration:underline}#resume-toast button{background:none;border:none;color:var(--dark-dim);cursor:pointer;font-size:14px}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:2rem 1.25rem 4rem}.grid-2,.grid-3,.audience-grid,.truth-stack,.matrix,.lesson-grid{grid-template-columns:1fr}.coord-stack{grid-template-columns:1fr}.pipeline-visual{grid-template-columns:repeat(2,1fr)}.pipe-node::after{display:none}.lane{grid-template-columns:1fr}.lane-track{overflow-x:auto;padding-bottom:.2rem}.mode-banner>span:last-child{display:none}.header-title{display:none}}
+@media(max-width:560px){.pipeline-visual{grid-template-columns:1fr}.visual-head{align-items:flex-start;flex-direction:column}.visual-note{text-align:left}.audience-card{min-height:0}}
+@media print{.mode-banner,.site-header,.sidebar,#progress-bar,#resume-toast,.hero-actions{display:none!important}.layout{display:block;max-width:none}.main{max-width:none;padding:0}body{background:#fff;font-size:11pt}.chapter{break-inside:avoid-page}pre{white-space:pre-wrap}}
+
+.power-tip{background:var(--dark2);border:1px solid rgba(245,242,236,.08);border-left:3px solid var(--accent2);border-radius:8px;padding:1rem 1.25rem;margin:1.1rem 0}
+.power-tip-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+.power-tip p{color:#D6D3D1;font-size:13px;line-height:1.65;margin:0}
+.reflect{background:var(--purple-bg);border:1px solid rgba(124,58,237,.18);border-left:3px solid var(--purple);border-radius:8px;padding:1rem 1.25rem;margin:1.1rem 0}
+.reflect-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:.5rem}
+.reflect p{font-size:13px;line-height:1.65;margin:0;color:var(--ink2)}
+.source-index{display:grid;gap:.45rem;margin:1.1rem 0}
+.source-row{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:center;padding:.55rem .8rem;background:#fff;border:1px solid var(--border2);border-radius:7px}
+.source-num{font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid var(--border);border-radius:4px;padding:2px 6px}
+.source-title{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.source-link{font-family:var(--mono);font-size:10px;color:var(--accent);white-space:nowrap}
+.source-cite{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);margin-top:.5rem}
+.gate-box{margin:1.2rem 0;border:1px dashed var(--border);border-radius:12px;background:linear-gradient(180deg,#fff,var(--bg2));padding:1.5rem;text-align:center}
+.gate-box input{font-family:var(--mono);font-size:12px;padding:.6rem .8rem;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--ink3);min-width:230px}
+.gate-box button{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:.6rem 1.1rem;border:0;border-radius:7px;background:var(--ink4);color:#fff;cursor:not-allowed}
 </style>
 </head>
 <body>
 <div class="mode-banner">
-  <div class="mode-banner-left">
-    <div class="mode-dot"></div>
-    <span>Grimoire 015 · The GHL Admin's Build · Marketing &amp; Integrations</span>
-  </div>
-  <span style="font-size:10px;color:var(--dark-dim)">The engine + the fork · email-gated · unlisted preview</span>
+  <div class="mode-banner-left"><div class="mode-dot"></div><span>Grimoire 015 &middot; The GHL Admin's Build &middot; Marketing &amp; Integrations</span></div>
+  <span style="font-size:10px;color:var(--dark-dim)">5-part engine &middot; the fork &middot; email-gated &middot; unlisted preview</span>
 </div>
 <header class="site-header">
   <div class="header-left">
-    <a href="../projects/" class="header-back">← Projects</a>
+    <a href="../projects/" class="header-back">&lt;- Projects</a>
     <div class="header-divider"></div>
     <span class="header-title">The GHL Admin's Build — Marketing &amp; Integrations</span>
   </div>
-  <span class="header-badge">Grimoire 015 · 2026</span>
+  <span class="header-badge">Grimoire 015 &middot; 2026</span>
 </header>
 <div id="progress-bar"></div>
 <div class="layout">
-<nav class="sidebar" aria-label="Module navigation">
-  <div class="nav-search"><input type="text" id="nav-filter" placeholder="Filter modules…" aria-label="Filter navigation"><kbd>/</kbd></div>
+<nav class="sidebar" aria-label="Grimoire navigation">
+  <div class="nav-search"><input type="text" id="nav-filter" placeholder="Filter sections..." aria-label="Filter navigation"></div>
+  <div class="nav-section">
+    <div class="nav-section-label">Start</div>
+    <a href="#overview" class="nav-link active">Overview</a>
+  </div>
   <div class="nav-section">
     <div class="nav-section-label">The Pivot</div>
-    <a href="#open" class="nav-link active">Tell Me About Myself</a>
-    <a href="#thesis" class="nav-link" style="color:var(--accent)">What GHL Actually Is</a>
+    <a href="#open" class="nav-link">Tell Me About Myself</a>
+    <a href="#thesis" class="nav-link">What GHL Actually Is</a>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">The Universal Engine</div>
-    <a href="#m1" class="nav-link">E1 — The Admin Mandate</a>
-    <a href="#m2" class="nav-link">E2 — Integrations &amp; the Perimeter</a>
-    <a href="#m3" class="nav-link">E3 — Funnels &amp; Capture</a>
-    <a href="#m4" class="nav-link">E4 — Speed-to-Lead &amp; Lead Mgmt</a>
-    <a href="#m5" class="nav-link">E5 — Marketing Data &amp; Attribution</a>
+    <a href="#m1" class="nav-link">E1 - Admin Mandate</a>
+    <a href="#m2" class="nav-link">E2 - Integrations &amp; Perimeter</a>
+    <a href="#m3" class="nav-link">E3 - Funnels &amp; Capture</a>
+    <a href="#m4" class="nav-link">E4 - Speed-to-Lead</a>
+    <a href="#m5" class="nav-link">E5 - Marketing Data</a>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">The Fork</div>
     <a href="#gate" class="nav-link">The Gate</a>
-    <a href="#fork" class="nav-link">Where It Varies — Your Business</a>
+    <a href="#fork" class="nav-link">Where It Varies</a>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">The Build</div>
-    <a href="#m6" class="nav-link">The 12-Month Roadmap</a>
+    <a href="#m6" class="nav-link">12-Month Roadmap</a>
     <a href="#m7" class="nav-link">Economics &amp; the Ask</a>
   </div>
   <div class="nav-section">
@@ -234,458 +163,376 @@ details .d-body{padding:0 1rem 1rem;font-size:13px;color:var(--ink2)}
     <a href="#sources" class="nav-link">Sources &amp; Receipts</a>
   </div>
 </nav>
-<main class="content">
+<main class="main" id="top">
 
-<!-- COLD OPEN -->
-<section class="module-section" id="open">
-  <div class="module-header">
-    <span class="module-num" style="border-color:var(--accent);color:var(--accent)">00</span>
-    <div>
-      <div class="module-title">Tell Me About Myself</div>
-      <div class="module-sub">The short version — then the pivot.</div>
+  <section class="hero" id="overview">
+    <div class="hero-eyebrow">Grimoire 015 &middot; June 2026 &middot; Capability Build</div>
+    <h1>The GHL Admin's Build: <em>Marketing &amp; Integrations</em></h1>
+    <p class="hero-sub">Drop me into any business. This is the GoHighLevel marketing engine I build the same way every time — and the exact point where it forks to yours. A proposal disguised as a manual: read the engine free, and by the end you're answering my questions about your business.</p>
+    <div class="stat-row">
+      <div class="stat-pill"><strong>5</strong>-part engine</div>
+      <div class="stat-pill"><strong>the</strong> fork</div>
+      <div class="stat-pill"><strong>12</strong>-month roadmap</div>
+      <div class="stat-pill"><strong>company</strong>-agnostic</div>
+      <div class="stat-pill"><strong>email</strong>-gated</div>
     </div>
-  </div>
-  <p>I'm an operational systems builder. I build the machinery that captures, routes, and converts demand — CRMs, funnels, automations, integrations — and I write down everything I build, because I use the notes. This document lives in that library. By trade I run GoHighLevel as a <strong>marketing and integrations engine</strong>: I own the instance, the funnels, the data, and every wire connecting it to ads, payments, telephony, and the automation stack underneath.</p>
-  <p>You already have my résumé. You can see the receipts on the shelf — a full-stack CRM engine for a construction firm, a dual-market rental marketing system that pulled 18 consults from a cold 340-contact list. So I'll keep the autobiography to one line: <strong>I'm the person who makes sure no lead you paid for dies in a gap between tools.</strong></p>
-  <div class="callout callout-info" style="margin-top:1.6rem"><strong>So here's the pivot.</strong> You didn't bring me in for a life story — you've got a marketing problem, or you wouldn't be hiring for this seat. So instead of answering "tell me about yourself" for ten minutes, let me show you exactly how I'd run your GHL marketing engine. Read on, and by the end you'll be answering <em>my</em> questions about your business. That's the job working before you've decided to give it to me.</p></div>
-</section>
+    <div class="hero-actions">
+      <a class="btn-hero solid" href="#m1">Start the engine</a>
+      <a class="btn-hero ghost" href="#fork">Jump to the fork</a>
+      <a class="btn-hero ghost" href="#m6">The 12-month plan</a>
+    </div>
+    <div class="callout callout-info"><strong>The pivot:</strong> you didn't bring me in for a life story — you have a marketing problem. So instead of ten minutes of "tell me about yourself," here's exactly how I'd run your GHL marketing engine. The job, working before you've decided to give it to me.</div>
+    <div class="visual-panel" aria-label="The engine and the fork">
+      <div class="visual-head">
+        <div class="visual-kicker">The engine + the fork</div>
+        <div class="visual-note">Built identically everywhere &middot; forks once, to you</div>
+      </div>
+      <div class="visual-body">
+        <div class="coord-stack">
+          <div class="coord-layer"><b>E1 Mandate</b><span>Own all five surfaces</span></div>
+          <div class="coord-layer"><b>E2 Integrations</b><span>The hub &amp; perimeter</span></div>
+          <div class="coord-layer"><b>E3 Funnels</b><span>Capture that converts</span></div>
+          <div class="coord-layer"><b>E4 Lead Mgmt</b><span>Speed-to-lead</span></div>
+          <div class="coord-layer"><b>E5 Data</b><span>Attribution</span></div>
+        </div>
+        <div class="flowline" style="margin-top:.7rem">
+          <span class="flow-step flow-ok">The engine — identical for every business (reads free)</span>
+          <span class="flow-step flow-stop">&#9670; The gate — email-walled</span>
+          <span class="flow-step">The fork — your niche, setup, and scale</span>
+          <span class="flow-step flow-ok">The 12-month build</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- THESIS -->
-<section class="module-section" id="thesis">
-  <div class="module-header">
-    <span class="module-num">01</span>
-    <div>
-      <div class="module-title">What GHL Actually Is</div>
-      <div class="module-sub">Not a CRM. A marketing engine wearing a CRM's clothes.</div>
-    </div>
+  <div class="part-header">
+    <div class="part-label">The Pivot</div>
+    <h2>Who I Am, and Why That's Not the Point</h2>
+    <p>The short version, then the hard cut into your marketing problem.</p>
   </div>
-  <p>Most people list "GoHighLevel" under CRM skills. That's the first tell that they don't really run it. GHL is <strong>marketing software that grew a CRM to keep you from leaving</strong> — and understanding that distinction is the difference between building <em>with</em> the tool's grain and fighting it.</p>
-  <p>What GHL is genuinely elite at is a short, specific list. Build to that list and it's the best value in the category. Ask it to be Salesforce and it will disappoint you in slow, expensive ways.</p>
-  <div class="feature-grid">
-    <div class="feature-card" style="border-left:3px solid var(--blue)">
-      <div class="feature-card-label" style="color:var(--blue)">Integrations &amp; the perimeter</div>
-      <h4>The hub it was born to be</h4>
-      <p>Native ad-lead ingestion, Stripe, calendars, telephony, and webhooks out to Zapier / Make / n8n. GHL is happiest as the center of a wheel, not the whole machine.</p>
-    </div>
-    <div class="feature-card" style="border-left:3px solid var(--teal)">
-      <div class="feature-card-label" style="color:var(--teal)">Funnel &amp; site building</div>
-      <h4>Capture surfaces, fast</h4>
-      <p>Funnels, forms, surveys, and sites that wire straight into the database. Templated once, cloned in thirty minutes. This is where speed compounds.</p>
-    </div>
-    <div class="feature-card" style="border-left:3px solid var(--amber)">
-      <div class="feature-card-label" style="color:var(--amber)">Marketing data capture</div>
-      <h4>Every touch, attributed</h4>
-      <p>UTMs, hidden fields, trigger links, call tracking — the raw material of knowing which dollar produced which customer. GHL collects it well even if it reports it poorly.</p>
-    </div>
-    <div class="feature-card" style="border-left:3px solid var(--green)">
-      <div class="feature-card-label" style="color:var(--green)">Lead management</div>
-      <h4>Speed-to-lead, pipelines, follow-up</h4>
-      <p>Instant response, pipeline movement, nurture, reactivation. The unsexy plumbing that decides whether marketing spend turns into revenue or evaporates.</p>
-    </div>
-  </div>
-  <div class="reflect">
-    <div class="reflect-label">↺ Honest assessment — and the question you should ask me</div>
-    <p>GHL is mediocre at deep reporting, its data model is rigid next to a real CRM, and its shared sending infrastructure means your deliverability partly rides on strangers. So the fair pushback is: <em>"then why GHL instead of HubSpot or a proper stack?"</em> Because for a service business or an agency, GHL <strong>consolidates</strong> five-to-ten tools, white-labels, costs a fraction at scale, and clones a proven build via snapshots. You buy consolidation and speed, not best-in-class anything — and you bolt on n8n + a real BI layer exactly where GHL runs out of room. Knowing where it runs out is the job.</p>
-  </div>
-</section>
 
-<!-- E1 -->
-<section class="module-section" id="m1">
-  <div class="module-header">
-    <span class="module-num">E1</span>
-    <div>
-      <div class="module-title">The Admin Mandate</div>
-      <div class="module-sub">What I own end to end — and why it's one person, not three</div>
+  <section class="chapter" id="open">
+    <div class="chapter-header">
+      <div class="chapter-num">00 &middot; Cold open</div>
+      <h2>Tell Me About Myself</h2>
+      <p class="chapter-lede">I'm an operational systems builder. I run GoHighLevel as a marketing and integrations engine — and I make sure no lead you paid for dies in a gap between tools.</p>
     </div>
-  </div>
-  <p>The front half of GHL is nearly identical across every business. That's what makes this section company-agnostic: the engine I describe here is the engine I've built before and will build again, regardless of what you sell. As the administrator I own five surfaces end to end:</p>
-  <ol class="steps">
-    <li><b>The instance</b> — sub-accounts, users, roles, permissions, billing hygiene, and the naming conventions everyone else has to follow.</li>
-    <li><b>The data model</b> — custom fields, custom objects, and a strict tag taxonomy that keeps the database queryable a year from now.</li>
-    <li><b>The marketing engine</b> — funnels, forms, calendars, email / SMS / WhatsApp, and the campaigns running on them.</li>
-    <li><b>The automation layer</b> — every workflow that moves a lead without a human touching it.</li>
-    <li><b>The integration perimeter</b> — ads, payments, telephony, and the n8n / Zapier / webhook connections to everything GHL doesn't do natively.</li>
-  </ol>
-  <div class="power-tip"><div class="power-tip-label">⚡ Power Tip</div>
-    <p><strong>The first value isn't a new funnel — it's consolidated ownership.</strong> When one person owns all five surfaces, leads stop falling between an agency, a VA, and "whoever set it up." When ownership is split, every handoff is a leak. I close the org-chart leaks before I build a single new asset.</p>
-  </div>
-  <h2 class="section-h">Operating principles</h2>
-  <div class="table-wrap"><table>
-    <tr><th>Principle</th><th>What it means in the build</th></tr>
-    <tr><td><strong>Single source of truth</strong></td><td>GHL holds the canonical contact record. Integrations sync <em>to</em> it, never fork it.</td></tr>
-    <tr><td><strong>Speed-to-lead</strong></td><td>First automated response inside 5 minutes, always. The first responder usually wins the deal.</td></tr>
-    <tr><td><strong>No orphan leads</strong></td><td>Every contact belongs to a pipeline stage or a nurture. Nothing sits untagged and untouched.</td></tr>
-    <tr><td><strong>Idempotency</strong></td><td>Re-running a workflow can't double-text, double-charge, or duplicate a contact. Built in, not patched later.</td></tr>
-    <tr><td><strong>Instrument first</strong></td><td>Tracking ships <em>before</em> the funnel goes live. If it isn't measured, it didn't happen.</td></tr>
-    <tr><td><strong>Document as you build</strong></td><td>Every workflow has a name convention, an owner, and a one-line purpose. The instance stays legible.</td></tr>
-  </table></div>
-</section>
+    <p>I build the machinery that captures, routes, and converts demand — CRMs, funnels, automations, integrations — and I write down everything I build, because I use the notes. This document lives in that library. By trade I own the GHL instance, the funnels, the data, and every wire connecting it to ads, payments, telephony, and the automation stack underneath.</p>
+    <p>You already have my r&eacute;sum&eacute;, and the receipts are on the shelf: a full-stack CRM engine for a construction firm, and a dual-market rental system that pulled 18 consultations from a cold 340-contact list. So I'll keep the autobiography to one line and spend the rest of this showing you the work.</p>
+    <div class="callout callout-success"><strong>Read on, and the roles reverse.</strong> By the last section you'll be answering a marketing consultant's discovery questions about your own business — not interviewing a candidate. That's the point.</div>
+  </section>
 
-<!-- E2 -->
-<section class="module-section" id="m2">
-  <div class="module-header">
-    <span class="module-num">E2</span>
-    <div>
-      <div class="module-title">Integrations &amp; the Capture Perimeter</div>
-      <div class="module-sub">GHL is the hub. The perimeter is where the real work routes.</div>
+  <section class="chapter" id="thesis">
+    <div class="chapter-header">
+      <div class="chapter-num">01 &middot; Thesis</div>
+      <h2>What GHL Actually Is</h2>
+      <p class="chapter-lede">Not a CRM. A marketing engine wearing a CRM's clothes — and knowing the difference is the whole job.</p>
     </div>
-  </div>
-  <p>GHL does plenty natively, and reaches for orchestration tools where logic gets real. My bias: native where it's solid, webhooks + n8n where it isn't — it's cheaper and more controllable than chaining a dozen Zaps. (That lesson cost a real client an $800 Zapier bill; the n8n rebuild runs for the price of a small VPS. See G004.)</p>
-  <h2 class="section-h">The integration decision table</h2>
-  <div class="table-wrap"><table>
-    <tr><th>Option</th><th>Use when…</th><th>Cost</th></tr>
-    <tr><td><strong>GHL Native</strong></td><td>Integration exists natively (Stripe, Google, Facebook, Twilio/LC)</td><td>Included</td></tr>
-    <tr><td><strong>Zapier</strong></td><td>Quick mainstream connections; speed beats cost. Official LeadConnector app.</td><td>$20–50+/mo</td></tr>
-    <tr><td><strong>Make.com</strong></td><td>Multi-step logic, data transformation, scheduled tasks</td><td>$9–20/mo</td></tr>
-    <tr><td><strong>n8n (self-hosted)</strong></td><td>AI orchestration, Claude API, high volume, cost control</td><td>~$6/mo VPS</td></tr>
-    <tr><td><strong>GHL API (direct)</strong></td><td>Custom apps, bulk operations, real-time sync</td><td>Dev time</td></tr>
-  </table></div>
-  <h2 class="section-h">The capture perimeter — what feeds the hub</h2>
-  <div class="table-wrap"><table>
-    <tr><th>Surface</th><th>Connects to</th><th>Why it matters</th></tr>
-    <tr><td><strong>Ad platforms</strong></td><td>Meta &amp; Google lead forms</td><td>Leads flow straight to pipelines; conversions flow back for optimization</td></tr>
-    <tr><td><strong>Payments</strong></td><td>Stripe / native checkout</td><td>Revenue events tie to the contact record — gate on <code>payment.cleared</code>, never <code>submitted</code></td></tr>
-    <tr><td><strong>Telephony</strong></td><td>LC Phone / call tracking</td><td>Calls logged and attributed to source</td></tr>
-    <tr><td><strong>Orchestration</strong></td><td>n8n / Zapier / Make / webhooks</td><td>Enrichment, routing, AI, and anything GHL can't do alone</td></tr>
-    <tr><td><strong>Reporting</strong></td><td>Sheets / Looker Studio / BI</td><td>Numbers leave GHL for the dashboard an owner actually reads</td></tr>
-  </table></div>
-  <pre><span class="c">// The pattern I reach for most often:</span>
-  Form / Ad lead  <span class="w">→</span>  GHL workflow  <span class="w">→</span>  webhook  <span class="w">→</span>  n8n
-                                          <span class="w">→</span> enrich + dedupe
-                                          <span class="w">→</span> Claude API (qualify / summarize)
-                                          <span class="w">→</span> write back to a GHL custom field
-  <span class="c">// GHL stays the source of truth. The brain lives outside it.</span></pre>
-  <a href="https://marketplace.gohighlevel.com/docs/" target="_blank" rel="noopener" class="source-cite">HighLevel API Docs ↗</a>
-</section>
+    <p>Most people list "GoHighLevel" under CRM skills. That's the first tell that they don't really run it. GHL is <strong>marketing software that grew a CRM to keep you from leaving.</strong> Build with that grain and it's the best value in the category; ask it to be Salesforce and it disappoints you in slow, expensive ways.</p>
+    <div class="grid-2">
+      <div class="card"><div class="card-label">Integrations &amp; perimeter</div><h4>The hub it was born to be</h4><p>Native ad-lead ingestion, Stripe, calendars, telephony, and webhooks out to Zapier / Make / n8n. Happiest as the center of a wheel, not the whole machine.</p></div>
+      <div class="card"><div class="card-label">Funnel &amp; site building</div><h4>Capture surfaces, fast</h4><p>Funnels, forms, and sites that wire straight into the database. Templated once, cloned in thirty minutes. Where speed compounds.</p></div>
+      <div class="card"><div class="card-label">Marketing data capture</div><h4>Every touch, attributed</h4><p>UTMs, hidden fields, trigger links, call tracking — the raw material of knowing which dollar produced which customer. Collected well even when reported poorly.</p></div>
+      <div class="card"><div class="card-label">Lead management</div><h4>Speed-to-lead, pipelines, follow-up</h4><p>Instant response, pipeline movement, nurture, reactivation. The unsexy plumbing that decides whether spend becomes revenue or evaporates.</p></div>
+    </div>
+    <div class="reflect">
+      <div class="reflect-label">&#8635; Honest assessment — and the question you should ask me</div>
+      <p>GHL is mediocre at deep reporting, its data model is rigid next to a real CRM, and its shared sending infrastructure means your deliverability partly rides on strangers. So the fair pushback is: <em>"then why GHL instead of HubSpot or a proper stack?"</em> Because for a service business or agency it <strong>consolidates</strong> five-to-ten tools, white-labels, costs a fraction at scale, and clones a proven build via snapshots. You buy consolidation and speed — and you bolt on n8n and a real BI layer exactly where GHL runs out of room. Knowing where it runs out is the job.</p>
+    </div>
+  </section>
 
-<!-- E3 -->
-<section class="module-section" id="m3">
-  <div class="module-header">
-    <span class="module-num">E3</span>
-    <div>
-      <div class="module-title">Funnels &amp; Capture Surfaces</div>
-      <div class="module-sub">Every funnel has the same seven joints. Most break on the back four.</div>
-    </div>
+  <div class="part-header">
+    <div class="part-label">The Universal Engine</div>
+    <h2>Five Surfaces, Built the Same Everywhere</h2>
+    <p>The front half of GHL barely changes by business. This is the part I've shipped before and will ship again — company-agnostic by design.</p>
   </div>
-  <p>Companies obsess over traffic and capture and neglect everything after the form. The anatomy below is universal; only the shape changes by business model.</p>
-  <div class="table-wrap"><table>
-    <tr><th>#</th><th>Stage</th><th>The job of this stage</th></tr>
-    <tr><td>1</td><td><strong>Offer</strong></td><td>A reason to raise a hand worth more than the effort to claim it</td></tr>
-    <tr><td>2</td><td><strong>Traffic</strong></td><td>The right people arriving — paid, organic, referral, owned</td></tr>
-    <tr><td>3</td><td><strong>Capture</strong></td><td>Contact info exchanged for the offer, friction minimized</td></tr>
-    <tr><td>4</td><td><strong>Nurture</strong></td><td>Trust built across touches until they're ready</td></tr>
-    <tr><td>5</td><td><strong>Close</strong></td><td>The booked call, quote, or checkout — the conversion event</td></tr>
-    <tr><td>6</td><td><strong>Retain</strong></td><td>Onboarding and repeat that raise lifetime value</td></tr>
-    <tr><td>7</td><td><strong>Refer</strong></td><td>Happy customers turned into the cheapest traffic there is</td></tr>
-  </table></div>
-  <h2 class="section-h">Build a capture funnel that doesn't leak</h2>
-  <ol class="steps">
-    <li><b>One promise above the fold</b> — and no second ask competing with it.</li>
-    <li><b>Form wired direct to pipeline:</b> <span class="path"><b>Sites</b> <i>→</i> <b>Forms</b> <i>→</i> <b>+ Add Form</b></span> — 2 visible fields max, hidden UTM fields, consent checkbox (never pre-ticked).</li>
-    <li><b>Proof close behind the promise</b> — reviews, results, a guarantee. Borrow trust before asking for it.</li>
-    <li><b>Mobile-first and fast</b> — assume thumbs, not a desktop. Speed is a conversion feature.</li>
-    <li><b>Tag on submission</b> <code>source:website</code> and fire the Day-0 sequence inside 5 minutes (E4).</li>
-    <li><b>Test with a dummy contact</b> — submit it yourself, watch the workflow History tab execute end to end before going live.</li>
-  </ol>
-  <div class="callout callout-danger"><strong>The #1 silent funnel bug:</strong> a submit button not linked to a form block. It looks fine and captures nothing. Every funnel I ship gets a live test submission before it's called done.</div>
-</section>
 
-<!-- E4 -->
-<section class="module-section" id="m4">
-  <div class="module-header">
-    <span class="module-num">E4</span>
-    <div>
-      <div class="module-title">Speed-to-Lead &amp; Lead Management</div>
-      <div class="module-sub">The highest-ROI automation in the whole build — and where the receipts come from</div>
+  <section class="chapter" id="m1">
+    <div class="chapter-header">
+      <div class="chapter-num">E1 &middot; Mandate</div>
+      <h2>The Admin Mandate</h2>
+      <p class="chapter-lede">What I own end to end — and why it's one person, not three.</p>
     </div>
-  </div>
-  <p>Most "we need more leads" problems are actually "we lose half the leads we have" problems. The fix is automated, it ships in week one, and it pays for the engagement before anything fancy gets built.</p>
-  <h2 class="section-h">Speed-to-lead</h2>
-  <pre><span class="w">Trigger</span>: Form Submitted / Ad lead received
-  <span class="w">0–60 sec</span>:  Auto-SMS + auto-email  (warm before a human blinks)
-  <span class="w">+0 sec</span>:   Create opportunity → stage: New Lead
-  <span class="w">+0 sec</span>:   Internal notification to the rep
-  <span class="w">On reply</span>: Stop the sequence, route to a human, tag <code>status:engaged</code>
-  <span class="c">// Responding in minutes vs hours multiplies contact + qualify rates.</span></pre>
-  <h2 class="section-h">Pipelines, nurture &amp; reactivation</h2>
-  <p>Stages are defined by <em>buyer action</em> — New Lead → Contacted → Booked → Showed → Won/Lost — so the board reflects reality and forecasting means something. Leads that aren't ready get a 7–12 touch nurture that stops the instant they convert. And the fastest ROI of all: <strong>database reactivation</strong> against the cold list the company already paid for.</p>
-  <div class="reflect">
-    <div class="reflect-label">↺ Receipts — this isn't theory</div>
-    <p>On a dual-market rental build (G002) the engine produced a <strong>34.2% open rate and 18 consultations from a 340-contact cold list</strong> — reactivation revenue from leads everyone had written off. On a construction CRM (G001) the same engine ran <strong>76 custom fields and 24 automations, QA-verified through 13 documented corrections</strong>. The front half of GHL is the part I've shipped and measured. That's why I can promise it before I've seen your account.</p>
-  </div>
-</section>
+    <p>As the administrator I own five surfaces. When one person owns all five, leads stop falling between an agency, a VA, and "whoever set it up."</p>
+    <ol class="steps">
+      <li><b>The instance</b> — sub-accounts, users, roles, permissions, billing hygiene, and the naming conventions everyone else follows.</li>
+      <li><b>The data model</b> — custom fields, custom objects, and a strict tag taxonomy that keeps the database queryable a year out.</li>
+      <li><b>The marketing engine</b> — funnels, forms, calendars, email / SMS / WhatsApp, and the campaigns on them.</li>
+      <li><b>The automation layer</b> — every workflow that moves a lead without a human touching it.</li>
+      <li><b>The integration perimeter</b> — ads, payments, telephony, and the n8n / Zapier / webhook connections to everything GHL doesn't do natively.</li>
+    </ol>
+    <div class="power-tip"><div class="power-tip-label">&#9889; Power Tip</div><p><strong>The first value isn't a new funnel — it's consolidated ownership.</strong> Split ownership means every handoff is a leak. I close the org-chart leaks before building a single new asset.</p></div>
+    <h3 class="section-h">Operating principles</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Principle</th><th>What it means in the build</th></tr>
+      <tr><td><strong>Single source of truth</strong></td><td>GHL holds the canonical contact record. Integrations sync <em>to</em> it, never fork it.</td></tr>
+      <tr><td><strong>Speed-to-lead</strong></td><td>First automated response inside 5 minutes, always. The first responder usually wins.</td></tr>
+      <tr><td><strong>No orphan leads</strong></td><td>Every contact belongs to a pipeline stage or a nurture. Nothing sits untagged and untouched.</td></tr>
+      <tr><td><strong>Idempotency</strong></td><td>Re-running a workflow can't double-text, double-charge, or duplicate a contact.</td></tr>
+      <tr><td><strong>Instrument first</strong></td><td>Tracking ships <em>before</em> the funnel goes live. If it isn't measured, it didn't happen.</td></tr>
+    </table></div>
+  </section>
 
-<!-- E5 -->
-<section class="module-section" id="m5">
-  <div class="module-header">
-    <span class="module-num">E5</span>
-    <div>
-      <div class="module-title">Marketing Data &amp; Attribution</div>
-      <div class="module-sub">If you can't trace a closed deal to its source, every budget call is a guess</div>
+  <section class="chapter" id="m2">
+    <div class="chapter-header">
+      <div class="chapter-num">E2 &middot; Perimeter</div>
+      <h2>Integrations &amp; the Capture Perimeter</h2>
+      <p class="chapter-lede">GHL is the hub. The perimeter is where the real work routes — native where solid, n8n where logic gets real.</p>
     </div>
-  </div>
-  <h2 class="section-h">UTM discipline — the attribution backbone</h2>
-  <div class="table-wrap"><table>
-    <tr><th>Parameter</th><th>Example values</th></tr>
-    <tr><td><code>utm_source</code></td><td>facebook, google, newsletter</td></tr>
-    <tr><td><code>utm_medium</code></td><td>cpc, email, social</td></tr>
-    <tr><td><code>utm_campaign</code></td><td>the specific ad or campaign name</td></tr>
-  </table></div>
-  <p>UTMs on every link, captured into hidden form fields, enforced as a source field on every contact. The standard I hold: any lead, any day, traceable from first click to closed revenue.</p>
-  <div class="reflect">
-    <div class="reflect-label">↺ Honest assessment — GHL reporting runs out of room here</div>
-    <p>GHL's native dashboard answers "how many, from where, what cost, what's it worth" — and not much past that. So I pipe the data out: <strong>GHL → Google Sheets → Looker Studio</strong>, where the owner gets a branded, two-minute read instead of twelve charts they ignore. The KPI tree hangs one north-star metric (CAC or booked revenue) at the top; everything else ladders up to it. Weekly look at leading indicators, monthly at lagging, quarterly reset.</p>
-  </div>
-</section>
+    <p>My bias: native where it's solid, webhooks + n8n where it isn't — cheaper and more controllable than chaining a dozen Zaps. (That lesson cost a real client an $800 Zapier bill; the n8n rebuild runs for the price of a small VPS. See G004.)</p>
+    <div class="table-wrap"><table>
+      <tr><th>Option</th><th>Use when&hellip;</th><th>Cost</th></tr>
+      <tr><td><strong>GHL Native</strong></td><td>It exists natively (Stripe, Google, Facebook, Twilio/LC)</td><td>Included</td></tr>
+      <tr><td><strong>Zapier</strong></td><td>Quick mainstream connections; speed beats cost</td><td>$20–50+/mo</td></tr>
+      <tr><td><strong>Make.com</strong></td><td>Multi-step logic, data transformation, scheduled tasks</td><td>$9–20/mo</td></tr>
+      <tr><td><strong>n8n (self-hosted)</strong></td><td>AI orchestration, Claude API, high volume, cost control</td><td>~$6/mo VPS</td></tr>
+      <tr><td><strong>GHL API</strong></td><td>Custom apps, bulk operations, real-time sync</td><td>Dev time</td></tr>
+    </table></div>
+    <pre><span class="w">// The pattern I reach for most often:</span>
+  Form / Ad lead  ->  GHL workflow  ->  webhook  ->  n8n
+                                          -> enrich + dedupe
+                                          -> Claude API (qualify / summarize)
+                                          -> write back to a GHL custom field
+  <span class="w">// GHL stays the source of truth. The brain lives outside it.</span></pre>
+    <a href="https://marketplace.gohighlevel.com/docs/" target="_blank" rel="noopener" class="source-cite">HighLevel API Docs -&gt;</a>
+  </section>
 
-<!-- THE GATE -->
-<section class="module-section" id="gate">
-  <div class="module-header">
-    <span class="module-num" style="border-color:var(--accent2);color:var(--accent2)">◆</span>
-    <div>
-      <div class="module-title">The Gate</div>
-      <div class="module-sub">Everything above is the engine — built the same for everyone. Everything below is yours.</div>
+  <section class="chapter" id="m3">
+    <div class="chapter-header">
+      <div class="chapter-num">E3 &middot; Capture</div>
+      <h2>Funnels &amp; Capture Surfaces</h2>
+      <p class="chapter-lede">Every funnel has the same seven joints. Most break on the back four.</p>
     </div>
-  </div>
-  <p>The engine is company-agnostic on purpose: it's the proof, and it reads free. What comes next isn't generic — it depends entirely on your business, which means it's the part worth trading an email for.</p>
-  <div class="callout callout-warn" style="text-align:center">
-    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem">◆ Gated section · placeholder · inert</div>
-    <strong>The Fork, the 12-month roadmap, and the build blueprints unlock on email.</strong>
-    <div style="margin:.9rem auto 0;display:flex;gap:.5rem;max-width:420px">
-      <input type="email" placeholder="you@company.com" disabled style="flex:1;font-family:var(--mono);font-size:12px;padding:.6rem .8rem;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--ink3)">
-      <button type="button" disabled style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:.6rem 1rem;border:0;border-radius:6px;background:var(--ink4);color:#fff;cursor:not-allowed">Unlock</button>
-    </div>
-    <div style="margin-top:.7rem;font-family:var(--mono);font-size:10px;color:var(--ink3)">// STUB — not wired. Two versions ship from this file: an ungated direct link for live interviews, and this gated version for the public Library.</div>
-  </div>
-</section>
+    <div class="table-wrap"><table>
+      <tr><th>#</th><th>Stage</th><th>The job of this stage</th></tr>
+      <tr><td>1</td><td><strong>Offer</strong></td><td>A reason to raise a hand worth more than the effort to claim it</td></tr>
+      <tr><td>2</td><td><strong>Traffic</strong></td><td>The right people arriving — paid, organic, referral, owned</td></tr>
+      <tr><td>3</td><td><strong>Capture</strong></td><td>Contact info exchanged for the offer, friction minimized</td></tr>
+      <tr><td>4</td><td><strong>Nurture</strong></td><td>Trust built across touches until they're ready</td></tr>
+      <tr><td>5</td><td><strong>Close</strong></td><td>The booked call, quote, or checkout</td></tr>
+      <tr><td>6</td><td><strong>Retain</strong></td><td>Onboarding and repeat that raise lifetime value</td></tr>
+      <tr><td>7</td><td><strong>Refer</strong></td><td>Happy customers turned into the cheapest traffic there is</td></tr>
+    </table></div>
+    <h3 class="section-h">Build a capture funnel that doesn't leak</h3>
+    <ol class="steps">
+      <li><b>One promise above the fold</b> — no second ask competing with it.</li>
+      <li><b>Form wired direct to pipeline:</b> 2 visible fields max, hidden UTM fields, consent checkbox (never pre-ticked).</li>
+      <li><b>Proof close behind the promise</b> — reviews, results, a guarantee.</li>
+      <li><b>Tag on submission</b> <code>source:website</code> and fire the Day-0 sequence inside 5 minutes.</li>
+      <li><b>Test with a dummy contact</b> — watch the workflow History tab execute end to end before going live.</li>
+    </ol>
+    <div class="callout callout-danger"><strong>The #1 silent funnel bug:</strong> a submit button not linked to a form block. It looks fine and captures nothing. Every funnel I ship gets a live test submission before it's called done.</div>
+  </section>
 
-<!-- THE FORK -->
-<section class="module-section" id="fork">
-  <div class="module-header">
-    <span class="module-num">02</span>
-    <div>
-      <div class="module-title">Where It Varies — Your Business</div>
-      <div class="module-sub">The engine is identical everywhere. Here it forks — and these are my questions for you.</div>
+  <section class="chapter" id="m4">
+    <div class="chapter-header">
+      <div class="chapter-num">E4 &middot; Lead management</div>
+      <h2>Speed-to-Lead &amp; Lead Management</h2>
+      <p class="chapter-lede">The highest-ROI automation in the build — and where the receipts come from.</p>
     </div>
-  </div>
-  <p>This is the part I can't pre-build, because the answers are yours. Read these as the intake I'd run in our first working session. Notice what's happened: you're now answering a marketing consultant's discovery, not interviewing a candidate.</p>
-  <h2 class="section-h">The intake — your answers go here</h2>
-  <ol class="steps">
-    <li><b>Niche &amp; industry?</b> ____________ — determines funnel archetype, compliance surface (e.g. HIPAA), and the sales cycle the nurture has to survive.</li>
-    <li><b>Current setup — greenfield or rebuild?</b> ____________ — a blank account is a clean build; an inherited one starts with an audit and a lead-leak map before I touch anything.</li>
-    <li><b>One business, multi-location, or agency / multiple clients?</b> ____________ — this sets the entire architecture: single account vs. sub-account strategy vs. snapshots and SaaS mode.</li>
-    <li><b>What happens <em>after</em> capture?</b> ____________ — your sales motion and fulfillment. This is the half of the funnel the engine hands off to, and where the customization actually lives.</li>
-    <li><b>What's the offer, and what's a customer worth?</b> ____________ — sets the ROI math in the next section and tells me how hard each stage has to convert.</li>
-  </ol>
-  <h2 class="section-h">How each answer reshapes the build</h2>
-  <div class="feature-grid">
-    <div class="feature-card" style="border-left:3px solid var(--blue)">
-      <div class="feature-card-label" style="color:var(--blue)">Single business</div>
-      <h4>One account, depth over breadth</h4>
-      <p>Rigorous tagging, one polished funnel per offer, deep nurture. Everything tuned for one P&amp;L. Simplest architecture, fastest to optimize.</p>
+    <p>Most "we need more leads" problems are actually "we lose half the leads we have" problems. The fix is automated, ships in week one, and pays for the engagement before anything fancy gets built.</p>
+    <pre><span class="w">Trigger</span>: Form Submitted / Ad lead received
+  0-60 sec:  Auto-SMS + auto-email  (warm before a human blinks)
+  +0 sec:   Create opportunity -> stage: New Lead
+  +0 sec:   Internal notification to the rep
+  On reply: Stop the sequence, route to a human, tag status:engaged</pre>
+    <p>Stages are defined by <em>buyer action</em> — New Lead, Contacted, Booked, Showed, Won/Lost — so the board reflects reality. Leads that aren't ready get a 7–12 touch nurture that stops the instant they convert. And the fastest ROI of all: <strong>database reactivation</strong> against the cold list already paid for.</p>
+    <div class="reflect">
+      <div class="reflect-label">&#8635; Receipts — this isn't theory</div>
+      <p>On a dual-market rental build (G002) the engine produced a <strong>34.2% open rate and 18 consultations from a 340-contact cold list.</strong> On a construction CRM (G001) it ran <strong>76 custom fields and 24 automations, QA-verified through 13 documented corrections.</strong> The front half of GHL is the part I've shipped and measured — which is why I can promise it before I've seen your account.</p>
     </div>
-    <div class="feature-card" style="border-left:3px solid var(--teal)">
-      <div class="feature-card-label" style="color:var(--teal)">Multi-location</div>
-      <h4>Sub-accounts + shared snapshot</h4>
-      <p>One master snapshot cloned per location, round-robin or location-routed booking, roll-up reporting. Consistency across sites without rebuilding each.</p>
-    </div>
-    <div class="feature-card" style="border-left:3px solid var(--purple)">
-      <div class="feature-card-label" style="color:var(--purple)">Agency / multiple clients</div>
-      <h4>Snapshots, rebilling, SaaS mode</h4>
-      <p>White-label, a vetted template library, per-client sub-accounts, and rebilling above modeled cost. The build becomes a product, not a one-off.</p>
-    </div>
-    <div class="feature-card" style="border-left:3px solid var(--amber)">
-      <div class="feature-card-label" style="color:var(--amber)">Greenfield vs. rebuild</div>
-      <h4>Build forward vs. stop the bleeding</h4>
-      <p>Greenfield: straight to the engine. Rebuild: a 14-day audit, a lead-leak map with dollar estimates, and quick wins (reactivation) that fund the rest.</p>
-    </div>
-  </div>
-  <div class="power-tip"><div class="power-tip-label">⚡ Power Tip — the question most candidates never ask</div>
-    <p><strong>"How many businesses are we building this for?"</strong> is the single most architecture-defining question in GHL, and almost nobody asks it in an interview. Asking it signals I think in GHL's actual operating model — sub-accounts, snapshots, SaaS — not just "I can build a funnel."</p>
-  </div>
-</section>
+  </section>
 
-<!-- THE BUILD -->
-<section class="module-section" id="m6">
-  <div class="module-header">
-    <span class="module-num">03</span>
-    <div>
-      <div class="module-title">The 12-Month Roadmap</div>
-      <div class="module-sub">Fix and found → scale → optimize → compound</div>
+  <section class="chapter" id="m5">
+    <div class="chapter-header">
+      <div class="chapter-num">E5 &middot; Data</div>
+      <h2>Marketing Data &amp; Attribution</h2>
+      <p class="chapter-lede">If you can't trace a closed deal to its source, every budget call is a guess.</p>
     </div>
-  </div>
-  <div class="feature-grid">
-    <div class="feature-card" style="border-left:3px solid var(--blue)">
-      <div class="feature-card-label" style="color:var(--blue)">Q1 — Foundation &amp; quick wins</div>
-      <h4>Stop the leaks, prove the value</h4>
-      <p>Audit, lead-leak map, baseline. Account architecture &amp; data model. Speed-to-lead live. Database reactivation — the proof. Core pipeline + booking built.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Parameter</th><th>Example values</th></tr>
+      <tr><td><code>utm_source</code></td><td>facebook, google, newsletter</td></tr>
+      <tr><td><code>utm_medium</code></td><td>cpc, email, social</td></tr>
+      <tr><td><code>utm_campaign</code></td><td>the specific ad or campaign name</td></tr>
+    </table></div>
+    <p>UTMs on every link, captured into hidden form fields, enforced as a source field on every contact. The standard I hold: any lead, any day, traceable from first click to closed revenue.</p>
+    <div class="reflect">
+      <div class="reflect-label">&#8635; Honest assessment — GHL reporting runs out of room here</div>
+      <p>GHL's native dashboard answers "how many, from where, what cost, what's it worth" — and not much past that. So I pipe the data out: <strong>GHL -&gt; Google Sheets -&gt; Looker Studio</strong>, where the owner gets a branded two-minute read instead of twelve charts they ignore. One north-star metric (CAC or booked revenue) at the top; everything else ladders up. Weekly leading indicators, monthly lagging, quarterly reset.</p>
     </div>
-    <div class="feature-card" style="border-left:3px solid var(--teal)">
-      <div class="feature-card-label" style="color:var(--teal)">Q2 — Build &amp; scale</div>
-      <h4>Turn the engine on</h4>
-      <p>Primary funnels per archetype. A2P &amp; email deliverability locked. Ad integrations + attribution. Nurtures across sources. Review automation.</p>
-    </div>
-    <div class="feature-card" style="border-left:3px solid var(--amber)">
-      <div class="feature-card-label" style="color:var(--amber)">Q3 — Optimize</div>
-      <h4>Make every stage convert harder</h4>
-      <p>A/B test funnels &amp; offers. Tighten pipeline conversion. Cut CAC via attribution. Custom n8n integrations. Dashboard maturity.</p>
-    </div>
-    <div class="feature-card" style="border-left:3px solid var(--green)">
-      <div class="feature-card-label" style="color:var(--green)">Q4 — Compound</div>
-      <h4>Make year two cheaper than year one</h4>
-      <p>Retention &amp; referral loops. Reactivation on a recurring cycle. Full SOP documentation. Forecasting off clean data. Year-two roadmap from evidence.</p>
-    </div>
-  </div>
-  <h2 class="section-h">What I commit to, by quarter</h2>
-  <div class="table-wrap"><table>
-    <tr><th>By end of</th><th>Primary commitment</th><th>How it's proven</th></tr>
-    <tr><td><strong>Q1</strong></td><td>Speed-to-lead &lt; 5 min; reactivation revenue booked</td><td>Workflow logs + booked appts from the cold list</td></tr>
-    <tr><td><strong>Q2</strong></td><td>Every lead source attributed &amp; reporting</td><td>Source field enforced; dashboard live</td></tr>
-    <tr><td><strong>Q3</strong></td><td>Measurable lift in lead→customer rate; lower CAC</td><td>Pipeline conversion vs. the Q1 baseline</td></tr>
-    <tr><td><strong>Q4</strong></td><td>Repeat/referral contributing to growth; documented system</td><td>Retention metrics + SOP handover pack</td></tr>
-  </table></div>
-</section>
+  </section>
 
-<!-- ECONOMICS & ASK -->
-<section class="module-section" id="m7">
-  <div class="module-header">
-    <span class="module-num">04</span>
-    <div>
-      <div class="module-title">Economics &amp; the Ask</div>
-      <div class="module-sub">The case isn't "marketing matters." It's arithmetic.</div>
-    </div>
+  <div class="part-header">
+    <div class="part-label">The Fork</div>
+    <h2>Where the Engine Stops and Your Business Begins</h2>
+    <p>Everything above is identical across businesses. Everything below depends on you — which is exactly where I hand you the questions.</p>
   </div>
-  <p>Take a business at 100 inquiries a month, closing 20% at a $1,200 average ticket — that's $288k/year in won work. Recover even a quarter of the leads currently leaking at first-response and follow-up, and at the same close rate that's roughly <strong>$70k+ of recovered revenue from leads already paid for</strong> — before a dollar of new ad spend. (Numbers are illustrative; in Q1 I replace them with yours.)</p>
-  <div class="callout callout-success"><strong>The ROI logic.</strong> A GHL admin pays for themselves in recovered leakage alone. Better funnels, lower CAC, retention, and referral are upside that compounds quarter over quarter. The system is an appreciating asset, not a recurring cost.</div>
-  <h2 class="section-h">The 90-day proof — and the ask</h2>
-  <p>I don't ask anyone to take a year on faith. The first 90 days are built to prove the thesis: the audit names the leaks in dollars, speed-to-lead and reactivation deliver visible revenue from existing leads, and the dashboard makes every result legible.</p>
-  <div class="power-tip"><div class="power-tip-label">⚡ The ask</div>
-    <p><strong>Give me a sandbox sub-account and one working session, and I'll build you a live capture funnel + speed-to-lead workflow before we finish talking.</strong> Then give me the first 30 days to diagnose and the next 60 to prove it. By day 90 you'll have recovered revenue, a system you can see, and a roadmap earned by evidence — not promised in an interview.</p>
-  </div>
-  <p style="font-family:var(--serif);font-size:1.15rem;font-style:italic;color:var(--ink2);margin-top:1.6rem">That's the plan. It walked in before I did.</p>
-</section>
 
-<!-- SOURCES & RECEIPTS -->
-<section class="module-section" id="sources">
-  <div class="module-header">
-    <span class="module-num">REF</span>
-    <div>
-      <div class="module-title">Sources &amp; Receipts</div>
-      <div class="module-sub">The build claims anchor to my own shipped systems and GHL's own docs.</div>
+  <section class="chapter" id="gate">
+    <div class="chapter-header">
+      <div class="chapter-num">&#9670; The gate</div>
+      <h2>The Engine Reads Free. The Rest Is Yours.</h2>
+      <p class="chapter-lede">The engine is company-agnostic on purpose — it's the proof. What comes next isn't generic, which makes it the part worth trading an email for.</p>
     </div>
-  </div>
-  <div class="source-index">
-    <div class="source-row"><div class="source-num">01</div><div class="source-title">Receipt — ASMC Full Stack CRM Engine (G001): 76 custom fields, 24 Zaps, QA-verified</div><a href="/library/grimoires/001-asmc-crm-engine.html" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">02</div><div class="source-title">Receipt — Dual Wing Rental Marketing Engine (G002): 34.2% open rate, 18 consults from a cold 340-list</div><a href="/library/grimoires/002-dual-wing-rental.html" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">03</div><div class="source-title">Method — GHL 101: The Button-to-Button Manual (G003): every procedure as click-paths</div><a href="/library/grimoires/003-ghl-101.html" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">04</div><div class="source-title">Method — n8n 101 (G004): the orchestration layer and the $800 Zapier bill</div><a href="/library/grimoires/004-n8n-101.html" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">05</div><div class="source-title">GHL Official Website — product, pricing, announcements</div><a href="https://www.gohighlevel.com" target="_blank" rel="noopener" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">06</div><div class="source-title">Workflows &amp; Automation — triggers, actions, reentry</div><a href="https://help.gohighlevel.com/support/solutions/48000449539" target="_blank" rel="noopener" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">07</div><div class="source-title">Opportunities &amp; Pipelines — stages, Kanban, Forecast View</div><a href="https://help.gohighlevel.com/support/solutions/48000449537" target="_blank" rel="noopener" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">08</div><div class="source-title">Reporting &amp; Attribution — dashboard, UTM tracking</div><a href="https://help.gohighlevel.com/support/solutions/48000449543" target="_blank" rel="noopener" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">09</div><div class="source-title">SaaS Mode Full Setup Guide — tiers, snapshots, rebilling</div><a href="https://help.gohighlevel.com/support/solutions/articles/48001208393" target="_blank" rel="noopener" class="source-link">↗ Link</a></div>
-    <div class="source-row"><div class="source-num">10</div><div class="source-title">HighLevel API Documentation — REST API, OAuth 2.0, webhooks</div><a href="https://marketplace.gohighlevel.com/docs/" target="_blank" rel="noopener" class="source-link">↗ Link</a></div>
-  </div>
-  <div class="callout callout-info"><strong>On the gate.</strong> This grimoire ships in two states from one file: an <strong>ungated direct link</strong> for live interviews and screen-shares, and a <strong>gated public version</strong> (email unlocks the Fork onward) for the Library. The gate above is an inert placeholder until that's wired.</div>
-</section>
+    <div class="gate-box">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem">&#9670; Gated section &middot; placeholder &middot; inert</div>
+      <strong>The Fork, the 12-month roadmap, and the build blueprints unlock on email.</strong>
+      <div style="margin:.9rem 0 0;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap">
+        <input type="email" placeholder="you@company.com" disabled>
+        <button type="button" disabled>Unlock</button>
+      </div>
+      <div style="margin-top:.7rem;font-family:var(--mono);font-size:10px;color:var(--ink4)">// STUB — not wired. Two versions ship from this file: an ungated direct link for live interviews, and this gated version for the public Library.</div>
+    </div>
+  </section>
 
-<section style="background:#F5F2EC;border-top:1px solid rgba(28,25,23,.10);padding:3rem 0">
-  <div style="max-width:860px;margin:0 auto;padding:0 2rem">
-    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#78716C;margin-bottom:1.1rem">Related Grimoires</div>
+  <section class="chapter" id="fork">
+    <div class="chapter-header">
+      <div class="chapter-num">02 &middot; Discovery</div>
+      <h2>Where It Varies — Your Business</h2>
+      <p class="chapter-lede">Read these as the intake I'd run in our first working session. Notice the shift: you're answering a consultant's discovery now, not interviewing a candidate.</p>
+    </div>
+    <h3 class="section-h">The intake — your answers go here</h3>
+    <ol class="steps">
+      <li><b>Niche &amp; industry?</b> ____________ — sets funnel archetype, compliance surface (e.g. HIPAA), and the sales cycle the nurture has to survive.</li>
+      <li><b>Greenfield or rebuild?</b> ____________ — a blank account is a clean build; an inherited one starts with an audit and a lead-leak map before I touch anything.</li>
+      <li><b>One business, multi-location, or agency / multiple clients?</b> ____________ — this sets the entire architecture: single account vs. sub-accounts vs. snapshots and SaaS mode.</li>
+      <li><b>What happens <em>after</em> capture?</b> ____________ — your sales motion and fulfillment, the half of the funnel the engine hands off to.</li>
+      <li><b>What's the offer, and what's a customer worth?</b> ____________ — sets the ROI math below and tells me how hard each stage has to convert.</li>
+    </ol>
+    <h3 class="section-h">How each answer reshapes the build</h3>
+    <div class="grid-2">
+      <div class="card"><div class="card-label">Single business</div><h4>One account, depth over breadth</h4><p>Rigorous tagging, one polished funnel per offer, deep nurture. Simplest architecture, fastest to optimize.</p></div>
+      <div class="card"><div class="card-label">Multi-location</div><h4>Sub-accounts + shared snapshot</h4><p>One master snapshot cloned per location, location-routed booking, roll-up reporting. Consistency without rebuilding each.</p></div>
+      <div class="card"><div class="card-label">Agency / multiple</div><h4>Snapshots, rebilling, SaaS mode</h4><p>White-label, a vetted template library, per-client sub-accounts, rebilling above modeled cost. The build becomes a product.</p></div>
+      <div class="card"><div class="card-label">Greenfield vs. rebuild</div><h4>Build forward vs. stop the bleeding</h4><p>Greenfield: straight to the engine. Rebuild: a 14-day audit, a lead-leak map with dollar estimates, and quick wins that fund the rest.</p></div>
+    </div>
+    <div class="power-tip"><div class="power-tip-label">&#9889; Power Tip — the question most candidates never ask</div><p><strong>"How many businesses are we building this for?"</strong> is the single most architecture-defining question in GHL, and almost nobody asks it in an interview. Asking it signals I think in GHL's actual operating model — sub-accounts, snapshots, SaaS — not just "I can build a funnel."</p></div>
+  </section>
+
+  <div class="part-header">
+    <div class="part-label">The Build</div>
+    <h2>Fix and Found, Then Scale, Then Compound</h2>
+    <p>Once the fork is answered, the year has a shape — and numbers I hold myself to.</p>
+  </div>
+
+  <section class="chapter" id="m6">
+    <div class="chapter-header">
+      <div class="chapter-num">03 &middot; Roadmap</div>
+      <h2>The 12-Month Roadmap</h2>
+      <p class="chapter-lede">Each quarter has a theme so effort doesn't scatter.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="card-label">Q1 &middot; Foundation</div><h4>Stop the leaks, prove the value</h4><p>Audit, lead-leak map, baseline. Account architecture &amp; data model. Speed-to-lead live. Database reactivation — the proof. Core pipeline + booking.</p></div>
+      <div class="card"><div class="card-label">Q2 &middot; Build &amp; scale</div><h4>Turn the engine on</h4><p>Primary funnels per archetype. A2P &amp; email deliverability locked. Ad integrations + attribution. Nurtures across sources. Review automation.</p></div>
+      <div class="card"><div class="card-label">Q3 &middot; Optimize</div><h4>Make every stage convert harder</h4><p>A/B test funnels &amp; offers. Tighten pipeline conversion. Cut CAC via attribution. Custom n8n integrations. Dashboard maturity.</p></div>
+      <div class="card"><div class="card-label">Q4 &middot; Compound</div><h4>Make year two cheaper than year one</h4><p>Retention &amp; referral loops. Reactivation on a recurring cycle. Full SOP documentation. Forecasting off clean data.</p></div>
+    </div>
+    <h3 class="section-h">What I commit to, by quarter</h3>
+    <div class="table-wrap"><table>
+      <tr><th>By end of</th><th>Primary commitment</th><th>How it's proven</th></tr>
+      <tr><td><strong>Q1</strong></td><td>Speed-to-lead &lt; 5 min; reactivation revenue booked</td><td>Workflow logs + booked appts from the cold list</td></tr>
+      <tr><td><strong>Q2</strong></td><td>Every lead source attributed &amp; reporting</td><td>Source field enforced; dashboard live</td></tr>
+      <tr><td><strong>Q3</strong></td><td>Measurable lift in lead-&gt;customer rate; lower CAC</td><td>Pipeline conversion vs. the Q1 baseline</td></tr>
+      <tr><td><strong>Q4</strong></td><td>Repeat/referral contributing to growth; documented system</td><td>Retention metrics + SOP handover pack</td></tr>
+    </table></div>
+  </section>
+
+  <section class="chapter" id="m7">
+    <div class="chapter-header">
+      <div class="chapter-num">04 &middot; Economics</div>
+      <h2>Economics &amp; the Ask</h2>
+      <p class="chapter-lede">The case isn't "marketing matters." It's arithmetic.</p>
+    </div>
+    <p>Take a business at 100 inquiries a month, closing 20% at a $1,200 average ticket — that's $288k/year in won work. Recover even a quarter of the leads currently leaking at first-response and follow-up, and at the same close rate that's roughly <strong>$70k+ of recovered revenue from leads already paid for</strong> — before a dollar of new ad spend. (Illustrative; in Q1 I replace them with yours.)</p>
+    <div class="callout callout-success"><strong>The ROI logic.</strong> A GHL admin pays for themselves in recovered leakage alone. Better funnels, lower CAC, retention, and referral are upside that compounds quarter over quarter. The system is an appreciating asset, not a recurring cost.</div>
+    <div class="power-tip"><div class="power-tip-label">&#9889; The ask</div><p><strong>Give me a sandbox sub-account and one working session, and I'll build you a live capture funnel + speed-to-lead workflow before we finish talking.</strong> Then the first 30 days to diagnose and the next 60 to prove it. By day 90: recovered revenue, a system you can see, and a roadmap earned by evidence.</p></div>
+    <p style="font-family:var(--serif);font-size:1.2rem;font-style:italic;color:var(--ink2);margin-top:1.4rem">That's the plan. It walked in before I did.</p>
+  </section>
+
+  <section class="chapter" id="sources">
+    <div class="chapter-header">
+      <div class="chapter-num">Reference</div>
+      <h2>Sources &amp; Receipts</h2>
+      <p class="chapter-lede">The build claims anchor to my own shipped systems and GHL's own docs.</p>
+    </div>
+    <div class="source-index">
+      <div class="source-row"><div class="source-num">01</div><div class="source-title">Receipt — ASMC Full Stack CRM Engine (G001): 76 custom fields, 24 Zaps, QA-verified</div><a href="/library/grimoires/001-asmc-crm-engine.html" class="source-link">-&gt; Link</a></div>
+      <div class="source-row"><div class="source-num">02</div><div class="source-title">Receipt — Dual Wing Rental Marketing Engine (G002): 34.2% open rate, 18 consults from a cold 340-list</div><a href="/library/grimoires/002-dual-wing-rental.html" class="source-link">-&gt; Link</a></div>
+      <div class="source-row"><div class="source-num">03</div><div class="source-title">Method — GHL 101: The Button-to-Button Manual (G003): every procedure as click-paths</div><a href="/library/grimoires/003-ghl-101.html" class="source-link">-&gt; Link</a></div>
+      <div class="source-row"><div class="source-num">04</div><div class="source-title">Method — n8n 101 (G004): the orchestration layer and the $800 Zapier bill</div><a href="/library/grimoires/004-n8n-101.html" class="source-link">-&gt; Link</a></div>
+      <div class="source-row"><div class="source-num">05</div><div class="source-title">GHL Official Website — product, pricing, announcements</div><a href="https://www.gohighlevel.com" target="_blank" rel="noopener" class="source-link">-&gt; Link</a></div>
+      <div class="source-row"><div class="source-num">06</div><div class="source-title">HighLevel API Documentation — REST API, OAuth 2.0, webhooks</div><a href="https://marketplace.gohighlevel.com/docs/" target="_blank" rel="noopener" class="source-link">-&gt; Link</a></div>
+    </div>
+    <div class="callout callout-info"><strong>On the gate.</strong> This grimoire ships in two states from one file: an <strong>ungated direct link</strong> for live interviews and screen-shares, and a <strong>gated public version</strong> (email unlocks the Fork onward) for the Library. The gate above is an inert placeholder until that's wired.</div>
+  </section>
+
+  <section style="border-top:1px solid var(--border);padding:2.4rem 0 0;margin-top:1rem">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:1.1rem">Related Grimoires</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem">
-      <a href="/library/grimoires/003-ghl-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#1D4ED8';this.style.boxShadow='0 2px 12px #1D4ED822'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#1D4ED8;margin-bottom:.4rem">003</div>
-        <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">GHL 101: The Button-to-Button Manual</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">Every GoHighLevel procedure as exact click-paths — the method behind this build.</div>
+      <a href="/library/grimoires/003-ghl-101.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#4338CA';this.style.boxShadow='0 2px 12px rgba(67,56,202,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#4338CA;margin-bottom:.4rem">003</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">GHL 101: Button-to-Button Manual</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">The method behind this build — every procedure as exact click-paths.</div>
       </a>
-      <a href="/library/grimoires/001-asmc-crm-engine.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#7C3AED';this.style.boxShadow='0 2px 12px #7C3AED22'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#7C3AED;margin-bottom:.4rem">001</div>
-        <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">ASMC Full Stack CRM Engine</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">A receipt — full GHL buildout for construction: 76 fields, 24 Zaps, QA-verified.</div>
+      <a href="/library/grimoires/001-asmc-crm-engine.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#7C3AED';this.style.boxShadow='0 2px 12px rgba(124,58,237,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#7C3AED;margin-bottom:.4rem">001</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">ASMC Full Stack CRM Engine</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">A receipt — full GHL buildout: 76 fields, 24 Zaps, QA-verified.</div>
       </a>
-      <a href="/library/grimoires/002-dual-wing-rental.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#0D9488';this.style.boxShadow='0 2px 12px #0D948822'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#0D9488;margin-bottom:.4rem">002</div>
-        <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">Dual Wing Rental Marketing Engine</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">A receipt — 34.2% open rate and 18 consults from a cold 340-contact list.</div>
+      <a href="/library/grimoires/002-dual-wing-rental.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#0D9488';this.style.boxShadow='0 2px 12px rgba(13,148,136,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#0D9488;margin-bottom:.4rem">002</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">Dual Wing Rental Marketing Engine</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">A receipt — 34.2% open rate, 18 consults from a cold 340-list.</div>
       </a>
-      <a href="/library/grimoires/004-n8n-101.html" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.12);border-radius:10px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#C2410C';this.style.boxShadow='0 2px 12px #C2410C22'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#C2410C;margin-bottom:.4rem">004</div>
-        <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1C1917;line-height:1.3;margin-bottom:.35rem">n8n 101: AI Workflow Automation</div>
-        <div style="font-size:12px;color:#78716C;line-height:1.5">The orchestration layer the perimeter hands off to — agents, RAG, self-hosting.</div>
+      <a href="/library/grimoires/016-lessons-from-a-bespoke-project-business.html" style="display:block;background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;color:inherit;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='#C2410C';this.style.boxShadow='0 2px 12px rgba(194,65,12,.13)'" onmouseout="this.style.borderColor='rgba(28,25,23,.12)';this.style.boxShadow='none'">
+        <div style="font-family:var(--mono);font-size:10px;color:#C2410C;margin-bottom:.4rem">016</div>
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3;margin-bottom:.35rem">Lessons from a Bespoke Project Business</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">The pipeline this engine feeds — stages, gates, and the five hidden entities.</div>
       </a>
     </div>
-  </div>
-</section>
+  </section>
 </main>
 </div>
-<div id="resume-toast"><span>Resume where you left off?</span><a href="#" id="resume-link">Jump back</a><button id="resume-close" aria-label="Dismiss">✕</button></div>
 <footer class="page-footer">
-  <div>
-    <span>The GHL Admin's Build — Marketing &amp; Integrations · Grimoire 015</span>
-    <span style="margin:0 10px;opacity:.3">·</span>
-    <span>2026 · The engine + the fork · email-gated · unlisted</span>
-  </div>
-  <div style="display:flex;gap:1rem;align-items:center">
-    <a href="../projects/" class="footer-link-page">← Back to Projects</a>
-  </div>
+  <a class="footer-link-page" href="../projects/">&lt;- Back to Library</a>
+  <span>Grimoire 015 &middot; The GHL Admin's Build &middot; Marketing &amp; Integrations &middot; email-gated &middot; unlisted</span>
+  <a class="footer-link-page" href="#top">Top</a>
 </footer>
+<div id="resume-toast"><span>Continue where you left off?</span><a id="resume-link" href="#">Resume</a><button id="resume-dismiss" aria-label="Dismiss">x</button></div>
 <script>
 (function(){
-  // Scrollspy
-  var sections = document.querySelectorAll('section[id]');
-  var navLinks = document.querySelectorAll('.nav-link');
-  var spy = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        navLinks.forEach(function(l){l.classList.remove('active')});
-        var a = document.querySelector('.nav-link[href="#'+e.target.id+'"]');
-        if(a){a.classList.add('active');a.scrollIntoView({block:'nearest'})}
-        try{localStorage.setItem('g015-pos', e.target.id)}catch(err){}
-      }
-    });
-  },{rootMargin:'-15% 0px -70% 0px'});
-  sections.forEach(function(s){spy.observe(s)});
-  // Progress bar
-  var bar = document.getElementById('progress-bar');
-  addEventListener('scroll', function(){
-    var h = document.documentElement;
-    var p = h.scrollTop / (h.scrollHeight - h.clientHeight);
-    bar.style.transform = 'scaleX(' + p + ')';
-  }, {passive:true});
-  // Sidebar filter ("/" to focus)
-  var filter = document.getElementById('nav-filter');
+  var progress=document.getElementById('progress-bar');
+  var links=[].slice.call(document.querySelectorAll('.nav-link'));
+  var sections=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    progress.style.transform='scaleX('+(max? h.scrollTop/max : 0)+')';
+    var current=sections[0];
+    sections.forEach(function(s){ if(s.getBoundingClientRect().top<140) current=s; });
+    links.forEach(function(a){ a.classList.toggle('active', current && a.getAttribute('href')==='#'+current.id); });
+    if(current) localStorage.setItem('g015-last','#'+current.id);
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  var filter=document.getElementById('nav-filter');
   if(filter){
-    filter.addEventListener('input', function(){
-      var q = this.value.toLowerCase();
-      document.querySelectorAll('.nav-section').forEach(function(sec){
-        var any = false;
-        sec.querySelectorAll('.nav-link').forEach(function(l){
-          var hit = l.textContent.toLowerCase().indexOf(q) > -1;
-          l.style.display = hit ? '' : 'none';
-          if(hit) any = true;
-        });
-        sec.style.display = any ? '' : 'none';
-      });
+    filter.addEventListener('input',function(){
+      var q=this.value.toLowerCase();
+      links.forEach(function(a){ a.style.display=a.textContent.toLowerCase().indexOf(q)>-1?'block':'none'; });
     });
-    addEventListener('keydown', function(e){
-      if(e.key === '/' && document.activeElement !== filter && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)){
-        e.preventDefault(); filter.focus();
-      }
+    addEventListener('keydown',function(e){
+      if(e.key==='/'&&document.activeElement!==filter&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();filter.focus();}
     });
   }
-  // Resume toast
-  try{
-    var saved = localStorage.getItem('g015-pos');
-    if(saved && saved !== 'overview' && !location.hash && document.getElementById(saved)){
-      var toast = document.getElementById('resume-toast');
-      var link = document.getElementById('resume-link');
-      link.href = '#' + saved;
-      toast.style.display = 'flex';
-      link.addEventListener('click', function(){toast.style.display='none'});
-      document.getElementById('resume-close').addEventListener('click', function(){toast.style.display='none'});
-      setTimeout(function(){toast.style.display='none'}, 12000);
-    }
-  }catch(err){}
+  var last=localStorage.getItem('g015-last');
+  var toast=document.getElementById('resume-toast');
+  var resume=document.getElementById('resume-link');
+  var dismiss=document.getElementById('resume-dismiss');
+  if(last && last !== '#overview' && document.querySelector(last)){
+    resume.href=last;
+    toast.style.display='flex';
+  }
+  if(dismiss) dismiss.onclick=function(){toast.style.display='none';localStorage.removeItem('g015-last');};
 })();
 </script>
 </body>
