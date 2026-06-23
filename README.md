@@ -32,9 +32,9 @@ automatically (github-pages gem keeps local + remote versions identical).
 
 Two lanes, severable by design:
 - Direct (roles, library, collaboration) → suarezaaronroy@gmail.com — site-wide default
-- B2B systems engagements → asmultitaskcollective@gmail.com via ASMC
-ASMC appears in exactly two places (contact page, about) as a neutral
-link — no ownership language anywhere on this site. asmc_url lives in
+- Built-for-you systems work → referred out to ASMC (a separate studio), asmultitaskcollective@gmail.com
+ASMC appears in exactly two places (contact page, about) as a referral
+to a separate studio — arm's-length, no ownership language anywhere on this site. asmc_url lives in
 _config.yml; change once, changes everywhere.
 
 ## Migration checklist
