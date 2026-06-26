@@ -5,16 +5,13 @@ description: "Free CRM, automation, and AI operations manuals — step-by-step g
 ---
 <section class="hero shell">
   <h1>Everything I build, <em>I write down.</em></h1>
-  <p class="lede">This is my working library — the manuals, system documentation, and field notes I keep because I use them. 17 shelf entries across CRM, automation, payments, AI, remote work, quiet trades, and organizational physics. If they're useful to you too, good: everything here is free, open, and ungated.</p>
+  <p class="lede">This is my working library — the manuals, system documentation, and field notes I keep because I use them. 17 grimoires across CRM, automation, payments, AI, remote work, quiet trades, and organizational physics. If they're useful to you too, good: everything here is free, open, and ungated.</p>
   <div class="hero-ctas">
     <a class="btn-primary" href="{{ '/projects/' | relative_url }}">Open the library →</a>
     <a class="btn-secondary" href="{{ '/about/' | relative_url }}">About me</a>
   </div>
   <div class="proof-line">
-    {% assign live_count = site.data.grimoires | where: "status", "live" | size %}
-    {% assign draft_count = site.data.grimoires | where: "status", "soon" | size %}
-    <span class="proof-pill"><b>{{ site.data.grimoires | size }}</b> shelf entries</span>
-    <span class="proof-pill"><b>{{ live_count }}</b> live · <b>{{ draft_count }}</b> drafting</span>
+    <span class="proof-pill"><b>{{ site.data.grimoires | size }}</b> grimoires on the shelf</span>
     <span class="proof-pill"><b>3-volume</b> trilogy: money · work · organizations</span>
     <span class="proof-pill"><b>{{ site.notes | size }}</b> field notes</span>
     <span class="proof-pill"><b>0</b> paywalls, gates, or email walls</span>
@@ -23,7 +20,7 @@ description: "Free CRM, automation, and AI operations manuals — step-by-step g
 
 <div class="shell">
   <div class="start-here-band">
-    <div class="sh-label">Start here — choose a path</div>
+    <div class="sh-label">Start here — find your door</div>
     <div class="sh-grid">
       <a class="sh-cell" href="{{ '/grimoires/014-remote-work-101.html' | relative_url }}">
         <span class="sh-tag">New to remote work</span>
@@ -63,12 +60,6 @@ description: "Free CRM, automation, and AI operations manuals — step-by-step g
   <div class="g-grid">
     {% assign built = site.data.grimoires | where: "tier", "built" %}
     {% for g in built %}{% include grimoire-card.html %}{% endfor %}
-  </div>
-
-  <div class="section-h"><h2>Drafting now</h2><span>quiet trades · work in public</span></div>
-  <div class="g-grid">
-    {% assign drafts = site.data.grimoires | where: "tier", "draft" %}
-    {% for g in drafts %}{% include grimoire-card.html %}{% endfor %}
   </div>
 
   <div class="section-h"><h2>Field manuals</h2><span>free · open · cited</span></div>

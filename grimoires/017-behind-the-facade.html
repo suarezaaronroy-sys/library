@@ -42,76 +42,89 @@ body{
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 .shell{width:min(1140px,calc(100% - 2rem));margin:0 auto}
-.topbar{
+.mode-banner{
   position:sticky;
   top:0;
-  z-index:50;
-  backdrop-filter:blur(16px);
-  background:rgba(246,241,232,.9);
-  border-bottom:1px solid var(--line);
-}
-.topbar .shell{
-  min-height:58px;
+  z-index:300;
+  height:40px;
+  padding:0 2rem;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:1rem;
-}
-.brand{display:flex;align-items:center;gap:.75rem}
-.brand-mark{
-  width:36px;
-  height:36px;
-  border-radius:8px;
-  display:grid;
-  place-items:center;
   background:var(--charcoal);
   color:var(--paper);
   font-family:var(--mono);
-  font-size:.78rem;
-  font-weight:500;
+  font-size:11px;
 }
-.brand strong{display:block;font-family:var(--mono);font-size:.8rem;line-height:1.2}
-.brand span{display:block;font-family:var(--mono);font-size:.62rem;color:var(--faint);margin-top:.08rem}
-.nav{display:flex;gap:.35rem;align-items:center;justify-content:flex-end;flex-wrap:wrap}
-.nav a{
-  border:1px solid var(--line);
-  border-radius:999px;
-  background:rgba(255,250,241,.72);
-  color:var(--muted);
-  font-family:var(--mono);
-  font-size:.68rem;
-  padding:.35rem .72rem;
+.mode-banner-left{display:flex;align-items:center;gap:10px}
+.mode-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#86efac;
+  animation:pulse 2s infinite;
 }
-.nav a:hover{border-color:var(--red);color:var(--red)}
-.nav .current{background:var(--charcoal);border-color:var(--charcoal);color:var(--paper)}
-.grimoire-chrome{
-  background:rgba(255,250,241,.86);
-  border-bottom:1px solid var(--line);
-}
-.grimoire-chrome .shell{
-  min-height:58px;
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.site-header{
+  position:sticky;
+  top:40px;
+  z-index:200;
+  height:52px;
+  padding:0 2rem;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:1rem;
+  background:rgba(246,241,232,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
 }
-.book-meta{display:flex;flex-direction:column;gap:.12rem}
-.book-meta strong{font-family:var(--mono);font-size:.68rem;color:var(--ink);letter-spacing:.03em}
-.book-meta span{font-family:var(--mono);font-size:.62rem;color:var(--faint)}
-.back-link{font-family:var(--mono);font-size:.68rem;color:var(--red)}
-.page-nav{display:flex;gap:.32rem;flex-wrap:wrap;justify-content:flex-end}
-.page-nav a{
+.header-left{display:flex;align-items:center;gap:1rem;min-width:0}
+.header-back{
   font-family:var(--mono);
-  font-size:.62rem;
+  font-size:11px;
   color:var(--muted);
-  border:1px solid var(--line);
-  border-radius:999px;
-  background:rgba(246,241,232,.8);
-  padding:.24rem .55rem;
+  display:flex;
+  align-items:center;
+  gap:.3rem;
+  transition:.14s;
+  white-space:nowrap;
 }
-.page-nav a:hover{color:var(--red);border-color:var(--red)}
+.header-back:hover{color:var(--red)}
+.header-divider{width:1px;height:16px;background:var(--line);flex:0 0 auto}
+.header-title{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--ink);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.header-badge{
+  font-family:var(--mono);
+  font-size:10px;
+  padding:3px 9px;
+  border-radius:20px;
+  background:rgba(47,111,78,.12);
+  color:var(--moss);
+  border:1px solid rgba(47,111,78,.24);
+  white-space:nowrap;
+}
+#progress-bar{
+  position:fixed;
+  top:92px;
+  left:0;
+  right:0;
+  height:2px;
+  z-index:250;
+  background:linear-gradient(90deg,var(--moss),var(--red));
+  transform-origin:left;
+  transform:scaleX(0);
+  pointer-events:none;
+}
 .hero{
-  min-height:calc(100vh - 116px);
+  min-height:calc(100vh - 92px);
   display:grid;
   align-items:end;
   position:relative;
@@ -679,31 +692,20 @@ a{color:inherit;text-decoration:none}
 .source-card b{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);margin-bottom:.25rem}
 .source-card a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
 .source-card p{margin:0;color:var(--muted);font-size:.82rem}
-.footer{
+.page-footer{
+  padding:2rem 3rem;
   border-top:1px solid var(--line);
-  padding:2rem 0 3rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+  font-family:var(--mono);
+  font-size:11px;
   color:var(--faint);
-  font-family:var(--mono);
-  font-size:.66rem;
 }
-.footer .shell{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-.footer a{color:var(--faint)}
-.footer a:hover{color:var(--red)}
-.footer-links{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
-.quick-anchor{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  z-index:40;
-  border:1px solid var(--line);
-  border-radius:999px;
-  background:#fff;
-  color:var(--muted);
-  font-family:var(--mono);
-  font-size:.64rem;
-  padding:.48rem .7rem;
-  box-shadow:0 8px 24px rgba(23,19,15,.1);
-}
+.footer-link-page{color:var(--red)}
+.footer-link-page:hover{text-decoration:underline}
 @media(max-width:980px){
   .intro-grid,.image-story,.map-wrap,.mode-board,.library-preview{grid-template-columns:1fr}
   .longform{grid-template-columns:1fr}
@@ -715,9 +717,10 @@ a{color:inherit;text-decoration:none}
   .chapter-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:760px){
-  .topbar .shell{align-items:flex-start;flex-direction:column;padding:.7rem 0}
-  .grimoire-chrome .shell{align-items:flex-start;flex-direction:column;padding:.7rem 0}
-  .nav{justify-content:flex-start}
+  .mode-banner{padding:0 1rem}
+  .mode-banner>span:last-child{display:none}
+  .site-header{padding:0 1rem}
+  .header-title{display:none}
   .hero{min-height:760px}
   .hero-content{padding:7rem 0 3rem}
   .lens-grid,.source-grid,.field-grid,.taxonomy,.rules-grid,.image-strip{grid-template-columns:1fr}
@@ -728,40 +731,19 @@ a{color:inherit;text-decoration:none}
 </style>
 </head>
 <body id="top">
-<header class="topbar">
-  <div class="shell">
-    <a class="brand" href="https://suarezaaronroy-sys.github.io/library/" aria-label="Aaron Suarez library home">
-      <div class="brand-mark">AS</div>
-      <div>
-        <strong>Aaron Suarez</strong>
-        <span>Valencia City, PH &middot; remote-first</span>
-      </div>
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="https://suarezaaronroy-sys.github.io/library/about/">About</a>
-      <a href="https://suarezaaronroy-sys.github.io/library/projects/" class="current">Library</a>
-      <a href="https://suarezaaronroy-sys.github.io/library/notes/">Notes</a>
-      <a href="mailto:suarezaaronroy@gmail.com">Contact &rarr;</a>
-    </nav>
-  </div>
-</header>
-
-<div class="grimoire-chrome" aria-label="Grimoire navigation">
-  <div class="shell">
-    <a class="back-link" href="https://suarezaaronroy-sys.github.io/library/projects/">&larr; Projects</a>
-    <div class="book-meta">
-      <strong>Grimoire 017 &middot; Behind the Facade &middot; Field Notes from the Quiet Trades</strong>
-      <span>12 essays &middot; quiet trades &middot; drafting stage &middot; Free, no gate</span>
-    </div>
-    <nav class="page-nav" aria-label="In-page navigation">
-      <a href="#thesis">Overview</a>
-      <a href="#city">City</a>
-      <a href="#failure">Failure</a>
-      <a href="#objects">Objects</a>
-      <a href="#chapters">Chapters</a>
-    </nav>
-  </div>
+<div class="mode-banner">
+  <div class="mode-banner-left"><div class="mode-dot"></div><span>Grimoire 017 &middot; Behind the Facade</span></div>
+  <span style="font-size:10px;color:rgba(246,241,232,.68)">12 essays &middot; quiet trades &middot; public-safe draft &middot; free, no gate</span>
 </div>
+<header class="site-header">
+  <div class="header-left">
+    <a href="/library/projects/" class="header-back">&lt;- Projects</a>
+    <div class="header-divider"></div>
+    <span class="header-title">Behind the Facade</span>
+  </div>
+  <span class="header-badge">Grimoire 017 &middot; Field Notes</span>
+</header>
+<div id="progress-bar"></div>
 
 <main>
   <section class="hero">
@@ -1399,29 +1381,29 @@ a{color:inherit;text-decoration:none}
   <section class="section compact">
     <div class="shell">
       <div class="section-title">
-        <h2>Draft Shelf Context</h2>
+        <h2>Shelf Context</h2>
         <span>why this is G017</span>
       </div>
       <div class="draft-grid">
         <article class="draft-card soon">
           <div class="shelf-top">
             <span class="shelf-num">015</span>
-            <span class="shelf-date">Drafting</span>
+            <span class="shelf-date">Jun 2026</span>
           </div>
-          <h3>Coming Soon: Field Manual In Draft</h3>
-          <p>Reserved shelf slot for a still-forming Grimoire. Keep the card visible so the numbering sequence stays honest while the work matures.</p>
-          <div class="tags"><span>drafting</span><span>not yet public</span></div>
-          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">drafting</span></div>
+          <h3>The GHL Admin's Build: Marketing &amp; Integrations</h3>
+          <p>GHL isn't a CRM - it's a marketing engine. The company-agnostic build, the fork where it varies by business, and the 12-month roadmap.</p>
+          <div class="tags"><span>5-part engine</span><span>the fork</span><span>email-gated</span></div>
+          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">in progress</span></div>
         </article>
         <article class="draft-card soon">
           <div class="shelf-top">
             <span class="shelf-num">016</span>
-            <span class="shelf-date">Drafting</span>
+            <span class="shelf-date">Jun 2026</span>
           </div>
-          <h3>Coming Soon: Field Manual In Draft</h3>
-          <p>Reserved shelf slot for the next unfinished Grimoire. The card says the library is still moving without pretending the book is ready.</p>
-          <div class="tags"><span>drafting</span><span>not yet public</span></div>
-          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">drafting</span></div>
+          <h3>Lessons from a Bespoke Project Business</h3>
+          <p>What bespoke project work really teaches: the pipeline lies, payment isn't fulfilment, and the five entities hiding inside one job.</p>
+          <div class="tags"><span>10-stage pipeline</span><span>5 entity layers</span><span>What I Did</span></div>
+          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">in progress</span></div>
         </article>
         <article class="draft-card">
         <div class="shelf-top">
@@ -1431,13 +1413,13 @@ a{color:inherit;text-decoration:none}
         <h3>Behind the Facade: Field Notes from the Quiet Trades</h3>
         <p>Essays on glass, stone, failure, memory, and the invisible work that lets ordinary buildings keep their dignity.</p>
         <div class="tags"><span>quiet trades</span><span>heritage</span><span>invisible work</span><span>city ops</span></div>
-        <div class="shelf-foot"><span class="open">Open grimoire &rarr;</span><span class="live">draft &middot; public-safe</span></div>
+        <div class="shelf-foot"><span class="open">Open grimoire &rarr;</span><span class="live">live &middot; free &middot; no gate</span></div>
       </article>
       </div>
       <aside class="snippet-note">
-        <h3>Library placement idea</h3>
-        <p>Place G015 and G016 as dashed drafting cards, then let G017 appear as the pretty draft that can survive publication now.</p>
-        <p>Suggested shelf label: <strong>Quiet Trades</strong> or <strong>Art + Systems</strong>. The card should stay moss/stone so it belongs to Aaron's library, not a client brand identity.</p>
+        <h3>Library placement</h3>
+        <p>G015 and G016 stay visible as in-progress cards using the same shelf metadata as the Library page. G017 is the next live card in sequence.</p>
+        <p>The public label stays <strong>Field Notes from the Quiet Trades</strong>: this is a Working Library essay, not a client page.</p>
       </aside>
     </div>
   </section>
@@ -1478,21 +1460,21 @@ a{color:inherit;text-decoration:none}
   </section>
 </main>
 
-<footer class="footer">
-  <div class="shell">
-    <div>&copy; <span id="yr"></span> Aaron Suarez &middot; operational systems builder &middot; <a href="https://suarezaaronroy-sys.github.io/library/feed.xml">RSS</a></div>
-    <div class="footer-links">
-      <span>Valencia City, PH &middot; remote-first</span>
-      <a href="mailto:suarezaaronroy@gmail.com">Email</a>
-      <a href="https://www.linkedin.com/in/suarez-aaronroy/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </div>
-  </div>
+<footer class="page-footer">
+  <a class="footer-link-page" href="/library/projects/">&lt;- Back to Library</a>
+  <span>Grimoire 017 &middot; Behind the Facade &middot; Public-safe draft</span>
+  <a class="footer-link-page" href="#top">Top</a>
 </footer>
 
-<a class="quick-anchor" href="#top" aria-label="Back to top">top</a>
-
 <script>
-document.getElementById("yr").textContent = new Date().getFullYear();
+const progressBar = document.getElementById("progress-bar");
+function updateProgress(){
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = max > 0 ? window.scrollY / max : 0;
+  progressBar.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
+}
+addEventListener("scroll", updateProgress, { passive: true });
+updateProgress();
 const modes = {
   heritage: {
     title: "Heritage Layer",

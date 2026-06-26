@@ -208,7 +208,7 @@
           '<div><strong>Just browsing?</strong><span>GHL CRM 101 — 76 fields, 24 automations.</span></div>' +
         '</div>' +
       '</div>' +
-      '<p id="ghost-popup-footer"><a href="' + sitePath('/projects/') + '">Browse all 17 shelf entries →</a></p>';
+      '<p id="ghost-popup-footer"><a href="' + sitePath('/projects/') + '">Browse all 17 grimoires →</a></p>';
     document.body.appendChild(bubble);
 
     function openPopup()  { bubble.classList.add('gp-visible'); }
