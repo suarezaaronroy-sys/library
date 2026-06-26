@@ -1,14 +1,14 @@
 ---
 layout: default
 title: The Library — Grimoires
-description: "Free step-by-step guides for GoHighLevel, n8n, Zapier, Claude AI, agentic workflows, SEO, payment processing, and organizational systems. 14 grimoires, all ungated."
+description: "Free step-by-step guides for GoHighLevel, n8n, Zapier, Claude AI, agentic workflows, SEO, payment processing, organizational systems, quiet trades, and drafting-stage field notes. 17 shelf entries, all ungated."
 permalink: /projects/
 ---
 <div class="shell page-pad">
   <header class="page-header">
     <div class="page-eyebrow">The Library</div>
     <h1>Systems built. Documented. <em>Shipped.</em></h1>
-    <p class="lede">14 grimoires — system documentation and field manuals written from production use. New here? Start with <a href="{{ '/grimoires/014-remote-work-101.html' | relative_url }}" style="color:var(--accent)">Remote Work 101 (G014)</a>. Want CRM, automation, or AI systems? Pick a door below.</p>
+    <p class="lede">17 shelf entries — system documentation, field manuals, and drafting-stage essays written from production use. New here? Start with <a href="{{ '/grimoires/014-remote-work-101.html' | relative_url }}" style="color:var(--accent)">Remote Work 101 (G014)</a>. Want CRM, automation, AI systems, quiet craft systems, or organizational physics? Pick a path below.</p>
     <input type="text" id="lib-filter" placeholder="Filter the shelf — try &quot;CRM&quot;, &quot;agents&quot;, &quot;payments&quot;…" aria-label="Filter library"
       style="margin-top:1rem;width:min(440px,100%);font-family:var(--mono);font-size:.72rem;padding:.55rem .9rem;border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--ink);outline:none">
   </header>
@@ -28,6 +28,12 @@ permalink: /projects/
   <div class="g-grid">
     {% assign built = site.data.grimoires | where: "tier", "built" %}
     {% for g in built %}{% include grimoire-card.html %}{% endfor %}
+  </div>
+
+  <div class="section-h"><h2>Drafting now</h2><span>work in public · still forming</span></div>
+  <div class="g-grid">
+    {% assign drafts = site.data.grimoires | where: "tier", "draft" %}
+    {% for g in drafts %}{% include grimoire-card.html %}{% endfor %}
   </div>
 
   <div class="section-h"><h2>The trilogy, in full</h2><span>009 → 010 → 011</span></div>

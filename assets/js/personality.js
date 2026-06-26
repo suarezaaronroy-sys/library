@@ -5,6 +5,20 @@
 (function () {
   'use strict';
 
+  var siteBase = (function () {
+    var script = document.currentScript || document.querySelector('script[src*="/assets/js/personality.js"]');
+    if (!script) return '';
+    var src = script.getAttribute('src') || '';
+    var url = new URL(src, window.location.origin);
+    var marker = '/assets/js/personality.js';
+    var index = url.pathname.indexOf(marker);
+    return index > -1 ? url.pathname.slice(0, index) : '';
+  }());
+
+  function sitePath(path) {
+    return siteBase + path;
+  }
+
   /* ── 1. DIAGONAL WALLPAPER ──────────────────────────────── */
   function initWallpaper() {
     var svgNS = 'http://www.w3.org/2000/svg';
@@ -181,20 +195,20 @@
       '<p id="ghost-popup-hed">Where do you want to start?</p>' +
       '<p id="ghost-popup-sub">Pick one — I\'ll open it for you.</p>' +
       '<div id="ghost-popup-cards">' +
-        '<div class="gp-card" onclick="location.href=\'/grimoires/014-remote-work-101.html\'" role="link" tabindex="0">' +
+        '<div class="gp-card" onclick="location.href=\'' + sitePath('/grimoires/014-remote-work-101.html') + '\'" role="link" tabindex="0">' +
           '<span class="gp-card-emoji">🌏</span>' +
           '<div><strong>Are you new here?</strong><span>Remote Work 101 — Filipino VA field manual.</span></div>' +
         '</div>' +
-        '<div class="gp-card" onclick="location.href=\'/grimoires/011-organizational-physics.html\'" role="link" tabindex="0">' +
+        '<div class="gp-card" onclick="location.href=\'' + sitePath('/grimoires/011-organizational-physics.html') + '\'" role="link" tabindex="0">' +
           '<span class="gp-card-emoji">🔬</span>' +
           '<div><strong>Are you a client?</strong><span>Organizational Physics — why systems break.</span></div>' +
         '</div>' +
-        '<div class="gp-card" onclick="location.href=\'/grimoires/003-ghl-101.html\'" role="link" tabindex="0">' +
+        '<div class="gp-card" onclick="location.href=\'' + sitePath('/grimoires/003-ghl-101.html') + '\'" role="link" tabindex="0">' +
           '<span class="gp-card-emoji">⚙️</span>' +
           '<div><strong>Just browsing?</strong><span>GHL CRM 101 — 76 fields, 24 automations.</span></div>' +
         '</div>' +
       '</div>' +
-      '<p id="ghost-popup-footer"><a href="/projects/">Browse all 14 grimoires →</a></p>';
+      '<p id="ghost-popup-footer"><a href="' + sitePath('/projects/') + '">Browse all 17 shelf entries →</a></p>';
     document.body.appendChild(bubble);
 
     function openPopup()  { bubble.classList.add('gp-visible'); }

@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G017 - Behind the Facade | Aaron Suarez Working Library</title>
+<meta name="description" content="Grimoire 017: Field Notes from the Quiet Trades - a public-safe essay on glass, stone, Edinburgh, invisible work, failure, and the systems that let ordinary buildings endure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#f6f1e8;
+  --paper-2:#ebe3d4;
+  --paper-3:#fffaf1;
+  --ink:#17130f;
+  --muted:#655f55;
+  --faint:#8e8577;
+  --line:rgba(23,19,15,.14);
+  --red:#c2410c;
+  --teal:#0d9488;
+  --blue:#1d4ed8;
+  --moss:#2f6f4e;
+  --charcoal:#181512;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"DM Sans",system-ui,sans-serif;
+  --mono:"DM Mono",ui-monospace,monospace;
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:
+    linear-gradient(90deg,rgba(23,19,15,.035) 1px,transparent 1px) 0 0/28px 28px,
+    linear-gradient(rgba(23,19,15,.028) 1px,transparent 1px) 0 0/28px 28px,
+    var(--paper);
+  line-height:1.68;
+  font-weight:300;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.shell{width:min(1140px,calc(100% - 2rem));margin:0 auto}
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(16px);
+  background:rgba(246,241,232,.9);
+  border-bottom:1px solid var(--line);
+}
+.topbar .shell{
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.brand{display:flex;align-items:center;gap:.75rem}
+.brand-mark{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  background:var(--charcoal);
+  color:var(--paper);
+  font-family:var(--mono);
+  font-size:.78rem;
+  font-weight:500;
+}
+.brand strong{display:block;font-family:var(--mono);font-size:.8rem;line-height:1.2}
+.brand span{display:block;font-family:var(--mono);font-size:.62rem;color:var(--faint);margin-top:.08rem}
+.nav{display:flex;gap:.35rem;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.nav a{
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,250,241,.72);
+  color:var(--muted);
+  font-family:var(--mono);
+  font-size:.68rem;
+  padding:.35rem .72rem;
+}
+.nav a:hover{border-color:var(--red);color:var(--red)}
+.nav .current{background:var(--charcoal);border-color:var(--charcoal);color:var(--paper)}
+.grimoire-chrome{
+  background:rgba(255,250,241,.86);
+  border-bottom:1px solid var(--line);
+}
+.grimoire-chrome .shell{
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.book-meta{display:flex;flex-direction:column;gap:.12rem}
+.book-meta strong{font-family:var(--mono);font-size:.68rem;color:var(--ink);letter-spacing:.03em}
+.book-meta span{font-family:var(--mono);font-size:.62rem;color:var(--faint)}
+.back-link{font-family:var(--mono);font-size:.68rem;color:var(--red)}
+.page-nav{display:flex;gap:.32rem;flex-wrap:wrap;justify-content:flex-end}
+.page-nav a{
+  font-family:var(--mono);
+  font-size:.62rem;
+  color:var(--muted);
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(246,241,232,.8);
+  padding:.24rem .55rem;
+}
+.page-nav a:hover{color:var(--red);border-color:var(--red)}
+.hero{
+  min-height:calc(100vh - 116px);
+  display:grid;
+  align-items:end;
+  position:relative;
+  overflow:hidden;
+  background:#111;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(10,8,6,.86) 0%,rgba(10,8,6,.52) 46%,rgba(10,8,6,.13) 100%),
+    linear-gradient(0deg,rgba(10,8,6,.78),rgba(10,8,6,.12) 42%,rgba(10,8,6,.62));
+  z-index:1;
+}
+.hero img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(.88) contrast(1.08);
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  color:var(--paper);
+  padding:8rem 0 4.5rem;
+}
+.kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:.45rem;
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#7dd3fc;
+  border-left:2px solid #7dd3fc;
+  padding-left:.6rem;
+  margin-bottom:1rem;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(3.3rem,8vw,8.4rem);
+  line-height:.88;
+  letter-spacing:0;
+  margin:0;
+  max-width:10.5ch;
+  font-weight:600;
+}
+.hero h1 em{font-style:italic;font-weight:300;color:#ffd8c3}
+.hero .lede{
+  margin:1.35rem 0 0;
+  max-width:62ch;
+  color:rgba(246,241,232,.86);
+  font-size:clamp(1rem,1.5vw,1.18rem);
+}
+.hero-actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.55rem}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  border-radius:999px;
+  border:1px solid rgba(246,241,232,.24);
+  padding:.65rem 1rem;
+  font-family:var(--mono);
+  font-size:.72rem;
+  color:var(--paper);
+  background:rgba(246,241,232,.08);
+}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn:hover{transform:translateY(-1px)}
+.proof-line{
+  display:flex;
+  gap:.45rem;
+  flex-wrap:wrap;
+  margin-top:1.6rem;
+}
+.proof-line span{
+  font-family:var(--mono);
+  font-size:.62rem;
+  color:rgba(246,241,232,.75);
+  border:1px solid rgba(246,241,232,.2);
+  background:rgba(246,241,232,.06);
+  border-radius:999px;
+  padding:.24rem .58rem;
+}
+.intro-band{
+  background:var(--charcoal);
+  color:var(--paper);
+  padding:3rem 0;
+}
+.intro-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);
+  gap:2rem;
+  align-items:start;
+}
+.intro-band h2,.section-title h2,.narrative h2{
+  font-family:var(--serif);
+  font-size:clamp(1.8rem,4vw,3.2rem);
+  line-height:1.05;
+  letter-spacing:0;
+  margin:0;
+}
+.intro-band p{color:rgba(246,241,232,.72);font-size:1rem;margin:1rem 0 0;max-width:66ch}
+.quote-panel{
+  border:1px solid rgba(246,241,232,.16);
+  background:rgba(246,241,232,.06);
+  border-radius:8px;
+  padding:1.15rem;
+}
+.quote-panel p{
+  margin:0;
+  color:var(--paper);
+  font-family:var(--serif);
+  font-size:1.28rem;
+  line-height:1.28;
+}
+.quote-panel span{display:block;color:#7dd3fc;font-family:var(--mono);font-size:.62rem;margin-top:.8rem;text-transform:uppercase;letter-spacing:.08em}
+.section{padding:4.6rem 0}
+.section.compact{padding:3rem 0}
+.section-title{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:1rem;
+  margin-bottom:1.35rem;
+  border-bottom:1px solid var(--line);
+  padding-bottom:.85rem;
+}
+.section-title span{
+  font-family:var(--mono);
+  color:var(--faint);
+  font-size:.66rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.lens-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.85rem;
+}
+.lens-card{
+  background:rgba(255,250,241,.88);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:1.2rem;
+  min-height:258px;
+  display:flex;
+  flex-direction:column;
+}
+.lens-card .num{font-family:var(--mono);font-size:.62rem;color:var(--red);letter-spacing:.08em;text-transform:uppercase}
+.lens-card h3{font-family:var(--serif);font-size:1.55rem;line-height:1.12;margin:.45rem 0 .65rem}
+.lens-card p{margin:0;color:var(--muted);font-size:.92rem}
+.lens-card ul{margin:auto 0 0;padding:0;list-style:none;display:grid;gap:.34rem}
+.lens-card li{font-family:var(--mono);font-size:.62rem;color:var(--muted);border-top:1px solid rgba(23,19,15,.08);padding-top:.34rem}
+.image-story{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:1rem;
+  align-items:stretch;
+}
+.photo-panel{
+  position:relative;
+  min-height:520px;
+  overflow:hidden;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--paper-2);
+}
+.photo-panel img{width:100%;height:100%;object-fit:cover}
+.photo-label{
+  position:absolute;
+  left:1rem;
+  bottom:1rem;
+  max-width:calc(100% - 2rem);
+  color:var(--paper);
+  font-family:var(--mono);
+  font-size:.62rem;
+  background:rgba(23,19,15,.72);
+  border:1px solid rgba(246,241,232,.2);
+  border-radius:999px;
+  padding:.32rem .7rem;
+}
+.story-stack{
+  display:grid;
+  gap:1rem;
+}
+.story-card{
+  min-height:0;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,250,241,.8);
+  padding:1rem;
+}
+.story-card h3{
+  margin:0 0 .5rem;
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--teal);
+}
+.story-card p{margin:0;color:var(--muted);font-size:.91rem}
+.story-card strong{color:var(--ink);font-weight:500}
+.longform{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);
+  gap:1rem;
+  align-items:start;
+}
+.essay-panel{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,250,241,.82);
+  padding:1.35rem;
+}
+.essay-panel h3{
+  font-family:var(--serif);
+  font-size:1.9rem;
+  line-height:1.08;
+  margin:0 0 .8rem;
+}
+.essay-panel p{
+  color:var(--muted);
+  margin:.75rem 0 0;
+  font-size:.98rem;
+}
+.essay-panel p:first-of-type{margin-top:0}
+.essay-panel strong{color:var(--ink);font-weight:500}
+.pullquote-large{
+  border:1px solid rgba(23,19,15,.13);
+  border-radius:8px;
+  background:var(--charcoal);
+  color:var(--paper);
+  padding:1.35rem;
+}
+.pullquote-large p{
+  margin:0;
+  font-family:var(--serif);
+  font-size:clamp(1.45rem,3vw,2.4rem);
+  line-height:1.08;
+}
+.pullquote-large span{
+  display:block;
+  color:#7dd3fc;
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-top:1rem;
+}
+.field-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.75rem;
+}
+.field-card{
+  min-height:230px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,250,241,.84);
+  padding:1rem;
+}
+.field-card b{
+  display:block;
+  font-family:var(--mono);
+  font-size:.58rem;
+  color:var(--red);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:.45rem;
+}
+.field-card h3{
+  font-family:var(--serif);
+  font-size:1.25rem;
+  line-height:1.13;
+  margin:0 0 .5rem;
+}
+.field-card p{margin:0;color:var(--muted);font-size:.86rem}
+.taxonomy{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:.75rem;
+}
+.tax-card{
+  position:relative;
+  overflow:hidden;
+  min-height:250px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fffaf1;
+  padding:1rem;
+}
+.tax-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.08;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 14px,var(--ink) 14px 15px),
+    repeating-linear-gradient(0deg,transparent 0 18px,var(--ink) 18px 19px);
+  pointer-events:none;
+}
+.tax-card b,.tax-card h3,.tax-card p,.tax-card ul{position:relative}
+.tax-card b{display:block;font-family:var(--mono);font-size:.58rem;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.45rem}
+.tax-card h3{font-family:var(--serif);font-size:1.22rem;line-height:1.15;margin:0 0 .5rem}
+.tax-card p{margin:0;color:var(--muted);font-size:.83rem}
+.tax-card ul{margin:.75rem 0 0;padding:0;list-style:none;display:grid;gap:.28rem}
+.tax-card li{font-family:var(--mono);font-size:.58rem;color:var(--faint)}
+.ledger{
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+  background:rgba(255,250,241,.84);
+}
+.ledger-row{
+  display:grid;
+  grid-template-columns:180px minmax(0,1fr) minmax(0,1fr);
+  border-bottom:1px solid rgba(23,19,15,.09);
+}
+.ledger-row:last-child{border-bottom:none}
+.ledger-row > *{padding:.9rem}
+.ledger-row b{font-family:var(--mono);font-size:.62rem;color:var(--red);letter-spacing:.06em;text-transform:uppercase}
+.ledger-row span{color:var(--muted);font-size:.86rem}
+.ledger-row strong{font-weight:500;color:var(--ink)}
+.rules-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:.75rem;
+}
+.rule-card{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,250,241,.84);
+  padding:1rem;
+}
+.rule-card b{display:block;font-family:var(--mono);font-size:.58rem;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.38rem}
+.rule-card h3{font-family:var(--serif);font-size:1.3rem;line-height:1.12;margin:0 0 .45rem}
+.rule-card p{margin:0;color:var(--muted);font-size:.88rem}
+.image-strip{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.75rem;
+  margin-top:.75rem;
+}
+.strip-image{
+  position:relative;
+  min-height:260px;
+  overflow:hidden;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--paper-2);
+}
+.strip-image img{width:100%;height:100%;object-fit:cover}
+.strip-image span{
+  position:absolute;
+  left:.75rem;
+  bottom:.75rem;
+  max-width:calc(100% - 1.5rem);
+  background:rgba(23,19,15,.72);
+  color:var(--paper);
+  border-radius:999px;
+  padding:.25rem .55rem;
+  font-family:var(--mono);
+  font-size:.58rem;
+}
+.map-wrap{
+  display:grid;
+  grid-template-columns:minmax(260px,.7fr) minmax(0,1.3fr);
+  gap:1rem;
+  align-items:stretch;
+}
+.map-text{
+  background:var(--charcoal);
+  color:var(--paper);
+  border-radius:8px;
+  padding:1.2rem;
+}
+.map-text h3{font-family:var(--serif);font-size:1.75rem;line-height:1.1;margin:0 0 .75rem}
+.map-text p{margin:0;color:rgba(246,241,232,.72)}
+.system-map{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,250,241,.84);
+  padding:1rem;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:.55rem;
+  align-content:center;
+}
+.map-node{
+  position:relative;
+  min-height:130px;
+  border:1px solid rgba(23,19,15,.13);
+  border-radius:8px;
+  padding:.75rem;
+  background:#fffaf1;
+}
+.map-node:not(:last-child)::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  right:-.56rem;
+  width:.56rem;
+  border-top:1px solid rgba(23,19,15,.35);
+}
+.map-node b{display:block;font-family:var(--mono);font-size:.58rem;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.45rem}
+.map-node span{display:block;font-family:var(--serif);font-size:1.04rem;line-height:1.08;margin-bottom:.35rem}
+.map-node small{display:block;color:var(--muted);font-size:.72rem;line-height:1.42}
+.mode-board{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:1rem;
+  align-items:stretch;
+}
+.mode-controls{
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:.75rem;
+  background:rgba(255,250,241,.8);
+  display:flex;
+  flex-direction:column;
+  gap:.45rem;
+}
+.mode-controls button{
+  appearance:none;
+  border:1px solid var(--line);
+  background:#fffaf1;
+  border-radius:8px;
+  min-height:52px;
+  padding:.6rem .75rem;
+  color:var(--muted);
+  text-align:left;
+  font-family:var(--mono);
+  font-size:.68rem;
+  cursor:pointer;
+}
+.mode-controls button[aria-pressed="true"]{background:var(--charcoal);color:var(--paper);border-color:var(--charcoal)}
+.mode-display{
+  position:relative;
+  min-height:420px;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#111;
+}
+.mode-display img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}
+.mode-copy{
+  position:absolute;
+  inset:auto 1rem 1rem 1rem;
+  background:rgba(23,19,15,.82);
+  border:1px solid rgba(246,241,232,.16);
+  color:var(--paper);
+  padding:1rem;
+  border-radius:8px;
+}
+.mode-copy h3{margin:0 0 .35rem;font-family:var(--serif);font-size:1.55rem;line-height:1.1}
+.mode-copy p{margin:0;color:rgba(246,241,232,.76)}
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:.75rem;
+}
+.chapter{
+  border:1px solid var(--line);
+  background:rgba(255,250,241,.84);
+  border-radius:8px;
+  padding:.95rem;
+  min-height:168px;
+}
+.chapter b{display:block;font-family:var(--mono);font-size:.58rem;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.chapter h3{font-family:var(--serif);font-size:1.12rem;line-height:1.15;margin:0 0 .45rem}
+.chapter p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.52}
+.library-preview{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+  align-items:stretch;
+}
+.shelf-card{
+  display:flex;
+  flex-direction:column;
+  min-height:315px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  padding:1.2rem 1.35rem;
+}
+.shelf-top{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.shelf-num{font-family:var(--serif);font-size:1.45rem;color:var(--moss);font-weight:600}
+.shelf-date{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--faint)}
+.shelf-card h3{font-family:var(--serif);font-size:1.28rem;line-height:1.2;margin:.1rem 0 .45rem}
+.shelf-card p{margin:0;color:var(--muted);font-size:.86rem;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.85rem}
+.tags span{font-family:var(--mono);font-size:.58rem;border:1px solid var(--line);background:var(--paper-2);padding:.14rem .42rem;border-radius:4px;color:var(--muted)}
+.shelf-foot{display:flex;justify-content:space-between;align-items:center;margin-top:.9rem;padding-top:.7rem;border-top:1px solid rgba(23,19,15,.08);font-family:var(--mono);font-size:.62rem}
+.shelf-foot .open{color:var(--red);font-weight:500}
+.shelf-foot .live{color:var(--teal)}
+.draft-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.75rem;
+}
+.draft-card{
+  display:flex;
+  flex-direction:column;
+  min-height:250px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  padding:1.05rem 1.15rem;
+}
+.draft-card.soon{border-style:dashed;background:rgba(255,250,241,.74)}
+.draft-card .shelf-num{color:var(--moss)}
+.draft-card h3{font-family:var(--serif);font-size:1.2rem;line-height:1.18;margin:.1rem 0 .45rem}
+.draft-card p{margin:0;color:var(--muted);font-size:.84rem;flex:1}
+.draft-card .shelf-foot{font-size:.6rem}
+.ending{
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  color:var(--paper);
+  background:#111;
+}
+.ending::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(10,8,6,.88),rgba(10,8,6,.52),rgba(10,8,6,.24)),
+    linear-gradient(0deg,rgba(10,8,6,.82),rgba(10,8,6,.08) 56%,rgba(10,8,6,.62));
+  z-index:1;
+}
+.ending img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04)}
+.ending .shell{position:relative;z-index:2;padding:6rem 0}
+.ending h2{font-family:var(--serif);font-size:clamp(2.2rem,6vw,5.6rem);line-height:.95;margin:0;max-width:11ch}
+.ending p{max-width:62ch;color:rgba(246,241,232,.82);font-size:1.04rem;margin:1rem 0 0}
+.ending .last-line{font-family:var(--serif);font-size:clamp(1.35rem,3vw,2.6rem);line-height:1.1;color:#ffd8c3;margin-top:1.5rem}
+.snippet-note{
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--charcoal);
+  color:var(--paper);
+  padding:1.2rem;
+}
+.draft-grid + .snippet-note{margin-top:1rem}
+.snippet-note h3{font-family:var(--serif);font-size:1.55rem;line-height:1.1;margin:0 0 .65rem}
+.snippet-note p{color:rgba(246,241,232,.72);margin:.55rem 0 0}
+.source-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:.75rem;
+}
+.source-card{
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:.9rem;
+  background:rgba(255,250,241,.78);
+}
+.source-card b{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);margin-bottom:.25rem}
+.source-card a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
+.source-card p{margin:0;color:var(--muted);font-size:.82rem}
+.footer{
+  border-top:1px solid var(--line);
+  padding:2rem 0 3rem;
+  color:var(--faint);
+  font-family:var(--mono);
+  font-size:.66rem;
+}
+.footer .shell{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer a{color:var(--faint)}
+.footer a:hover{color:var(--red)}
+.footer-links{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+.quick-anchor{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:40;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  color:var(--muted);
+  font-family:var(--mono);
+  font-size:.64rem;
+  padding:.48rem .7rem;
+  box-shadow:0 8px 24px rgba(23,19,15,.1);
+}
+@media(max-width:980px){
+  .intro-grid,.image-story,.map-wrap,.mode-board,.library-preview{grid-template-columns:1fr}
+  .longform{grid-template-columns:1fr}
+  .field-grid,.taxonomy{grid-template-columns:repeat(2,1fr)}
+  .draft-grid{grid-template-columns:1fr}
+  .ledger-row{grid-template-columns:1fr}
+  .system-map{grid-template-columns:repeat(3,1fr)}
+  .map-node:not(:last-child)::after{display:none}
+  .chapter-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .topbar .shell{align-items:flex-start;flex-direction:column;padding:.7rem 0}
+  .grimoire-chrome .shell{align-items:flex-start;flex-direction:column;padding:.7rem 0}
+  .nav{justify-content:flex-start}
+  .hero{min-height:760px}
+  .hero-content{padding:7rem 0 3rem}
+  .lens-grid,.source-grid,.field-grid,.taxonomy,.rules-grid,.image-strip{grid-template-columns:1fr}
+  .photo-panel{min-height:380px}
+  .system-map{grid-template-columns:1fr}
+  .chapter-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body id="top">
+<header class="topbar">
+  <div class="shell">
+    <a class="brand" href="https://suarezaaronroy-sys.github.io/library/" aria-label="Aaron Suarez library home">
+      <div class="brand-mark">AS</div>
+      <div>
+        <strong>Aaron Suarez</strong>
+        <span>Valencia City, PH &middot; remote-first</span>
+      </div>
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="https://suarezaaronroy-sys.github.io/library/about/">About</a>
+      <a href="https://suarezaaronroy-sys.github.io/library/projects/" class="current">Library</a>
+      <a href="https://suarezaaronroy-sys.github.io/library/notes/">Notes</a>
+      <a href="mailto:suarezaaronroy@gmail.com">Contact &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<div class="grimoire-chrome" aria-label="Grimoire navigation">
+  <div class="shell">
+    <a class="back-link" href="https://suarezaaronroy-sys.github.io/library/projects/">&larr; Projects</a>
+    <div class="book-meta">
+      <strong>Grimoire 017 &middot; Behind the Facade &middot; Field Notes from the Quiet Trades</strong>
+      <span>12 essays &middot; quiet trades &middot; drafting stage &middot; Free, no gate</span>
+    </div>
+    <nav class="page-nav" aria-label="In-page navigation">
+      <a href="#thesis">Overview</a>
+      <a href="#city">City</a>
+      <a href="#failure">Failure</a>
+      <a href="#objects">Objects</a>
+      <a href="#chapters">Chapters</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <img src="assets/g017/edinburgh-stone-facade-unsplash.jpg" alt="Stone Edinburgh facade with sash windows and a doorway">
+    <div class="shell hero-content">
+      <div class="kicker">Grimoire 017 &middot; drafting stage</div>
+      <h1>Behind the <em>fa&ccedil;ade</em></h1>
+      <p class="lede">Field Notes from the Quiet Trades: essays on glass, stone, failure, memory, and the invisible work that lets ordinary buildings endure.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#thesis">Read the thesis</a>
+        <a class="btn" href="#chapters">Open chapter spine</a>
+      </div>
+      <div class="proof-line" aria-label="Project summary">
+        <span>quiet trades</span>
+        <span>CRM as shadow</span>
+        <span>Edinburgh as character</span>
+        <span>public-safe draft</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro-band" id="thesis">
+    <div class="shell intro-grid">
+      <div>
+        <h2>The job is not the pipeline. The pipeline is the visible trace.</h2>
+        <p>This Grimoire treats glazing as a city-scale act of care. A window is not only a product. It is an opening in stone, a planning question, a measure of heat and privacy, a supplier dependency, a fitting risk, and a promise made to a person living behind it.</p>
+        <p>A private glazing project is the lens, not the whole subject. The larger subject is why ordinary civilization keeps working: because quiet trades keep returning to old buildings, old streets, old materials, and new failures before anyone else has to notice.</p>
+      </div>
+      <aside class="quote-panel">
+        <p>"Bespoke trades are not chaotic because tradespeople lack systems. They are chaotic because the work itself is contextual."</p>
+        <span>Working thesis from anonymized field notes</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Three Lenses</h2>
+        <span>how the page should read</span>
+      </div>
+      <div class="lens-grid">
+        <article class="lens-card">
+          <div class="num">01 &middot; Art</div>
+          <h3>Glass as city light.</h3>
+          <p>Use imagery as atmosphere: stone, rain, sash windows, reflective glass, narrow streets, and the threshold between inside and outside.</p>
+          <ul>
+            <li>Pull quotes, not heavy manuals</li>
+            <li>Editorial pacing</li>
+            <li>Visual rhythm over dense SOPs</li>
+          </ul>
+        </article>
+        <article class="lens-card">
+          <div class="num">02 &middot; City</div>
+          <h3>Edinburgh as character.</h3>
+          <p>Morning rain, buses, sandstone, coffee cups, delivery vans, old stairwells, new glass, and the castle watching over everything: the city is not a setting. It is a participant.</p>
+          <ul>
+            <li>The newest object may be the window</li>
+            <li>Old buildings as active systems</li>
+            <li>Stone, weather, and public memory</li>
+          </ul>
+        </article>
+        <article class="lens-card">
+          <div class="num">03 &middot; System</div>
+          <h3>The office remembers.</h3>
+          <p>The admin layer translates scattered job reality into quotes, deposits, supplier orders, diary holds, remedials, follow-ups, and aftercare memory.</p>
+          <ul>
+            <li>CRM as a map, not the territory</li>
+            <li>Supplier chain visibility</li>
+            <li>Human judgement before automation</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="essay-panel">
+        <h3>Prologue: the ordinary surface is the interesting one.</h3>
+        <p>Most people only notice glazing when it fails. A window mists between panes. A handle sticks. A door drops. A room feels cold. A pane breaks. A customer sees the visible problem and asks for the visible fix.</p>
+        <p>The trade sees a longer story. It sees whether the existing frame can survive the repair. It sees whether the opening is square, whether the sill has moved, whether the glass is patterned or plain, whether the customer is asking for privacy, warmth, security, silence, or the same look they already have.</p>
+        <p><strong>Behind the Facade</strong> begins when the job file stops looking like the work. The CRM says "survey booked." The site says: stone, access, sash weight, rain, stairs, parking, conservation, lead time, supplier response, customer expectation, and one exact measurement that cannot be guessed.</p>
+      </article>
+      <aside class="pullquote-large">
+        <p>The facade is what the city sees. The system is what lets the facade survive being used.</p>
+        <span>Opening line candidate</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact" id="city">
+    <div class="shell image-story">
+      <figure class="photo-panel">
+        <img src="assets/g017/edinburgh-alley-windows-unsplash.jpg" alt="Old stone buildings with windows in a narrow Edinburgh alley">
+        <figcaption class="photo-label">Sample graphic: Edinburgh stone, windows, access, weather, age</figcaption>
+      </figure>
+      <div class="story-stack">
+        <div class="story-card">
+          <h3>Address as clue</h3>
+          <p><strong>213/9</strong> is not just a label. It can imply a flat, a stair, a carrying route, a parking constraint, a neighbour context, and a job that starts before the van arrives.</p>
+        </div>
+        <div class="story-card">
+          <h3>The facade is not always yours</h3>
+          <p>In heritage settings, the outside face of a building can belong partly to the street, the planning authority, the building's history, and the shared visual fabric of the city.</p>
+        </div>
+        <div class="story-card">
+          <h3>Trade knowledge is local</h3>
+          <p>A system for this kind of work has to remember the material reality: glass patterns, sash proportions, hardware, supplier limits, lead times, access, and customer communication.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="essay-panel">
+        <h3>Edinburgh is a city where the newest object in the street might be the window.</h3>
+        <p>Morning rain darkens the sandstone before the shops are fully awake. Buses move along the road with their windows fogged at the edges. People carry coffee past buildings older than their grandparents. A delivery van noses into a space it should not quite fit. Somewhere above the pavement, behind a sash, a room is colder than it should be.</p>
+        <p>This is the city the work enters. Not "historic Edinburgh" as a postcard phrase, but Edinburgh as a living material problem: stone that remembers weather, stairwells that narrow the body, committees that protect a shared face, flats stacked above streets, new glass asked to behave politely inside old openings.</p>
+        <p>The castle looks over everything with the indifference of old stone. Below it, tradespeople keep negotiating with the smaller stones: sills, lintels, reveals, steps, facades, thresholds. A beautiful street is not a fixed thing. It is a maintained agreement.</p>
+      </article>
+      <aside class="pullquote-large">
+        <p>Some windows belong as much to the street as they do to the owner.</p>
+        <span>City principle</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Field Notes From A City Job</h2>
+        <span>what a CRM field cannot fully hold</span>
+      </div>
+      <div class="field-grid">
+        <article class="field-card">
+          <b>Street</b>
+          <h3>Access is part of the specification.</h3>
+          <p>A third-floor flat, narrow stairwell, controlled parking zone, shared entrance, or busy street can change the job before anyone talks about glass. The route to the opening matters almost as much as the opening.</p>
+        </article>
+        <article class="field-card">
+          <b>Stone</b>
+          <h3>Old buildings are not neutral containers.</h3>
+          <p>Stone settles. Openings drift. Previous repairs leave evidence. The surveyor is reading a small piece of architecture, not just collecting dimensions for a quote.</p>
+        </article>
+        <article class="field-card">
+          <b>Neighbourhood</b>
+          <h3>The outside face belongs to more than one person.</h3>
+          <p>A customer may own the desire for change, but the street may own the visual continuity. Conservation areas and shared committees turn taste into process.</p>
+        </article>
+        <article class="field-card">
+          <b>Weather</b>
+          <h3>Scotland is a project manager.</h3>
+          <p>Cold, rain, wind, and daylight are not background mood. They affect installation timing, sealants, working comfort, customer urgency, and the emotional meaning of a warm room.</p>
+        </article>
+        <article class="field-card">
+          <b>Memory</b>
+          <h3>The useful note is the note that survives handoff.</h3>
+          <p>Photos, sketches, supplier replies, customer preferences, and odd little details must travel from inquiry to survey to quote to order to install without losing their meaning.</p>
+        </article>
+        <article class="field-card">
+          <b>Care</b>
+          <h3>Completion is not the end of the relationship.</h3>
+          <p>Aftercare, remedials, warranty expectations, and future work all depend on whether the business can remember what happened when the job was still alive.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="essay-panel">
+        <h3>A survey begins before the tape measure leaves the van.</h3>
+        <p>The street has already said something. The stair has said something. The height of the flat, the shape of the opening, the age of the stone, the customer's tone, the weather, the place the van can or cannot stop: all of it is already part of the job.</p>
+        <p>Only then does the tape measure come out. The surveyor is not merely collecting dimensions. They are deciding which details matter enough to survive into the quote, the order, the diary, and the hands of the installer.</p>
+        <p>This is why a trade CRM should never pretend the job begins with a clean form. The form is a late stage in the knowledge process. Before the form, there is a building. Before the building becomes data, someone has to read it.</p>
+      </article>
+      <aside class="essay-panel">
+        <h3>Survey data the page should make visible</h3>
+        <p><strong>Opening:</strong> size, squareness, sash/casement/door type, surrounding material.</p>
+        <p><strong>Glass:</strong> DGU, toughened, laminated, patterned, obscured, smart/privacy requirement.</p>
+        <p><strong>Context:</strong> access, parking, floor level, shared stair, pets/children, customer availability.</p>
+        <p><strong>Risk:</strong> supplier uncertainty, discontinued pattern, conservation question, remedial likelihood.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Glass Is Not Just Glass</h2>
+        <span>material vocabulary as system design</span>
+      </div>
+      <div class="taxonomy">
+        <article class="tax-card">
+          <b>Unit</b>
+          <h3>DGU / sealed unit</h3>
+          <p>The default phrase can hide the real decisions: cavity, spacer, low-e coating, argon, thickness, sightline, and whether only the unit or the whole frame is changing.</p>
+          <ul><li>thermal performance</li><li>misted unit replacement</li><li>manufacturing lead time</li></ul>
+        </article>
+        <article class="tax-card">
+          <b>Safety</b>
+          <h3>Toughened / laminated</h3>
+          <p>Safety glass is a regulatory and risk question, not just an upgrade. Location, height, doors, side panels, and human movement all change the spec.</p>
+          <ul><li>impact zones</li><li>doors and side screens</li><li>security vs break pattern</li></ul>
+        </article>
+        <article class="tax-card">
+          <b>Privacy</b>
+          <h3>Obscure / patterned</h3>
+          <p>Patterned glass is practical and aesthetic at once. It must hide, match, soften, or preserve a room's character, and discontinued patterns become detective work.</p>
+          <ul><li>reeded</li><li>stippolyte</li><li>sandblast effect</li></ul>
+        </article>
+        <article class="tax-card">
+          <b>Future</b>
+          <h3>Smart / switchable</h3>
+          <p>PDLC glass and smart films turn privacy into a control state. They belong in the Grimoire as a contrast between ancient facades and programmable surfaces.</p>
+          <ul><li>privacy on demand</li><li>wiring and control</li><li>modernity inside old rooms</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>What Is Invisible Here?</h2>
+        <span>the recurring question</span>
+      </div>
+      <div class="field-grid">
+        <article class="field-card">
+          <b>Glass</b>
+          <h3>The clear pane is full of hidden decisions.</h3>
+          <p>Coatings, gas, spacer bars, seals, thickness, safety treatment, and manufacturing tolerances disappear the moment the unit looks clean.</p>
+        </article>
+        <article class="field-card">
+          <b>Survey</b>
+          <h3>The invisible part is experience.</h3>
+          <p>A survey begins before the tape measure leaves the van. The first measurement is often the building itself: age, access, weather, risk, and previous repair.</p>
+        </article>
+        <article class="field-card">
+          <b>CRM</b>
+          <h3>The invisible part is judgement.</h3>
+          <p>A status can say "quoted." It cannot say whether the quote is fragile, whether the customer needs reassurance, or whether one supplier answer could change the job.</p>
+        </article>
+        <article class="field-card">
+          <b>Supplier</b>
+          <h3>The invisible part is manufacturing.</h3>
+          <p>The customer sees a number. Behind it sits a chain of availability, lead time, profile, pattern, production tolerance, delivery, and exception handling.</p>
+        </article>
+        <article class="field-card">
+          <b>City</b>
+          <h3>The invisible part is permission.</h3>
+          <p>Some constraints do not appear until they stop the job: listed status, conservation rules, committee approvals, factor decisions, or the visual duty owed to the street.</p>
+        </article>
+        <article class="field-card">
+          <b>Craft</b>
+          <h3>The invisible part is disappearance.</h3>
+          <p>Good glazing vanishes into the building. Good plumbing, wiring, stonework, joinery: the quiet crafts are noticed most clearly when they fail.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="essay-panel">
+        <h3>Entropy: every building is losing a fight.</h3>
+        <p>Paint lifts. Seals perish. Timber moves. Hardware loosens. Gas escapes. Stone drinks rain. Water finds the smallest path. Time is patient enough to become damage.</p>
+        <p>Tradespeople do not defeat entropy. They slow it down. A good repair is not a victory over time; it is a treaty with time, renewed in silicone, glass, timber, iron, and care.</p>
+      </article>
+      <article class="essay-panel">
+        <h3>Time: thirty years depends on five hours.</h3>
+        <p>A window may last thirty years. The quote may take three days. The survey may take an hour. The installation may take five hours. The strange proportion is the point: decades of comfort can depend on a handful of careful decisions.</p>
+        <p>This is why small work is not small. A tiny error in the hour of attention can become a decade of irritation. A careful hour can disappear for a generation.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="pullquote-large">
+        <p>Cities remember through materials: glass, stone, timber, iron.</p>
+        <span>Memory principle</span>
+      </article>
+      <article class="essay-panel">
+        <h3>Memory is not only in archives.</h3>
+        <p>A city remembers in what it keeps using. The worn stone step. The brass handle polished by hands. The timber frame repaired instead of discarded. The old pane whose unevenness softens the room.</p>
+        <p>Paperwork remembers one version of the job. Materials remember another. The most respectful systems do not force the material memory to become a checkbox. They make room for it, because sometimes the point is not to make the building new. Sometimes the point is to help it continue.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="system">
+    <div class="shell">
+      <div class="section-title">
+        <h2>The Hidden Operating System</h2>
+        <span>from inquiry to aftercare</span>
+      </div>
+      <div class="map-wrap">
+        <div class="map-text">
+          <h3>Every visible unit has invisible dependencies.</h3>
+          <p>The CRM status is only one surface. The real system is the chain of observations, confirmations, constraints, documents, deposits, supplier responses, schedule decisions, and customer trust.</p>
+        </div>
+        <div class="system-map" aria-label="Operational flow map">
+          <div class="map-node"><b>01</b><span>Lead</span><small>Inquiry, location, photos, urgency, desired outcome.</small></div>
+          <div class="map-node"><b>02</b><span>Survey</span><small>Measurements, access, condition, constraints, judgement.</small></div>
+          <div class="map-node"><b>03</b><span>Spec</span><small>Glass type, frame, hardware, pattern, privacy, safety.</small></div>
+          <div class="map-node"><b>04</b><span>Supply</span><small>Manufacturing, availability, lead time, exceptions.</small></div>
+          <div class="map-node"><b>05</b><span>Install</span><small>Diary, deposit, access prep, fitter notes, snag risk.</small></div>
+          <div class="map-node"><b>06</b><span>Care</span><small>Warranty, remedials, aftercare, memory for next time.</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact" id="failure">
+    <div class="shell">
+      <div class="section-title">
+        <h2>The Broken Window</h2>
+        <span>failure as a philosophy of systems</span>
+      </div>
+      <div class="longform">
+        <article class="pullquote-large">
+          <p>Every craft is defined more by failure than success.</p>
+          <span>Failure principle</span>
+        </article>
+        <article class="essay-panel">
+          <h3>Failure is how the hidden system speaks.</h3>
+          <p>Not only the literal broken window. The cracked unit. The scratched pane. The discontinued pattern no supplier can match cleanly. The wrong slab. The delayed order. The committee approval that arrives too late. The unit that looks simple until the building refuses to be simple.</p>
+          <p>Success makes the system disappear. Failure draws its outline. Suddenly everyone can see the dependency chain: the survey note, the supplier email, the quote wording, the expectation set with the customer, the decision someone forgot to record, the assumption that travelled too far.</p>
+          <p>This chapter should not treat failure as embarrassment. It should treat failure as x-ray. Every crack reveals how the work is actually held together.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>The Chain Behind The Quote</h2>
+        <span>supplier work as invisible architecture</span>
+      </div>
+      <div class="ledger">
+        <div class="ledger-row">
+          <b>Customer asks</b>
+          <span><strong>"Can you replace this?"</strong> The request arrives as a visible problem, usually without all technical context.</span>
+          <span>The office needs photos, address, urgency, approximate scope, access notes, and enough language to route the request intelligently.</span>
+        </div>
+        <div class="ledger-row">
+          <b>Surveyor reads</b>
+          <span><strong>The site becomes information.</strong> Measurements, frame condition, material, opening style, safety requirement, and hidden constraints are gathered.</span>
+          <span>The important part is not only what is measured, but what is noticed and explained.</span>
+        </div>
+        <div class="ledger-row">
+          <b>Supplier answers</b>
+          <span><strong>The market pushes back.</strong> Some units are straightforward. Others depend on pattern availability, profiles, manufacturing limits, or special order lead times.</span>
+          <span>Supplier emails are part of the job memory and should not vanish into inbox archaeology.</span>
+        </div>
+        <div class="ledger-row">
+          <b>Office composes</b>
+          <span><strong>The quote becomes a promise.</strong> Scope, price, validity, deposit, timeline, exclusions, and next steps are packaged into something a customer can trust.</span>
+          <span>This is where communication style matters: clear, calm, precise, warm, and never falsely certain.</span>
+        </div>
+        <div class="ledger-row">
+          <b>Installers finish</b>
+          <span><strong>The system returns to the wall.</strong> The order becomes a physical unit, fitted by people carrying tools through real homes.</span>
+          <span>Aftercare closes the loop: warranty notes, remedials, customer satisfaction, and future reference.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="pullquote-large">
+        <p>A bespoke trade does not need less structure. It needs structure that respects exceptions.</p>
+        <span>Systems thesis</span>
+      </article>
+      <article class="essay-panel">
+        <h3>The CRM was not wrong. It was incomplete.</h3>
+        <p>A pipeline can show where a job is supposed to be. It cannot, by itself, explain why a quote is waiting on a supplier, why a survey note matters, why a customer has not paid a deposit, why a committee decision changes the schedule, or why one detail from an old email is the key to avoiding a return visit.</p>
+        <p>The lesson is not "CRM bad." The lesson is that the CRM must be designed as an index to reality, not a replacement for it. It should point to photos, survey details, supplier decisions, payment state, diary constraints, and unresolved risks.</p>
+        <p>For this Grimoire, the interesting system is not a software stack diagram. It is the translation layer between craft knowledge and business continuity.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Switch The Reading Mode</h2>
+        <span>a small interaction for the public page</span>
+      </div>
+      <div class="mode-board">
+        <div class="mode-controls" role="group" aria-label="Reading modes">
+          <button type="button" aria-pressed="true" data-mode="heritage">Heritage Layer</button>
+          <button type="button" aria-pressed="false" data-mode="glass">Glass Layer</button>
+          <button type="button" aria-pressed="false" data-mode="memory">Memory Layer</button>
+        </div>
+        <div class="mode-display" aria-live="polite">
+          <img id="mode-image" src="assets/g017/edinburgh-stone-sky-unsplash.jpg" alt="Stone buildings in Edinburgh under blue sky">
+          <div class="mode-copy">
+            <h3 id="mode-title">Heritage Layer</h3>
+            <p id="mode-text">Old buildings make new work answer to history: listed status, conservation areas, shared facades, visual continuity, and the slower ethics of repair.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>The Admin's View</h2>
+        <span>remote work inside physical craft</span>
+      </div>
+      <div class="longform">
+        <article class="essay-panel">
+          <h3>Remote admin is not distant from the work. It is close to the handoffs.</h3>
+          <p>The admin may never touch the glass, but they touch almost every promise surrounding it. They see the customer worry, the supplier delay, the invoice reminder, the quote revision, the calendar squeeze, and the installer note that needs to become an action before it becomes a problem.</p>
+          <p>That position creates a special kind of knowledge. It is not master-craft knowledge. It is connective knowledge. The admin learns where information goes missing, which statuses are too vague, which fields arrive too late, which follow-ups protect trust, and which tiny details should be captured because someone will need them later.</p>
+          <p>This is why G017 belongs in the Working Library. It is not only about windows. It is about learning that operations design begins with respect for the work that already exists.</p>
+        </article>
+        <article class="essay-panel">
+          <h3>What the office must remember</h3>
+          <p><strong>Who:</strong> customer, decision-maker, tenant, factor, committee, supplier, installer, surveyor.</p>
+          <p><strong>What:</strong> requested outcome, actual spec, exceptions, quoted scope, exclusions, deposit state.</p>
+          <p><strong>Where:</strong> address format, access, floor level, parking, room, elevation, visible facade.</p>
+          <p><strong>When:</strong> survey date, quote expiry, payment date, manufacture lead time, install window, remedial follow-up.</p>
+          <p><strong>Why:</strong> privacy, warmth, safety, visual continuity, damage repair, sale/rental readiness, heritage compliance.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="essay-panel">
+        <h3>The Quiet Crafts</h3>
+        <p>Good glazing disappears. So does good plumbing. Good electrical work. Good stonework. Good joinery. Good drainage. Good scheduling. Good documentation.</p>
+        <p>The quiet crafts are the kinds of work people rarely praise while they are working. They become visible through interruption: water where water should not be, cold where warmth should be, a switch that does nothing, a door that will not close, a pane that clouds from the inside.</p>
+        <p>This is the larger theme hiding inside the private glazing lens. The Grimoire is not finally about glazing, CRM, or Edinburgh. It is about the class of work that allows ordinary life to continue without announcing itself.</p>
+      </article>
+      <aside class="pullquote-large">
+        <p>You only notice some kinds of excellence when they stop being excellent.</p>
+        <span>Quiet crafts motif</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Rules For The Future System</h2>
+        <span>what the Grimoire can teach builders</span>
+      </div>
+      <div class="rules-grid">
+        <article class="rule-card">
+          <b>01</b>
+          <h3>Never flatten a site into a status.</h3>
+          <p>A status should summarize, not erase. Every key stage needs space for context: photos, access notes, survey findings, supplier dependencies, and customer constraints.</p>
+        </article>
+        <article class="rule-card">
+          <b>02</b>
+          <h3>Make exceptions first-class citizens.</h3>
+          <p>Bespoke work fails when exceptions hide in email threads. If a pattern is discontinued, a committee is pending, or a unit is unusual, the system should carry that fact forward visibly.</p>
+        </article>
+        <article class="rule-card">
+          <b>03</b>
+          <h3>Capture expertise without slowing experts down.</h3>
+          <p>Surveyors and installers should not become data-entry clerks. The system should make the right note easy, fast, and useful enough that capturing it feels like protection, not admin theatre.</p>
+        </article>
+        <article class="rule-card">
+          <b>04</b>
+          <h3>Design for the next person in the chain.</h3>
+          <p>Every note should answer a handoff question. What does quoting need? What does ordering need? What does installation need? What will aftercare need three months later?</p>
+        </article>
+        <article class="rule-card">
+          <b>05</b>
+          <h3>Treat payment as scheduling information.</h3>
+          <p>A deposit is not just finance. It changes commitment, purchasing, diary confidence, and customer expectation. The system should connect money movement to operational readiness.</p>
+        </article>
+        <article class="rule-card">
+          <b>06</b>
+          <h3>Preserve tone as part of quality.</h3>
+          <p>Clear, warm customer communication is operational infrastructure. A good system helps the business sound like itself while staying precise about uncertainty, timing, and next steps.</p>
+        </article>
+      </div>
+      <div class="image-strip">
+        <figure class="strip-image">
+          <img src="assets/g017/edinburgh-modern-glass-pexels.jpg" alt="Modern glass architecture in Edinburgh">
+          <span>Modern glass as the future layer</span>
+        </figure>
+        <figure class="strip-image">
+          <img src="assets/g017/edinburgh-moody-street-pexels.jpg" alt="Moody Edinburgh street with historic and modern architecture">
+          <span>City texture as the old layer</span>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact" id="objects">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Object Studies</h2>
+        <span>small tools, long stories</span>
+      </div>
+      <div class="field-grid">
+        <article class="field-card">
+          <b>Tape measure</b>
+          <h3>An instrument of trust.</h3>
+          <p>Not just a tool. The tape measure is where conversation becomes commitment. A number written down badly can travel through the whole system disguised as truth.</p>
+        </article>
+        <article class="field-card">
+          <b>Spacer bar</b>
+          <h3>The hidden distance.</h3>
+          <p>The customer almost never sees it, yet it helps decide whether the unit performs, whether the edge holds, and whether the glass stays clear instead of misting.</p>
+        </article>
+        <article class="field-card">
+          <b>Glazing shovel</b>
+          <h3>A tiny tool with decades inside it.</h3>
+          <p>Simple, almost forgettable, refined by repetition. Some objects are not impressive because they are complex. They are impressive because they became exactly enough.</p>
+        </article>
+        <article class="field-card">
+          <b>Silicone</b>
+          <h3>The last thing applied, the first thing noticed.</h3>
+          <p>When it is clean, nobody thinks about it. When it is messy, it becomes the signature of the whole job. Finish is not decoration; finish is evidence.</p>
+        </article>
+        <article class="field-card">
+          <b>Handle</b>
+          <h3>The daily handshake.</h3>
+          <p>A window or door is judged through the body. The handle is where hardware becomes feeling: resistance, alignment, certainty, annoyance, trust.</p>
+        </article>
+        <article class="field-card">
+          <b>Old glass</b>
+          <h3>Memory you can see through.</h3>
+          <p>Pattern, waviness, privacy, scratches, tint, and age can make a pane part of a room's memory. Replacement is sometimes a technical act and sometimes a small act of editing history.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="chapters">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Chapter Spine</h2>
+        <span>12-part web/book structure</span>
+      </div>
+      <div class="chapter-grid">
+        <article class="chapter"><b>01</b><h3>The City of Openings</h3><p>Windows and doors as the places where weather, privacy, light, and architecture negotiate.</p></article>
+        <article class="chapter"><b>02</b><h3>The Surveyor's Eye</h3><p>Observation as the first system: measure, angle, access, material, risk, and memory.</p></article>
+        <article class="chapter"><b>03</b><h3>Glass Has Dialects</h3><p>DGU, toughened, laminated, obscure, reeded, patterned, privacy, heat, safety, and continuity.</p></article>
+        <article class="chapter"><b>04</b><h3>Frames Remember</h3><p>uPVC, timber, sash, case, ironmongery, profile, tolerances, and the politics of visible change.</p></article>
+        <article class="chapter"><b>05</b><h3>The Facade Is Public</h3><p>Planning, listed buildings, conservation areas, house committees, and visual responsibility.</p></article>
+        <article class="chapter"><b>06</b><h3>The Supplier Chain</h3><p>Hidden partners, quotes, lead times, manufacturing exceptions, and the craft of chasing calmly.</p></article>
+        <article class="chapter"><b>07</b><h3>The CRM Was A Shadow</h3><p>Business Pilot as a surface over a deeper system of notes, photos, judgement, and exceptions.</p></article>
+        <article class="chapter"><b>08</b><h3>The Office That Remembers</h3><p>Remote admin as translator: turning messy reality into next actions without flattening the craft.</p></article>
+        <article class="chapter"><b>09</b><h3>Deposits And Trust</h3><p>Payments, quote validity, booking discipline, and how money becomes a schedule commitment.</p></article>
+        <article class="chapter"><b>10</b><h3>The Broken Window</h3><p>Cracked units, scratched glass, wrong slabs, discontinued patterns, delays, committees, and the x-ray of failure.</p></article>
+        <article class="chapter"><b>11</b><h3>Smart Glass, Old Streets</h3><p>PDLC, electrochromic glass, films, privacy technology, and modernity meeting heritage.</p></article>
+        <article class="chapter"><b>12</b><h3>The Quiet Crafts</h3><p>The final argument: civilization keeps working because invisible specialists maintain the everyday surface.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Glossary Of The Invisible</h2>
+        <span>terms that carry the world</span>
+      </div>
+      <div class="field-grid">
+        <article class="field-card">
+          <b>Facade</b>
+          <h3>The public face of private work.</h3>
+          <p>The outside surface of a building, but also the metaphor for every clean-looking system that hides negotiation, maintenance, and judgement behind it.</p>
+        </article>
+        <article class="field-card">
+          <b>DGU</b>
+          <h3>A sealed decision.</h3>
+          <p>A double glazed unit is a product, but in the job story it is also a bundle of measurements, performance choices, lead times, and manufacturing commitments.</p>
+        </article>
+        <article class="field-card">
+          <b>Obscure glass</b>
+          <h3>Privacy as pattern.</h3>
+          <p>The quiet art of letting light through while keeping life hidden. In older homes, the pattern can become part of the memory of the room.</p>
+        </article>
+        <article class="field-card">
+          <b>Lead time</b>
+          <h3>Time made visible.</h3>
+          <p>The distance between promise and installation. It is shaped by supplier capacity, special materials, diary pressure, payment, and the customer's patience.</p>
+        </article>
+        <article class="field-card">
+          <b>Remedial</b>
+          <h3>The afterlife of the job.</h3>
+          <p>A remedial is not merely a problem. It is the system proving whether it can remember, return, explain, and preserve trust after the invoice.</p>
+        </article>
+        <article class="field-card">
+          <b>Admin</b>
+          <h3>The keeper of continuity.</h3>
+          <p>Not the person outside the craft, but the person responsible for helping the craft survive translation between people, software, suppliers, and time.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell longform">
+      <article class="essay-panel">
+        <h3>Lines the Grimoire can keep returning to</h3>
+        <p><strong>The CRM was only the shadow cast by the job.</strong></p>
+        <p><strong>Every old window is a negotiation between comfort and continuity.</strong></p>
+        <p><strong>The supplier chain is the part of the building the customer never sees.</strong></p>
+        <p><strong>A survey is not data collection. It is attention with a tape measure.</strong></p>
+        <p><strong>The office does not make the craft. The office helps the craft survive handoff.</strong></p>
+      </article>
+      <aside class="pullquote-large">
+        <p>Craft is infrastructure when a city depends on it but forgets to name it.</p>
+        <span>Closing argument candidate</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="ending">
+    <img src="assets/g017/edinburgh-moody-street-pexels.jpg" alt="Moody Edinburgh street with old stone and modern city life">
+    <div class="shell">
+      <h2>Tomorrow morning</h2>
+      <p>Someone will walk past the house. They will never know a window was replaced. They will never know a committee debated it, a surveyor measured it, a supplier manufactured it, an installer carried it up four flights of stairs, or someone in another country updated the paperwork that allowed it to happen.</p>
+      <p>They will simply see another beautiful street.</p>
+      <p class="last-line">That is what good craftsmanship looks like. It disappears into the city.</p>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Draft Shelf Context</h2>
+        <span>why this is G017</span>
+      </div>
+      <div class="draft-grid">
+        <article class="draft-card soon">
+          <div class="shelf-top">
+            <span class="shelf-num">015</span>
+            <span class="shelf-date">Drafting</span>
+          </div>
+          <h3>Coming Soon: Field Manual In Draft</h3>
+          <p>Reserved shelf slot for a still-forming Grimoire. Keep the card visible so the numbering sequence stays honest while the work matures.</p>
+          <div class="tags"><span>drafting</span><span>not yet public</span></div>
+          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">drafting</span></div>
+        </article>
+        <article class="draft-card soon">
+          <div class="shelf-top">
+            <span class="shelf-num">016</span>
+            <span class="shelf-date">Drafting</span>
+          </div>
+          <h3>Coming Soon: Field Manual In Draft</h3>
+          <p>Reserved shelf slot for the next unfinished Grimoire. The card says the library is still moving without pretending the book is ready.</p>
+          <div class="tags"><span>drafting</span><span>not yet public</span></div>
+          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">drafting</span></div>
+        </article>
+        <article class="draft-card">
+        <div class="shelf-top">
+          <span class="shelf-num">017</span>
+          <span class="shelf-date">Draft 2026</span>
+        </div>
+        <h3>Behind the Facade: Field Notes from the Quiet Trades</h3>
+        <p>Essays on glass, stone, failure, memory, and the invisible work that lets ordinary buildings keep their dignity.</p>
+        <div class="tags"><span>quiet trades</span><span>heritage</span><span>invisible work</span><span>city ops</span></div>
+        <div class="shelf-foot"><span class="open">Open grimoire &rarr;</span><span class="live">draft &middot; public-safe</span></div>
+      </article>
+      </div>
+      <aside class="snippet-note">
+        <h3>Library placement idea</h3>
+        <p>Place G015 and G016 as dashed drafting cards, then let G017 appear as the pretty draft that can survive publication now.</p>
+        <p>Suggested shelf label: <strong>Quiet Trades</strong> or <strong>Art + Systems</strong>. The card should stay moss/stone so it belongs to Aaron's library, not a client brand identity.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="sources">
+    <div class="shell">
+      <div class="section-title">
+        <h2>Credits And Sources</h2>
+        <span>public-safe draft trail</span>
+      </div>
+      <div class="source-grid">
+        <div class="source-card">
+          <b>Drafting source</b>
+          <p>Built from anonymized private field notes. Company identifiers, personal names, and internal process details have been removed or generalized for publication.</p>
+        </div>
+        <div class="source-card">
+          <b>Anonymization</b>
+          <p>This is a personal Working Library essay about quiet trades and systems. It is not an official page for any client, contractor, or supplier.</p>
+        </div>
+        <div class="source-card">
+          <b>Planning context</b>
+          <p>Edinburgh window replacement context checked against <a href="https://www.edinburgh.gov.uk/planning-applications-1/prior-approval-%E2%80%93-windows">City of Edinburgh Council guidance</a>.</p>
+        </div>
+        <div class="source-card">
+          <b>Heritage context</b>
+          <p>Listed building and conservation consent context checked against <a href="https://www.historicenvironment.scot/protect-and-care/owning-managing-and-visiting/consents-and-permissions/listed-building-and-conservation-area-consent/">Historic Environment Scotland</a>.</p>
+        </div>
+        <div class="source-card">
+          <b>Sample images</b>
+          <p>Hero facade by Jorgen Hendriksen on <a href="https://unsplash.com/photos/elegant-stone-building-facade-with-arched-doorway-and-windows-UOWxqUGd7e4">Unsplash</a>. Alley and stone-sky images by <a href="https://unsplash.com/photos/old-stone-buildings-with-windows-in-narrow-alley-ha8xVKx_ov0">@paws_and_prints</a> on Unsplash.</p>
+        </div>
+        <div class="source-card">
+          <b>Sample images</b>
+          <p>Modern glass and moody Edinburgh street samples by Saul Bandera Brotheridge on <a href="https://www.pexels.com/photo/modern-glass-architecture-in-edinburgh-30664840/">Pexels</a> / <a href="https://www.pexels.com/photo/moody-architectural-street-view-in-edinburgh-30664873/">Pexels</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div>&copy; <span id="yr"></span> Aaron Suarez &middot; operational systems builder &middot; <a href="https://suarezaaronroy-sys.github.io/library/feed.xml">RSS</a></div>
+    <div class="footer-links">
+      <span>Valencia City, PH &middot; remote-first</span>
+      <a href="mailto:suarezaaronroy@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/suarez-aaronroy/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<a class="quick-anchor" href="#top" aria-label="Back to top">top</a>
+
+<script>
+document.getElementById("yr").textContent = new Date().getFullYear();
+const modes = {
+  heritage: {
+    title: "Heritage Layer",
+    text: "Old buildings make new work answer to history: listed status, conservation areas, shared facades, visual continuity, and the slower ethics of repair.",
+    image: "assets/g017/edinburgh-stone-sky-unsplash.jpg",
+    alt: "Stone buildings in Edinburgh under blue sky"
+  },
+  glass: {
+    title: "Glass Layer",
+    text: "Glass is not one material in the job file. It can mean safety, privacy, thermal control, pattern matching, supply risk, and the exact quality of light a room keeps.",
+    image: "assets/g017/edinburgh-modern-glass-pexels.jpg",
+    alt: "Modern reflective glass architecture in Edinburgh"
+  },
+  memory: {
+    title: "Memory Layer",
+    text: "The office keeps the trade from forgetting itself: who replied, what was measured, what the supplier confirmed, what the customer expects, and what must happen next.",
+    image: "assets/g017/edinburgh-moody-street-pexels.jpg",
+    alt: "Moody Edinburgh street scene with modern and historic architecture"
+  }
+};
+const buttons = document.querySelectorAll("[data-mode]");
+const image = document.getElementById("mode-image");
+const title = document.getElementById("mode-title");
+const text = document.getElementById("mode-text");
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const mode = modes[button.dataset.mode];
+    buttons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+    image.src = mode.image;
+    image.alt = mode.alt;
+    title.textContent = mode.title;
+    text.textContent = mode.text;
+  });
+});
+</script>
+</body>
+</html>
