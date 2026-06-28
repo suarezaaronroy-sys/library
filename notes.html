@@ -1,27 +1,95 @@
 ---
 layout: default
-title: Notes — Operational thinking, written down
-description: "Operational field notes on CRM systems, automation failures, AI delegation, and why organizations keep producing the same problems. Short, direct, from real work."
+title: Field Notes — Operational Thinking
+description: "Operational field notes on CRM systems, automation failures, AI delegation, handoffs, and why organizations keep producing the same problems."
 permalink: /notes/
 ---
-<div class="shell page-pad">
-  <header class="page-header">
-    <div class="page-eyebrow">Notes · Field Logs</div>
-    <h1>Operational thinking, <em>written down.</em></h1>
-    <p class="lede">My running commentary — field observations from real operations: how breakdowns happen, why they repeat, and what the fix actually requires. Pattern recognition, not theory. Each note is its own page.</p>
-  </header>
-  {% assign cats = site.notes | map: "category" | uniq %}
-  {% for cat in cats %}
-  <div class="section-h"><h2>{{ cat }}</h2><span>{{ site.notes | where: "category", cat | size }} notes</span></div>
-  <div class="note-list">
-    {% assign catnotes = site.notes | where: "category", cat | sort: "date" | reverse %}
-    {% for n in catnotes %}
-    <a class="note-row" href="{{ n.url | relative_url }}">
-      <div class="n-meta">{{ n.date | date: "%b %Y" }}</div>
-      <h3>{{ n.title }}</h3>
-      <p>{{ n.lede }}</p>
-    </a>
-    {% endfor %}
+{% assign all_notes = site.notes | sort: "date" | reverse %}
+{% assign categories = all_notes | map: "category" | uniq %}
+
+<div class="notes-page">
+  <section class="notes-cover">
+    <img class="notes-cover-img" src="{{ '/assets/img/brand/brand-documents-plan-unsplash.jpg' | relative_url }}" alt="A workflow, product brief, and writing paper arranged on a desk">
+    <div class="notes-cover-shade"></div>
+    <div class="shell notes-cover-inner">
+      <div class="notes-kicker">Field log · observations from real work</div>
+      <h1>Field Notes</h1>
+      <p>Short arguments about the moments when work bends, breaks, or quietly succeeds: handoffs, systems, tools, incentives, and the details a dashboard cannot see.</p>
+      <div class="notes-cover-stats">
+        <div><span>Entries</span><strong>{{ all_notes | size }}</strong></div>
+        <div><span>Threads</span><strong>{{ categories | size }}</strong></div>
+        <div><span>Reading order</span><strong>Newest first</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="notes-filter-wrap">
+    <div class="shell notes-filter" role="group" aria-label="Filter notes by thread">
+      <button type="button" data-note-filter="all" aria-pressed="true">All <span>{{ all_notes | size }}</span></button>
+      {% for category in categories %}
+      {% assign category_count = all_notes | where: "category", category | size %}
+      <button type="button" data-note-filter="{{ category | slugify }}" aria-pressed="false">{{ category }} <span>{{ category_count }}</span></button>
+      {% endfor %}
+    </div>
   </div>
-  {% endfor %}
+
+  <section class="shell notes-journal">
+    <header class="notes-journal-head">
+      <span>Reading desk</span>
+      <div>
+        <h2>Ideas worth carrying forward.</h2>
+        <p id="notes-filter-status" aria-live="polite">Showing all {{ all_notes | size }} notes.</p>
+      </div>
+    </header>
+
+    <div class="notes-ledger">
+      {% for note in all_notes %}
+      <a class="notes-entry{% if forloop.first %} notes-entry-lead{% endif %}" data-note-category="{{ note.category | slugify }}" href="{{ note.url | relative_url }}">
+        <div class="notes-entry-meta">
+          <span>{{ note.category }}</span>
+          <time datetime="{{ note.date | date_to_xmlschema }}">{{ note.date | date: "%d %b %Y" }}</time>
+        </div>
+        <div class="notes-entry-copy">
+          <h3>{{ note.title }}</h3>
+          <p>{{ note.lede }}</p>
+        </div>
+        <b>Read note &rarr;</b>
+      </a>
+      {% endfor %}
+    </div>
+
+    <p class="notes-empty" id="notes-empty" hidden>No notes are filed under that thread yet.</p>
+  </section>
 </div>
+
+<script>
+(function(){
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-note-filter]'));
+  var entries = Array.prototype.slice.call(document.querySelectorAll('[data-note-category]'));
+  var status = document.getElementById('notes-filter-status');
+  var empty = document.getElementById('notes-empty');
+  if (!buttons.length || !entries.length || !status || !empty) return;
+
+  buttons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var filter = button.getAttribute('data-note-filter');
+      var visible = 0;
+
+      buttons.forEach(function(option) {
+        option.setAttribute('aria-pressed', String(option === button));
+      });
+
+      entries.forEach(function(entry) {
+        var matches = filter === 'all' || entry.getAttribute('data-note-category') === filter;
+        entry.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      empty.hidden = visible !== 0;
+      status.textContent = filter === 'all'
+        ? 'Showing all ' + visible + ' notes.'
+        : 'Showing ' + visible + (visible === 1 ? ' note.' : ' notes.');
+    });
+  });
+})();
+</script>

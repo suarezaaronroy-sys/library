@@ -1,65 +1,168 @@
 ---
 layout: default
-title: The Library — Grimoires
+title: The Working Library — Grimoires
 description: "Free step-by-step guides for GoHighLevel, n8n, Zapier, Claude AI, agentic workflows, SEO, payment processing, organizational systems, and quiet trades. 17 grimoires, all ungated."
 permalink: /projects/
 ---
-<div class="shell page-pad">
-  <header class="page-header">
-    <div class="page-eyebrow">The Library</div>
-    <h1>Systems built. Documented. <em>Shipped.</em></h1>
-    <p class="lede">17 grimoires — system documentation and field manuals written from production use. New here? Start with <a href="{{ '/grimoires/014-remote-work-101.html' | relative_url }}" style="color:var(--accent)">Remote Work 101 (G014)</a>. Want CRM, automation, AI systems, quiet craft systems, or organizational physics? Pick a door below.</p>
-    <input type="text" id="lib-filter" placeholder="Filter the shelf — try &quot;CRM&quot;, &quot;agents&quot;, &quot;payments&quot;…" aria-label="Filter library"
-      style="margin-top:1rem;width:min(440px,100%);font-family:var(--mono);font-size:.72rem;padding:.55rem .9rem;border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--ink);outline:none">
-  </header>
+{% assign built = site.data.grimoires | where: "tier", "built" %}
+{% assign trilogy = site.data.grimoires | where: "tier", "trilogy" %}
+{% assign manuals = site.data.grimoires | where: "tier", "manual" %}
+{% assign featured = manuals | where: "featured", true %}
+{% assign live_manuals = manuals | where: "status", "live" | where_exp: "g", "g.featured != true" %}
+{% assign drafting = manuals | where: "status", "soon" %}
 
-  <div class="trilogy-band" style="margin-top:0">
-    <div class="t-label">The Trilogy</div>
-    <div class="t-row">
-      {% assign trilogy = site.data.grimoires | where: "tier", "trilogy" %}
-      {% for g in trilogy %}
-      <a class="t-cell" href="{{ g.href | relative_url }}"><b>{{ g.trilogy_label }} · {{ g.num }}</b><i>{{ g.title }}</i><span>{{ g.desc | truncate: 90 }}</span></a>
-      {% unless forloop.last %}<div class="t-arrow">→</div>{% endunless %}
-      {% endfor %}
+<div class="library-page">
+  <section class="library-cover">
+    <img class="library-cover-img" src="{{ '/assets/img/brand/brand-library-interior-unsplash.jpg' | relative_url }}" alt="A public library with shelves arranged around a reading room">
+    <div class="library-cover-shade"></div>
+    <div class="shell library-cover-inner">
+      <div class="library-kicker">Catalogue · systems built and written down</div>
+      <h1>The Working Library</h1>
+      <p>Seventeen public artifacts from production systems, field failures, research, and operating practice. Built to be used, checked, and handed forward.</p>
+
+      <div class="library-search" role="search">
+        <label for="lib-filter">Search the catalogue</label>
+        <div class="library-search-control">
+          <input type="search" id="lib-filter" placeholder="Try CRM, agents, payments, remote work..." autocomplete="off">
+          <button id="lib-filter-clear" type="button" aria-label="Clear catalogue search" title="Clear search">&times;</button>
+        </div>
+        <div class="library-search-meta">
+          <span id="lib-filter-status" aria-live="polite">{{ site.data.grimoires | size }} artifacts on the shelf</span>
+          <span>free · open · no gate</span>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="section-h"><h2>Systems built</h2><span>client work · real numbers</span></div>
-  <div class="g-grid">
-    {% assign built = site.data.grimoires | where: "tier", "built" %}
-    {% for g in built %}{% include grimoire-card.html %}{% endfor %}
-  </div>
+  <nav class="library-map" aria-label="Library shelves">
+    <div class="shell library-map-inner">
+      <a href="#systems-built"><span>01</span><strong>Systems built</strong><small>{{ built | size }} case files</small></a>
+      <a href="#trilogy"><span>02</span><strong>The trilogy</strong><small>{{ trilogy | size }} volumes</small></a>
+      <a href="#operating-memory"><span>03</span><strong>Operating memory</strong><small>{{ featured | size | plus: live_manuals.size }} live manuals</small></a>
+      <a href="#drafting"><span>04</span><strong>Drafting table</strong><small>{{ drafting | size }} in progress</small></a>
+    </div>
+  </nav>
 
-  <div class="section-h"><h2>The trilogy, in full</h2><span>009 → 010 → 011</span></div>
-  <div class="g-grid">
-    {% for g in trilogy %}{% include grimoire-card.html %}{% endfor %}
-  </div>
+  <div class="shell library-catalogue">
+    <section class="library-section" id="systems-built">
+      <header class="library-section-head">
+        <span>01 · Applied systems</span>
+        <div>
+          <h2>Systems built</h2>
+          <p>Production work with real constraints, measurable outcomes, and documentation that survived the handoff.</p>
+        </div>
+      </header>
+      <div class="g-grid library-built-grid">
+        {% for g in built %}{% include grimoire-card.html %}{% endfor %}
+      </div>
+    </section>
 
-  <div class="section-h"><h2>Featured — new on the shelf</h2><span>G014 · June 2026</span></div>
-  <div class="g-grid g-grid-featured">
-    {% assign featured = site.data.grimoires | where: "featured", true %}
-    {% for g in featured %}{% include grimoire-card.html %}{% endfor %}
-  </div>
+    <section class="library-section" id="trilogy">
+      <header class="library-section-head">
+        <span>02 · Flagship sequence</span>
+        <div>
+          <h2>Money. Work. Organizations.</h2>
+          <p>Three connected volumes moving from transactions, to coordination, to the forces that shape institutional behaviour.</p>
+        </div>
+      </header>
+      <div class="library-volumes">
+        {% for g in trilogy %}
+        <a class="library-volume catalogue-item" href="{{ g.href | relative_url }}">
+          <span>{{ g.trilogy_label }} · G{{ g.num }}</span>
+          <strong>{{ g.title }}</strong>
+          <p>{{ g.desc }}</p>
+          <small>{{ g.stats | join: " · " }}</small>
+          <b>Open volume &rarr;</b>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
 
-  <div class="section-h"><h2>Field manuals</h2><span>free · open · cited</span></div>
-  <div class="g-grid">
-    {% assign manuals = site.data.grimoires | where: "tier", "manual" | where_exp: "g", "g.featured != true" %}
-    {% for g in manuals %}{% include grimoire-card.html %}{% endfor %}
+    <section class="library-section" id="operating-memory">
+      <header class="library-section-head">
+        <span>03 · Manuals and field notes</span>
+        <div>
+          <h2>Operating memory</h2>
+          <p>The part designed to travel: procedures, mental models, checklists, failures, and judgement made useful to the next person.</p>
+        </div>
+      </header>
+
+      {% for g in featured %}
+      <div class="library-front-door">
+        <div class="library-front-door-label">A useful first door</div>
+        {% include grimoire-card.html %}
+      </div>
+      {% endfor %}
+
+      <div class="g-grid library-manual-grid">
+        {% for g in live_manuals %}{% include grimoire-card.html %}{% endfor %}
+      </div>
+    </section>
+
+    <section class="library-section library-drafting" id="drafting">
+      <header class="library-section-head">
+        <span>04 · Work in progress</span>
+        <div>
+          <h2>The drafting table</h2>
+          <p>Visible before they are finished. These entries keep their place in the catalogue while the argument, evidence, and presentation are still being worked.</p>
+        </div>
+      </header>
+      <div class="g-grid">
+        {% for g in drafting %}{% include grimoire-card.html %}{% endfor %}
+      </div>
+    </section>
+
+    <p class="library-no-results" id="lib-no-results" hidden>No artifact matches that search. Try a tool, problem, or practice instead.</p>
   </div>
 </div>
+
 {% include cta-band.html %}
+
 <script>
 (function(){
-  var f=document.getElementById('lib-filter'); if(!f) return;
-  f.addEventListener('input',function(){
-    var q=this.value.toLowerCase();
-    document.querySelectorAll('.g-card').forEach(function(c){
-      c.style.display = c.textContent.toLowerCase().indexOf(q)>-1 ? '' : 'none';
+  var input = document.getElementById('lib-filter');
+  var clear = document.getElementById('lib-filter-clear');
+  var status = document.getElementById('lib-filter-status');
+  var empty = document.getElementById('lib-no-results');
+  if (!input || !clear || !status || !empty) return;
+
+  var items = Array.prototype.slice.call(document.querySelectorAll('.g-card, .catalogue-item'));
+  var total = items.length;
+
+  function filterCatalogue() {
+    var query = input.value.trim().toLowerCase();
+    var singular = query.length > 3 && query.charAt(query.length - 1) === 's'
+      ? query.slice(0, -1)
+      : query;
+    var visible = 0;
+
+    items.forEach(function(item) {
+      var text = item.textContent.toLowerCase();
+      var matches = !query || text.indexOf(query) > -1 || text.indexOf(singular) > -1;
+      item.hidden = !matches;
+      if (matches) visible += 1;
     });
+
+    clear.hidden = !query;
+    empty.hidden = visible !== 0;
+    status.textContent = query
+      ? visible + (visible === 1 ? ' artifact found' : ' artifacts found')
+      : total + ' artifacts on the shelf';
+  }
+
+  input.addEventListener('input', filterCatalogue);
+  clear.addEventListener('click', function() {
+    input.value = '';
+    filterCatalogue();
+    input.focus();
   });
-  f.addEventListener('focus',function(){},{once:true});
-  addEventListener('keydown',function(e){
-    if(e.key==='/'&&document.activeElement!==f&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();f.focus()}
+  addEventListener('keydown', function(event) {
+    if (event.key === '/' && document.activeElement !== input && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+      event.preventDefault();
+      input.focus();
+    }
   });
+
+  filterCatalogue();
 })();
 </script>

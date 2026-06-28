@@ -3,80 +3,198 @@ layout: default
 title: Aaron Suarez — The Working Library
 description: "Free CRM, automation, and AI operations manuals — step-by-step grimoires for GoHighLevel, n8n, Zapier, Claude, agentic AI, SEO, and payment processing. Built from real systems, ungated."
 ---
-<section class="hero shell">
-  <h1>Everything I build, <em>I write down.</em></h1>
-  <p class="lede">This is my working library — the manuals, system documentation, and field notes I keep because I use them. 17 grimoires across CRM, automation, payments, AI, remote work, quiet trades, and organizational physics. If they're useful to you too, good: everything here is free, open, and ungated.</p>
-  <div class="hero-ctas">
-    <a class="btn-primary" href="{{ '/projects/' | relative_url }}">Open the library →</a>
-    <a class="btn-secondary" href="{{ '/about/' | relative_url }}">About me</a>
-  </div>
-  <div class="proof-line">
-    <span class="proof-pill"><b>{{ site.data.grimoires | size }}</b> grimoires on the shelf</span>
-    <span class="proof-pill"><b>3-volume</b> trilogy: money · work · organizations</span>
-    <span class="proof-pill"><b>{{ site.notes | size }}</b> field notes</span>
-    <span class="proof-pill"><b>0</b> paywalls, gates, or email walls</span>
+<section class="home-cover">
+  <img class="home-cover-img" src="{{ '/assets/img/brand/brand-workflow-diagram-unsplash.jpg' | relative_url }}" alt="Documents and a hand-drawn workflow map on a desk">
+  <div class="home-cover-shade"></div>
+  <div class="shell home-cover-inner">
+    <div class="home-cover-copy">
+      <div class="home-kicker">The Working Library</div>
+      <h1>Everything I build becomes an artifact.</h1>
+      <p>A public shelf of systems manuals, field notes, operating doctrine, and essays about how work really moves across tools, teams, money, and memory.</p>
+      <div class="home-cover-actions">
+        <a class="btn-primary" href="{{ '/projects/' | relative_url }}">Open the library &rarr;</a>
+        <a class="btn-ghost" href="{{ '/about/' | relative_url }}">How I work</a>
+      </div>
+    </div>
+    <aside class="home-index" aria-label="Working method">
+      <div class="home-index-heading">
+        <span>How the work moves</span>
+        <small>From field reality to durable memory</small>
+      </div>
+      <div class="home-index-list">
+        <a href="{{ '/about/#method' | relative_url }}">
+          <span>01</span>
+          <strong>Understand the work</strong>
+          <small>handoffs · constraints · failure modes</small>
+          <em>Read the method &rarr;</em>
+        </a>
+        <a href="{{ '/projects/#systems-built' | relative_url }}">
+          <span>02</span>
+          <strong>Build the system</strong>
+          <small>CRM · automation · payments · AI</small>
+          <em>See systems built &rarr;</em>
+        </a>
+        <a href="{{ '/projects/#operating-memory' | relative_url }}">
+          <span>03</span>
+          <strong>Leave operating memory</strong>
+          <small>manuals · maps · decisions · continuity</small>
+          <em>Browse the manuals &rarr;</em>
+        </a>
+      </div>
+      <p>The artifact is not extra documentation. It is part of the system.</p>
+    </aside>
   </div>
 </section>
 
-<div class="shell">
-  <div class="start-here-band">
-    <div class="sh-label">Start here — find your door</div>
-    <div class="sh-grid">
-      <a class="sh-cell" href="{{ '/grimoires/014-remote-work-101.html' | relative_url }}">
-        <span class="sh-tag">New to remote work</span>
-        <strong>Remote Work 101</strong>
-        <span class="sh-num">G014 →</span>
+{% assign trilogy = site.data.grimoires | where: "tier", "trilogy" %}
+{% assign built = site.data.grimoires | where: "tier", "built" %}
+{% assign recent = site.notes | sort: "date" | reverse %}
+
+<section class="home-proof">
+  <div class="shell home-proof-inner">
+    <div><b>{{ site.data.grimoires | size }}</b><span>Grimoires</span><small>public artifacts on the shelf</small></div>
+    <div><b>3</b><span>Connected volumes</span><small>money · work · organizations</small></div>
+    <div><b>{{ site.notes | size }}</b><span>Field notes</span><small>short arguments from real work</small></div>
+    <div><b>0</b><span>Gates</span><small>no paywall or email wall</small></div>
+  </div>
+</section>
+
+<section class="shell home-evidence">
+  <header class="home-section-head">
+    <span>01 · The evidence</span>
+    <div>
+      <h2>The shelf is the work, not a showroom.</h2>
+      <p>Systems become useful when the reasoning can travel. The portfolio is made of artifacts other people can inspect, use, question, and extend.</p>
+    </div>
+  </header>
+  <div class="home-evidence-grid">
+    <a class="home-evidence-item home-evidence-library" href="{{ '/projects/' | relative_url }}">
+      <img src="{{ '/assets/img/brand/brand-library-interior-unsplash.jpg' | relative_url }}" alt="A public library arranged around a reading room">
+      <div><span>The catalogue</span><strong>Evidence, manuals, and field notes</strong><small>Browse all {{ site.data.grimoires | size }} grimoires &rarr;</small></div>
+    </a>
+    <a class="home-evidence-item" href="{{ '/grimoires/010-orchestration-layer.html' | relative_url }}">
+      <img src="{{ '/assets/img/brand/brand-documents-plan-unsplash.jpg' | relative_url }}" alt="Planning documents and a workflow diagram on a desk">
+      <div><span>G010 · Coordination</span><strong>How work moves</strong><small>memory · governance · observability</small></div>
+    </a>
+    <a class="home-evidence-item" href="{{ '/grimoires/011-organizational-physics.html' | relative_url }}">
+      <img src="{{ '/assets/img/brand/brand-infrastructure-wires-unsplash.jpg' | relative_url }}" alt="Wiring and controls inside an electrical panel">
+      <div><span>G011 · Structure</span><strong>Hidden infrastructure</strong><small>why the same problems keep returning</small></div>
+    </a>
+  </div>
+</section>
+
+<section class="home-entry-band">
+  <div class="shell">
+    <header class="home-section-head">
+      <span>02 · Four entry routes</span>
+      <div>
+        <h2>Start with the problem you recognize.</h2>
+        <p>You do not need to understand the catalogue first. Choose the nearest situation and enter there.</p>
+      </div>
+    </header>
+    <div class="home-entry-list">
+      <a href="{{ '/grimoires/014-remote-work-101.html' | relative_url }}">
+        <span>01</span>
+        <div><small>Starting a remote career</small><strong>Build the professional foundation</strong></div>
+        <p>A field manual for first jobs, durable habits, Philippine realities, and the path beyond entry-level work.</p>
+        <b>G014 &rarr;</b>
       </a>
-      <a class="sh-cell" href="{{ '/grimoires/003-ghl-101.html' | relative_url }}">
-        <span class="sh-tag">Need a CRM system</span>
-        <strong>GHL 101</strong>
-        <span class="sh-num">G003 →</span>
+      <a href="{{ '/grimoires/003-ghl-101.html' | relative_url }}">
+        <span>02</span>
+        <div><small>Needing a CRM that works</small><strong>Turn a database into an operating system</strong></div>
+        <p>Exact procedures, architecture, QA, and the difference between storing records and coordinating work.</p>
+        <b>G003 &rarr;</b>
       </a>
-      <a class="sh-cell" href="{{ '/grimoires/004-n8n-101.html' | relative_url }}">
-        <span class="sh-tag">Want automation</span>
-        <strong>n8n · Zapier · Patterns</strong>
-        <span class="sh-num">G004 / G005 / G006 →</span>
+      <a href="{{ '/projects/#operating-memory' | relative_url }}">
+        <span>03</span>
+        <div><small>Automating repeated work</small><strong>Choose the pattern before the tool</strong></div>
+        <p>n8n, Zapier, production safeguards, failure handling, and the point where no-code should give way.</p>
+        <b>G004–G006 &rarr;</b>
       </a>
-      <a class="sh-cell" href="{{ '/grimoires/007-agentic-ai-101.html' | relative_url }}">
-        <span class="sh-tag">Want AI systems</span>
-        <strong>Agentic AI + The Trilogy</strong>
-        <span class="sh-num">G007 / G010 / G011 →</span>
+      <a href="{{ '/grimoires/007-agentic-ai-101.html' | relative_url }}">
+        <span>04</span>
+        <div><small>Building with AI</small><strong>Design coordination, not just prompts</strong></div>
+        <p>Agents, human approval, memory, evaluation, guardrails, and the organizational layer around intelligence.</p>
+        <b>G007 &rarr;</b>
       </a>
     </div>
   </div>
+</section>
 
-  <div class="trilogy-band">
-    <div class="t-label">The Trilogy — flagship of the library</div>
-    <div class="t-row">
-      {% assign trilogy = site.data.grimoires | where: "tier", "trilogy" %}
+<section class="home-trilogy-feature">
+  <div class="shell">
+    <header class="home-trilogy-head">
+      <div>
+        <span>03 · The central argument</span>
+        <h2>Money moves. Work moves. Organizations resist.</h2>
+      </div>
+      <p>Three volumes, read independently or as one widening lens: from a transaction, to the system coordinating it, to the institution shaping both.</p>
+    </header>
+    <div class="home-trilogy-grid">
       {% for g in trilogy %}
-      <a class="t-cell" href="{{ g.href | relative_url }}"><b>{{ g.trilogy_label }} · {{ g.num }}</b><i>{{ g.title }}</i><span>{{ g.desc | truncate: 90 }}</span></a>
-      {% unless forloop.last %}<div class="t-arrow">→</div>{% endunless %}
+      <a href="{{ g.href | relative_url }}">
+        <span>{{ g.trilogy_label }}</span>
+        <b>{{ g.num }}</b>
+        <strong>{{ g.title }}</strong>
+        <p>{{ g.desc }}</p>
+        <small>Open volume &rarr;</small>
+      </a>
       {% endfor %}
     </div>
   </div>
+</section>
 
-  <div class="section-h"><h2>Systems built</h2><span>client work · real numbers</span></div>
-  <div class="g-grid">
-    {% assign built = site.data.grimoires | where: "tier", "built" %}
-    {% for g in built %}{% include grimoire-card.html %}{% endfor %}
-  </div>
-
-  <div class="section-h"><h2>Field manuals</h2><span>free · open · cited</span></div>
-  <div class="g-grid">
-    {% assign manuals = site.data.grimoires | where: "tier", "manual" %}
-    {% for g in manuals %}{% include grimoire-card.html %}{% endfor %}
-  </div>
-
-  <div class="section-h"><h2>Recent notes</h2><span><a href="{{ '/notes/' | relative_url }}" style="color:var(--accent)">all notes →</a></span></div>
-  <div class="note-list">
-    {% assign recent = site.notes | sort: "date" | reverse %}
-    {% for n in recent limit: 3 %}
-    <a class="note-row" href="{{ n.url | relative_url }}">
-      <div class="n-meta">{{ n.category }} · {{ n.date | date: "%b %Y" }}</div>
-      <h3>{{ n.title }}</h3>
-      <p>{{ n.lede }}</p>
+<section class="shell home-applied">
+  <header class="home-section-head">
+    <span>04 · Applied systems</span>
+    <div>
+      <h2>Proof from production.</h2>
+      <p>The manuals explain the thinking. These case files show what happened when that thinking met deadlines, incomplete information, and real users.</p>
+    </div>
+  </header>
+  <div class="home-case-list">
+    {% for g in built %}
+    <a href="{{ g.href | relative_url }}">
+      <span>{{ g.num }}</span>
+      <div><strong>{{ g.title }}</strong><p>{{ g.desc }}</p></div>
+      <small>{{ g.stats | join: " · " }}</small>
+      <b>Open case file &rarr;</b>
     </a>
     {% endfor %}
   </div>
-</div>
+</section>
+
+<section class="home-thinking">
+  <div class="shell">
+    <header class="home-section-head">
+      <span>05 · Current thinking</span>
+      <div>
+        <h2>Shorter observations from the field.</h2>
+        <p>The grimoires hold the long-form systems. Notes capture the smaller patterns while they are still sharp.</p>
+      </div>
+    </header>
+    <div class="home-note-list">
+      {% for note in recent limit: 3 %}
+      <a href="{{ note.url | relative_url }}">
+        <span>{{ note.category }} · {{ note.date | date: "%d %b %Y" }}</span>
+        <strong>{{ note.title }}</strong>
+        <p>{{ note.lede }}</p>
+        <b>Read note &rarr;</b>
+      </a>
+      {% endfor %}
+    </div>
+    <a class="home-all-notes" href="{{ '/notes/' | relative_url }}">Open the reading desk &rarr;</a>
+  </div>
+</section>
+
+<section class="shell home-closing">
+  <div>
+    <span>The operating principle</span>
+    <h2>Leave the work more understandable than you found it.</h2>
+  </div>
+  <p>That principle connects the systems, the manuals, and the notes. It is also the standard I use for collaboration.</p>
+  <div>
+    <a class="btn-primary" href="{{ '/projects/' | relative_url }}">Browse the library &rarr;</a>
+    <a class="btn-secondary" href="{{ '/contact/' | relative_url }}">Start a conversation</a>
+  </div>
+</section>
