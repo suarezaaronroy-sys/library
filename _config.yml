@@ -28,6 +28,16 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-feed
+  - jekyll-redirect-from
+
+feed:
+  path: /feed.xml
+  posts_limit: 20
+  collections:
+    notes:
+      path: /feed.xml
+    posts:
+      path: /feed/posts.xml
 
 # Notes become real pages: /notes/<slug>/
 collections:
@@ -47,6 +57,7 @@ defaults:
 exclude:
   - README.md
   - grimoires/README.md
+  - assets/img/brand/README.md
   - Gemfile
   - Gemfile.lock
   - vendor

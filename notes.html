@@ -3,6 +3,8 @@ layout: default
 title: Field Notes — Operational Thinking
 description: "Operational field notes on CRM systems, automation failures, AI delegation, handoffs, and why organizations keep producing the same problems."
 permalink: /notes/
+redirect_from:
+  - /notes.html
 ---
 {% assign all_notes = site.notes | sort: "date" | reverse %}
 {% assign categories = all_notes | map: "category" | uniq %}

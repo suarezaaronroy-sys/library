@@ -1,60 +1,90 @@
-# aaron-site — standard Jekyll build
+# Aaron Suarez - The Working Library
 
-Clean rebuild of suarezaaronroy-sys.github.io. One data file drives the
-library; layouts/includes replace copy-pasted chrome; notes are real pages.
+The source for [suarezaaronroy-sys.github.io/library](https://suarezaaronroy-sys.github.io/library/):
+a public portfolio and working reference for operational systems, manuals,
+field notes, and essays.
+
+## Current Shape
+
+- Five primary routes: Home, About, Library, Notes, and Contact
+- Fifteen published Grimoires (G001-G014 and G017), two visible drafts
+  (G015-G016), and one retired alias (G018)
+- Eleven Notes generated from the `_notes` collection
+- One data file driving the Library catalogue
+- Shared Jekyll layouts and includes for the primary site
+- Self-contained HTML for the long-form Grimoires
 
 ## Structure
 
-    _config.yml          site meta, plugins, collections — edit once
-    _data/grimoires.yml  ← THE library. One entry per grimoire, drives
-                           homepage shelf, /projects/, trilogy bands
-    _layouts/            default (shell) · page (prose) · note (field notes)
-    _includes/           head / header / footer / cta-band / grimoire-card
-    _notes/              one .md per note → /notes/<slug>/  (SEO-visible)
-    assets/css/main.css  the whole design system, once
-    grimoires/           drop your existing 0xx-*.html files here UNCHANGED
-                         (no front matter = copied verbatim, Liquid-safe)
-    index.html           library-led homepage (static HTML — crawlable)
-    projects.html        full library  ·  notes.html  ·  about.html  ·  404
+```text
+_config.yml          Site metadata, plugins, collections, feeds, and defaults
+_data/grimoires.yml  Catalogue data and publication state
+_includes/           Shared head, header, footer, CTA, and catalogue card
+_layouts/            Shared shell, page, and Note layouts
+_notes/              Markdown Notes published at /notes/<slug>/
+assets/               Site CSS, JavaScript, images, and social preview artwork
+grimoires/            Self-contained G001-G018 HTML documents
+index.html            Home
+about.html            About
+projects.html         Library catalogue
+notes.html            Notes index
+contact.html          Contact routing
+404.html              Custom non-indexable 404 page
+```
 
-## Run locally
+## Run Locally
 
-    gem install bundler
-    bundle install
-    bundle exec jekyll serve        # http://localhost:4000
+```powershell
+bundle install
+bundle exec jekyll serve
+```
+
+The default local URL is `http://127.0.0.1:4000/library/`.
 
 ## Deploy
 
-Push to the `main` branch of <user>.github.io — GitHub Pages builds it
-automatically (github-pages gem keeps local + remote versions identical).
+GitHub Pages builds this project site from the `main` branch of the
+`library` repository. The production base path is `/library`; keep `url` and
+`baseurl` in `_config.yml` aligned with that deployment.
 
-## Contact architecture (deliberate)
+## Publishing Content
 
-Two lanes, severable by design:
-- Direct (roles, library, collaboration) → suarezaaronroy@gmail.com — site-wide default
-- Built-for-you systems work → referred out to ASMC (a separate studio), asmultitaskcollective@gmail.com
-ASMC appears in exactly two places (contact page, about) as a referral
-to a separate studio — arm's-length, no ownership language anywhere on this site. asmc_url lives in
-_config.yml; change once, changes everywhere.
+### Add a Grimoire
 
-## Migration checklist
+1. Add the self-contained HTML file under `grimoires/`.
+2. Add or update its entry in `_data/grimoires.yml`.
+3. Include one `h1`, a description, canonical URL, Open Graph image, Twitter
+   card, and valid JSON-LD.
+4. Keep drafts `noindex` and out of the sitemap with front matter:
 
-1. Copy `favicon.png` into the root.
-2. Copy all grimoire HTML files into `/grimoires/` (001–011).
-3. Port remaining notes from old notes.html → one .md each in `_notes/`
-   (3 are scaffolded; bodies marked MIGRATE need the original text).
-4. Port articles if keeping them: add `articles.html` + nav link.
-5. Old URLs: /about.html → /about/, /projects.html → /projects/, etc.
-   Add redirect stubs at the old paths if you care about inbound links.
-6. When the custom domain lands: update `url:` in _config.yml, add CNAME
-   file, swap `author.email`.
+```yaml
+---
+layout: null
+sitemap: false
+---
+```
 
-## Adding content (the whole point)
+`layout: null` is required so Jekyll does not wrap a standalone Grimoire in
+the shared site layout.
 
-- **New grimoire:** drop the HTML in /grimoires/, add one YAML entry in
-  _data/grimoires.yml. Every page updates.
-- **New note:** create _notes/my-slug.md with title/date/category/lede
-  front matter. Appears on /notes/ and homepage automatically, with RSS.
+### Add a Note
 
-Plugins: jekyll-seo-tag (meta/OG), jekyll-sitemap, jekyll-feed (RSS at
-/feed.xml) — all GitHub Pages whitelisted.
+Create `_notes/<slug>.md` with `title`, `date`, `category`, `lede`, and
+`description` front matter. Notes appear on the Notes index and in
+`/feed.xml`.
+
+## Discovery Layer
+
+- `jekyll-seo-tag` generates metadata for shared-layout pages.
+- `jekyll-sitemap` generates `/sitemap.xml`.
+- `jekyll-feed` publishes all Notes at `/feed.xml`.
+- `jekyll-redirect-from` preserves the legacy `.html` primary routes.
+- `robots.txt` allows crawling and advertises the sitemap.
+- `assets/og-default.png` is the 1200 x 630 default social image.
+
+## Contact Architecture
+
+Direct roles, collaboration, writing, and library questions use
+`suarezaaronroy@gmail.com`. Selective build-and-handoff systems work is
+referred to the separate ASMC studio at `asmultitaskcollective@gmail.com`.
+Both destinations are configured in `_config.yml`.
