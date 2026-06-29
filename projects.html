@@ -1,7 +1,7 @@
 ---
 layout: default
 title: The Working Library — Grimoires
-description: "Free step-by-step guides for GoHighLevel, n8n, Zapier, Claude AI, agentic workflows, SEO, payment processing, organizational systems, and quiet trades. 17 grimoires, all ungated."
+description: "Free step-by-step guides for GoHighLevel, n8n, Zapier, Claude AI, agentic workflows, SEO, payment processing, organizational systems, and quiet trades. 15 live grimoires and 2 in progress, all ungated."
 permalink: /projects/
 redirect_from:
   - /projects.html
@@ -12,6 +12,7 @@ redirect_from:
 {% assign featured = manuals | where: "featured", true %}
 {% assign live_manuals = manuals | where: "status", "live" | where_exp: "g", "g.featured != true" %}
 {% assign drafting = manuals | where: "status", "soon" %}
+{% assign live_grimoires = site.data.grimoires | where: "status", "live" %}
 
 <div class="library-page">
   <section class="library-cover">
@@ -20,7 +21,7 @@ redirect_from:
     <div class="shell library-cover-inner">
       <div class="library-kicker">Catalogue · systems built and written down</div>
       <h1>The Working Library</h1>
-      <p>Seventeen public artifacts from production systems, field failures, research, and operating practice. Built to be used, checked, and handed forward.</p>
+      <p>Fifteen live artifacts from production systems, field failures, research, and operating practice, with two more in progress. Built to be used, checked, and handed forward.</p>
 
       <div class="library-search" role="search">
         <label for="lib-filter">Search the catalogue</label>
@@ -29,7 +30,7 @@ redirect_from:
           <button id="lib-filter-clear" type="button" aria-label="Clear catalogue search" title="Clear search">&times;</button>
         </div>
         <div class="library-search-meta">
-          <span id="lib-filter-status" aria-live="polite">{{ site.data.grimoires | size }} artifacts on the shelf</span>
+          <span id="lib-filter-status" aria-live="polite">{{ live_grimoires | size }} live · {{ drafting | size }} in progress</span>
           <span>free · open · no gate</span>
         </div>
       </div>
@@ -129,7 +130,7 @@ redirect_from:
   if (!input || !clear || !status || !empty) return;
 
   var items = Array.prototype.slice.call(document.querySelectorAll('.g-card, .catalogue-item'));
-  var total = items.length;
+  var shelfSummary = '{{ live_grimoires | size }} live · {{ drafting | size }} in progress';
 
   function filterCatalogue() {
     var query = input.value.trim().toLowerCase();
@@ -149,7 +150,7 @@ redirect_from:
     empty.hidden = visible !== 0;
     status.textContent = query
       ? visible + (visible === 1 ? ' artifact found' : ' artifacts found')
-      : total + ' artifacts on the shelf';
+      : shelfSummary;
   }
 
   input.addEventListener('input', filterCatalogue);

@@ -18,6 +18,56 @@ description: "Contact Aaron Suarez for roles, collaboration, writing, library qu
     </div>
   </section>
 
+  <section class="contact-world-time" aria-labelledby="world-time-title">
+    <div class="shell">
+      <header class="contact-world-time-head">
+        <span>Working across regions</span>
+        <div>
+          <h2 id="world-time-title">The working day, at a glance.</h2>
+          <p>Live local time for my home base and the two client regions I work with most.</p>
+        </div>
+      </header>
+
+      <div class="contact-clock-grid">
+        <article class="contact-clock" data-time-zone="Asia/Manila">
+          <span class="contact-clock-region">PH</span>
+          <div>
+            <h3>Valencia City</h3>
+            <p>Philippine Time</p>
+          </div>
+          <time class="contact-clock-time">Loading&hellip;</time>
+          <span class="contact-clock-date"></span>
+          <span class="contact-clock-zone"></span>
+          <span class="contact-clock-dst"></span>
+        </article>
+
+        <article class="contact-clock" data-time-zone="America/Chicago">
+          <span class="contact-clock-region">US / TX</span>
+          <div>
+            <h3>Texas</h3>
+            <p>Central Time</p>
+          </div>
+          <time class="contact-clock-time">Loading&hellip;</time>
+          <span class="contact-clock-date"></span>
+          <span class="contact-clock-zone"></span>
+          <span class="contact-clock-dst"></span>
+        </article>
+
+        <article class="contact-clock" data-time-zone="Europe/London">
+          <span class="contact-clock-region">UK</span>
+          <div>
+            <h3>United Kingdom</h3>
+            <p>London time</p>
+          </div>
+          <time class="contact-clock-time">Loading&hellip;</time>
+          <span class="contact-clock-date"></span>
+          <span class="contact-clock-zone"></span>
+          <span class="contact-clock-dst"></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="shell contact-routing" id="choose-a-door">
     <header class="contact-routing-head">
       <span>Routing guide</span>
@@ -78,3 +128,72 @@ description: "Contact Aaron Suarez for roles, collaboration, writing, library qu
     </div>
   </section>
 </div>
+
+<script>
+(() => {
+  const clocks = document.querySelectorAll(".contact-clock[data-time-zone]");
+  if (!clocks.length) return;
+
+  function offsetMinutes(timeZone, date) {
+    const value = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      timeZoneName: "longOffset"
+    }).formatToParts(date).find((part) => part.type === "timeZoneName")?.value || "GMT";
+    if (value === "GMT") return 0;
+
+    const match = value.match(/^GMT([+-])(\d{1,2})(?::(\d{2}))?$/);
+    if (!match) return 0;
+
+    const minutes = Number(match[2]) * 60 + Number(match[3] || 0);
+    return match[1] === "-" ? -minutes : minutes;
+  }
+
+  function updateClocks() {
+    const now = new Date();
+
+    clocks.forEach((clock) => {
+      const timeZone = clock.dataset.timeZone;
+      const time = new Intl.DateTimeFormat("en-US", {
+        timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      }).format(now);
+      const date = new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        weekday: "short",
+        day: "2-digit",
+        month: "short"
+      }).format(now);
+      const year = now.getUTCFullYear();
+      const januaryOffset = offsetMinutes(timeZone, new Date(Date.UTC(year, 0, 1, 12)));
+      const julyOffset = offsetMinutes(timeZone, new Date(Date.UTC(year, 6, 1, 12)));
+      const currentOffset = offsetMinutes(timeZone, now);
+      const observesDst = januaryOffset !== julyOffset;
+      const standardOffset = Math.min(januaryOffset, julyOffset);
+      const dstActive = observesDst && currentOffset !== standardOffset;
+      const dstLabel = observesDst
+        ? `${dstActive ? "DST active" : "Standard time"} · adjusts automatically`
+        : "No DST · fixed year-round";
+      const zone = timeZone === "Asia/Manila"
+        ? "PHT"
+        : timeZone === "America/Chicago"
+          ? (dstActive ? "CDT" : "CST")
+          : (dstActive ? "BST" : "GMT");
+
+      const timeElement = clock.querySelector(".contact-clock-time");
+      timeElement.textContent = time;
+      timeElement.dateTime = now.toISOString();
+      timeElement.setAttribute("aria-label", `${date}, ${time}, ${zone}. ${dstLabel}`);
+      clock.querySelector(".contact-clock-date").textContent = date;
+      clock.querySelector(".contact-clock-zone").textContent = zone;
+      clock.querySelector(".contact-clock-dst").textContent = dstLabel;
+      clock.querySelector(".contact-clock-dst").classList.toggle("is-active", dstActive);
+    });
+  }
+
+  updateClocks();
+  window.setInterval(updateClocks, 1000);
+})();
+</script>

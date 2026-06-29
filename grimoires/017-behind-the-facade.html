@@ -156,7 +156,13 @@ a{color:inherit;text-decoration:none}
     linear-gradient(0deg,rgba(10,8,6,.78),rgba(10,8,6,.12) 42%,rgba(10,8,6,.62));
   z-index:1;
 }
-.hero img{
+.hero > picture{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.hero > picture img{
   position:absolute;
   inset:0;
   width:100%;
@@ -314,7 +320,8 @@ a{color:inherit;text-decoration:none}
   border:1px solid var(--line);
   background:var(--paper-2);
 }
-.photo-panel img{width:100%;height:100%;object-fit:cover}
+.photo-panel picture{display:block;width:100%;height:100%}
+.photo-panel img{display:block;width:100%;height:100%;object-fit:cover}
 .photo-label{
   position:absolute;
   left:1rem;
@@ -498,7 +505,8 @@ a{color:inherit;text-decoration:none}
   border:1px solid var(--line);
   background:var(--paper-2);
 }
-.strip-image img{width:100%;height:100%;object-fit:cover}
+.strip-image picture{display:block;width:100%;height:100%}
+.strip-image img{display:block;width:100%;height:100%;object-fit:cover}
 .strip-image span{
   position:absolute;
   left:.75rem;
@@ -596,7 +604,8 @@ a{color:inherit;text-decoration:none}
   border:1px solid var(--line);
   background:#111;
 }
-.mode-display img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}
+.mode-display picture{position:absolute;inset:0;width:100%;height:100%}
+.mode-display img{display:block;width:100%;height:100%;object-fit:cover;opacity:.72}
 .mode-copy{
   position:absolute;
   inset:auto 1rem 1rem 1rem;
@@ -684,7 +693,8 @@ a{color:inherit;text-decoration:none}
     linear-gradient(0deg,rgba(10,8,6,.82),rgba(10,8,6,.08) 56%,rgba(10,8,6,.62));
   z-index:1;
 }
-.ending img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04)}
+.ending > picture{position:absolute;inset:0;width:100%;height:100%}
+.ending > picture img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04)}
 .ending .shell{position:relative;z-index:2;padding:6rem 0}
 .ending h2{font-family:var(--serif);font-size:clamp(2.2rem,6vw,5.6rem);line-height:.95;margin:0;max-width:11ch}
 .ending p{max-width:62ch;color:rgba(246,241,232,.82);font-size:1.04rem;margin:1rem 0 0}
@@ -768,11 +778,15 @@ a{color:inherit;text-decoration:none}
 
 <main>
   <section class="hero">
-    <img src="assets/g017/edinburgh-stone-facade-unsplash.jpg" alt="Stone Edinburgh facade with sash windows and a doorway">
+    <picture>
+      <source type="image/avif" srcset="assets/g017/edinburgh-stone-facade-unsplash-640.avif 640w, assets/g017/edinburgh-stone-facade-unsplash-1280.avif 1280w, assets/g017/edinburgh-stone-facade-unsplash-1920.avif 1920w" sizes="100vw">
+      <source type="image/webp" srcset="assets/g017/edinburgh-stone-facade-unsplash-640.webp 640w, assets/g017/edinburgh-stone-facade-unsplash-1280.webp 1280w, assets/g017/edinburgh-stone-facade-unsplash-1920.webp 1920w" sizes="100vw">
+      <img src="assets/g017/edinburgh-stone-facade-unsplash-1280.webp" width="1280" height="2147" fetchpriority="high" alt="Stone Edinburgh facade with sash windows and a doorway">
+    </picture>
     <div class="shell hero-content">
       <div class="kicker">Grimoire 017 &middot; anonymized field notes</div>
       <h1>Behind the <em>facade</em></h1>
-      <p class="lede">Field Notes from the Quiet Trades: essays on glass, stone, failure, memory, and the invisible work that lets ordinary buildings endure. A public-safe essay from anonymized glazing operations notes, exploring how real trade work exceeds what a CRM pipeline can show.</p>
+      <p class="lede">Field Notes from the Quiet Trades: essays on glass, stone, failure, memory, and the invisible work that lets ordinary buildings endure. Drawn from anonymized glazing operations notes, the essay explores how real trade work exceeds what a CRM pipeline can show.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#thesis">Read the thesis</a>
         <a class="btn" href="#chapters">Open chapter spine</a>
@@ -810,11 +824,11 @@ a{color:inherit;text-decoration:none}
         <article class="lens-card">
           <div class="num">01 &middot; Art</div>
           <h3>Glass as city light.</h3>
-          <p>Use imagery as atmosphere: stone, rain, sash windows, reflective glass, narrow streets, and the threshold between inside and outside.</p>
+          <p>Stone, rain, sash windows, reflective glass, and narrow streets make the threshold between inside and outside visible.</p>
           <ul>
-            <li>Pull quotes, not heavy manuals</li>
-            <li>Editorial pacing</li>
-            <li>Visual rhythm over dense SOPs</li>
+            <li>Light changes the character of glass</li>
+            <li>Repair can preserve a room's atmosphere</li>
+            <li>Craft becomes visible through detail</li>
           </ul>
         </article>
         <article class="lens-card">
@@ -859,8 +873,12 @@ a{color:inherit;text-decoration:none}
   <section class="section compact" id="city">
     <div class="shell image-story">
       <figure class="photo-panel">
-        <img src="assets/g017/edinburgh-alley-windows-unsplash.jpg" alt="Old stone buildings with windows in a narrow Edinburgh alley">
-        <figcaption class="photo-label">Sample graphic: Edinburgh stone, windows, access, weather, age</figcaption>
+        <picture>
+          <source type="image/avif" srcset="assets/g017/edinburgh-alley-windows-unsplash-640.avif 640w, assets/g017/edinburgh-alley-windows-unsplash-1280.avif 1280w" sizes="(max-width: 800px) 100vw, 50vw">
+          <source type="image/webp" srcset="assets/g017/edinburgh-alley-windows-unsplash-640.webp 640w, assets/g017/edinburgh-alley-windows-unsplash-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 50vw">
+          <img src="assets/g017/edinburgh-alley-windows-unsplash-1280.webp" width="1280" height="857" loading="lazy" decoding="async" alt="Old stone buildings with windows in a narrow Edinburgh alley">
+        </picture>
+        <figcaption class="photo-label">Edinburgh stone, windows, access, weather, and age</figcaption>
       </figure>
       <div class="story-stack">
         <div class="story-card">
@@ -1096,7 +1114,7 @@ a{color:inherit;text-decoration:none}
           <h3>Failure is how the hidden system speaks.</h3>
           <p>Not only the literal broken window. The cracked unit. The scratched pane. The discontinued pattern no supplier can match cleanly. The wrong slab. The delayed order. The committee approval that arrives too late. The unit that looks simple until the building refuses to be simple.</p>
           <p>Success makes the system disappear. Failure draws its outline. Suddenly everyone can see the dependency chain: the survey note, the supplier email, the quote wording, the expectation set with the customer, the decision someone forgot to record, the assumption that travelled too far.</p>
-          <p>This chapter should not treat failure as embarrassment. It should treat failure as x-ray. Every crack reveals how the work is actually held together.</p>
+          <p>Failure is not merely an embarrassment. It is an x-ray. Every crack reveals how the work is actually held together.</p>
         </article>
       </div>
     </div>
@@ -1148,7 +1166,7 @@ a{color:inherit;text-decoration:none}
         <h3>The record was not wrong. It was incomplete.</h3>
         <p>A pipeline can show where a job is supposed to be. It cannot, by itself, explain why a quote is waiting on a supplier, why a survey note matters, why a customer has not paid a deposit, why a committee decision changes the schedule, or why one detail from an old email is the key to avoiding a return visit.</p>
         <p>The lesson is not "CRM bad." The lesson is that the CRM must be designed as an index to reality, not a replacement for it. It should point to photos, survey details, supplier decisions, payment state, diary constraints, and unresolved risks.</p>
-        <p>For this Grimoire, the interesting system is not a software stack diagram. It is the translation layer between craft knowledge and business continuity.</p>
+        <p>The interesting system is not a software stack diagram. It is the translation layer between craft knowledge and business continuity.</p>
       </article>
     </div>
   </section>
@@ -1167,7 +1185,11 @@ a{color:inherit;text-decoration:none}
           <button type="button" aria-pressed="false" data-mode="memory">Memory lens</button>
         </div>
         <div class="mode-display" aria-live="polite">
-          <img id="mode-image" src="assets/g017/edinburgh-stone-sky-unsplash.jpg" alt="Stone buildings in Edinburgh under blue sky">
+          <picture>
+            <source id="mode-image-avif" type="image/avif" srcset="assets/g017/edinburgh-stone-sky-unsplash-640.avif 640w, assets/g017/edinburgh-stone-sky-unsplash-1280.avif 1280w" sizes="(max-width: 800px) 100vw, 60vw">
+            <source id="mode-image-webp" type="image/webp" srcset="assets/g017/edinburgh-stone-sky-unsplash-640.webp 640w, assets/g017/edinburgh-stone-sky-unsplash-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 60vw">
+            <img id="mode-image" src="assets/g017/edinburgh-stone-sky-unsplash-1280.webp" width="1280" height="857" loading="lazy" decoding="async" alt="Stone buildings in Edinburgh under blue sky">
+          </picture>
           <div class="mode-copy">
             <h3 id="mode-title">Heritage lens</h3>
             <p id="mode-text">Old buildings make new work answer to history: listed status, conservation areas, shared facades, visual continuity, and the slower ethics of repair.</p>
@@ -1257,11 +1279,19 @@ a{color:inherit;text-decoration:none}
       </div>
       <div class="image-strip">
         <figure class="strip-image">
-          <img src="assets/g017/edinburgh-modern-glass-pexels.jpg" alt="Modern glass architecture in Edinburgh">
+          <picture>
+            <source type="image/avif" srcset="assets/g017/edinburgh-modern-glass-pexels-640.avif 640w, assets/g017/edinburgh-modern-glass-pexels-1280.avif 1280w" sizes="(max-width: 800px) 100vw, 50vw">
+            <source type="image/webp" srcset="assets/g017/edinburgh-modern-glass-pexels-640.webp 640w, assets/g017/edinburgh-modern-glass-pexels-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 50vw">
+            <img src="assets/g017/edinburgh-modern-glass-pexels-1280.webp" width="1280" height="853" loading="lazy" decoding="async" alt="Modern glass architecture in Edinburgh">
+          </picture>
           <span>Modern glass as the future layer</span>
         </figure>
         <figure class="strip-image">
-          <img src="assets/g017/edinburgh-moody-street-pexels.jpg" alt="Moody Edinburgh street with historic and modern architecture">
+          <picture>
+            <source type="image/avif" srcset="assets/g017/edinburgh-moody-street-pexels-640.avif 640w, assets/g017/edinburgh-moody-street-pexels-1280.avif 1280w" sizes="(max-width: 800px) 100vw, 50vw">
+            <source type="image/webp" srcset="assets/g017/edinburgh-moody-street-pexels-640.webp 640w, assets/g017/edinburgh-moody-street-pexels-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 50vw">
+            <img src="assets/g017/edinburgh-moody-street-pexels-1280.webp" width="1280" height="1920" loading="lazy" decoding="async" alt="Moody Edinburgh street with historic and modern architecture">
+          </picture>
           <span>City texture as the old layer</span>
         </figure>
       </div>
@@ -1389,58 +1419,16 @@ a{color:inherit;text-decoration:none}
   </section>
 
   <section class="ending">
-    <img src="assets/g017/edinburgh-moody-street-pexels.jpg" alt="Moody Edinburgh street with old stone and modern city life">
+    <picture>
+      <source type="image/avif" srcset="assets/g017/edinburgh-moody-street-pexels-640.avif 640w, assets/g017/edinburgh-moody-street-pexels-1280.avif 1280w, assets/g017/edinburgh-moody-street-pexels-1920.avif 1920w" sizes="100vw">
+      <source type="image/webp" srcset="assets/g017/edinburgh-moody-street-pexels-640.webp 640w, assets/g017/edinburgh-moody-street-pexels-1280.webp 1280w, assets/g017/edinburgh-moody-street-pexels-1920.webp 1920w" sizes="100vw">
+      <img src="assets/g017/edinburgh-moody-street-pexels-1280.webp" width="1280" height="1920" loading="lazy" decoding="async" alt="Moody Edinburgh street with old stone and modern city life">
+    </picture>
     <div class="shell">
       <h2>Tomorrow morning</h2>
       <p>Someone will walk past the house. They will never know a window was replaced. They will never know a committee debated it, a surveyor measured it, a supplier manufactured it, an installer carried it up four flights of stairs, or someone in another country updated the paperwork that allowed it to happen.</p>
       <p>They will simply see another beautiful street.</p>
       <p class="last-line">That is what good craftsmanship looks like. It disappears into the city.</p>
-    </div>
-  </section>
-
-  <section class="section compact">
-    <div class="shell">
-      <div class="section-title">
-        <h2>Shelf Context</h2>
-        <span>why this is G017</span>
-      </div>
-      <div class="draft-grid">
-        <article class="draft-card soon">
-          <div class="shelf-top">
-            <span class="shelf-num">015</span>
-            <span class="shelf-date">Jun 2026</span>
-          </div>
-          <h3>The GHL Admin's Build: Marketing &amp; Integrations</h3>
-          <p>GHL isn't a CRM - it's a marketing engine. The company-agnostic build, the fork where it varies by business, and the 12-month roadmap.</p>
-          <div class="tags"><span>5-part engine</span><span>the fork</span><span>email-gated</span></div>
-          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">in progress</span></div>
-        </article>
-        <article class="draft-card soon">
-          <div class="shelf-top">
-            <span class="shelf-num">016</span>
-            <span class="shelf-date">Jun 2026</span>
-          </div>
-          <h3>Lessons from a Bespoke Project Business</h3>
-          <p>What bespoke project work really teaches: the pipeline lies, payment isn't fulfilment, and the five entities hiding inside one job.</p>
-          <div class="tags"><span>10-stage pipeline</span><span>5 entity layers</span><span>What I Did</span></div>
-          <div class="shelf-foot"><span class="open">Coming soon</span><span class="live">in progress</span></div>
-        </article>
-        <article class="draft-card">
-        <div class="shelf-top">
-          <span class="shelf-num">017</span>
-          <span class="shelf-date">Draft 2026</span>
-        </div>
-        <h3>Behind the Facade: Field Notes from the Quiet Trades</h3>
-        <p>Essays on glass, stone, failure, memory, and the invisible work that lets ordinary buildings keep their dignity.</p>
-        <div class="tags"><span>quiet trades</span><span>heritage</span><span>invisible work</span><span>city ops</span></div>
-        <div class="shelf-foot"><span class="open">Open grimoire &rarr;</span><span class="live">live &middot; free &middot; no gate</span></div>
-      </article>
-      </div>
-      <aside class="snippet-note">
-        <h3>Library placement</h3>
-        <p>G015 and G016 stay visible as in-progress cards using the same shelf metadata as the Library page. G017 is the next live card in sequence.</p>
-        <p>The public label stays <strong>Field Notes from the Quiet Trades</strong>: this is a Working Library essay, not a client page.</p>
-      </aside>
     </div>
   </section>
 
@@ -1499,31 +1487,35 @@ const modes = {
   heritage: {
     title: "Heritage lens",
     text: "Old buildings make new work answer to history: listed status, conservation areas, shared facades, visual continuity, and the slower ethics of repair.",
-    image: "assets/g017/edinburgh-stone-sky-unsplash.jpg",
+    stem: "edinburgh-stone-sky-unsplash",
     alt: "Stone buildings in Edinburgh under blue sky"
   },
   glass: {
     title: "Glass lens",
     text: "Glass is not one material in the job file. It can mean safety, privacy, thermal control, pattern matching, supply risk, and the exact quality of light a room keeps.",
-    image: "assets/g017/edinburgh-modern-glass-pexels.jpg",
+    stem: "edinburgh-modern-glass-pexels",
     alt: "Modern reflective glass architecture in Edinburgh"
   },
   memory: {
     title: "Memory lens",
     text: "The office keeps the trade from forgetting itself: who replied, what was measured, what the supplier confirmed, what the customer expects, and what must happen next.",
-    image: "assets/g017/edinburgh-moody-street-pexels.jpg",
+    stem: "edinburgh-moody-street-pexels",
     alt: "Moody Edinburgh street scene with modern and historic architecture"
   }
 };
 const buttons = document.querySelectorAll("[data-mode]");
 const image = document.getElementById("mode-image");
+const imageAvif = document.getElementById("mode-image-avif");
+const imageWebp = document.getElementById("mode-image-webp");
 const title = document.getElementById("mode-title");
 const text = document.getElementById("mode-text");
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const mode = modes[button.dataset.mode];
     buttons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
-    image.src = mode.image;
+    imageAvif.srcset = `assets/g017/${mode.stem}-640.avif 640w, assets/g017/${mode.stem}-1280.avif 1280w`;
+    imageWebp.srcset = `assets/g017/${mode.stem}-640.webp 640w, assets/g017/${mode.stem}-1280.webp 1280w`;
+    image.src = `assets/g017/${mode.stem}-1280.webp`;
     image.alt = mode.alt;
     title.textContent = mode.title;
     text.textContent = mode.text;

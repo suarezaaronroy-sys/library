@@ -48,11 +48,13 @@ description: "Free CRM, automation, and AI operations manuals — step-by-step g
 
 {% assign trilogy = site.data.grimoires | where: "tier", "trilogy" %}
 {% assign built = site.data.grimoires | where: "tier", "built" %}
+{% assign live_grimoires = site.data.grimoires | where: "status", "live" %}
+{% assign draft_grimoires = site.data.grimoires | where: "status", "soon" %}
 {% assign recent = site.notes | sort: "date" | reverse %}
 
 <section class="home-proof">
   <div class="shell home-proof-inner">
-    <div><b>{{ site.data.grimoires | size }}</b><span>Grimoires</span><small>public artifacts on the shelf</small></div>
+    <div><b>{{ live_grimoires | size }}</b><span>Live grimoires</span><small>{{ draft_grimoires | size }} in progress · public artifacts on the shelf</small></div>
     <div><b>3</b><span>Connected volumes</span><small>money · work · organizations</small></div>
     <div><b>{{ site.notes | size }}</b><span>Field notes</span><small>short arguments from real work</small></div>
     <div><b>0</b><span>Gates</span><small>no paywall or email wall</small></div>
@@ -70,7 +72,7 @@ description: "Free CRM, automation, and AI operations manuals — step-by-step g
   <div class="home-evidence-grid">
     <a class="home-evidence-item home-evidence-library" href="{{ '/projects/' | relative_url }}">
       <img src="{{ '/assets/img/brand/brand-library-interior-unsplash.jpg' | relative_url }}" alt="A public library arranged around a reading room">
-      <div><span>The catalogue</span><strong>Evidence, manuals, and field notes</strong><small>Browse all {{ site.data.grimoires | size }} grimoires &rarr;</small></div>
+      <div><span>The catalogue</span><strong>Evidence, manuals, and field notes</strong><small>Browse {{ live_grimoires | size }} live grimoires &rarr;</small></div>
     </a>
     <a class="home-evidence-item" href="{{ '/grimoires/010-orchestration-layer.html' | relative_url }}">
       <img src="{{ '/assets/img/brand/brand-documents-plan-unsplash.jpg' | relative_url }}" alt="Planning documents and a workflow diagram on a desk">
