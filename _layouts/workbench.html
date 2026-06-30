@@ -17,12 +17,12 @@ layout: default
   <nav class="workbench-nav" aria-label="Workbench navigation">
     <a href="{{ '/workbench/' | relative_url }}"{% if page.workspace == 'index' %} aria-current="page"{% endif %}>Desk</a>
     <a href="{{ '/workbench/billing/' | relative_url }}"{% if page.workspace == 'billing' %} aria-current="page"{% endif %}>Billing</a>
-    <span aria-disabled="true">Scheduling</span>
-    <span aria-disabled="true">Writing</span>
-    <span aria-disabled="true">Marketing</span>
-    <span aria-disabled="true">CRM</span>
-    <span aria-disabled="true">Library tools</span>
-    <span aria-disabled="true">Decisions</span>
+    <a href="{{ '/workbench/scheduling/' | relative_url }}"{% if page.workspace == 'scheduling' %} aria-current="page"{% endif %}>Scheduling</a>
+    <a href="{{ '/workbench/writing/' | relative_url }}"{% if page.workspace == 'writing' %} aria-current="page"{% endif %}>Writing</a>
+    <a href="{{ '/workbench/marketing/' | relative_url }}"{% if page.workspace == 'marketing' %} aria-current="page"{% endif %}>Marketing</a>
+    <a href="{{ '/workbench/crm/' | relative_url }}"{% if page.workspace == 'crm' %} aria-current="page"{% endif %}>CRM</a>
+    <a href="{{ '/workbench/library-tools/' | relative_url }}"{% if page.workspace == 'library-tools' %} aria-current="page"{% endif %}>Library tools</a>
+    <a href="{{ '/workbench/decisions/' | relative_url }}"{% if page.workspace == 'decisions' %} aria-current="page"{% endif %}>Decisions</a>
   </nav>
 
   <div class="workbench-content">
@@ -30,5 +30,5 @@ layout: default
   </div>
 </div>
 {% if page.workbench_script %}
-<script type="module" src="{{ page.workbench_script | relative_url }}"></script>
+<script type="module" src="{{ page.workbench_script | relative_url }}?v=2"></script>
 {% endif %}

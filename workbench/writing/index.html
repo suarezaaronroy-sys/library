@@ -1,0 +1,40 @@
+---
+layout: workbench
+title: Writing Workspace
+description: "A local scratchpad, text utilities, snippets, and Markdown preview."
+permalink: /workbench/writing/
+workbench: true
+workspace: writing
+workbench_title: Writing Workspace
+workbench_lede: Hold rough language here until it is ready to become operating memory.
+workbench_script: /assets/js/workbench/writing.js
+---
+<div id="writing-workspace" class="tool-grid">
+  <section class="tool-panel wide">
+    <div class="tool-panel-head"><div><span>01 · Scratchpad</span><h2>Write before arranging</h2></div><output id="writing-count" class="tool-status"></output></div>
+    <textarea id="scratchpad" class="tool-output" rows="12" placeholder="This stays in this browser."></textarea>
+    <div class="tool-actions">
+      <button class="workbench-button" data-transform="trim" type="button">Clean spacing</button>
+      <button class="workbench-button" data-transform="lower" type="button">lowercase</button>
+      <button class="workbench-button" data-transform="upper" type="button">UPPERCASE</button>
+      <button class="workbench-button" data-transform="title" type="button">Title Case</button>
+      <button class="workbench-button" data-action="copy-writing" type="button">Copy</button>
+      <button class="workbench-button" data-action="capture-clipboard" type="button">Capture clipboard</button>
+    </div>
+    <output id="writing-status" class="tool-status"></output>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>02 · Snippets</span><h2>Reusable language</h2></div></div>
+    <form id="snippet-form" class="tool-form">
+      <label class="workbench-field"><span>Name</span><input name="name" required placeholder="Follow-up"></label>
+      <label class="workbench-field"><span>Text</span><textarea name="text" required></textarea></label>
+      <button class="workbench-button primary" type="submit">Save snippet</button>
+    </form>
+    <div id="snippet-list" class="record-list"></div>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>03 · Markdown</span><h2>Preview structure</h2></div></div>
+    <textarea id="markdown-input" class="tool-output" rows="8" placeholder="# Heading&#10;&#10;A short note."></textarea>
+    <div id="markdown-preview" class="tool-output preview"></div>
+  </section>
+</div>

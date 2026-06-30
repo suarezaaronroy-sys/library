@@ -6,7 +6,7 @@ permalink: /workbench/billing/
 workbench: true
 workspace: billing
 workbench_title: Billing Workspace
-workbench_lede: Turn a working month into invoice-ready numbers without opening a spreadsheet.
+workbench_lede: Turn any billing period into invoice-ready numbers without opening a spreadsheet.
 workbench_script: /assets/js/workbench/billing.js
 ---
 <div id="billing-workspace" class="billing-layout">
@@ -71,27 +71,29 @@ workbench_script: /assets/js/workbench/billing.js
   <section class="workbench-panel billing-calendar-panel" aria-labelledby="billing-calendar-title">
     <div class="workbench-panel-head">
       <div>
-        <span>02 · Working month</span>
+        <span>02 · Billing period</span>
         <h2 id="billing-calendar-title">Mark the days</h2>
-        <p>Click a date to cycle full, half, holiday, and off.</p>
+        <p>A period may cross months. Click a date to change its state.</p>
       </div>
     </div>
 
-    <div class="calendar-toolbar">
-      <button type="button" data-action="previous-month" aria-label="Previous month" title="Previous month">‹</button>
-      <input id="billing-month" class="billing-month-input" type="month" aria-label="Billing month">
-      <button type="button" data-action="next-month" aria-label="Next month" title="Next month">›</button>
+    <div class="period-toolbar">
+      <label class="workbench-field">
+        <span>Period starts</span>
+        <input id="period-start" type="date">
+      </label>
+      <label class="workbench-field">
+        <span>Period ends</span>
+        <input id="period-end" type="date">
+      </label>
     </div>
 
-    <div class="calendar-weekdays" aria-hidden="true">
-      <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-    </div>
-    <div id="billing-calendar" class="billing-calendar" role="grid" aria-label="Billing day calendar"></div>
+    <div id="billing-calendar" class="billing-calendars" aria-label="Billing period calendars"></div>
 
     <div class="calendar-actions">
       <button class="workbench-button" type="button" data-action="select-weekdays">Weekdays full</button>
-      <button class="workbench-button" type="button" data-action="clear-month">Clear month</button>
-      <button class="workbench-button" type="button" data-action="reset-month">Reset month</button>
+      <button class="workbench-button" type="button" data-action="clear-period">Clear period</button>
+      <button class="workbench-button" type="button" data-action="reset-period">Reset period</button>
     </div>
     <div class="calendar-legend" aria-label="Day state legend">
       <span><i class="full"></i>Full day</span>

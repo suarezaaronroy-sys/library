@@ -1,0 +1,42 @@
+---
+layout: workbench
+title: Marketing Workspace
+description: "Campaign naming, UTM construction, funnel math, and ROI calculations."
+permalink: /workbench/marketing/
+workbench: true
+workspace: marketing
+workbench_title: Marketing Workspace
+workbench_lede: Build trackable campaigns and test the arithmetic before launch.
+workbench_script: /assets/js/workbench/marketing.js
+---
+<div id="marketing-workspace" class="tool-grid">
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>01 · Tracking</span><h2>UTM builder</h2></div></div>
+    <form id="utm-form" class="tool-form">
+      <label class="workbench-field"><span>Destination URL</span><input name="url" type="url" placeholder="https://example.com/page"></label>
+      <div class="tool-row"><label class="workbench-field"><span>Source</span><input name="source" placeholder="linkedin"></label><label class="workbench-field"><span>Medium</span><input name="medium" placeholder="social"></label></div>
+      <label class="workbench-field"><span>Campaign</span><input name="campaign" placeholder="systems-audit"></label>
+      <div class="tool-row"><label class="workbench-field"><span>Term</span><input name="term"></label><label class="workbench-field"><span>Content</span><input name="content"></label></div>
+    </form>
+    <textarea id="utm-output" class="tool-output" readonly></textarea>
+    <button class="workbench-button primary" data-copy="utm-output" type="button">Copy URL</button>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>02 · Naming</span><h2>Campaign convention</h2></div></div>
+    <form id="campaign-form" class="tool-form">
+      <div class="tool-row"><label class="workbench-field"><span>Brand</span><input name="brand" placeholder="library"></label><label class="workbench-field"><span>Offer</span><input name="offer" placeholder="audit"></label></div>
+      <div class="tool-row"><label class="workbench-field"><span>Audience</span><input name="audience" placeholder="operators"></label><label class="workbench-field"><span>Date</span><input name="date" type="month"></label></div>
+      <label class="workbench-field"><span>Channel</span><input name="channel" placeholder="linkedin"></label>
+    </form>
+    <output id="campaign-output" class="tool-output"></output>
+    <button class="workbench-button primary" data-copy="campaign-output" type="button">Copy name</button>
+  </section>
+  <section class="tool-panel wide">
+    <div class="tool-panel-head"><div><span>03 · Economics</span><h2>Funnel and ROI calculator</h2></div></div>
+    <form id="funnel-form" class="tool-form">
+      <div class="tool-row three"><label class="workbench-field"><span>Visitors</span><input name="visitors" type="number" min="0" value="1000"></label><label class="workbench-field"><span>Leads</span><input name="leads" type="number" min="0" value="80"></label><label class="workbench-field"><span>Customers</span><input name="customers" type="number" min="0" value="8"></label></div>
+      <div class="tool-row three"><label class="workbench-field"><span>Revenue</span><input name="revenue" type="number" min="0" value="4000"></label><label class="workbench-field"><span>Campaign cost</span><input name="cost" type="number" min="0" value="1000"></label><label class="workbench-field"><span>Currency</span><input name="currency" value="USD"></label></div>
+    </form>
+    <div id="funnel-output" class="metric-strip"></div>
+  </section>
+</div>

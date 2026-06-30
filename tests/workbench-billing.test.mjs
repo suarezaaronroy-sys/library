@@ -3,9 +3,11 @@ import assert from "node:assert/strict";
 import {
   buildInvoiceSummary,
   buildMonthStatuses,
+  buildPeriodStatuses,
   calculateBilling,
   cycleDayState,
-  daysInMonth
+  daysInMonth,
+  monthsInPeriod
 } from "../assets/js/workbench/billing-core.mjs";
 
 test("weekdays start full and weekends start off", () => {
@@ -56,6 +58,13 @@ test("calendar helpers handle leap years and state order", () => {
   assert.equal(cycleDayState("off"), "full");
 });
 
+test("billing periods can cross month and year boundaries", () => {
+  const statuses = buildPeriodStatuses("2026-12-29", "2027-01-04");
+  assert.equal(Object.keys(statuses).length, 7);
+  assert.equal(statuses["2027-01-02"], "off");
+  assert.deepEqual(monthsInPeriod("2026-12-29", "2027-01-04"), ["2026-12", "2027-01"]);
+});
+
 test("invoice output contains the working totals", () => {
   const profile = {
     clientName: "Example Client",
@@ -67,7 +76,7 @@ test("invoice output contains the working totals", () => {
     notes: "Net 15"
   };
   const totals = calculateBilling(profile, { a: "full", b: "half" });
-  const summary = buildInvoiceSummary(profile, "2026-06", totals);
+  const summary = buildInvoiceSummary(profile, { start: "2026-06-01", end: "2026-06-30" }, totals);
 
   assert.match(summary, /Billing period: 1 June 2026 to 30 June 2026/);
   assert.match(summary, /Client: Example Client/);

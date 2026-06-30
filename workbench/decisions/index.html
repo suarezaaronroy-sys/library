@@ -1,0 +1,36 @@
+---
+layout: workbench
+title: Decision Workspace
+description: "A local decision journal and belief revision log."
+permalink: /workbench/decisions/
+workbench: true
+workspace: decisions
+workbench_title: Decision Workspace
+workbench_lede: Preserve the reasoning that disappears once a choice becomes ordinary.
+workbench_script: /assets/js/workbench/decisions.js
+---
+<div id="decisions-workspace" class="tool-grid">
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>01 · Record</span><h2>Decision journal</h2></div></div>
+    <form id="decision-form" class="tool-form">
+      <label class="workbench-field"><span>Decision</span><input name="title" required placeholder="What did you choose?"></label>
+      <label class="workbench-field"><span>Context</span><textarea name="context" required placeholder="What was true at the time?"></textarea></label>
+      <label class="workbench-field"><span>Why this path</span><textarea name="reason"></textarea></label>
+      <label class="workbench-field"><span>Review on</span><input name="review" type="date"></label>
+      <button class="workbench-button primary" type="submit">Record decision</button>
+    </form>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>02 · Revise</span><h2>Belief revision</h2></div></div>
+    <form id="belief-form" class="tool-form">
+      <label class="workbench-field"><span>I used to believe</span><textarea name="before" required></textarea></label>
+      <label class="workbench-field"><span>Now I believe</span><textarea name="after" required></textarea></label>
+      <label class="workbench-field"><span>What changed the evidence?</span><textarea name="evidence"></textarea></label>
+      <button class="workbench-button primary" type="submit">Record revision</button>
+    </form>
+  </section>
+  <section class="tool-panel wide">
+    <div class="tool-panel-head"><div><span>03 · Memory</span><h2>What changed, and why</h2></div><button id="export-decisions" class="workbench-button" type="button">Export JSON</button></div>
+    <div id="decision-list" class="record-list"></div>
+  </section>
+</div>

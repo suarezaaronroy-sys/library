@@ -1,20 +1,28 @@
 import {
   buildInvoiceSummary,
-  buildMonthStatuses,
+  buildPeriodStatuses,
   calculateBilling,
   cycleDayState,
   daysInMonth,
+  formatDateKey,
   formatMonthKey,
   money,
   monthLabel,
+  monthsInPeriod,
   number
 } from "./billing-core.mjs";
 import { loadState, saveState } from "./store.js";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
+const today = new Date();
+const currentMonth = formatMonthKey(today);
+const defaultPeriod = {
+  start: `${currentMonth}-01`,
+  end: `${currentMonth}-${String(daysInMonth(currentMonth)).padStart(2, "0")}`
+};
 const DEFAULT_STATE = {
-  schemaVersion: 1,
-  month: formatMonthKey(),
+  schemaVersion: 2,
+  period: defaultPeriod,
   profile: {
     clientName: "",
     currency: "GBP",
@@ -24,22 +32,24 @@ const DEFAULT_STATE = {
     fxRate: 74,
     notes: ""
   },
-  months: {}
+  dates: {}
 };
 
 const root = document.querySelector("#billing-workspace");
 if (root) {
-  const state = loadState(STORAGE_KEY, DEFAULT_STATE);
+  const state = migrateState(loadState(STORAGE_KEY, DEFAULT_STATE));
   const form = document.querySelector("#billing-form");
-  const monthInput = document.querySelector("#billing-month");
+  const startInput = document.querySelector("#period-start");
+  const endInput = document.querySelector("#period-end");
   const calendar = document.querySelector("#billing-calendar");
   const saveOutput = document.querySelector("#billing-save-state");
   const toast = document.querySelector("#billing-toast");
   let toastTimer;
 
-  ensureMonth(state.month);
+  ensurePeriod();
   hydrateForm();
-  monthInput.value = state.month;
+  startInput.value = state.period.start;
+  endInput.value = state.period.end;
   render();
 
   form.addEventListener("input", () => {
@@ -64,19 +74,14 @@ if (root) {
     renderSummary();
   });
 
-  monthInput.addEventListener("change", () => {
-    if (!monthInput.value) return;
-    state.month = monthInput.value;
-    ensureMonth(state.month);
-    persist();
-    render();
-  });
+  startInput.addEventListener("change", () => updatePeriod("start"));
+  endInput.addEventListener("change", () => updatePeriod("end"));
 
   calendar.addEventListener("click", (event) => {
     const day = event.target.closest(".billing-day[data-date]");
     if (!day) return;
     const date = day.dataset.date;
-    state.months[state.month][date] = cycleDayState(state.months[state.month][date]);
+    state.dates[date] = cycleDayState(state.dates[date]);
     persist();
     render();
   });
@@ -85,23 +90,17 @@ if (root) {
     const action = event.target.closest("[data-action]")?.dataset.action;
     if (!action) return;
 
-    if (action === "previous-month" || action === "next-month") {
-      moveMonth(action === "next-month" ? 1 : -1);
-    } else if (action === "select-weekdays") {
-      state.months[state.month] = buildMonthStatuses(state.month);
+    if (action === "select-weekdays" || action === "reset-period") {
+      state.dates = buildPeriodStatuses(state.period.start, state.period.end);
       persist();
       render();
-    } else if (action === "clear-month") {
-      Object.keys(state.months[state.month]).forEach((date) => {
-        state.months[state.month][date] = "off";
+      announce(action === "reset-period" ? "Period reset to weekdays." : "Weekdays selected.");
+    } else if (action === "clear-period") {
+      Object.keys(state.dates).forEach((date) => {
+        if (date >= state.period.start && date <= state.period.end) state.dates[date] = "off";
       });
       persist();
       render();
-    } else if (action === "reset-month") {
-      state.months[state.month] = buildMonthStatuses(state.month);
-      persist();
-      render();
-      announce("Month reset to weekdays.");
     } else if (action === "copy-summary") {
       try {
         await navigator.clipboard.writeText(document.querySelector("#invoice-output").value);
@@ -111,49 +110,87 @@ if (root) {
         announce("Summary selected. Copy it from the text field.");
       }
     } else if (action === "download-csv") {
-      downloadFile(csvExport(), `billing-${state.month}.csv`, "text/csv");
+      downloadFile(csvExport(), `billing-${state.period.start}-to-${state.period.end}.csv`, "text/csv");
       announce("CSV prepared.");
     } else if (action === "export-json") {
-      downloadFile(JSON.stringify(state, null, 2), `billing-${state.month}.json`, "application/json");
+      downloadFile(JSON.stringify(state, null, 2), `billing-${state.period.start}-to-${state.period.end}.json`, "application/json");
       announce("JSON backup prepared.");
     }
   });
 
-  function ensureMonth(monthKey) {
-    if (!state.months[monthKey]) state.months[monthKey] = buildMonthStatuses(monthKey);
+  function migrateState(loaded) {
+    if (Number(loaded.schemaVersion) >= 2 && loaded.period) return loaded;
+    const month = loaded.month || currentMonth;
+    const period = {
+      start: `${month}-01`,
+      end: `${month}-${String(daysInMonth(month)).padStart(2, "0")}`
+    };
+    return {
+      schemaVersion: 2,
+      period,
+      profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
+      dates: { ...(loaded.months?.[month] || loaded.dates || {}) }
+    };
+  }
+
+  function updatePeriod(changed) {
+    if (!startInput.value || !endInput.value) return;
+    if (startInput.value > endInput.value) {
+      if (changed === "start") endInput.value = startInput.value;
+      else startInput.value = endInput.value;
+    }
+    state.period = { start: startInput.value, end: endInput.value };
+    ensurePeriod();
+    persist();
+    render();
+  }
+
+  function ensurePeriod() {
+    state.dates = {
+      ...state.dates,
+      ...buildPeriodStatuses(state.period.start, state.period.end, state.dates)
+    };
+  }
+
+  function periodDates() {
+    return Object.fromEntries(
+      Object.entries(state.dates).filter(([date]) => date >= state.period.start && date <= state.period.end)
+    );
   }
 
   function hydrateForm() {
     Object.entries(state.profile).forEach(([name, value]) => {
       const field = form.elements.namedItem(name);
-      if (!field) return;
-      if (field instanceof RadioNodeList) {
-        field.value = value;
-      } else {
-        field.value = value;
-      }
+      if (field) field.value = value;
     });
     document.querySelector("#fx-rate").disabled = state.profile.currency === "PHP";
   }
 
   function render() {
-    renderCalendar();
+    renderCalendars();
     renderSummary();
   }
 
-  function renderCalendar() {
-    const [year, month] = state.month.split("-").map(Number);
-    const firstDay = new Date(year, month - 1, 1).getDay();
-    const leadingCells = (firstDay + 6) % 7;
-    const cells = [];
+  function renderCalendars() {
+    calendar.innerHTML = monthsInPeriod(state.period.start, state.period.end)
+      .map((month) => renderMonth(month))
+      .join("");
+  }
 
-    for (let index = 0; index < leadingCells; index += 1) {
-      cells.push(`<span class="billing-day is-empty" aria-hidden="true"></span>`);
-    }
+  function renderMonth(monthKey) {
+    const [year, month] = monthKey.split("-").map(Number);
+    const leadingCells = (new Date(year, month - 1, 1).getDay() + 6) % 7;
+    const cells = Array.from({ length: leadingCells }, () =>
+      `<span class="billing-day is-empty" aria-hidden="true"></span>`
+    );
 
-    for (let day = 1; day <= daysInMonth(state.month); day += 1) {
-      const date = `${state.month}-${String(day).padStart(2, "0")}`;
-      const status = state.months[state.month][date] || "off";
+    for (let day = 1; day <= daysInMonth(monthKey); day += 1) {
+      const date = `${monthKey}-${String(day).padStart(2, "0")}`;
+      if (date < state.period.start || date > state.period.end) {
+        cells.push(`<span class="billing-day is-empty" aria-hidden="true"></span>`);
+        continue;
+      }
+      const status = state.dates[date] || "off";
       const weekday = new Date(year, month - 1, day).getDay();
       const weekend = weekday === 0 || weekday === 6 ? " is-weekend" : "";
       cells.push(
@@ -164,28 +201,24 @@ if (root) {
       );
     }
 
-    calendar.innerHTML = cells.join("");
-    calendar.setAttribute("aria-label", `${monthLabel(state.month)} billing day calendar`);
+    return `<section class="billing-month-section">
+      <h3 class="billing-month-title">${monthLabel(monthKey)}</h3>
+      <div class="calendar-weekdays" aria-hidden="true">
+        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+      </div>
+      <div class="billing-calendar" role="grid" aria-label="${monthLabel(monthKey)} billing days">${cells.join("")}</div>
+    </section>`;
   }
 
   function renderSummary() {
-    const totals = calculateBilling(state.profile, state.months[state.month]);
+    const totals = calculateBilling(state.profile, periodDates());
     const currency = state.profile.currency;
     document.querySelector("#selected-days").textContent = number(totals.billableDays);
     document.querySelector("#billable-hours").textContent = number(totals.billableHours);
     document.querySelector("#daily-total").textContent = `${currency} ${money(totals.dailyEquivalent)}`;
     document.querySelector("#native-total").textContent = `${currency} ${money(totals.nativeTotal)}`;
     document.querySelector("#php-total").textContent = `PHP ${money(totals.phpTotal)} estimate`;
-    document.querySelector("#invoice-output").value = buildInvoiceSummary(state.profile, state.month, totals);
-  }
-
-  function moveMonth(offset) {
-    const [year, month] = state.month.split("-").map(Number);
-    state.month = formatMonthKey(new Date(year, month - 1 + offset, 1));
-    ensureMonth(state.month);
-    monthInput.value = state.month;
-    persist();
-    render();
+    document.querySelector("#invoice-output").value = buildInvoiceSummary(state.profile, state.period, totals);
   }
 
   function persist() {
@@ -202,13 +235,15 @@ if (root) {
   }
 
   function csvExport() {
-    const totals = calculateBilling(state.profile, state.months[state.month]);
+    const dates = periodDates();
+    const totals = calculateBilling(state.profile, dates);
     const rows = [
       ["date", "status"],
-      ...Object.entries(state.months[state.month]),
+      ...Object.entries(dates),
       [],
       ["client", state.profile.clientName],
-      ["month", state.month],
+      ["period_start", state.period.start],
+      ["period_end", state.period.end],
       ["currency", state.profile.currency],
       ["rate_type", state.profile.rateType],
       ["rate", state.profile.rate],

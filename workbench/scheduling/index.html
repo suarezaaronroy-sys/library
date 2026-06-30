@@ -1,0 +1,41 @@
+---
+layout: workbench
+title: Scheduling Workspace
+description: "World clocks, timezone overlap planning, and local countdowns."
+permalink: /workbench/scheduling/
+workbench: true
+workspace: scheduling
+workbench_title: Scheduling Workspace
+workbench_lede: See where working hours meet before opening a calendar invitation.
+workbench_script: /assets/js/workbench/scheduling.js
+---
+<div id="scheduling-workspace" class="tool-grid">
+  <section class="tool-panel wide">
+    <div class="tool-panel-head"><div><span>01 · Now</span><h2>Working clocks</h2><p class="tool-intro">A small remote-work reference, updated each minute.</p></div></div>
+    <div id="world-clocks" class="clock-grid"></div>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>02 · Overlap</span><h2>Find shared hours</h2></div></div>
+    <form id="overlap-form" class="tool-form">
+      <div class="tool-row">
+        <label class="workbench-field"><span>Timezone A</span><select name="zoneA"></select></label>
+        <label class="workbench-field"><span>Timezone B</span><select name="zoneB"></select></label>
+      </div>
+      <div class="tool-row">
+        <label class="workbench-field"><span>Work starts</span><input name="start" type="number" min="0" max="23" value="9"></label>
+        <label class="workbench-field"><span>Work ends</span><input name="end" type="number" min="1" max="24" value="17"></label>
+      </div>
+    </form>
+    <div id="overlap-strip" class="overlap-strip" aria-label="24 hour overlap"></div>
+    <output id="overlap-output" class="tool-output"></output>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>03 · Countdown</span><h2>Keep the next edge visible</h2></div></div>
+    <form id="countdown-form" class="tool-form">
+      <label class="workbench-field"><span>Label</span><input name="label" required placeholder="Client call"></label>
+      <label class="workbench-field"><span>Date and time</span><input name="at" type="datetime-local" required></label>
+      <button class="workbench-button primary" type="submit">Add countdown</button>
+    </form>
+    <div id="countdown-list" class="record-list"></div>
+  </section>
+</div>

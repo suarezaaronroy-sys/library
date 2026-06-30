@@ -1,0 +1,44 @@
+---
+layout: workbench
+title: CRM Workspace
+description: "Pipeline modeling, JSON formatting, regex testing, and API request diagnostics."
+permalink: /workbench/crm/
+workbench: true
+workspace: crm
+workbench_title: CRM Workspace
+workbench_lede: Inspect the mechanics around a CRM without touching production records.
+workbench_script: /assets/js/workbench/crm.js
+---
+<div id="crm-workspace" class="tool-grid">
+  <section class="tool-panel wide">
+    <div class="tool-panel-head"><div><span>01 · Pipeline</span><h2>Stage model</h2><p class="tool-intro">Estimate where value sits and where conversion thins.</p></div></div>
+    <form id="pipeline-form" class="tool-form">
+      <div class="tool-row three"><label class="workbench-field"><span>New leads</span><input name="leads" type="number" min="0" value="100"></label><label class="workbench-field"><span>Qualified</span><input name="qualified" type="number" min="0" value="45"></label><label class="workbench-field"><span>Won</span><input name="won" type="number" min="0" value="12"></label></div>
+      <div class="tool-row"><label class="workbench-field"><span>Average deal value</span><input name="value" type="number" min="0" value="1500"></label><label class="workbench-field"><span>Currency</span><input name="currency" value="USD"></label></div>
+    </form>
+    <div id="pipeline-output" class="metric-strip"></div>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>02 · Payload</span><h2>JSON formatter</h2></div></div>
+    <textarea id="json-input" class="tool-output" rows="8" placeholder='{"contact":{"name":"Example"}}'></textarea>
+    <div class="tool-actions"><button class="workbench-button primary" data-action="format-json" type="button">Format</button><button class="workbench-button" data-action="minify-json" type="button">Minify</button></div>
+    <textarea id="json-output" class="tool-output" rows="8" readonly></textarea>
+    <output id="json-status" class="tool-status"></output>
+  </section>
+  <section class="tool-panel">
+    <div class="tool-panel-head"><div><span>03 · Pattern</span><h2>Regex tester</h2></div></div>
+    <div class="tool-row"><label class="workbench-field"><span>Pattern</span><input id="regex-pattern" placeholder="\\b[A-Z]{2,}\\b"></label><label class="workbench-field"><span>Flags</span><input id="regex-flags" value="g"></label></div>
+    <label class="workbench-field"><span>Test text</span><textarea id="regex-text"></textarea></label>
+    <output id="regex-output" class="tool-output"></output>
+  </section>
+  <section class="tool-panel wide">
+    <div class="tool-panel-head"><div><span>04 · Request</span><h2>Webhook and API tester</h2></div></div>
+    <form id="request-form" class="tool-form">
+      <div class="tool-row"><label class="workbench-field"><span>Method</span><select name="method"><option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option></select></label><label class="workbench-field"><span>Endpoint</span><input name="url" type="url" placeholder="https://api.example.com/test" required></label></div>
+      <label class="workbench-field"><span>JSON body</span><textarea name="body" placeholder='{"event":"test"}'></textarea></label>
+      <button class="workbench-button primary" type="submit">Send request</button>
+    </form>
+    <p class="privacy-note">This sends the entered body to the endpoint you provide. Never paste production credentials or private customer data here.</p>
+    <pre id="request-output" class="tool-output">No request sent.</pre>
+  </section>
+</div>

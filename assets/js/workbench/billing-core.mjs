@@ -22,6 +22,43 @@ export function buildMonthStatuses(monthKey) {
   return statuses;
 }
 
+export function formatDateKey(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+export function parseDateKey(key) {
+  const [year, month, day] = key.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+export function buildPeriodStatuses(start, end, existing = {}) {
+  const statuses = {};
+  const cursor = parseDateKey(start);
+  const last = parseDateKey(end);
+  if (cursor > last) return statuses;
+
+  while (cursor <= last) {
+    const key = formatDateKey(cursor);
+    const weekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+    statuses[key] = existing[key] || (weekend ? "off" : "full");
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return statuses;
+}
+
+export function monthsInPeriod(start, end) {
+  const first = parseDateKey(start);
+  const last = parseDateKey(end);
+  const months = [];
+  if (first > last) return months;
+  const cursor = new Date(first.getFullYear(), first.getMonth(), 1);
+  while (cursor <= last) {
+    months.push(formatMonthKey(cursor));
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+  return months;
+}
+
 export function cycleDayState(state) {
   const index = DAY_STATES.indexOf(state);
   return DAY_STATES[(index + 1) % DAY_STATES.length];
@@ -51,7 +88,7 @@ export function calculateBilling(profile, statuses) {
   };
 }
 
-export function buildInvoiceSummary(profile, monthKey, totals) {
+export function buildInvoiceSummary(profile, period, totals) {
   const client = profile.clientName.trim() || "Client";
   const currency = profile.currency || "PHP";
   const rateLabel = profile.rateType === "daily"
@@ -61,7 +98,7 @@ export function buildInvoiceSummary(profile, monthKey, totals) {
 
   return [
     `INVOICE WORKING SUMMARY`,
-    `Billing period: ${billingPeriod(monthKey)}`,
+    `Billing period: ${billingPeriod(period.start, period.end)}`,
     `Client: ${client}`,
     ``,
     `Rate: ${rateLabel}`,
@@ -86,16 +123,17 @@ export function monthLabel(monthKey) {
   }).format(new Date(Date.UTC(year, month - 1, 1)));
 }
 
-export function billingPeriod(monthKey) {
-  const [year, month] = monthKey.split("-").map(Number);
+export function billingPeriod(start, end) {
   const formatter = new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "long",
     year: "numeric",
     timeZone: "UTC"
   });
-  const first = formatter.format(new Date(Date.UTC(year, month - 1, 1)));
-  const last = formatter.format(new Date(Date.UTC(year, month - 1, daysInMonth(monthKey))));
+  const firstDate = parseDateKey(start);
+  const lastDate = parseDateKey(end);
+  const first = formatter.format(new Date(Date.UTC(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate())));
+  const last = formatter.format(new Date(Date.UTC(lastDate.getFullYear(), lastDate.getMonth(), lastDate.getDate())));
   return `${first} to ${last}`;
 }
 
