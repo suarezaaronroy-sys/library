@@ -1,4 +1,4 @@
-import { loadState, saveState } from "./store.js";
+import { loadState, saveState } from "./store.js?v=3";
 
 const ZONES = [
   ["Asia/Manila", "Manila"],

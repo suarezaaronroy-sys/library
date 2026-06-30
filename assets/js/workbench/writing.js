@@ -1,4 +1,4 @@
-import { loadState, saveState } from "./store.js";
+import { loadState, saveState } from "./store.js?v=3";
 
 const KEY = "aaron-workbench:v1:writing";
 const state = loadState(KEY, { scratchpad: "", markdown: "", snippets: [], clipboard: [] });

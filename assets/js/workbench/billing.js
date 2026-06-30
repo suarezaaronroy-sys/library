@@ -10,8 +10,8 @@ import {
   monthLabel,
   monthsInPeriod,
   number
-} from "./billing-core.mjs";
-import { loadState, saveState } from "./store.js";
+} from "./billing-core.mjs?v=3";
+import { loadState, saveState } from "./store.js?v=3";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
 const today = new Date();
