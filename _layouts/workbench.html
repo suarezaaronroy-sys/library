@@ -1,0 +1,34 @@
+---
+layout: default
+---
+<div class="workbench-frame" data-workspace="{{ page.workspace | default: 'index' }}">
+  <header class="workbench-header">
+    <div>
+      <div class="workbench-eyebrow">Operator Workbench</div>
+      <h1>{{ page.workbench_title }}</h1>
+      {% if page.workbench_lede %}<p>{{ page.workbench_lede }}</p>{% endif %}
+    </div>
+    <div class="workbench-local-status">
+      <span aria-hidden="true"></span>
+      Local-first
+    </div>
+  </header>
+
+  <nav class="workbench-nav" aria-label="Workbench navigation">
+    <a href="{{ '/workbench/' | relative_url }}"{% if page.workspace == 'index' %} aria-current="page"{% endif %}>Desk</a>
+    <a href="{{ '/workbench/billing/' | relative_url }}"{% if page.workspace == 'billing' %} aria-current="page"{% endif %}>Billing</a>
+    <span aria-disabled="true">Scheduling</span>
+    <span aria-disabled="true">Writing</span>
+    <span aria-disabled="true">Marketing</span>
+    <span aria-disabled="true">CRM</span>
+    <span aria-disabled="true">Library tools</span>
+    <span aria-disabled="true">Decisions</span>
+  </nav>
+
+  <div class="workbench-content">
+    {{ content }}
+  </div>
+</div>
+{% if page.workbench_script %}
+<script type="module" src="{{ page.workbench_script | relative_url }}"></script>
+{% endif %}

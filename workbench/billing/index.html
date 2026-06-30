@@ -1,0 +1,133 @@
+---
+layout: workbench
+title: Billing Workspace
+description: "A local-first billing calendar, rate calculator, currency estimator, and invoice summary tool."
+permalink: /workbench/billing/
+workbench: true
+workspace: billing
+workbench_title: Billing Workspace
+workbench_lede: Turn a working month into invoice-ready numbers without opening a spreadsheet.
+workbench_script: /assets/js/workbench/billing.js
+---
+<div id="billing-workspace" class="billing-layout">
+  <aside class="workbench-panel" aria-labelledby="billing-settings-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>01 · Terms</span>
+        <h2 id="billing-settings-title">Client and rate</h2>
+        <p>Saved only in this browser.</p>
+      </div>
+    </div>
+
+    <form id="billing-form" class="billing-form">
+      <label class="workbench-field">
+        <span>Client</span>
+        <input id="client-name" name="clientName" autocomplete="organization" placeholder="Client or project">
+      </label>
+
+      <label class="workbench-field">
+        <span>Currency</span>
+        <select id="currency" name="currency">
+          <option value="GBP">GBP · British pound</option>
+          <option value="USD">USD · US dollar</option>
+          <option value="CAD">CAD · Canadian dollar</option>
+          <option value="AUD">AUD · Australian dollar</option>
+          <option value="PHP">PHP · Philippine peso</option>
+        </select>
+      </label>
+
+      <fieldset class="workbench-fieldset">
+        <legend>Rate basis</legend>
+        <div class="workbench-segmented">
+          <label><input id="rate-hourly" type="radio" name="rateType" value="hourly" checked>Hourly</label>
+          <label><input id="rate-daily" type="radio" name="rateType" value="daily">Daily</label>
+        </div>
+      </fieldset>
+
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Rate</span>
+          <input id="rate" name="rate" type="number" min="0" step="0.01" inputmode="decimal" value="0">
+        </label>
+        <label class="workbench-field">
+          <span>Hours / day</span>
+          <input id="hours-per-day" name="hoursPerDay" type="number" min="0" step="0.25" inputmode="decimal" value="8">
+        </label>
+      </div>
+
+      <label class="workbench-field">
+        <span>1 unit in PHP</span>
+        <input id="fx-rate" name="fxRate" type="number" min="0" step="0.0001" inputmode="decimal" value="58">
+      </label>
+
+      <label class="workbench-field">
+        <span>Invoice notes</span>
+        <textarea id="billing-notes" name="notes" placeholder="Scope, reference, or payment terms"></textarea>
+      </label>
+      <output id="billing-save-state" class="workbench-save-state" aria-live="polite">Ready</output>
+    </form>
+  </aside>
+
+  <section class="workbench-panel billing-calendar-panel" aria-labelledby="billing-calendar-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>02 · Working month</span>
+        <h2 id="billing-calendar-title">Mark the days</h2>
+        <p>Click a date to cycle full, half, holiday, and off.</p>
+      </div>
+    </div>
+
+    <div class="calendar-toolbar">
+      <button type="button" data-action="previous-month" aria-label="Previous month" title="Previous month">‹</button>
+      <input id="billing-month" class="billing-month-input" type="month" aria-label="Billing month">
+      <button type="button" data-action="next-month" aria-label="Next month" title="Next month">›</button>
+    </div>
+
+    <div class="calendar-weekdays" aria-hidden="true">
+      <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+    </div>
+    <div id="billing-calendar" class="billing-calendar" role="grid" aria-label="Billing day calendar"></div>
+
+    <div class="calendar-actions">
+      <button class="workbench-button" type="button" data-action="select-weekdays">Weekdays full</button>
+      <button class="workbench-button" type="button" data-action="clear-month">Clear month</button>
+      <button class="workbench-button" type="button" data-action="reset-month">Reset month</button>
+    </div>
+    <div class="calendar-legend" aria-label="Day state legend">
+      <span><i class="full"></i>Full day</span>
+      <span><i class="half"></i>Half day</span>
+      <span><i class="holiday"></i>Holiday</span>
+      <span><i></i>Off</span>
+    </div>
+  </section>
+
+  <aside class="workbench-panel billing-summary" aria-labelledby="billing-summary-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>03 · Invoice working</span>
+        <h2 id="billing-summary-title">Summary</h2>
+        <p>Check the arithmetic before export.</p>
+      </div>
+    </div>
+
+    <div class="summary-metrics">
+      <div class="summary-metric"><span>Billable days</span><strong id="selected-days">0</strong></div>
+      <div class="summary-metric"><span>Billable hours</span><strong id="billable-hours">0</strong></div>
+      <div class="summary-metric"><span>Daily equivalent</span><strong id="daily-total">—</strong></div>
+    </div>
+    <div class="summary-total">
+      <span>Invoice total</span>
+      <strong id="native-total">—</strong>
+      <small id="php-total">PHP 0.00 estimate</small>
+    </div>
+
+    <textarea id="invoice-output" class="invoice-output" aria-label="Invoice working summary" readonly></textarea>
+    <div class="summary-actions">
+      <button class="workbench-button primary" type="button" data-action="copy-summary">Copy summary</button>
+      <button class="workbench-button" type="button" data-action="download-csv">Download CSV</button>
+      <button class="workbench-button" type="button" data-action="export-json">Export JSON</button>
+    </div>
+    <p class="billing-disclaimer">Exchange rates are estimates. Confirm final payout with Wise, PayPal, or your payment provider.</p>
+    <output id="billing-toast" class="workbench-toast" aria-live="polite"></output>
+  </aside>
+</div>
