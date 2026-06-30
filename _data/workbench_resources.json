@@ -1,0 +1,67 @@
+[
+  {"id":"desk","name":"Operator's Desk","url":"/workbench/","kind":"internal","category":"Workbench","description":"The home surface for pinned tools, recent work, and operating memory.","tags":["home","dashboard","recent"],"pricing":"Included"},
+  {"id":"resource-hub","name":"Resource Hub","url":"/workbench/resources/","kind":"internal","category":"Workbench","description":"Curated tools, personal notes, favorites, and recent resources.","tags":["directory","tools","bookmarks"],"pricing":"Included"},
+  {"id":"systems-canvas","name":"Whiteboard","url":"/workbench/whiteboard/","kind":"internal","category":"Workbench","description":"Spatial maps of processes, decisions, tools, documents, and links.","tags":["whiteboard","canvas","systems","process","diagram"],"pricing":"Included"},
+  {"id":"billing","name":"Billing Workspace","url":"/workbench/billing/","kind":"internal","category":"Operations","description":"Cross-month billing periods, rates, currency estimates, and exports.","tags":["invoice","billing","currency","freelance"],"pricing":"Included"},
+  {"id":"scheduling","name":"Scheduling Workspace","url":"/workbench/scheduling/","kind":"internal","category":"Operations","description":"World clocks, timezone overlap, and local countdowns.","tags":["timezone","calendar","meetings"],"pricing":"Included"},
+  {"id":"writing","name":"Writing Workspace","url":"/workbench/writing/","kind":"internal","category":"Writing","description":"Autosaving scratchpad, snippets, text cleanup, and Markdown preview.","tags":["scratchpad","markdown","snippets"],"pricing":"Included"},
+  {"id":"marketing","name":"Marketing Workspace","url":"/workbench/marketing/","kind":"internal","category":"Marketing","description":"UTM construction, campaign naming, funnel math, and ROI.","tags":["utm","campaign","roi","funnel"],"pricing":"Included"},
+  {"id":"crm","name":"CRM Workspace","url":"/workbench/crm/","kind":"internal","category":"CRM","description":"Pipeline math, JSON formatting, regex, and request diagnostics.","tags":["pipeline","json","regex","webhook"],"pricing":"Included"},
+  {"id":"library-tools","name":"Library Tools","url":"/workbench/library-tools/","kind":"internal","category":"Writing","description":"Grimoire and Note scaffolds, metadata, and related-link markup.","tags":["grimoire","metadata","publishing"],"pricing":"Included"},
+  {"id":"decisions","name":"Decision Workspace","url":"/workbench/decisions/","kind":"internal","category":"Operations","description":"Decision records, belief revisions, context, and review dates.","tags":["decisions","journal","memory"],"pricing":"Included"},
+
+  {"id":"meta-ads-library","name":"Meta Ads Library","url":"https://www.facebook.com/ads/library/","kind":"external","category":"Marketing","description":"Search active advertisements across Meta products.","tags":["ads","creative","research"],"pricing":"Free"},
+  {"id":"canva","name":"Canva","url":"https://www.canva.com/","kind":"external","category":"Marketing","description":"Templates and collaborative visual content creation.","tags":["design","social","creative"],"pricing":"Freemium"},
+  {"id":"buffer","name":"Buffer","url":"https://buffer.com/","kind":"external","category":"Marketing","description":"Plan, publish, and review social media content.","tags":["social","scheduling","publishing"],"pricing":"Freemium"},
+  {"id":"metricool","name":"Metricool","url":"https://metricool.com/","kind":"external","category":"Marketing","description":"Social planning, analytics, and campaign reporting.","tags":["social","analytics","reporting"],"pricing":"Freemium"},
+  {"id":"mailchimp","name":"Mailchimp","url":"https://mailchimp.com/","kind":"external","category":"Marketing","description":"Email campaigns, audiences, and marketing automation.","tags":["email","campaign","automation"],"pricing":"Freemium"},
+  {"id":"brevo","name":"Brevo","url":"https://www.brevo.com/","kind":"external","category":"Marketing","description":"Email, SMS, transactional messaging, and lightweight CRM.","tags":["email","sms","crm"],"pricing":"Freemium"},
+
+  {"id":"ahrefs","name":"Ahrefs","url":"https://ahrefs.com/","kind":"external","category":"SEO","description":"Keyword, backlink, competitor, and site research.","tags":["seo","keywords","backlinks"],"pricing":"Paid"},
+  {"id":"semrush","name":"Semrush","url":"https://www.semrush.com/","kind":"external","category":"SEO","description":"SEO, content, advertising, and competitive research suite.","tags":["seo","content","research"],"pricing":"Paid"},
+  {"id":"screaming-frog","name":"Screaming Frog SEO Spider","url":"https://www.screamingfrog.co.uk/seo-spider/","kind":"external","category":"SEO","description":"Desktop crawler for technical SEO audits.","tags":["seo","crawl","audit"],"pricing":"Freemium"},
+  {"id":"search-console","name":"Google Search Console","url":"https://search.google.com/search-console/","kind":"external","category":"SEO","description":"Google indexing, performance, and site issue reporting.","tags":["seo","google","indexing"],"pricing":"Free"},
+  {"id":"google-trends","name":"Google Trends","url":"https://trends.google.com/","kind":"external","category":"SEO","description":"Compare search interest across topics, places, and time.","tags":["search","research","trends"],"pricing":"Free"},
+
+  {"id":"gohighlevel","name":"GoHighLevel","url":"https://www.gohighlevel.com/","kind":"external","category":"CRM","description":"CRM, funnels, messaging, automation, and agency operations.","tags":["crm","automation","funnels"],"pricing":"Paid"},
+  {"id":"hubspot","name":"HubSpot","url":"https://www.hubspot.com/","kind":"external","category":"CRM","description":"CRM with marketing, sales, service, and content tools.","tags":["crm","marketing","sales"],"pricing":"Freemium"},
+  {"id":"pipedrive","name":"Pipedrive","url":"https://www.pipedrive.com/","kind":"external","category":"CRM","description":"Sales-focused pipeline and activity management.","tags":["crm","pipeline","sales"],"pricing":"Paid"},
+  {"id":"business-pilot","name":"Business Pilot","url":"https://businesspilot.co.uk/","kind":"external","category":"CRM","description":"CRM and business management for window and door installers.","tags":["crm","quoting","trade"],"pricing":"Paid"},
+  {"id":"clickup","name":"ClickUp","url":"https://clickup.com/","kind":"external","category":"CRM","description":"Tasks, documents, dashboards, and team workflows.","tags":["projects","tasks","operations"],"pricing":"Freemium"},
+
+  {"id":"zapier","name":"Zapier","url":"https://zapier.com/","kind":"external","category":"Automation","description":"Hosted no-code automation across business applications.","tags":["automation","integrations","webhooks"],"pricing":"Freemium"},
+  {"id":"make","name":"Make","url":"https://www.make.com/","kind":"external","category":"Automation","description":"Visual multi-step automation and data transformation.","tags":["automation","integrations","visual"],"pricing":"Freemium"},
+  {"id":"n8n","name":"n8n","url":"https://n8n.io/","kind":"external","category":"Automation","description":"Workflow automation with hosted and self-hosted options.","tags":["automation","ai","self-hosted"],"pricing":"Open source"},
+  {"id":"pabbly","name":"Pabbly Connect","url":"https://www.pabbly.com/connect/","kind":"external","category":"Automation","description":"Application integrations and workflow automation.","tags":["automation","integrations"],"pricing":"Paid"},
+
+  {"id":"github","name":"GitHub","url":"https://github.com/","kind":"external","category":"Development","description":"Source control, collaboration, issues, and automation.","tags":["code","git","repository"],"pricing":"Freemium"},
+  {"id":"codex","name":"Codex","url":"https://developers.openai.com/codex/","kind":"external","category":"Development","description":"Agentic coding tools for software work.","tags":["ai","code","agents"],"pricing":"Subscription"},
+  {"id":"vscode","name":"Visual Studio Code","url":"https://code.visualstudio.com/","kind":"external","category":"Development","description":"Extensible source-code editor.","tags":["code","editor","development"],"pricing":"Free"},
+  {"id":"figma","name":"Figma","url":"https://www.figma.com/","kind":"external","category":"Development","description":"Collaborative interface design and prototyping.","tags":["design","ui","prototype"],"pricing":"Freemium"},
+  {"id":"cloudflare","name":"Cloudflare","url":"https://www.cloudflare.com/","kind":"external","category":"Development","description":"DNS, delivery, security, compute, and web infrastructure.","tags":["dns","hosting","security"],"pricing":"Freemium"},
+
+  {"id":"chatgpt","name":"ChatGPT","url":"https://chatgpt.com/","kind":"external","category":"AI","description":"General-purpose conversational AI workspace.","tags":["ai","writing","research"],"pricing":"Freemium"},
+  {"id":"claude","name":"Claude","url":"https://claude.ai/","kind":"external","category":"AI","description":"AI assistant for analysis, writing, and coding.","tags":["ai","writing","analysis"],"pricing":"Freemium"},
+  {"id":"perplexity","name":"Perplexity","url":"https://www.perplexity.ai/","kind":"external","category":"AI","description":"Web-connected answer and research engine.","tags":["ai","research","search"],"pricing":"Freemium"},
+  {"id":"notebooklm","name":"NotebookLM","url":"https://notebooklm.google.com/","kind":"external","category":"AI","description":"Source-grounded research notebooks and synthesis.","tags":["ai","research","documents"],"pricing":"Freemium"},
+  {"id":"gemini","name":"Gemini","url":"https://gemini.google.com/","kind":"external","category":"AI","description":"Google's conversational AI workspace.","tags":["ai","google","research"],"pricing":"Freemium"},
+
+  {"id":"xero","name":"Xero","url":"https://www.xero.com/","kind":"external","category":"Accounting","description":"Cloud bookkeeping, invoicing, and financial reporting.","tags":["accounting","invoice","bookkeeping"],"pricing":"Paid"},
+  {"id":"wise","name":"Wise","url":"https://wise.com/","kind":"external","category":"Accounting","description":"International transfers and multi-currency accounts.","tags":["payments","currency","invoice"],"pricing":"Usage based"},
+  {"id":"stripe","name":"Stripe","url":"https://stripe.com/","kind":"external","category":"Accounting","description":"Online payment processing and billing infrastructure.","tags":["payments","billing","api"],"pricing":"Usage based"},
+  {"id":"paypal","name":"PayPal","url":"https://www.paypal.com/","kind":"external","category":"Accounting","description":"Online payments, invoicing, and money transfer.","tags":["payments","invoice","transfer"],"pricing":"Usage based"},
+
+  {"id":"coolors","name":"Coolors","url":"https://coolors.co/","kind":"external","category":"Design","description":"Generate and inspect color palettes.","tags":["color","palette","design"],"pricing":"Freemium"},
+  {"id":"lucide","name":"Lucide","url":"https://lucide.dev/","kind":"external","category":"Design","description":"Consistent open-source interface icon library.","tags":["icons","ui","svg"],"pricing":"Free"},
+  {"id":"heroicons","name":"Heroicons","url":"https://heroicons.com/","kind":"external","category":"Design","description":"Hand-crafted SVG icons for interfaces.","tags":["icons","ui","svg"],"pricing":"Free"},
+  {"id":"svg-repo","name":"SVG Repo","url":"https://www.svgrepo.com/","kind":"external","category":"Design","description":"Searchable collection of SVG vectors and icons.","tags":["svg","icons","graphics"],"pricing":"Free"},
+
+  {"id":"deepl","name":"DeepL","url":"https://www.deepl.com/","kind":"external","category":"Writing","description":"Translation and writing assistance.","tags":["translation","writing","language"],"pricing":"Freemium"},
+  {"id":"grammarly","name":"Grammarly","url":"https://www.grammarly.com/","kind":"external","category":"Writing","description":"Grammar, clarity, and writing feedback.","tags":["grammar","editing","writing"],"pricing":"Freemium"},
+  {"id":"hemingway","name":"Hemingway Editor","url":"https://hemingwayapp.com/","kind":"external","category":"Writing","description":"Readability and sentence-complexity editor.","tags":["editing","readability","writing"],"pricing":"Freemium"},
+
+  {"id":"regex101","name":"Regex101","url":"https://regex101.com/","kind":"external","category":"Utilities","description":"Interactive regular-expression tester and debugger.","tags":["regex","development","testing"],"pricing":"Free"},
+  {"id":"json-formatter","name":"JSON Formatter & Validator","url":"https://jsonformatter.curiousconcept.com/","kind":"external","category":"Utilities","description":"Format and validate JSON documents.","tags":["json","development","validation"],"pricing":"Free"},
+  {"id":"uuid-generator","name":"UUID Generator","url":"https://www.uuidgenerator.net/","kind":"external","category":"Utilities","description":"Generate UUID values for testing and records.","tags":["uuid","development","testing"],"pricing":"Free"},
+  {"id":"qr-generator","name":"QR Code Generator","url":"https://www.qr-code-generator.com/","kind":"external","category":"Utilities","description":"Create QR codes for links and content.","tags":["qr","links","marketing"],"pricing":"Freemium"}
+]

@@ -1,0 +1,19 @@
+<script id="workbench-registry" type="application/json">{{ site.data.workbench_resources | jsonify }}</script>
+<script id="workbench-grimoires" type="application/json">{{ site.data.grimoires | jsonify }}</script>
+<script id="workbench-notes" type="application/json">[
+{% for note in site.notes %}{"id":{{ note.slug | prepend: 'note-' | jsonify }},"name":{{ note.title | jsonify }},"url":{{ note.url | jsonify }},"kind":"internal","category":"Library","description":{{ note.description | default: 'Working Library note.' | jsonify }},"tags":["note","library"],"pricing":"Included"}{% unless forloop.last %},{% endunless %}
+{% endfor %}]</script>
+<script id="workbench-config" type="application/json">{"baseUrl":"{{ site.baseurl }}"}</script>
+
+<dialog id="site-search" class="site-search" aria-labelledby="site-search-title">
+  <form method="dialog" class="site-search-head">
+    <div><span>Universal search</span><strong id="site-search-title">Find your way through the site</strong></div>
+    <button type="submit" aria-label="Close search" title="Close">×</button>
+  </form>
+  <label class="site-search-input">
+    <span class="sr-only">Search the site</span>
+    <input id="site-search-query" type="search" placeholder="Search tools, resources, Grimoires, and Notes..." autocomplete="off">
+    <kbd>/</kbd>
+  </label>
+  <div id="site-search-results" class="site-search-results"></div>
+</dialog>

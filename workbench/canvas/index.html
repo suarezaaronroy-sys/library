@@ -1,0 +1,101 @@
+---
+layout: workbench
+title: Whiteboard
+description: "A local-first systems whiteboard for processes, decisions, tools, documents, resources, and their relationships."
+permalink: /workbench/whiteboard/
+workbench: true
+canvas: true
+workspace: canvas
+workbench_title: Whiteboard
+workbench_lede: Put the system somewhere you can see it, search it, and carry it forward.
+workbench_script: /assets/js/workbench/canvas.js
+---
+<div id="systems-canvas" class="systems-canvas">
+  <header class="canvas-toolbar">
+    <label class="workbench-field canvas-selector">
+      <span>Canvas</span>
+      <select id="canvas-select"></select>
+    </label>
+    <label class="workbench-field canvas-title-field">
+      <span>Name</span>
+      <input id="canvas-title" value="Untitled Canvas">
+    </label>
+    <button id="canvas-save" class="workbench-button primary" type="button" data-canvas-action="save">Save</button>
+    <label class="canvas-autosave"><input id="canvas-autosave" type="checkbox">Autosave</label>
+    <div class="canvas-toolbar-group">
+      <button class="workbench-button" type="button" data-canvas-action="new">New board</button>
+      <button class="workbench-button" type="button" data-canvas-action="delete">Delete</button>
+    </div>
+    <div class="canvas-toolbar-group">
+      <button id="canvas-connect" class="workbench-button" type="button" data-canvas-action="connect">Connect</button>
+      <button class="workbench-button" type="button" data-canvas-action="delete-selection">Delete selected</button>
+      <button class="workbench-button" type="button" data-canvas-action="fit">Fit</button>
+    </div>
+    <details class="canvas-export-menu">
+      <summary class="workbench-button">Export</summary>
+      <div>
+        <button type="button" data-canvas-action="export-json">JSON</button>
+        <button type="button" data-canvas-action="export-png">PNG</button>
+        <button type="button" data-canvas-action="export-svg">SVG</button>
+        <button type="button" data-canvas-action="import-json">Import JSON</button>
+      </div>
+    </details>
+    <input id="canvas-import" type="file" accept="application/json" hidden>
+    <output id="canvas-save-status" class="tool-status" aria-live="polite">Loaded locally</output>
+  </header>
+
+  <div class="canvas-workspace">
+    <aside class="canvas-palette" aria-labelledby="canvas-palette-title">
+      <span id="canvas-palette-title">Add node</span>
+      <button type="button" data-add-node="process"><i class="node-swatch process"></i>Process</button>
+      <button type="button" data-add-node="decision"><i class="node-swatch decision"></i>Decision</button>
+      <button type="button" data-add-node="note"><i class="node-swatch note"></i>Note</button>
+      <button type="button" data-add-node="database"><i class="node-swatch database"></i>Database</button>
+      <button type="button" data-add-node="document"><i class="node-swatch document"></i>Document</button>
+      <button type="button" data-add-node="tool"><i class="node-swatch tool"></i>Tool</button>
+      <button type="button" data-add-node="grimoire"><i class="node-swatch grimoire"></i>Grimoire</button>
+      <button type="button" data-add-node="library-note"><i class="node-swatch library-note"></i>Library note</button>
+      <button type="button" data-add-node="link"><i class="node-swatch link"></i>Link</button>
+      <p>Drag nodes to arrange. Use Connect, then choose two nodes.</p>
+    </aside>
+
+    <section class="canvas-stage" aria-label="Systems canvas editing area">
+      <div id="canvas-graph"></div>
+      <button id="canvas-search-trigger" class="canvas-search-trigger" type="button" aria-label="Search canvas">Search <kbd>Ctrl K</kbd></button>
+      <div id="canvas-search-panel" class="canvas-search-panel" hidden>
+        <input id="canvas-search" type="search" placeholder="Search this canvas">
+        <button type="button" data-canvas-action="close-search" aria-label="Close canvas search">×</button>
+        <output id="canvas-search-count">0 matches</output>
+      </div>
+      <div id="canvas-empty" class="canvas-empty">
+        <strong>Start with an object.</strong>
+        <span>Add a process, decision, document, or tool from the palette.</span>
+      </div>
+    </section>
+
+    <aside class="canvas-inspector" aria-labelledby="canvas-inspector-title">
+      <div class="canvas-inspector-head">
+        <span>Node properties</span>
+        <strong id="canvas-inspector-title">Nothing selected</strong>
+      </div>
+      <fieldset id="canvas-properties" class="tool-form" disabled>
+        <label class="workbench-field"><span>Type</span><select name="type">
+          <option value="process">Process</option><option value="decision">Decision</option><option value="note">Note</option>
+          <option value="database">Database</option><option value="document">Document</option><option value="tool">Tool</option>
+          <option value="grimoire">Grimoire</option><option value="library-note">Library note</option><option value="link">Link</option>
+        </select></label>
+        <label class="workbench-field"><span>Title</span><input name="title"></label>
+        <label class="workbench-field"><span>Description</span><textarea name="description"></textarea></label>
+        <label class="workbench-field"><span>Category</span><input name="category"></label>
+        <label class="workbench-field"><span>Tags, comma separated</span><input name="tags"></label>
+        <label class="workbench-field"><span>Related links, one per line</span><textarea name="links"></textarea></label>
+        <div class="tool-row">
+          <label class="workbench-field"><span>Status</span><select name="status"><option>Idea</option><option>Active</option><option>Blocked</option><option>Done</option><option>Archived</option></select></label>
+          <label class="workbench-field"><span>Color</span><input name="color" type="color" value="#0d9488"></label>
+        </div>
+        <label class="workbench-field"><span>Linked resource</span><select name="resourceId"><option value="">None</option></select></label>
+        <button id="canvas-open-resource" class="workbench-button" type="button" disabled>Open linked resource</button>
+      </fieldset>
+    </aside>
+  </div>
+</div>

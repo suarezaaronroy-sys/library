@@ -1,0 +1,66 @@
+---
+layout: workbench
+title: Resource Hub
+description: "A curated directory of internal workspaces and external tools with private notes, favorites, and recents."
+permalink: /workbench/resources/
+workbench: true
+workspace: resources
+workbench_title: Resource Hub
+workbench_lede: Remember what exists, why it matters, and what you learned while using it.
+workbench_script: /assets/js/workbench/resources.js
+---
+<div id="resource-hub" class="resource-hub">
+  <section class="resource-controls" aria-label="Resource filters">
+    <label class="workbench-field resource-search">
+      <span>Search the registry</span>
+      <input id="resource-search" type="search" placeholder="invoice, CRM, SVG, automation..." autocomplete="off">
+    </label>
+    <label class="workbench-field">
+      <span>Category</span>
+      <select id="resource-category"></select>
+    </label>
+    <fieldset class="workbench-fieldset">
+      <legend>View</legend>
+      <div class="workbench-segmented resource-view">
+        <label><input type="radio" name="resourceView" value="all" checked>All</label>
+        <label><input type="radio" name="resourceView" value="favorites">Pinned</label>
+        <label><input type="radio" name="resourceView" value="recent">Recent</label>
+      </div>
+    </fieldset>
+    <div class="resource-backup">
+      <button class="workbench-button" type="button" data-resource-action="export">Export memory</button>
+      <button class="workbench-button" type="button" data-resource-action="import">Import</button>
+      <input id="resource-import" type="file" accept="application/json" hidden>
+    </div>
+  </section>
+
+  <div class="resource-workspace">
+    <section class="resource-directory" aria-labelledby="resource-results-title">
+      <div class="resource-directory-head">
+        <div>
+          <span>Registry</span>
+          <h2 id="resource-results-title">Available resources</h2>
+        </div>
+        <output id="resource-count"></output>
+      </div>
+      <div id="resource-list" class="resource-list"></div>
+    </section>
+
+    <aside id="resource-inspector" class="resource-inspector" aria-labelledby="resource-inspector-title">
+      <div class="resource-inspector-head">
+        <span id="resource-kind">Resource</span>
+        <button id="resource-favorite" class="resource-favorite" type="button" aria-label="Pin resource" title="Pin resource">☆</button>
+      </div>
+      <h2 id="resource-inspector-title">Select a resource</h2>
+      <p id="resource-description">Its role, metadata, and your private notes will appear here.</p>
+      <dl id="resource-metadata" class="resource-metadata"></dl>
+      <div id="resource-tags" class="resource-tags"></div>
+      <label class="workbench-field resource-note">
+        <span>My notes</span>
+        <textarea id="resource-note" placeholder="What should you remember next time?"></textarea>
+      </label>
+      <output id="resource-save-status" class="tool-status" aria-live="polite"></output>
+      <button id="resource-open" class="workbench-button primary" type="button">Open resource</button>
+    </aside>
+  </div>
+</div>

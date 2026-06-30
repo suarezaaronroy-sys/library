@@ -1,18 +1,30 @@
 ---
 layout: workbench
 title: Writing Workspace
-description: "A local scratchpad, text utilities, snippets, and Markdown preview."
+description: "A formatted local notepad, text utilities, snippets, clipboard capture, and Markdown preview."
 permalink: /workbench/writing/
 workbench: true
 workspace: writing
 workbench_title: Writing Workspace
-workbench_lede: Hold rough language here until it is ready to become operating memory.
+workbench_lede: Write, format, keep, and reuse language without leaving the browser.
 workbench_script: /assets/js/workbench/writing.js
 ---
 <div id="writing-workspace" class="tool-grid">
   <section class="tool-panel wide">
-    <div class="tool-panel-head"><div><span>01 · Scratchpad</span><h2>Write before arranging</h2></div><output id="writing-count" class="tool-status"></output></div>
-    <textarea id="scratchpad" class="tool-output" rows="12" placeholder="This stays in this browser."></textarea>
+    <div class="tool-panel-head"><div><span>01 · Notepad</span><h2>Write before arranging</h2><p class="tool-intro">Formatting and content stay in this browser.</p></div><output id="writing-count" class="tool-status"></output></div>
+    <div class="notepad-toolbar" role="toolbar" aria-label="Notepad formatting">
+      <button type="button" data-format="undo" aria-label="Undo" title="Undo">↶</button>
+      <button type="button" data-format="redo" aria-label="Redo" title="Redo">↷</button>
+      <span></span>
+      <button type="button" data-format="bold" aria-label="Bold" title="Bold"><b>B</b></button>
+      <button type="button" data-format="italic" aria-label="Italic" title="Italic"><i>I</i></button>
+      <button type="button" data-format="underline" aria-label="Underline" title="Underline"><u>U</u></button>
+      <button type="button" data-format="formatBlock" data-format-value="h2" aria-label="Heading" title="Heading">H</button>
+      <button type="button" data-format="insertUnorderedList" aria-label="Bulleted list" title="Bulleted list">•</button>
+      <button type="button" data-format="insertOrderedList" aria-label="Numbered list" title="Numbered list">1.</button>
+      <button type="button" data-format="removeFormat" aria-label="Clear formatting" title="Clear formatting">Tx</button>
+    </div>
+    <div id="notepad" class="notepad-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Formatted notepad" data-placeholder="This stays in this browser."></div>
     <div class="tool-actions">
       <button class="workbench-button" data-transform="trim" type="button">Clean spacing</button>
       <button class="workbench-button" data-transform="lower" type="button">lowercase</button>
@@ -20,6 +32,8 @@ workbench_script: /assets/js/workbench/writing.js
       <button class="workbench-button" data-transform="title" type="button">Title Case</button>
       <button class="workbench-button" data-action="copy-writing" type="button">Copy</button>
       <button class="workbench-button" data-action="capture-clipboard" type="button">Capture clipboard</button>
+      <button class="workbench-button" data-action="export-text" type="button">Export text</button>
+      <button class="workbench-button" data-action="export-html" type="button">Export HTML</button>
     </div>
     <output id="writing-status" class="tool-status"></output>
   </section>

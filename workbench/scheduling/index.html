@@ -1,21 +1,64 @@
 ---
 layout: workbench
 title: Scheduling Workspace
-description: "World clocks, timezone overlap planning, and local countdowns."
+description: "A local clock, stopwatch, timer, world time, timezone overlap planning, and event countdowns."
 permalink: /workbench/scheduling/
 workbench: true
 workspace: scheduling
 workbench_title: Scheduling Workspace
-workbench_lede: See where working hours meet before opening a calendar invitation.
+workbench_lede: Keep time locally, then make it legible across remote teams.
 workbench_script: /assets/js/workbench/scheduling.js
 ---
 <div id="scheduling-workspace" class="tool-grid">
-  <section class="tool-panel wide">
-    <div class="tool-panel-head"><div><span>01 · Now</span><h2>Working clocks</h2><p class="tool-intro">A small remote-work reference, updated each minute.</p></div></div>
-    <div id="world-clocks" class="clock-grid"></div>
+  <section class="tool-panel third clock-app-panel">
+    <div class="tool-panel-head"><div><span>01 · Clock</span><h2>Local time</h2></div></div>
+    <div class="clock-app-display">
+      <strong id="local-clock-time">00:00:00</strong>
+      <span id="local-clock-date">Loading date</span>
+      <small id="local-clock-zone"></small>
+    </div>
+    <fieldset class="workbench-fieldset clock-format">
+      <legend>Display</legend>
+      <div class="workbench-segmented">
+        <label><input type="radio" name="clockFormat" value="24" checked>24 hour</label>
+        <label><input type="radio" name="clockFormat" value="12">12 hour</label>
+      </div>
+    </fieldset>
   </section>
+
+  <section class="tool-panel third">
+    <div class="tool-panel-head"><div><span>02 · Stopwatch</span><h2>Elapsed time</h2></div></div>
+    <div id="stopwatch-display" class="time-instrument">00:00:00.0</div>
+    <div class="tool-actions">
+      <button id="stopwatch-toggle" class="workbench-button primary" type="button" data-clock-action="stopwatch-toggle">Start</button>
+      <button class="workbench-button" type="button" data-clock-action="stopwatch-lap">Lap</button>
+      <button class="workbench-button" type="button" data-clock-action="stopwatch-reset">Reset</button>
+    </div>
+    <div id="stopwatch-laps" class="time-laps"></div>
+  </section>
+
+  <section class="tool-panel third">
+    <div class="tool-panel-head"><div><span>03 · Timer</span><h2>Count down</h2></div></div>
+    <div id="timer-display" class="time-instrument">00:25:00</div>
+    <div class="timer-inputs">
+      <label class="workbench-field"><span>Hours</span><input id="timer-hours" type="number" min="0" max="99" value="0"></label>
+      <label class="workbench-field"><span>Minutes</span><input id="timer-minutes" type="number" min="0" max="59" value="25"></label>
+      <label class="workbench-field"><span>Seconds</span><input id="timer-seconds" type="number" min="0" max="59" value="0"></label>
+    </div>
+    <div class="tool-actions">
+      <button id="timer-toggle" class="workbench-button primary" type="button" data-clock-action="timer-toggle">Start</button>
+      <button class="workbench-button" type="button" data-clock-action="timer-reset">Reset</button>
+    </div>
+    <output id="timer-status" class="tool-status" aria-live="polite"></output>
+  </section>
+
+  <section class="tool-panel wide">
+    <div class="tool-panel-head"><div><span>04 · World time</span><h2>Remote-work clocks</h2><p class="tool-intro">Local date, working-hours status, and day shifts at a glance.</p></div></div>
+    <div id="world-clocks" class="clock-grid remote-clock-grid"></div>
+  </section>
+
   <section class="tool-panel">
-    <div class="tool-panel-head"><div><span>02 · Overlap</span><h2>Find shared hours</h2></div></div>
+    <div class="tool-panel-head"><div><span>05 · Overlap</span><h2>Find shared hours</h2></div></div>
     <form id="overlap-form" class="tool-form">
       <div class="tool-row">
         <label class="workbench-field"><span>Timezone A</span><select name="zoneA"></select></label>
@@ -29,8 +72,9 @@ workbench_script: /assets/js/workbench/scheduling.js
     <div id="overlap-strip" class="overlap-strip" aria-label="24 hour overlap"></div>
     <output id="overlap-output" class="tool-output"></output>
   </section>
+
   <section class="tool-panel">
-    <div class="tool-panel-head"><div><span>03 · Countdown</span><h2>Keep the next edge visible</h2></div></div>
+    <div class="tool-panel-head"><div><span>06 · Events</span><h2>Saved countdowns</h2></div></div>
     <form id="countdown-form" class="tool-form">
       <label class="workbench-field"><span>Label</span><input name="label" required placeholder="Client call"></label>
       <label class="workbench-field"><span>Date and time</span><input name="at" type="datetime-local" required></label>

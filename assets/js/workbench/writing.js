@@ -1,57 +1,75 @@
-import { loadState, saveState } from "./store.js?v=3";
+import { loadState, saveState } from "./store.js?v=4";
 
-const KEY = "aaron-workbench:v1:writing";
-const state = loadState(KEY, { scratchpad: "", markdown: "", snippets: [], clipboard: [] });
+const KEY = "aaron-workbench:v2:writing";
+const legacy = loadState("aaron-workbench:v1:writing", { scratchpad: "", markdown: "", snippets: [], clipboard: [] });
+const state = loadState(KEY, {
+  notepadHtml: legacy.scratchpad ? `<p>${escapeHtml(legacy.scratchpad).replace(/\n/g, "<br>")}</p>` : "",
+  scratchpad: legacy.scratchpad || "",
+  markdown: legacy.markdown || "",
+  snippets: legacy.snippets || [],
+  clipboard: legacy.clipboard || []
+});
 const root = document.querySelector("#writing-workspace");
+let savedRange = null;
 
 if (root) {
-  const scratchpad = document.querySelector("#scratchpad");
+  const notepad = document.querySelector("#notepad");
   const markdown = document.querySelector("#markdown-input");
   const status = document.querySelector("#writing-status");
-  scratchpad.value = state.scratchpad;
+  notepad.innerHTML = state.notepadHtml;
+  normalizeNotepadMarkup();
   markdown.value = state.markdown;
   updateWriting();
   renderMarkdown();
   renderSnippets();
 
-  scratchpad.addEventListener("input", () => {
-    state.scratchpad = scratchpad.value;
-    saveState(KEY, state);
-    updateWriting();
+  document.querySelector(".notepad-toolbar").addEventListener("mousedown", (event) => {
+    if (event.target.closest("[data-format]")) event.preventDefault();
   });
+  document.addEventListener("selectionchange", () => {
+    const selection = window.getSelection();
+    if (selection.rangeCount && notepad.contains(selection.anchorNode)) {
+      savedRange = selection.getRangeAt(0).cloneRange();
+    }
+  });
+  notepad.addEventListener("input", saveNotepad);
   markdown.addEventListener("input", () => {
     state.markdown = markdown.value;
     saveState(KEY, state);
     renderMarkdown();
   });
   root.addEventListener("click", async (event) => {
+    const formatButton = event.target.closest("[data-format]");
     const transform = event.target.closest("[data-transform]")?.dataset.transform;
     const action = event.target.closest("[data-action]")?.dataset.action;
     const snippetId = Number(event.target.closest("[data-use-snippet]")?.dataset.useSnippet);
     const deleteId = Number(event.target.closest("[data-delete-snippet]")?.dataset.deleteSnippet);
-    if (transform) {
-      scratchpad.value = transformText(scratchpad.value, transform);
-      scratchpad.dispatchEvent(new Event("input"));
+    if (formatButton) {
+      applyFormatting(formatButton.dataset.format, formatButton.dataset.formatValue);
+      saveNotepad();
+    } else if (transform) {
+      const transformed = transformText(notepad.innerText, transform);
+      notepad.textContent = transformed;
+      saveNotepad();
     } else if (action === "copy-writing") {
-      await copyText(scratchpad.value, status);
+      await copyText(notepad.innerText, status);
     } else if (action === "capture-clipboard") {
       try {
         const text = await navigator.clipboard.readText();
         if (text && !state.clipboard.includes(text)) state.clipboard.unshift(text);
         state.clipboard = state.clipboard.slice(0, 10);
-        saveState(KEY, state);
-        scratchpad.value += `${scratchpad.value ? "\n\n" : ""}${text}`;
-        scratchpad.dispatchEvent(new Event("input"));
-        status.textContent = "Clipboard added to scratchpad.";
+        appendParagraph(text);
+        status.textContent = "Clipboard added to notepad.";
       } catch {
         status.textContent = "Clipboard permission was not granted.";
       }
+    } else if (action === "export-text") {
+      download(notepad.innerText, "workbench-note.txt", "text/plain");
+    } else if (action === "export-html") {
+      download(`<!doctype html><meta charset="utf-8"><title>Workbench note</title><article>${notepad.innerHTML}</article>`, "workbench-note.html", "text/html");
     } else if (snippetId) {
       const snippet = state.snippets.find((item) => item.id === snippetId);
-      if (snippet) {
-        scratchpad.value += `${scratchpad.value ? "\n\n" : ""}${snippet.text}`;
-        scratchpad.dispatchEvent(new Event("input"));
-      }
+      if (snippet) appendParagraph(snippet.text);
     } else if (deleteId) {
       state.snippets = state.snippets.filter((item) => item.id !== deleteId);
       saveState(KEY, state);
@@ -67,15 +85,114 @@ if (root) {
     renderSnippets();
   });
 
-  function updateWriting() {
-    const words = scratchpad.value.trim() ? scratchpad.value.trim().split(/\s+/).length : 0;
-    document.querySelector("#writing-count").textContent = `${words} words · ${scratchpad.value.length} characters`;
+  function saveNotepad() {
+    state.notepadHtml = notepad.innerHTML;
+    state.scratchpad = notepad.innerText;
+    saveState(KEY, state);
+    updateWriting();
+    status.textContent = "Saved locally";
   }
+
+  function appendParagraph(text) {
+    if (!text) return;
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    notepad.appendChild(paragraph);
+    saveNotepad();
+  }
+
+  function applyFormatting(command, value) {
+    if (command === "undo" || command === "redo") {
+      document.execCommand(command);
+      return;
+    }
+    const selection = window.getSelection();
+    let range = savedRange;
+    if (selection.rangeCount && notepad.contains(selection.anchorNode)) range = selection.getRangeAt(0).cloneRange();
+    if (!range || range.collapsed) {
+      range = document.createRange();
+      range.selectNodeContents(notepad);
+    }
+    const text = range.toString();
+    if (!text) return;
+    const inlineTag = { bold: "strong", italic: "em", underline: "u" }[command];
+    if (inlineTag && range.commonAncestorContainer === notepad) {
+      const blocks = Array.from(notepad.childNodes);
+      const alreadyFormatted = blocks.length && blocks.every((block) =>
+        block.nodeType === Node.ELEMENT_NODE &&
+        block.children.length === 1 &&
+        block.firstElementChild.tagName.toLowerCase() === inlineTag
+      );
+      blocks.forEach((block) => {
+        if (alreadyFormatted) {
+          const wrapper = block.firstElementChild;
+          while (wrapper.firstChild) block.insertBefore(wrapper.firstChild, wrapper);
+          wrapper.remove();
+        } else {
+          const wrapper = document.createElement(inlineTag);
+          while (block.firstChild) wrapper.appendChild(block.firstChild);
+          block.appendChild(wrapper);
+        }
+      });
+      const all = document.createRange();
+      all.selectNodeContents(notepad);
+      selection.removeAllRanges();
+      selection.addRange(all);
+      savedRange = all.cloneRange();
+      notepad.focus();
+      return;
+    }
+
+    let replacement;
+    if (command === "insertUnorderedList" || command === "insertOrderedList") {
+      replacement = document.createElement(command === "insertOrderedList" ? "ol" : "ul");
+      text.split(/\n+/).filter(Boolean).forEach((line) => {
+        const item = document.createElement("li");
+        item.textContent = line;
+        replacement.appendChild(item);
+      });
+    } else if (command === "removeFormat") {
+      replacement = document.createTextNode(text);
+    } else {
+      const tags = { bold: "strong", italic: "em", underline: "u", formatBlock: value || "h2" };
+      replacement = document.createElement(tags[command] || "span");
+      try {
+        replacement.appendChild(range.extractContents());
+      } catch {
+        replacement.textContent = text;
+        range.deleteContents();
+      }
+    }
+    range.insertNode(replacement);
+    selection.removeAllRanges();
+    const after = document.createRange();
+    after.selectNodeContents(replacement);
+    selection.addRange(after);
+    savedRange = after.cloneRange();
+    notepad.focus();
+  }
+
+  function normalizeNotepadMarkup() {
+    const inlineTags = ["STRONG", "EM", "U"];
+    const blockTags = "p,h1,h2,h3,div,ul,ol,li";
+    const malformed = Array.from(notepad.children).some((element) =>
+      inlineTags.includes(element.tagName) && element.querySelector(blockTags)
+    );
+    if (malformed) notepad.innerHTML = `<p>${escapeHtml(notepad.innerText)}</p>`;
+  }
+
+  function updateWriting() {
+    const text = notepad.innerText.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    document.querySelector("#writing-count").textContent = `${words} words · ${text.length} characters`;
+  }
+
   function renderSnippets() {
     document.querySelector("#snippet-list").innerHTML = state.snippets.length ? state.snippets.map((item) =>
       `<article class="record"><div><strong>${escapeHtml(item.name)}</strong><p>${escapeHtml(item.text.slice(0, 120))}</p><div class="tool-actions"><button class="workbench-button" type="button" data-use-snippet="${item.id}">Insert</button><button class="workbench-button" type="button" data-delete-snippet="${item.id}">Delete</button></div></div></article>`
     ).join("") : `<p class="tool-intro">Save language you use more than once.</p>`;
   }
+
   function renderMarkdown() {
     document.querySelector("#markdown-preview").innerHTML = markdownToHtml(markdown.value);
   }
@@ -105,6 +222,15 @@ async function copyText(text, output) {
   } catch {
     output.textContent = "Copy permission was not available.";
   }
+}
+
+function download(content, filename, type) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 function escapeHtml(value) {
