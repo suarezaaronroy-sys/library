@@ -145,20 +145,25 @@ MVP features:
 
 Storage key: `aaron-workbench:v1:canvas`.
 
-The same route also includes two deliberately lighter alternate modes:
+The Whiteboard has one editing surface and eight starter families:
 
-- Pipeline Visualizer with five reusable stage patterns and local cards
-- Automation Dry Run with 30 editable-reference flows across Capture, Qualify, Route, Nurture, Transact, and Retain
+- Blank
+- Pipeline, with five reusable stage patterns
+- Automation, with 30 flows across Capture, Qualify, Route, Nurture, Transact, and Retain
+- BPMN
+- Org Chart
+- Journey
+- Decision Tree
+- Mind Map
 
-Mode state:
+Every starter becomes a normal editable canvas. Pipeline and Automation are guided
+starting points, not alternate or constrained views. The same node palette, inspector,
+connection handles, snapping, history, exports, dry run, and presentation mode apply
+to all of them.
 
-- Pipeline: `aaron-workbench:v1:pipeline`
-- Automation meeting notes: `aaron-workbench:v1:automation-dry-run`
-
-Board, Pipeline, and Automation Dry Run all render through the shared Cytoscape
-adapter in `assets/js/workbench/graph-engine.js`. Pipeline constrains graph nodes to
-five stage columns. Automation renders its trigger, five actions, and failure gate as
-a directed graph. They are separate workflows, but no longer separate visual engines.
+Legacy Pipeline cards are read once from `aaron-workbench:v1:pipeline` and copied into
+a migrated editable board. The old storage is left untouched. Migration completion is
+recorded inside `aaron-workbench:v1:canvas`.
 
 ```js
 {
@@ -168,6 +173,8 @@ a directed graph. They are separate workflows, but no longer separate visual eng
     "canvas-...": {
       id,
       title,
+      boardType,
+      templateId,
       createdAt,
       updatedAt,
       viewport: { zoom, pan },
@@ -309,8 +316,11 @@ When changing a stored structure:
 - [x] ~~Use one shared graph adapter across Board, Pipeline, and Automation views.~~
 - [x] ~~Export Pipeline and Automation meaning as readable text and structured JSON.~~
 - [x] ~~Keep pipeline items, dry-run notes, and board data local to the browser.~~
-- [ ] Add pipeline import/export after the drafting workflow settles.
-- [ ] Add editable automation-pattern templates only if the curated set proves limiting.
+- [x] ~~Replace rigid Pipeline and Automation views with editable Whiteboard starters.~~
+- [x] ~~Add Blank, Pipeline, Automation, BPMN, Org Chart, Journey, Decision Tree, and Mind Map starters.~~
+- [x] ~~Add presentation mode and a graph dry run for fast meeting explanations.~~
+- [x] ~~Migrate legacy Pipeline cards without deleting their old local state.~~
+- [ ] Add edge-label editing if meeting use proves the generated labels too limiting.
 
 ### Universal Search
 

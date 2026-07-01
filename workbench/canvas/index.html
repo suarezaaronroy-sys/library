@@ -10,13 +10,7 @@ workbench_title: Whiteboard
 workbench_lede: Put the system somewhere you can see it, search it, and carry it forward.
 workbench_script: /assets/js/workbench/canvas.js
 ---
-<div class="workspace-view-tabs" role="tablist" aria-label="Whiteboard views">
-  <button type="button" role="tab" aria-selected="true" data-whiteboard-view="board">Board</button>
-  <button type="button" role="tab" aria-selected="false" data-whiteboard-view="pipeline">Pipeline</button>
-  <button type="button" role="tab" aria-selected="false" data-whiteboard-view="automation">Automation Dry Run</button>
-</div>
-
-<div id="systems-canvas" class="systems-canvas" data-whiteboard-panel="board">
+<div id="systems-canvas" class="systems-canvas">
   <header class="canvas-toolbar">
     <label class="workbench-field canvas-selector">
       <span>Canvas</span>
@@ -37,6 +31,8 @@ workbench_script: /assets/js/workbench/canvas.js
       <button id="canvas-redo" class="workbench-button canvas-history-button" type="button" data-canvas-action="redo" aria-label="Redo" title="Redo, up to 3 actions" disabled>&#8631;</button>
       <button class="workbench-button" type="button" data-canvas-action="delete-selection">Delete selected</button>
       <button class="workbench-button" type="button" data-canvas-action="fit">Fit</button>
+      <button class="workbench-button" type="button" data-canvas-action="dry-run">Dry run</button>
+      <button class="workbench-button" type="button" data-canvas-action="present">Present</button>
     </div>
     <details class="canvas-export-menu">
       <summary class="workbench-button">Export</summary>
@@ -51,6 +47,32 @@ workbench_script: /assets/js/workbench/canvas.js
     <output id="canvas-save-status" class="tool-status" aria-live="polite">Loaded locally</output>
   </header>
 
+  <section class="canvas-quick-start" aria-labelledby="canvas-starter-title">
+    <div>
+      <span>Quick start</span>
+      <strong id="canvas-starter-title">New editable board from a starter</strong>
+    </div>
+    <label class="workbench-field">
+      <span>Board type</span>
+      <select id="canvas-template-kind">
+        <option value="blank">Blank</option>
+        <option value="pipeline">Pipeline</option>
+        <option value="automation">Automation</option>
+        <option value="bpmn">BPMN</option>
+        <option value="org">Org Chart</option>
+        <option value="journey">Journey</option>
+        <option value="decision">Decision Tree</option>
+        <option value="mindmap">Mind Map</option>
+      </select>
+    </label>
+    <label class="workbench-field canvas-template-choice">
+      <span>Starter</span>
+      <select id="canvas-template"></select>
+    </label>
+    <button class="workbench-button primary" type="button" data-canvas-action="create-template">Create board</button>
+    <p id="canvas-template-note">Start empty, or pull out a guided flow for a quick meeting.</p>
+  </section>
+
   <div class="canvas-workspace">
     <aside class="canvas-palette" aria-labelledby="canvas-palette-title">
       <span id="canvas-palette-title">Add node</span>
@@ -63,6 +85,12 @@ workbench_script: /assets/js/workbench/canvas.js
       <button type="button" data-add-node="grimoire"><i class="node-swatch grimoire"></i>Grimoire</button>
       <button type="button" data-add-node="library-note"><i class="node-swatch library-note"></i>Library note</button>
       <button type="button" data-add-node="link"><i class="node-swatch link"></i>Link</button>
+      <button type="button" data-add-node="trigger"><i class="node-swatch trigger"></i>Trigger</button>
+      <button type="button" data-add-node="action"><i class="node-swatch action"></i>Action</button>
+      <button type="button" data-add-node="condition"><i class="node-swatch condition"></i>Condition</button>
+      <button type="button" data-add-node="delay"><i class="node-swatch delay"></i>Delay</button>
+      <button type="button" data-add-node="approval"><i class="node-swatch approval"></i>Approval</button>
+      <button type="button" data-add-node="failure"><i class="node-swatch failure"></i>Failure</button>
       <p>Drag freely; nodes settle onto the grid. Select one and drag a side point to another node to connect.</p>
     </aside>
 
@@ -88,6 +116,8 @@ workbench_script: /assets/js/workbench/canvas.js
         <strong>Start with an object.</strong>
         <span>Add a process, decision, document, or tool from the palette.</span>
       </div>
+      <output id="canvas-run-status" class="canvas-run-status" aria-live="polite"></output>
+      <button class="canvas-present-exit" type="button" data-canvas-action="exit-present">Exit presentation</button>
     </section>
 
     <aside class="canvas-inspector" aria-labelledby="canvas-inspector-title">
@@ -100,6 +130,8 @@ workbench_script: /assets/js/workbench/canvas.js
           <option value="process">Process</option><option value="decision">Decision</option><option value="note">Note</option>
           <option value="database">Database</option><option value="document">Document</option><option value="tool">Tool</option>
           <option value="grimoire">Grimoire</option><option value="library-note">Library note</option><option value="link">Link</option>
+          <option value="trigger">Trigger</option><option value="action">Action</option><option value="condition">Condition</option>
+          <option value="delay">Delay</option><option value="approval">Approval</option><option value="failure">Failure</option>
         </select></label>
         <label class="workbench-field"><span>Title</span><input name="title"></label>
         <label class="workbench-field"><span>Description</span><textarea name="description"></textarea></label>
@@ -114,72 +146,5 @@ workbench_script: /assets/js/workbench/canvas.js
         <button id="canvas-open-resource" class="workbench-button" type="button" disabled>Open linked resource</button>
       </fieldset>
     </aside>
-  </div>
-</div>
-
-<div id="pipeline-visualizer" class="pipeline-visualizer" data-whiteboard-panel="pipeline" hidden>
-  <header class="mode-toolbar">
-    <div>
-      <span>Quick drafting view</span>
-      <h2>Pipeline visualizer</h2>
-      <p>Move work through a sequence without opening a CRM.</p>
-    </div>
-    <form id="pipeline-form" class="pipeline-quick-add">
-      <input name="title" aria-label="Pipeline item" placeholder="Add lead, task, or case" required>
-      <input name="owner" aria-label="Owner" placeholder="Owner">
-      <input name="value" aria-label="Value" type="number" min="0" step="0.01" placeholder="Value">
-      <button class="workbench-button primary" type="submit">Add item</button>
-    </form>
-  </header>
-  <div class="pipeline-controls">
-    <label class="workbench-field"><span>Pipeline pattern</span><select id="pipeline-template">
-      <option value="sales">Sales</option>
-      <option value="delivery">Client delivery</option>
-      <option value="hiring">Hiring</option>
-      <option value="content">Content production</option>
-      <option value="support">Support queue</option>
-    </select></label>
-    <button class="workbench-button" type="button" data-pipeline-action="reset">Reset pattern</button>
-    <button class="workbench-button" type="button" data-pipeline-action="fit">Fit view</button>
-    <button class="workbench-button" type="button" data-pipeline-action="copy">Copy brief</button>
-    <button class="workbench-button" type="button" data-pipeline-action="export">Export JSON</button>
-    <output id="pipeline-status" class="tool-status" aria-live="polite"></output>
-  </div>
-  <div id="pipeline-stage-strip" class="pipeline-stage-strip" aria-label="Pipeline stage summary"></div>
-  <div class="pipeline-graph-workspace">
-    <div class="mode-graph-shell">
-      <div id="pipeline-graph" class="mode-graph" aria-label="Pipeline visual canvas"></div>
-      <p id="pipeline-empty">Add an item to begin the visual draft.</p>
-    </div>
-    <aside class="pipeline-inspector" aria-labelledby="pipeline-inspector-title">
-      <span>Selected item</span>
-      <h3 id="pipeline-inspector-title">Nothing selected</h3>
-      <fieldset id="pipeline-properties" class="tool-form" disabled>
-        <label class="workbench-field"><span>Title</span><input name="title"></label>
-        <label class="workbench-field"><span>Owner</span><input name="owner"></label>
-        <label class="workbench-field"><span>Value</span><input name="value" type="number" min="0" step="0.01"></label>
-        <label class="workbench-field"><span>Stage</span><select name="stageId"></select></label>
-        <button class="workbench-button" type="button" data-pipeline-action="delete">Delete item</button>
-      </fieldset>
-      <p>Drag an item toward another stage. It will snap into that column.</p>
-    </aside>
-  </div>
-</div>
-
-<div id="automation-runner" class="automation-runner" data-whiteboard-panel="automation" hidden>
-  <header class="mode-toolbar">
-    <div>
-      <span>Meeting and design view</span>
-      <h2>Automation Dry Run</h2>
-      <p>Walk through triggers, decisions, actions, and failure paths before building.</p>
-    </div>
-    <label class="workbench-field automation-search">
-      <span>Find a common flow</span>
-      <input id="automation-search" type="search" placeholder="lead, invoice, onboarding, renewal...">
-    </label>
-  </header>
-  <div class="automation-workspace">
-    <nav id="automation-library" class="automation-library" aria-label="Automation flow library"></nav>
-    <section id="automation-detail" class="automation-detail" aria-live="polite"></section>
   </div>
 </div>

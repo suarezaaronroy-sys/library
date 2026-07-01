@@ -1,5 +1,5 @@
 import { loadState, saveState } from "./store.js?v=4";
-import "./whiteboard-modes.js?v=2";
+import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=3";
 import { createWorkbenchGraph } from "./graph-engine.js?v=1";
 import {
   escapeHtml,
@@ -21,7 +21,43 @@ const NODE_COLORS = {
   tool: "#15803d",
   grimoire: "#7c3aed",
   "library-note": "#be185d",
-  link: "#475569"
+  link: "#475569",
+  trigger: "#15803d",
+  action: "#0d9488",
+  condition: "#c2410c",
+  delay: "#b45309",
+  approval: "#7c3aed",
+  failure: "#be123c"
+};
+const PIPELINE_LABELS = {
+  sales: "Sales",
+  delivery: "Client delivery",
+  hiring: "Hiring",
+  content: "Content production",
+  support: "Support queue"
+};
+const GENERAL_STARTERS = {
+  bpmn: {
+    "bpmn-basic": "Basic business process",
+    "bpmn-approval": "Approval workflow",
+    "bpmn-incident": "Incident response"
+  },
+  org: {
+    "org-small-team": "Small remote team",
+    "org-client-delivery": "Client delivery team"
+  },
+  journey: {
+    "journey-customer": "Customer journey",
+    "journey-onboarding": "Client onboarding journey"
+  },
+  decision: {
+    "decision-simple": "Simple decision",
+    "decision-vendor": "Vendor selection"
+  },
+  mindmap: {
+    "mindmap-project": "Project discovery",
+    "mindmap-campaign": "Campaign planning"
+  }
 };
 let state = loadState(STORAGE_KEY, createInitialState());
 let cy;
@@ -33,11 +69,13 @@ let dragSnapshot;
 let propertyEditSnapshot;
 let titleEditSnapshot;
 let connectionDrag;
+let dryRunToken = 0;
 let undoStack = [];
 let redoStack = [];
 
 if (root && window.cytoscape) {
   normalizeState();
+  populateTemplateSelect();
   populateResourceSelect();
   renderCanvasSelect();
   initializeGraph();
@@ -57,7 +95,7 @@ function createInitialState() {
   };
 }
 
-function createCanvas(id, title, seeded = false) {
+function createCanvas(id, title, seeded = false, meta = {}) {
   const elements = seeded ? {
     nodes: [
       nodeJson("node-desk", "tool", "Operator's Desk", 170, 190, "#15803d", "desk"),
@@ -72,6 +110,8 @@ function createCanvas(id, title, seeded = false) {
   return {
     id,
     title,
+    boardType: meta.boardType || "blank",
+    templateId: meta.templateId || "",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     viewport: { zoom: 1, pan: { x: 0, y: 0 } },
@@ -94,15 +134,82 @@ function normalizeState() {
     state = replacement;
   }
   state.preferences = { autosave: false, ...(state.preferences || {}) };
+  state.migrations = { unifiedWhiteboard: false, ...(state.migrations || {}) };
   Object.values(state.canvases).forEach((canvas) => {
+    canvas.boardType ||= "blank";
+    canvas.templateId ||= "";
     canvas.elements?.nodes?.forEach((node) => {
       if (node.data?.title === "Systems Canvas") node.data.title = "Whiteboard";
     });
   });
+  migrateLegacyPipeline();
 }
 
 function activeCanvas() {
   return state.canvases[state.activeId];
+}
+
+function migrateLegacyPipeline() {
+  if (state.migrations.unifiedWhiteboard) return;
+  const legacy = loadState("aaron-workbench:v1:pipeline", { cards: [], stages: [], template: "sales" });
+  if (legacy.cards?.length && legacy.stages?.length) {
+    const id = `canvas-pipeline-migrated-${Date.now()}`;
+    const canvas = createPipelineCanvas(id, legacy.template || "sales");
+    const stageById = Object.fromEntries(legacy.stages.map((stage, index) => [stage.id, index]));
+    legacy.cards.forEach((card, index) => {
+      const stageIndex = stageById[card.stageId] ?? 0;
+      const node = nodeJson(
+        `legacy-${card.id}`,
+        "note",
+        card.title,
+        150 + stageIndex * 220,
+        380 + index * 84,
+        NODE_COLORS.note
+      );
+      node.data.description = `Owner: ${card.owner || "Unassigned"}\nValue: ${card.value || 0}`;
+      node.data.category = "Migrated pipeline item";
+      canvas.elements.nodes.push(node);
+    });
+    canvas.title = `${PIPELINE_LABELS[legacy.template] || "Pipeline"} (migrated)`;
+    state.canvases[id] = canvas;
+  }
+  state.migrations.unifiedWhiteboard = true;
+  saveState(STORAGE_KEY, state);
+}
+
+function populateTemplateSelect() {
+  const kind = document.querySelector("#canvas-template-kind").value;
+  const select = document.querySelector("#canvas-template");
+  const note = document.querySelector("#canvas-template-note");
+  if (kind === "pipeline") {
+    select.disabled = false;
+    select.innerHTML = Object.entries(PIPELINE_LABELS).map(([value, label]) =>
+      `<option value="${value}">${label}</option>`
+    ).join("");
+    note.textContent = "Creates an editable stage flow with a follow-up branch.";
+  } else if (kind === "automation") {
+    select.disabled = false;
+    select.innerHTML = FLOW_LIBRARY.map((flow) =>
+      `<option value="${flow.id}">${escapeHtml(flow.stage)} - ${escapeHtml(flow.title)}</option>`
+    ).join("");
+    note.textContent = "Creates an editable trigger, action path, and failure gate.";
+  } else if (GENERAL_STARTERS[kind]) {
+    select.disabled = false;
+    select.innerHTML = Object.entries(GENERAL_STARTERS[kind]).map(([value, label]) =>
+      `<option value="${value}">${label}</option>`
+    ).join("");
+    note.textContent = {
+      bpmn: "Creates events, tasks, gateways, approvals, and exception paths.",
+      org: "Creates an editable reporting structure for roles and teams.",
+      journey: "Creates stages, touchpoints, decisions, and a visible pain point.",
+      decision: "Creates labelled branches and editable outcomes.",
+      mindmap: "Creates a central idea with movable thought branches."
+    }[kind];
+  } else {
+    select.disabled = true;
+    select.innerHTML = `<option value="blank">Blank canvas</option>`;
+    note.textContent = "Start empty, or choose a guided flow for a quick meeting.";
+  }
 }
 
 function populateResourceSelect() {
@@ -143,6 +250,12 @@ function initializeGraph() {
       { selector: 'node[type = "database"]', style: { "shape": "barrel" }},
       { selector: 'node[type = "document"]', style: { "shape": "round-tag" }},
       { selector: 'node[type = "link"]', style: { "shape": "ellipse" }},
+      { selector: 'node[type = "trigger"]', style: { "shape": "round-hexagon", "border-width": 2.5 }},
+      { selector: 'node[type = "action"]', style: { "border-width": 2 }},
+      { selector: 'node[type = "condition"]', style: { "shape": "diamond", "width": 112, "height": 112, "text-max-width": 78 }},
+      { selector: 'node[type = "delay"]', style: { "shape": "ellipse", "width": 120, "height": 72 }},
+      { selector: 'node[type = "approval"]', style: { "shape": "round-tag", "border-width": 2 }},
+      { selector: 'node[type = "failure"]', style: { "shape": "diamond", "width": 112, "height": 112, "text-max-width": 78, "border-style": "dashed" }},
       { selector: "edge", style: {
         "width": 1.5, "line-color": "#a8a29e", "target-arrow-color": "#78716c",
         "target-arrow-shape": "triangle", "arrow-scale": 0.8, "curve-style": "straight",
@@ -150,7 +263,9 @@ function initializeGraph() {
       }},
       { selector: ":selected", style: { "border-width": 4, "border-color": "#c2410c", "line-color": "#c2410c", "target-arrow-color": "#c2410c" }},
       { selector: ".search-match", style: { "border-width": 5, "border-color": "#15803d", "background-opacity": 0.24 }},
-      { selector: ".connection-target", style: { "border-width": 5, "border-color": "#c2410c", "background-opacity": 0.24 }}
+      { selector: ".connection-target", style: { "border-width": 5, "border-color": "#c2410c", "background-opacity": 0.24 }},
+      { selector: ".run-passed", style: { "background-opacity": 0.28, "border-width": 3, "border-color": "#15803d", "line-color": "#15803d", "target-arrow-color": "#15803d" }},
+      { selector: ".run-current", style: { "background-opacity": 0.42, "border-width": 5, "border-color": "#c2410c" }}
     ]
   });
   const viewport = activeCanvas().viewport;
@@ -190,6 +305,7 @@ function bindControls() {
     if (action) handleAction(action);
   });
   document.querySelector("#canvas-select").addEventListener("change", (event) => switchCanvas(event.target.value));
+  document.querySelector("#canvas-template-kind").addEventListener("change", populateTemplateSelect);
   title.addEventListener("focus", () => {
     titleEditSnapshot = snapshotCanvas();
   });
@@ -226,10 +342,6 @@ function bindControls() {
   document.querySelector("#canvas-import").addEventListener("change", (event) => importCanvas(event.target.files[0]));
   document.querySelector("#canvas-node-ports").addEventListener("pointerdown", startConnectionDrag);
   window.addEventListener("resize", updateNodePorts);
-  window.addEventListener("whiteboard:board-shown", () => {
-    cy.resize();
-    updateNodePorts();
-  });
   document.addEventListener("keydown", (event) => {
     const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName);
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
@@ -248,6 +360,7 @@ function bindControls() {
     } else if (event.key === "Escape") {
       closeCanvasSearch();
       cancelConnectionDrag();
+      exitPresentation();
     }
   });
 }
@@ -305,6 +418,10 @@ function handleAction(action) {
   if (action === "redo") redo();
   if (action === "delete-selection") deleteSelection();
   if (action === "fit") cy.fit(cy.elements(), 50);
+  if (action === "create-template") createCanvasFromStarter();
+  if (action === "dry-run") dryRunGraph();
+  if (action === "present") enterPresentation();
+  if (action === "exit-present") exitPresentation();
   if (action === "export-json") exportJson();
   if (action === "export-png") exportPng();
   if (action === "export-svg") exportSvg();
@@ -321,6 +438,205 @@ function newCanvas() {
   loadActiveIntoGraph();
   resetHistory();
   scheduleSave();
+}
+
+function createCanvasFromStarter() {
+  captureActive();
+  const kind = document.querySelector("#canvas-template-kind").value;
+  const templateId = document.querySelector("#canvas-template").value;
+  const id = `canvas-${Date.now()}`;
+  let canvas;
+  if (kind === "pipeline") canvas = createPipelineCanvas(id, templateId);
+  else if (kind === "automation") canvas = createAutomationCanvas(id, templateId);
+  else if (GENERAL_STARTERS[kind]) canvas = createGeneralStarterCanvas(id, kind, templateId);
+  else canvas = createCanvas(id, `Canvas ${Object.keys(state.canvases).length + 1}`);
+  state.canvases[id] = canvas;
+  state.activeId = id;
+  renderCanvasSelect();
+  loadActiveIntoGraph();
+  resetHistory();
+  scheduleSave();
+  setStatus(`${canvas.title} created - click Save`);
+  window.requestAnimationFrame(() => cy.fit(cy.elements(), 70));
+}
+
+function createPipelineCanvas(id, templateId) {
+  const stages = PIPELINE_PATTERNS[templateId] || PIPELINE_PATTERNS.sales;
+  const title = `${PIPELINE_LABELS[templateId] || "Sales"} pipeline`;
+  const canvas = createCanvas(id, title, false, { boardType: "pipeline", templateId });
+  const nodes = stages.map((stage, index) => {
+    const type = index === 0 ? "trigger" : index === stages.length - 1 ? "action" :
+      /(decision|review|approval|qualified|triaged|screened)/i.test(stage) ? "condition" : "process";
+    const node = nodeJson(`pipeline-${index + 1}`, type, stage, 140 + index * 220, 190, NODE_COLORS[type]);
+    node.data.category = "Pipeline stage";
+    node.data.description = `Editable ${stage.toLowerCase()} stage in the ${title.toLowerCase()}.`;
+    return node;
+  });
+  const followUp = nodeJson("pipeline-follow-up", "failure", "Follow up / revise", 140 + Math.min(3, stages.length - 2) * 220, 390, NODE_COLORS.failure);
+  followUp.data.description = "Use this branch for records that are not ready to move forward.";
+  const edges = stages.slice(1).map((_, index) =>
+    edgeJson(`pipeline-edge-${index + 1}`, `pipeline-${index + 1}`, `pipeline-${index + 2}`, "")
+  );
+  edges.push(edgeJson("pipeline-edge-follow-up", `pipeline-${Math.min(4, stages.length - 1)}`, followUp.data.id, "Not yet"));
+  canvas.elements = { nodes: [...nodes, followUp], edges };
+  return canvas;
+}
+
+function createAutomationCanvas(id, templateId) {
+  const flow = FLOW_LIBRARY.find((item) => item.id === templateId) || FLOW_LIBRARY[0];
+  const canvas = createCanvas(id, flow.title, false, { boardType: "automation", templateId: flow.id });
+  const trigger = nodeJson("automation-trigger", "trigger", "Trigger", 120, 190, NODE_COLORS.trigger);
+  trigger.data.description = flow.trigger;
+  trigger.data.category = flow.stage;
+  const actions = flow.steps.map((step, index) => {
+    const type = automationNodeType(step);
+    const node = nodeJson(`automation-step-${index + 1}`, type, step, 350 + index * 230, 190, NODE_COLORS[type]);
+    node.data.category = `${flow.stage} - step ${index + 1}`;
+    return node;
+  });
+  const failure = nodeJson("automation-failure", "failure", "Failure gate", 810, 410, NODE_COLORS.failure);
+  failure.data.description = flow.failure;
+  failure.data.category = "Failure to test";
+  const bestPractice = nodeJson("automation-best-practice", "note", "Best practice", 350, 410, NODE_COLORS.note);
+  bestPractice.data.description = flow.best;
+  const edges = [
+    edgeJson("automation-edge-trigger", trigger.data.id, actions[0].data.id, ""),
+    ...actions.slice(1).map((_, index) =>
+      edgeJson(`automation-edge-${index + 1}`, actions[index].data.id, actions[index + 1].data.id, "")
+    ),
+    edgeJson("automation-edge-failure", actions[Math.min(2, actions.length - 1)].data.id, failure.data.id, "Failure"),
+    edgeJson("automation-edge-guidance", trigger.data.id, bestPractice.data.id, "Guidance")
+  ];
+  canvas.elements = { nodes: [trigger, ...actions, failure, bestPractice], edges };
+  return canvas;
+}
+
+function createGeneralStarterCanvas(id, kind, templateId) {
+  if (kind === "bpmn") return createBpmnCanvas(id, templateId);
+  if (kind === "org") return createOrgCanvas(id, templateId);
+  if (kind === "journey") return createJourneyCanvas(id, templateId);
+  if (kind === "decision") return createDecisionCanvas(id, templateId);
+  return createMindMapCanvas(id, templateId);
+}
+
+function createBpmnCanvas(id, templateId) {
+  const variants = {
+    "bpmn-basic": ["Request received", "Validate information", "Complete?", "Perform work", "Review output", "Process complete"],
+    "bpmn-approval": ["Request submitted", "Check policy", "Within authority?", "Manager approval", "Record decision", "Notify requester"],
+    "bpmn-incident": ["Incident reported", "Triage impact", "Critical?", "Contain incident", "Verify recovery", "Close incident"]
+  };
+  const labels = variants[templateId] || variants["bpmn-basic"];
+  const title = GENERAL_STARTERS.bpmn[templateId] || "Basic business process";
+  const canvas = createCanvas(id, title, false, { boardType: "bpmn", templateId });
+  const types = ["trigger", "action", "condition", "action", "approval", "action"];
+  const nodes = labels.map((label, index) => {
+    const node = nodeJson(`bpmn-${index + 1}`, types[index], label, 120 + index * 220, 190, NODE_COLORS[types[index]]);
+    node.data.category = "BPMN starter";
+    return node;
+  });
+  const exception = nodeJson("bpmn-exception", "failure", "Exception / rework", 560, 410, NODE_COLORS.failure);
+  exception.data.description = "Edit this path for missing information, rejection, or recovery work.";
+  const edges = nodes.slice(1).map((_, index) => edgeJson(`bpmn-edge-${index + 1}`, nodes[index].data.id, nodes[index + 1].data.id, index === 2 ? "Yes" : ""));
+  edges.push(edgeJson("bpmn-edge-exception", nodes[2].data.id, exception.data.id, "No"));
+  edges.push(edgeJson("bpmn-edge-return", exception.data.id, nodes[1].data.id, "Revise"));
+  canvas.elements = { nodes: [...nodes, exception], edges };
+  return canvas;
+}
+
+function createOrgCanvas(id, templateId) {
+  const clientDelivery = templateId === "org-client-delivery";
+  const title = GENERAL_STARTERS.org[templateId] || "Small remote team";
+  const canvas = createCanvas(id, title, false, { boardType: "org", templateId });
+  const rootLabel = clientDelivery ? "Account lead" : "Team lead";
+  const branchLabels = clientDelivery ? ["Strategy", "Delivery", "Client success"] : ["Operations", "Delivery", "Support"];
+  const leafLabels = clientDelivery ? ["Research", "Build", "QA", "Reporting"] : ["Admin", "Specialist", "Coordinator", "Assistant"];
+  const rootNode = nodeJson("org-root", "tool", rootLabel, 600, 100, NODE_COLORS.tool);
+  const branches = branchLabels.map((label, index) => nodeJson(`org-branch-${index + 1}`, "process", label, 300 + index * 300, 280, NODE_COLORS.process));
+  const leaves = leafLabels.map((label, index) => nodeJson(`org-leaf-${index + 1}`, "note", label, 180 + index * 280, 470, NODE_COLORS.note));
+  const edges = [
+    ...branches.map((node, index) => edgeJson(`org-edge-branch-${index}`, rootNode.data.id, node.data.id, "")),
+    ...leaves.map((node, index) => edgeJson(`org-edge-leaf-${index}`, branches[Math.min(branches.length - 1, Math.floor(index * branches.length / leaves.length))].data.id, node.data.id, ""))
+  ];
+  canvas.elements = { nodes: [rootNode, ...branches, ...leaves], edges };
+  return canvas;
+}
+
+function createJourneyCanvas(id, templateId) {
+  const onboarding = templateId === "journey-onboarding";
+  const title = GENERAL_STARTERS.journey[templateId] || "Customer journey";
+  const labels = onboarding
+    ? ["Agreement signed", "Access collected", "Kickoff", "First delivery", "Review", "Steady state"]
+    : ["Awareness", "Consideration", "Decision", "Onboarding", "Value", "Renewal"];
+  const canvas = createCanvas(id, title, false, { boardType: "journey", templateId });
+  const nodes = labels.map((label, index) => {
+    const type = index === 0 ? "trigger" : index === 2 ? "condition" : index === labels.length - 1 ? "approval" : "action";
+    const node = nodeJson(`journey-${index + 1}`, type, label, 120 + index * 220, 190, NODE_COLORS[type]);
+    node.data.category = "Journey stage";
+    return node;
+  });
+  const pain = nodeJson("journey-pain", "failure", onboarding ? "Access blocker" : "Drop-off / friction", 780, 410, NODE_COLORS.failure);
+  pain.data.description = "Name the moment where confidence, access, or momentum is lost.";
+  const edges = nodes.slice(1).map((_, index) => edgeJson(`journey-edge-${index + 1}`, nodes[index].data.id, nodes[index + 1].data.id, ""));
+  edges.push(edgeJson("journey-edge-pain", nodes[2].data.id, pain.data.id, "Friction"));
+  canvas.elements = { nodes: [...nodes, pain], edges };
+  return canvas;
+}
+
+function createDecisionCanvas(id, templateId) {
+  const vendor = templateId === "decision-vendor";
+  const title = GENERAL_STARTERS.decision[templateId] || "Simple decision";
+  const canvas = createCanvas(id, title, false, { boardType: "decision", templateId });
+  const question = nodeJson("decision-root", "condition", vendor ? "Does the vendor meet must-haves?" : "What decision are we making?", 600, 100, NODE_COLORS.condition);
+  const optionA = nodeJson("decision-a", "condition", vendor ? "Budget acceptable?" : "Option A viable?", 330, 300, NODE_COLORS.condition);
+  const optionB = nodeJson("decision-b", "condition", vendor ? "Risk acceptable?" : "Option B viable?", 870, 300, NODE_COLORS.condition);
+  const outcomes = [
+    nodeJson("decision-a-yes", "action", vendor ? "Shortlist vendor" : "Choose option A", 200, 520, NODE_COLORS.action),
+    nodeJson("decision-a-no", "failure", vendor ? "Negotiate / reject" : "Reject option A", 450, 520, NODE_COLORS.failure),
+    nodeJson("decision-b-yes", "action", vendor ? "Run final review" : "Choose option B", 750, 520, NODE_COLORS.action),
+    nodeJson("decision-b-no", "failure", vendor ? "Find another vendor" : "Reframe decision", 1000, 520, NODE_COLORS.failure)
+  ];
+  const edges = [
+    edgeJson("decision-edge-a", question.data.id, optionA.data.id, "Yes / A"),
+    edgeJson("decision-edge-b", question.data.id, optionB.data.id, "No / B"),
+    edgeJson("decision-edge-a-yes", optionA.data.id, outcomes[0].data.id, "Yes"),
+    edgeJson("decision-edge-a-no", optionA.data.id, outcomes[1].data.id, "No"),
+    edgeJson("decision-edge-b-yes", optionB.data.id, outcomes[2].data.id, "Yes"),
+    edgeJson("decision-edge-b-no", optionB.data.id, outcomes[3].data.id, "No")
+  ];
+  canvas.elements = { nodes: [question, optionA, optionB, ...outcomes], edges };
+  return canvas;
+}
+
+function createMindMapCanvas(id, templateId) {
+  const campaign = templateId === "mindmap-campaign";
+  const title = GENERAL_STARTERS.mindmap[templateId] || "Project discovery";
+  const canvas = createCanvas(id, title, false, { boardType: "mindmap", templateId });
+  const center = nodeJson("mindmap-center", "process", campaign ? "Campaign" : "Project", 600, 300, NODE_COLORS.process);
+  const labels = campaign
+    ? ["Audience", "Offer", "Message", "Channels", "Evidence", "Measurement"]
+    : ["Outcome", "People", "Constraints", "Inputs", "Risks", "Next actions"];
+  const positions = [[600, 80], [900, 150], [930, 430], [600, 540], [300, 430], [270, 150]];
+  const branches = labels.map((label, index) => {
+    const node = nodeJson(`mindmap-${index + 1}`, "note", label, positions[index][0], positions[index][1], NODE_COLORS.note);
+    node.data.category = "Mind-map branch";
+    return node;
+  });
+  canvas.elements = {
+    nodes: [center, ...branches],
+    edges: branches.map((node, index) => edgeJson(`mindmap-edge-${index + 1}`, center.data.id, node.data.id, ""))
+  };
+  return canvas;
+}
+
+function automationNodeType(step) {
+  if (/(wait|schedule|timer|delay)/i.test(step)) return "delay";
+  if (/(approval|approve|human review)/i.test(step)) return "approval";
+  if (/(check|verify|confirm|classify|validate|compare|branch|choose|review|identify)/i.test(step)) return "condition";
+  return "action";
+}
+
+function edgeJson(id, source, target, label) {
+  return { data: { id, source, target, label } };
 }
 
 function deleteCanvas() {
@@ -348,6 +664,8 @@ function switchCanvas(id) {
 
 function loadActiveIntoGraph() {
   restoringGraph = true;
+  ++dryRunToken;
+  setRunStatus("");
   cancelConnectionDrag();
   clearInspector();
   cy.elements().remove();
@@ -386,6 +704,71 @@ function finishNodeDrag(node) {
 
 function snap(value) {
   return Math.round(value / GRID_SIZE) * GRID_SIZE;
+}
+
+async function dryRunGraph() {
+  const token = ++dryRunToken;
+  cy.elements().removeClass("run-passed run-current");
+  const start = selectedNode && !selectedNode.removed()
+    ? selectedNode
+    : cy.nodes().filter((node) => node.indegree() === 0 && node.data("type") !== "note")[0] || cy.nodes()[0];
+  if (!start) {
+    setRunStatus("Add a node before starting a dry run.");
+    return;
+  }
+  const queue = [start];
+  const visited = new Set();
+  let step = 0;
+  setRunStatus(`Dry run starting from ${start.data("title")}.`);
+  while (queue.length && token === dryRunToken) {
+    const node = queue.shift();
+    if (!node || visited.has(node.id()) || node.data("type") === "note") continue;
+    visited.add(node.id());
+    step += 1;
+    cy.elements().removeClass("run-current");
+    node.addClass("run-current");
+    const incoming = node.incomers("edge");
+    incoming.addClass("run-passed");
+    setRunStatus(`Step ${step}: ${node.data("title")}`);
+    await wait(430);
+    node.removeClass("run-current").addClass("run-passed");
+    node.outgoers("edge").forEach((edge) => {
+      const target = edge.target();
+      if (target.data("type") !== "note" && !visited.has(target.id())) queue.push(target);
+    });
+  }
+  if (token === dryRunToken) setRunStatus(`Dry run complete - ${visited.size} nodes reviewed.`);
+}
+
+function enterPresentation() {
+  root.classList.add("is-presenting");
+  document.body.classList.add("whiteboard-presenting");
+  window.requestAnimationFrame(() => {
+    cy.resize();
+    cy.fit(cy.elements(), 80);
+    setRunStatus("Presentation mode - select a starting node or run the whole flow.");
+  });
+}
+
+function exitPresentation() {
+  if (!root.classList.contains("is-presenting")) return;
+  root.classList.remove("is-presenting");
+  document.body.classList.remove("whiteboard-presenting");
+  ++dryRunToken;
+  cy.elements().removeClass("run-passed run-current");
+  window.requestAnimationFrame(() => {
+    cy.resize();
+    updateNodePorts();
+  });
+  setRunStatus("");
+}
+
+function setRunStatus(message) {
+  document.querySelector("#canvas-run-status").textContent = message;
+}
+
+function wait(milliseconds) {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
 }
 
 function startConnectionDrag(event) {

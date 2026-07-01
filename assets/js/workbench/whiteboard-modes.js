@@ -7,7 +7,7 @@ import {
 
 const PIPELINE_KEY = "aaron-workbench:v1:pipeline";
 const AUTOMATION_KEY = "aaron-workbench:v1:automation-dry-run";
-const PIPELINE_PATTERNS = {
+export const PIPELINE_PATTERNS = {
   sales: ["Captured", "Qualified", "Proposal", "Decision", "Won"],
   delivery: ["Requested", "Scoped", "In progress", "Review", "Delivered"],
   hiring: ["Applied", "Screened", "Interview", "Offer", "Hired"],
@@ -15,7 +15,7 @@ const PIPELINE_PATTERNS = {
   support: ["New", "Triaged", "Working", "Waiting", "Resolved"]
 };
 
-const FLOW_LIBRARY = [
+export const FLOW_LIBRARY = [
   flow("capture-form", "Capture", "Website form to CRM", "A visitor submits a form.", ["Validate required fields", "Normalize contact data", "Create or update contact", "Attach source and campaign", "Confirm receipt"], "Use one idempotency key so retries do not create duplicates.", "Invalid or duplicate contact data"),
   flow("capture-call", "Capture", "Missed call follow-up", "A tracked phone call is missed.", ["Match caller to a contact", "Create an inbound activity", "Send an acknowledgement", "Assign a callback owner", "Start response timer"], "Do not promise an exact callback time unless staffing supports it.", "Unknown caller or no available owner"),
   flow("capture-chat", "Capture", "Chat conversation intake", "A new chat starts.", ["Capture channel identity", "Ask minimum qualifying questions", "Create conversation record", "Tag intent", "Route by availability"], "Keep intake short enough that a human can take over quickly.", "Anonymous user leaves before identification"),
