@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dual Wing Rental Marketing Engine — Grimoire 002 · v4 · April 2026</title>
+<title>Dual Wing Rental Marketing - Grimoire 002 | Aaron Suarez</title>
 <link rel="icon" href="../favicon.png" type="image/png">
 <link rel="canonical" href="https://suarezaaronroy-sys.github.io/library/grimoires/002-dual-wing-rental.html"/>
 <meta property="og:type" content="article">
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://suarezaaronroy-sys.github.io/library/assets/og-default.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Dual Wing Rental Marketing Engine \u2014 Grimoire 002", "author": {"@type": "Person", "name": "Aaron Suarez"}, "datePublished": "2026-04-01", "articleSection": "Marketing Automation", "proficiencyLevel": "Beginner to Advanced"}</script>
 <meta name="robots" content="index, follow">
-<meta name="description" content="Rental marketing automation case study — 34.2% open rate and 18 consultations from 340 cold contacts. Dual-market (UK + US) CRM and email campaign system, fully documented."">
+<meta name="description" content="Rental marketing automation case study: 34.2% open rate and 18 consultations from 340 contacts across a UK and US CRM campaign.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -188,7 +188,7 @@
   .nav-plain { display: block; padding: 0 8px 4px; font-size: 11px; color: var(--ink4); line-height: 1.4; }
 
   /* ── MAIN ── */
-  .main { padding: 3rem 3rem 6rem; max-width: 860px; }
+  .main { box-sizing: border-box; width: 100%; min-width: 0; padding: 3rem 3rem 6rem; max-width: 860px; }
 
   /* ── CAMPAIGN SHOWCASE (new) ── */
   .campaign-showcase {
@@ -757,10 +757,22 @@
     .main { padding: 2rem 1.25rem 4rem; }
     .wing-cards { grid-template-columns: 1fr; }
     .score-row { grid-template-columns: 1fr; }
-    .failure-grid { grid-template-columns: 1fr; }
+    .failure-grid, .fm-grid, .obs-grid { grid-template-columns: 1fr; }
+    .reader-paths { grid-template-columns: 1fr; }
+    .ab-grid, .crm-tag-flow { grid-template-columns: 1fr; }
+    .crm-tag-row { min-width: 0; flex-wrap: wrap; }
+    .crm-tag-row .ctr-trigger { white-space: normal; }
+    .optimization-loop { display: grid; grid-template-columns: 1fr; }
+    .opt-arrow { display: none; }
+    .daily-ops-table { display: block; max-width: 100%; overflow-x: auto; }
     .hero h1 { font-size: 1.8rem; }
     .metrics-grid { grid-template-columns: 1fr 1fr; }
     .seq-perf-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .metrics-grid, .metrics-grid[style] { grid-template-columns: 1fr !important; }
+    .metric-card { min-width: 0; }
+    .table-wrap { max-width: 100%; }
   }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYPEWZXH03"></script>

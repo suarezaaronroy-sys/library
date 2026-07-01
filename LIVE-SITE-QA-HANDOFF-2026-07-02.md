@@ -13,6 +13,28 @@ credential, broken-deployment, or indexing emergency was found.
 The next session should begin with the two P1 findings below. Do not start with
 metadata polishing while G002 and G006 still overflow on mobile.
 
+## Remediation Round 1
+
+Completed locally on 2026-07-02 and awaiting final regression/deployment at the
+time of this update:
+
+- Resolved G002 document overflow at 320, 390, 768, and 1280px.
+- Resolved G006 document overflow at 320, 390, 768, and 1280px without
+  changing Mermaid behavior.
+- Resolved G014 document overflow at 390px.
+- Added `rel="noopener"` to all 31 unsafe new-tab links.
+- Tightened metadata-only titles and descriptions on Home, About, Projects,
+  and the affected standalone Grimoires.
+- Removed malformed extra quote characters from affected description tags.
+
+Still open:
+
+- G006 Mermaid/main-thread performance.
+- Home image/LCP performance.
+- Shared color contrast.
+- Analytics/privacy policy.
+- Custom OG images and lower-priority accessibility semantics.
+
 ## Audit Scope
 
 - Crawled all 41 URLs in the live sitemap.
@@ -46,7 +68,7 @@ correctly remain `noindex, nofollow`.
 
 ## P1 - Fix First
 
-### P1.1 - G002 and G006 overflow badly on mobile
+### P1.1 - G002 and G006 overflow badly on mobile - resolved locally
 
 Affected pages:
 
@@ -177,7 +199,7 @@ Relevant files:
 
 ## P2 - Material Follow-Up
 
-### P2.1 - G014 has smaller but real mobile overflow
+### P2.1 - G014 has smaller but real mobile overflow - resolved locally
 
 URL:
 
@@ -233,7 +255,7 @@ document. Fixing shared color tokens should resolve many instances at once.
 Do not fix this by increasing every font size independently. Prefer stronger
 foreground tokens for small text and muted text on dark cards.
 
-### P2.3 - Four Grimoires have unsafe new-tab links
+### P2.3 - Four Grimoires have unsafe new-tab links - resolved locally
 
 There are 31 links using `target="_blank"` without `rel="noopener"`:
 
@@ -268,7 +290,7 @@ Decision needed:
 4. Determine consent requirements based on the actual visitor jurisdictions;
    this audit does not make a legal determination.
 
-### P2.5 - Search snippets are frequently longer than common display ranges
+### P2.5 - Search snippets are frequently longer than common display ranges - partially resolved
 
 This is not an indexing failure and does not directly cause a ranking penalty.
 Search engines may truncate or rewrite these snippets.
@@ -450,9 +472,8 @@ Use a fix-check-fix-check loop:
 
 ## Parking State
 
-- No code fixes were made during this audit.
-- This file is the only intended repository change from the audit.
+- The first isolated remediation batch was completed after the original audit.
+- The handoff now records both the baseline findings and remediation status.
 - Temporary Lighthouse files were written outside the repository.
 - The browser viewport was reset after responsive testing.
 - The live browser was returned to `/library/workbench/`.
-

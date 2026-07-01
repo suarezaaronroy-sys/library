@@ -57,6 +57,7 @@ defaults:
 exclude:
   - README.md
   - WORKBENCH.md
+  - LIVE-SITE-QA-HANDOFF-2026-07-02.md
   - grimoires/README.md
   - assets/img/brand/README.md
   - Gemfile
