@@ -130,6 +130,9 @@ MVP features:
 
 - Pan and zoom
 - Nine node types
+- Four direct-drag connection ports on the selected node
+- Three-step undo and redo
+- 24px grid snapping after a node is moved
 - Straight arrow connectors
 - Node property inspector
 - Named canvases

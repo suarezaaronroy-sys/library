@@ -7,10 +7,10 @@
     <nav class="nav" aria-label="Main navigation">
       <a href="{{ '/about/' | relative_url }}"{% if page.url == '/about/' %} class="nav-active"{% endif %}>About</a>
       <a href="{{ '/projects/' | relative_url }}"{% if page.url == '/projects/' %} class="nav-active"{% endif %}>Library</a>
-      <a href="{{ '/workbench/' | relative_url }}"{% if page.url contains '/workbench' %} class="nav-active"{% endif %}>Workbench</a>
       <a href="{{ '/notes/' | relative_url }}"{% if page.url contains '/notes' %} class="nav-active"{% endif %}>Notes</a>
-      <button class="nav-search" type="button" data-open-site-search aria-label="Search the site">Search</button>
-      <a href="{{ '/contact/' | relative_url }}"{% if page.url == '/contact/' %} class="nav-cta nav-active"{% else %} class="nav-cta"{% endif %}>Contact →</a>
+      <a href="{{ '/workbench/' | relative_url }}"{% if page.url contains '/workbench' %} class="nav-active"{% endif %}>Workbench</a>
+      <button class="nav-search" type="button" data-open-site-search aria-label="Search the site"><span>Search</span><kbd>/</kbd></button>
+      <a href="{{ '/contact/' | relative_url }}"{% if page.url == '/contact/' %} class="nav-cta nav-active"{% else %} class="nav-cta"{% endif %}>Contacts</a>
     </nav>
   </div>
 </div>

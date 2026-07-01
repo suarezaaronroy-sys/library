@@ -8,6 +8,8 @@ import {
 const STORAGE_KEY = "aaron-workbench:v1:canvas";
 const registry = getRegistry();
 const root = document.querySelector("#systems-canvas");
+const HISTORY_LIMIT = 3;
+const GRID_SIZE = 24;
 const NODE_COLORS = {
   process: "#0d9488",
   decision: "#c2410c",
@@ -22,10 +24,15 @@ const NODE_COLORS = {
 let state = loadState(STORAGE_KEY, createInitialState());
 let cy;
 let selectedNode;
-let connectMode = false;
-let connectSource;
 let saveTimer;
 let dirty = false;
+let restoringGraph = false;
+let dragSnapshot;
+let propertyEditSnapshot;
+let titleEditSnapshot;
+let connectionDrag;
+let undoStack = [];
+let redoStack = [];
 
 if (root && window.cytoscape) {
   normalizeState();
@@ -120,7 +127,6 @@ function initializeGraph() {
     layout: { name: "preset" },
     minZoom: 0.15,
     maxZoom: 3,
-    wheelSensitivity: 0.18,
     style: [
       { selector: "node", style: {
         "width": 154, "height": 54, "shape": "round-rectangle",
@@ -142,7 +148,7 @@ function initializeGraph() {
       }},
       { selector: ":selected", style: { "border-width": 4, "border-color": "#c2410c", "line-color": "#c2410c", "target-arrow-color": "#c2410c" }},
       { selector: ".search-match", style: { "border-width": 5, "border-color": "#15803d", "background-opacity": 0.24 }},
-      { selector: ".connect-source", style: { "border-width": 5, "border-color": "#2563eb" }}
+      { selector: ".connection-target", style: { "border-width": 5, "border-color": "#c2410c", "background-opacity": 0.24 }}
     ]
   });
   const viewport = activeCanvas().viewport;
@@ -152,10 +158,19 @@ function initializeGraph() {
   cy.on("unselect", "node", () => {
     if (!cy.$("node:selected").length) clearInspector();
   });
-  cy.on("tap", "node", handleConnectTap);
-  cy.on("add remove dragfree position", scheduleSave);
-  cy.on("zoom pan", scheduleSave);
+  cy.on("grab", "node", () => {
+    dragSnapshot = snapshotCanvas();
+  });
+  cy.on("drag", "node", updateNodePorts);
+  cy.on("dragfree", "node", (event) => finishNodeDrag(event.target));
+  cy.on("add remove", scheduleSave);
+  cy.on("zoom pan", () => {
+    updateNodePorts();
+    scheduleSave();
+  });
+  cy.on("resize", updateNodePorts);
   updateEmptyState();
+  updateHistoryButtons();
   window.setTimeout(() => {
     window.clearTimeout(saveTimer);
     dirty = false;
@@ -164,6 +179,8 @@ function initializeGraph() {
 }
 
 function bindControls() {
+  const title = document.querySelector("#canvas-title");
+  const properties = document.querySelector("#canvas-properties");
   root.addEventListener("click", (event) => {
     const nodeType = event.target.closest("[data-add-node]")?.dataset.addNode;
     const action = event.target.closest("[data-canvas-action]")?.dataset.canvasAction;
@@ -171,11 +188,25 @@ function bindControls() {
     if (action) handleAction(action);
   });
   document.querySelector("#canvas-select").addEventListener("change", (event) => switchCanvas(event.target.value));
-  document.querySelector("#canvas-title").addEventListener("input", (event) => {
+  title.addEventListener("focus", () => {
+    titleEditSnapshot = snapshotCanvas();
+  });
+  title.addEventListener("input", (event) => {
     activeCanvas().title = event.target.value.trim() || "Untitled Canvas";
     scheduleSave();
   });
-  document.querySelector("#canvas-properties").addEventListener("input", updateSelectedNode);
+  title.addEventListener("blur", () => {
+    commitEditSnapshot("title");
+  });
+  properties.addEventListener("focusin", () => {
+    if (!propertyEditSnapshot) propertyEditSnapshot = snapshotCanvas();
+  });
+  properties.addEventListener("focusout", () => {
+    window.setTimeout(() => {
+      if (!properties.contains(document.activeElement)) commitEditSnapshot("property");
+    }, 0);
+  });
+  properties.addEventListener("input", updateSelectedNode);
   document.querySelector("#canvas-autosave").addEventListener("change", (event) => {
     state.preferences.autosave = event.target.checked;
     if (state.preferences.autosave) saveActive("Autosave on");
@@ -191,17 +222,26 @@ function bindControls() {
   document.querySelector("#canvas-search-trigger").addEventListener("click", openCanvasSearch);
   document.querySelector("#canvas-search").addEventListener("input", searchCanvas);
   document.querySelector("#canvas-import").addEventListener("change", (event) => importCanvas(event.target.files[0]));
+  document.querySelector("#canvas-node-ports").addEventListener("pointerdown", startConnectionDrag);
+  window.addEventListener("resize", updateNodePorts);
   document.addEventListener("keydown", (event) => {
     const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName);
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
       openCanvasSearch();
+    } else if (!typing && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
+      event.preventDefault();
+      if (event.shiftKey) redo();
+      else undo();
+    } else if (!typing && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "y") {
+      event.preventDefault();
+      redo();
     } else if ((event.key === "Delete" || event.key === "Backspace") && !typing && cy.$(":selected").length) {
       event.preventDefault();
       deleteSelection();
     } else if (event.key === "Escape") {
       closeCanvasSearch();
-      cancelConnect();
+      cancelConnectionDrag();
     }
   });
 }
@@ -212,9 +252,11 @@ function addNode(type) {
   const pan = cy.pan();
   const position = { x: (center.x - pan.x) / zoom, y: (center.y - pan.y) / zoom };
   const id = `node-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-  const node = cy.add(nodeJson(id, type, `New ${type.replace("-", " ")}`, position.x, position.y, NODE_COLORS[type]));
+  recordHistory();
+  const node = cy.add(nodeJson(id, type, `New ${type.replace("-", " ")}`, snap(position.x), snap(position.y), NODE_COLORS[type]));
   node.select();
   updateEmptyState();
+  updateNodePorts();
   scheduleSave();
 }
 
@@ -228,12 +270,14 @@ function selectNode(node) {
     if (field) field.value = node.data(name) || (name === "color" ? NODE_COLORS[node.data("type")] : "");
   });
   document.querySelector("#canvas-open-resource").disabled = !node.data("resourceId");
+  updateNodePorts();
 }
 
 function clearInspector() {
   selectedNode = null;
   document.querySelector("#canvas-properties").disabled = true;
   document.querySelector("#canvas-inspector-title").textContent = "Nothing selected";
+  document.querySelector("#canvas-node-ports").hidden = true;
 }
 
 function updateSelectedNode(event) {
@@ -247,27 +291,12 @@ function updateSelectedNode(event) {
   scheduleSave();
 }
 
-function handleConnectTap(event) {
-  if (!connectMode) return;
-  const node = event.target;
-  if (!connectSource) {
-    connectSource = node;
-    node.addClass("connect-source");
-    setStatus("Choose the destination node");
-    return;
-  }
-  if (connectSource.id() !== node.id()) {
-    cy.add({ data: { id: `edge-${Date.now()}`, source: connectSource.id(), target: node.id(), label: "" } });
-  }
-  cancelConnect();
-  scheduleSave();
-}
-
 function handleAction(action) {
   if (action === "save") saveActive("Saved locally");
   if (action === "new") newCanvas();
   if (action === "delete") deleteCanvas();
-  if (action === "connect") toggleConnect();
+  if (action === "undo") undo();
+  if (action === "redo") redo();
   if (action === "delete-selection") deleteSelection();
   if (action === "fit") cy.fit(cy.elements(), 50);
   if (action === "export-json") exportJson();
@@ -284,6 +313,7 @@ function newCanvas() {
   state.activeId = id;
   renderCanvasSelect();
   loadActiveIntoGraph();
+  resetHistory();
   scheduleSave();
 }
 
@@ -297,6 +327,7 @@ function deleteCanvas() {
   state.activeId = Object.keys(state.canvases)[0];
   renderCanvasSelect();
   loadActiveIntoGraph();
+  resetHistory();
   scheduleSave();
 }
 
@@ -305,32 +336,21 @@ function switchCanvas(id) {
   state.activeId = id;
   renderCanvasSelect();
   loadActiveIntoGraph();
+  resetHistory();
   scheduleSave();
 }
 
 function loadActiveIntoGraph() {
-  cancelConnect();
+  restoringGraph = true;
+  cancelConnectionDrag();
   clearInspector();
   cy.elements().remove();
   cy.add(activeCanvas().elements);
   cy.layout({ name: "preset" }).run();
   cy.zoom(activeCanvas().viewport?.zoom || 1);
   cy.pan(activeCanvas().viewport?.pan || { x: 0, y: 0 });
+  restoringGraph = false;
   updateEmptyState();
-}
-
-function toggleConnect() {
-  connectMode = !connectMode;
-  document.querySelector("#canvas-connect").classList.toggle("primary", connectMode);
-  setStatus(connectMode ? "Choose the source node" : dirty ? "Unsaved · click Save" : "Loaded locally");
-  if (!connectMode) cancelConnect();
-}
-
-function cancelConnect() {
-  connectMode = false;
-  connectSource?.removeClass("connect-source");
-  connectSource = null;
-  document.querySelector("#canvas-connect").classList.remove("primary");
 }
 
 function deleteSelection() {
@@ -339,13 +359,206 @@ function deleteSelection() {
     setStatus("Select a node or connector first");
     return;
   }
+  recordHistory();
   selection.remove();
   clearInspector();
   updateEmptyState();
   scheduleSave();
 }
 
+function finishNodeDrag(node) {
+  const before = dragSnapshot;
+  node.position({
+    x: snap(node.position("x")),
+    y: snap(node.position("y"))
+  });
+  dragSnapshot = null;
+  updateNodePorts();
+  if (before && snapshotKey(before) !== snapshotKey(snapshotCanvas())) recordHistory(before);
+  scheduleSave();
+}
+
+function snap(value) {
+  return Math.round(value / GRID_SIZE) * GRID_SIZE;
+}
+
+function startConnectionDrag(event) {
+  const port = event.target.closest("[data-canvas-port]");
+  if (!port || !selectedNode) return;
+  event.preventDefault();
+  event.stopPropagation();
+  const start = portPoint(selectedNode, port.dataset.canvasPort);
+  connectionDrag = {
+    source: selectedNode,
+    before: snapshotCanvas(),
+    start,
+    target: null
+  };
+  const preview = document.querySelector("#canvas-connection-preview");
+  preview.classList.add("is-active");
+  setPreviewLine(start, start);
+  document.addEventListener("pointermove", moveConnectionDrag);
+  document.addEventListener("pointerup", finishConnectionDrag, { once: true });
+  setStatus("Drag to another node");
+}
+
+function moveConnectionDrag(event) {
+  if (!connectionDrag) return;
+  const point = stagePoint(event);
+  const target = nodeAtPoint(point, connectionDrag.source);
+  cy.nodes().removeClass("connection-target");
+  target?.addClass("connection-target");
+  connectionDrag.target = target;
+  setPreviewLine(connectionDrag.start, point);
+}
+
+function finishConnectionDrag(event) {
+  if (!connectionDrag) return;
+  moveConnectionDrag(event);
+  const { source, target, before } = connectionDrag;
+  const duplicate = target && cy.edges().some((edge) =>
+    edge.source().id() === source.id() && edge.target().id() === target.id()
+  );
+  if (target && !duplicate) {
+    cy.add({ data: { id: `edge-${Date.now()}`, source: source.id(), target: target.id(), label: "" } });
+    recordHistory(before);
+    scheduleSave();
+    setStatus("Connected · click Save");
+  } else {
+    setStatus(duplicate ? "Those nodes are already connected" : dirty ? "Unsaved · click Save" : "Loaded locally");
+  }
+  cancelConnectionDrag();
+}
+
+function cancelConnectionDrag() {
+  document.removeEventListener("pointermove", moveConnectionDrag);
+  document.removeEventListener("pointerup", finishConnectionDrag);
+  cy?.nodes().removeClass("connection-target");
+  document.querySelector("#canvas-connection-preview")?.classList.remove("is-active");
+  connectionDrag = null;
+}
+
+function stagePoint(event) {
+  const bounds = document.querySelector(".canvas-stage").getBoundingClientRect();
+  return { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+}
+
+function nodeAtPoint(point, source) {
+  return cy.nodes().filter((node) => {
+    if (node.id() === source.id()) return false;
+    const bounds = node.renderedBoundingBox();
+    const tolerance = 10;
+    return point.x >= bounds.x1 - tolerance && point.x <= bounds.x2 + tolerance &&
+      point.y >= bounds.y1 - tolerance && point.y <= bounds.y2 + tolerance;
+  })[0];
+}
+
+function portPoint(node, side) {
+  const bounds = node.renderedBoundingBox();
+  const centerX = (bounds.x1 + bounds.x2) / 2;
+  const centerY = (bounds.y1 + bounds.y2) / 2;
+  if (side === "top") return { x: centerX, y: bounds.y1 };
+  if (side === "right") return { x: bounds.x2, y: centerY };
+  if (side === "bottom") return { x: centerX, y: bounds.y2 };
+  return { x: bounds.x1, y: centerY };
+}
+
+function updateNodePorts() {
+  const ports = document.querySelector("#canvas-node-ports");
+  if (!ports || !selectedNode || selectedNode.removed()) {
+    if (ports) ports.hidden = true;
+    return;
+  }
+  ports.hidden = false;
+  ports.querySelectorAll("[data-canvas-port]").forEach((port) => {
+    const point = portPoint(selectedNode, port.dataset.canvasPort);
+    port.style.left = `${point.x}px`;
+    port.style.top = `${point.y}px`;
+  });
+}
+
+function setPreviewLine(start, end) {
+  const line = document.querySelector("#canvas-connection-preview line");
+  line.setAttribute("x1", start.x);
+  line.setAttribute("y1", start.y);
+  line.setAttribute("x2", end.x);
+  line.setAttribute("y2", end.y);
+}
+
+function snapshotCanvas() {
+  return {
+    title: document.querySelector("#canvas-title").value,
+    elements: JSON.parse(JSON.stringify(cy.json().elements))
+  };
+}
+
+function snapshotKey(snapshot) {
+  return JSON.stringify(snapshot);
+}
+
+function recordHistory(snapshot = snapshotCanvas()) {
+  const currentKey = undoStack.length ? snapshotKey(undoStack[undoStack.length - 1]) : "";
+  if (snapshotKey(snapshot) !== currentKey) undoStack.push(snapshot);
+  undoStack = undoStack.slice(-HISTORY_LIMIT);
+  redoStack = [];
+  updateHistoryButtons();
+}
+
+function resetHistory() {
+  undoStack = [];
+  redoStack = [];
+  dragSnapshot = null;
+  propertyEditSnapshot = null;
+  titleEditSnapshot = null;
+  updateHistoryButtons();
+}
+
+function undo() {
+  const previous = undoStack.pop();
+  if (!previous) return;
+  redoStack.push(snapshotCanvas());
+  redoStack = redoStack.slice(-HISTORY_LIMIT);
+  restoreSnapshot(previous);
+  setStatus("Undone · click Save");
+}
+
+function redo() {
+  const next = redoStack.pop();
+  if (!next) return;
+  undoStack.push(snapshotCanvas());
+  undoStack = undoStack.slice(-HISTORY_LIMIT);
+  restoreSnapshot(next);
+  setStatus("Redone · click Save");
+}
+
+function restoreSnapshot(snapshot) {
+  restoringGraph = true;
+  cancelConnectionDrag();
+  clearInspector();
+  cy.elements().remove();
+  cy.add(snapshot.elements);
+  document.querySelector("#canvas-title").value = snapshot.title;
+  activeCanvas().title = snapshot.title.trim() || "Untitled Canvas";
+  restoringGraph = false;
+  updateEmptyState();
+  updateHistoryButtons();
+  scheduleSave();
+}
+
+function updateHistoryButtons() {
+  document.querySelector("#canvas-undo").disabled = undoStack.length === 0;
+  document.querySelector("#canvas-redo").disabled = redoStack.length === 0;
+}
+
+function commitEditSnapshot(kind) {
+  const snapshot = kind === "title" ? titleEditSnapshot : propertyEditSnapshot;
+  if (snapshot && snapshotKey(snapshot) !== snapshotKey(snapshotCanvas())) recordHistory(snapshot);
+  if (kind === "title") titleEditSnapshot = null;
+  else propertyEditSnapshot = null;
+}
+
 function scheduleSave() {
+  if (restoringGraph) return;
   captureActive();
   dirty = true;
   window.clearTimeout(saveTimer);
@@ -464,6 +677,7 @@ async function importCanvas(file) {
     state.activeId = id;
     renderCanvasSelect();
     loadActiveIntoGraph();
+    resetHistory();
     scheduleSave();
     setStatus("Imported · click Save to keep");
   } catch {

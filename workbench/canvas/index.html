@@ -27,7 +27,8 @@ workbench_script: /assets/js/workbench/canvas.js
       <button class="workbench-button" type="button" data-canvas-action="delete">Delete</button>
     </div>
     <div class="canvas-toolbar-group">
-      <button id="canvas-connect" class="workbench-button" type="button" data-canvas-action="connect">Connect</button>
+      <button id="canvas-undo" class="workbench-button canvas-history-button" type="button" data-canvas-action="undo" aria-label="Undo" title="Undo, up to 3 actions" disabled>&#8630;</button>
+      <button id="canvas-redo" class="workbench-button canvas-history-button" type="button" data-canvas-action="redo" aria-label="Redo" title="Redo, up to 3 actions" disabled>&#8631;</button>
       <button class="workbench-button" type="button" data-canvas-action="delete-selection">Delete selected</button>
       <button class="workbench-button" type="button" data-canvas-action="fit">Fit</button>
     </div>
@@ -56,11 +57,21 @@ workbench_script: /assets/js/workbench/canvas.js
       <button type="button" data-add-node="grimoire"><i class="node-swatch grimoire"></i>Grimoire</button>
       <button type="button" data-add-node="library-note"><i class="node-swatch library-note"></i>Library note</button>
       <button type="button" data-add-node="link"><i class="node-swatch link"></i>Link</button>
-      <p>Drag nodes to arrange. Use Connect, then choose two nodes.</p>
+      <p>Drag freely; nodes settle onto the grid. Select one and drag a side point to another node to connect.</p>
     </aside>
 
     <section class="canvas-stage" aria-label="Systems canvas editing area">
       <div id="canvas-graph"></div>
+      <svg id="canvas-connection-preview" class="canvas-connection-preview" aria-hidden="true">
+        <defs><marker id="canvas-preview-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z"></path></marker></defs>
+        <line></line>
+      </svg>
+      <div id="canvas-node-ports" class="canvas-node-ports" hidden>
+        <button type="button" data-canvas-port="top" aria-label="Connect from top"></button>
+        <button type="button" data-canvas-port="right" aria-label="Connect from right"></button>
+        <button type="button" data-canvas-port="bottom" aria-label="Connect from bottom"></button>
+        <button type="button" data-canvas-port="left" aria-label="Connect from left"></button>
+      </div>
       <button id="canvas-search-trigger" class="canvas-search-trigger" type="button" aria-label="Search canvas">Search <kbd>Ctrl K</kbd></button>
       <div id="canvas-search-panel" class="canvas-search-panel" hidden>
         <input id="canvas-search" type="search" placeholder="Search this canvas">

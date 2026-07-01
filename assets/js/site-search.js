@@ -12,7 +12,7 @@ const sitePages = [
   page("site-about", "About", "/about/", "Practice, operating philosophy, and working background.", ["about", "practice"], "Site › About"),
   page("site-library", "Library", "/projects/", "Grimoires, systems documentation, manuals, and project evidence.", ["library", "projects", "grimoires"], "Library › Catalogue"),
   page("site-notes", "Notes", "/notes/", "Short field notes from systems and operational work.", ["notes", "writing"], "Library › Notes"),
-  page("site-contact", "Contact", "/contact/", "Direct and studio routes for working together.", ["contact", "email"], "Site › Contact")
+  page("site-contact", "Contacts", "/contact/", "Direct and studio routes for working together.", ["contact", "email"], "Site › Contacts")
 ];
 const searchable = [...sitePages, ...registry];
 const dialog = document.querySelector("#site-search");
