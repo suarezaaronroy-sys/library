@@ -90,27 +90,104 @@ export function calculateBilling(profile, statuses) {
 
 export function buildInvoiceSummary(profile, period, totals) {
   const client = profile.clientName.trim() || "Client";
+  const provider = profile.providerName?.trim() || "Provider";
   const currency = profile.currency || "PHP";
   const rateLabel = profile.rateType === "daily"
     ? `${currency} ${money(profile.rate)} / day`
     : `${currency} ${money(profile.rate)} / hour`;
   const notes = profile.notes.trim();
+  const paymentDetails = profile.paymentDetails?.trim();
+  const fxSource = profile.fxSource?.trim();
+  const fxDate = profile.fxDate?.trim();
 
   return [
-    `INVOICE WORKING SUMMARY`,
+    `INVOICE`,
+    profile.invoiceNumber ? `Invoice number: ${profile.invoiceNumber}` : null,
+    profile.issueDate ? `Issue date: ${profile.issueDate}` : null,
+    profile.dueDate ? `Due date: ${profile.dueDate}` : null,
+    ``,
+    `FROM`,
+    provider,
+    profile.providerEmail?.trim() || null,
+    ``,
+    `BILL TO`,
+    client,
+    profile.clientEmail?.trim() || null,
+    ``,
+    `SERVICE`,
     `Billing period: ${billingPeriod(period.start, period.end)}`,
-    `Client: ${client}`,
     ``,
     `Rate: ${rateLabel}`,
     profile.rateType === "hourly" ? `Hours per day: ${number(profile.hoursPerDay)}` : null,
     `Billable days: ${number(totals.billableDays)}`,
     `Billable hours: ${number(totals.billableHours)}`,
+    ``,
     `Total: ${currency} ${money(totals.nativeTotal)}`,
-    `PHP estimate: PHP ${money(totals.phpTotal)}`,
+    currency !== "PHP" ? `PHP estimate: PHP ${money(totals.phpTotal)}` : null,
+    currency !== "PHP" ? `Manual exchange rate: 1 ${currency} = PHP ${number(profile.fxRate)}` : null,
+    currency !== "PHP" && (fxSource || fxDate)
+      ? `Rate reference: ${[fxSource, fxDate ? `checked ${fxDate}` : ""].filter(Boolean).join(" · ")}`
+      : null,
     notes ? `` : null,
     notes ? `Notes: ${notes}` : null,
+    paymentDetails ? `` : null,
+    paymentDetails ? `PAYMENT INSTRUCTIONS` : null,
+    paymentDetails || null,
     ``,
-    `Exchange rates are estimates. Confirm final payout with Wise, PayPal, or your payment provider.`
+    currency !== "PHP"
+      ? `The PHP conversion uses a manually entered reference rate. Confirm the final payout with your payment provider.`
+      : null
+  ].filter((line) => line !== null).join("\n");
+}
+
+export function calculateBudget(budget) {
+  const rate = positiveNumber(budget.rate, 0);
+  const hours = positiveNumber(budget.hours, 0);
+  const fixedRevenue = positiveNumber(budget.fixedRevenue, 0);
+  const revenue = fixedRevenue > 0 ? fixedRevenue : rate * hours;
+  const baseCosts = positiveNumber(budget.fixedCosts, 0) + positiveNumber(budget.variableCosts, 0);
+  const contingencyRate = positiveNumber(budget.contingency, 0) / 100;
+  const contingencyAmount = baseCosts * contingencyRate;
+  const totalCosts = baseCosts + contingencyAmount;
+  const remaining = revenue - totalCosts;
+  const margin = revenue > 0 ? (remaining / revenue) * 100 : 0;
+  const effectiveNetHourly = hours > 0 ? remaining / hours : 0;
+
+  return {
+    revenue,
+    baseCosts,
+    contingencyAmount,
+    totalCosts,
+    remaining,
+    margin,
+    effectiveNetHourly
+  };
+}
+
+export function buildBudgetSummary(budget, totals) {
+  const currency = budget.currency || "PHP";
+  const name = budget.name?.trim() || "Client / project";
+  const notes = budget.notes?.trim();
+  const revenueBasis = positiveNumber(budget.fixedRevenue, 0) > 0
+    ? `Fixed project fee: ${currency} ${money(budget.fixedRevenue)}`
+    : `Rate plan: ${currency} ${money(budget.rate)} × ${number(budget.hours)} hours`;
+
+  return [
+    `CLIENT BUDGET`,
+    `Client / project: ${name}`,
+    ``,
+    revenueBasis,
+    `Expected revenue: ${currency} ${money(totals.revenue)}`,
+    `Fixed costs: ${currency} ${money(budget.fixedCosts)}`,
+    `Variable costs: ${currency} ${money(budget.variableCosts)}`,
+    `Contingency (${number(budget.contingency)}%): ${currency} ${money(totals.contingencyAmount)}`,
+    `Total costs: ${currency} ${money(totals.totalCosts)}`,
+    ``,
+    `Budget remaining: ${currency} ${money(totals.remaining)}`,
+    `Estimated margin: ${number(totals.margin)}%`,
+    `Effective net per hour: ${currency} ${money(totals.effectiveNetHourly)}`,
+    notes ? `` : null,
+    notes ? `Notes: ${notes}` : null
   ].filter((line) => line !== null).join("\n");
 }
 

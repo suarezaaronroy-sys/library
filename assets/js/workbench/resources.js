@@ -7,17 +7,32 @@ import {
   saveResourceState,
   searchResources
 } from "./registry.mjs?v=1";
+import "./quick-tools.js?v=1";
 
 const registry = getRegistry();
+const COLLECTIONS = [
+  { id: "all", name: "Everything", description: "The complete registry", terms: [] },
+  { id: "media", name: "Media", description: "Edit, capture, source", terms: ["video", "image", "photo", "stock", "audio", "screen capture"] },
+  { id: "design", name: "Design", description: "Principles and production", terms: ["design", "ui", "ux", "color", "icon", "svg", "creative"] },
+  { id: "campaigns", name: "Campaigns", description: "Research, launch, measure", terms: ["marketing", "campaign", "ads", "social", "seo", "email", "utm"] },
+  { id: "funnels", name: "Funnels", description: "Journey and conversion", terms: ["funnel", "pipeline", "conversion", "prospecting", "remarketing", "sales", "crm"] },
+  { id: "management", name: "Management", description: "Plan and coordinate", terms: ["management", "operations", "projects", "tasks", "team", "meetings", "decisions", "planning"] },
+  { id: "automation", name: "Automation", description: "Connect and orchestrate", terms: ["automation", "workflow", "webhook", "integrations", "orchestration"] },
+  { id: "writing", name: "Writing", description: "Draft, edit, publish", terms: ["writing", "editing", "publishing", "translation", "grammar", "markdown", "note"] },
+  { id: "finance", name: "Finance", description: "Bill, budget, collect", terms: ["accounting", "invoice", "payment", "billing", "currency", "budget", "bookkeeping"] },
+  { id: "build", name: "Build + AI", description: "Code, test, research", terms: ["development", "code", "ai", "json", "regex", "hosting", "research"] }
+];
 let state = getResourceState();
 let selectedId = state.recents[0] || registry[0]?.id;
 let filteredResources = registry;
+let selectedCollection = "all";
 let saveTimer;
 const root = document.querySelector("#resource-hub");
 
 if (root) {
   const searchInput = document.querySelector("#resource-search");
   const categorySelect = document.querySelector("#resource-category");
+  const collectionList = document.querySelector("#resource-collection-list");
   const list = document.querySelector("#resource-list");
   const note = document.querySelector("#resource-note");
   const categories = [...new Set(registry.map((resource) => resource.category))].sort();
@@ -27,6 +42,13 @@ if (root) {
 
   searchInput.addEventListener("input", render);
   categorySelect.addEventListener("change", render);
+  collectionList.addEventListener("click", (event) => {
+    const collection = event.target.closest("[data-resource-collection]")?.dataset.resourceCollection;
+    if (!collection) return;
+    selectedCollection = collection;
+    categorySelect.value = "all";
+    render();
+  });
   root.addEventListener("change", (event) => {
     if (event.target.name === "resourceView") render();
     if (event.target.id === "resource-import") importMemory(event.target.files[0]);
@@ -65,14 +87,28 @@ if (root) {
     const queryMatches = searchResources(registry, searchInput.value);
     const category = categorySelect.value;
     const view = root.querySelector('input[name="resourceView"]:checked')?.value || "all";
-    filteredResources = queryMatches.filter((resource) => category === "all" || resource.category === category);
+    filteredResources = queryMatches
+      .filter((resource) => belongsToCollection(resource, selectedCollection))
+      .filter((resource) => category === "all" || resource.category === category);
     if (view === "favorites") filteredResources = filteredResources.filter((resource) => state.favorites.includes(resource.id));
     if (view === "recent") {
       filteredResources = state.recents.map((id) => filteredResources.find((resource) => resource.id === id)).filter(Boolean);
     }
     if (!filteredResources.some((resource) => resource.id === selectedId)) selectedId = filteredResources[0]?.id || registry[0]?.id;
+    renderCollections();
     renderList();
     renderInspector();
+  }
+
+  function renderCollections() {
+    collectionList.innerHTML = COLLECTIONS.map((collection) => {
+      const count = registry.filter((resource) => belongsToCollection(resource, collection.id)).length;
+      return `<button type="button" data-resource-collection="${collection.id}"${selectedCollection === collection.id ? ' aria-current="true"' : ""}>
+        <span>${String(count).padStart(2, "0")}</span>
+        <strong>${escapeHtml(collection.name)}</strong>
+        <small>${escapeHtml(collection.description)}</small>
+      </button>`;
+    }).join("");
   }
 
   function renderList() {
@@ -147,6 +183,19 @@ if (root) {
       document.querySelector("#resource-import").value = "";
     }
   }
+}
+
+function belongsToCollection(resource, collectionId) {
+  if (collectionId === "all") return true;
+  const collection = COLLECTIONS.find((item) => item.id === collectionId);
+  if (!collection) return true;
+  const haystack = [
+    resource.name,
+    resource.category,
+    resource.description,
+    ...(resource.tags || [])
+  ].join(" ").toLowerCase();
+  return collection.terms.some((term) => haystack.includes(term));
 }
 
 function downloadJson(value, filename) {

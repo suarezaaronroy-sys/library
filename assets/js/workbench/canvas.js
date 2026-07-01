@@ -1,4 +1,5 @@
 import { loadState, saveState } from "./store.js?v=4";
+import "./whiteboard-modes.js?v=1";
 import {
   escapeHtml,
   getRegistry,
@@ -224,6 +225,10 @@ function bindControls() {
   document.querySelector("#canvas-import").addEventListener("change", (event) => importCanvas(event.target.files[0]));
   document.querySelector("#canvas-node-ports").addEventListener("pointerdown", startConnectionDrag);
   window.addEventListener("resize", updateNodePorts);
+  window.addEventListener("whiteboard:board-shown", () => {
+    cy.resize();
+    updateNodePorts();
+  });
   document.addEventListener("keydown", (event) => {
     const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName);
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {

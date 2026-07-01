@@ -10,7 +10,13 @@ workbench_title: Whiteboard
 workbench_lede: Put the system somewhere you can see it, search it, and carry it forward.
 workbench_script: /assets/js/workbench/canvas.js
 ---
-<div id="systems-canvas" class="systems-canvas">
+<div class="workspace-view-tabs" role="tablist" aria-label="Whiteboard views">
+  <button type="button" role="tab" aria-selected="true" data-whiteboard-view="board">Board</button>
+  <button type="button" role="tab" aria-selected="false" data-whiteboard-view="pipeline">Pipeline</button>
+  <button type="button" role="tab" aria-selected="false" data-whiteboard-view="automation">Automation Dry Run</button>
+</div>
+
+<div id="systems-canvas" class="systems-canvas" data-whiteboard-panel="board">
   <header class="canvas-toolbar">
     <label class="workbench-field canvas-selector">
       <span>Canvas</span>
@@ -108,5 +114,51 @@ workbench_script: /assets/js/workbench/canvas.js
         <button id="canvas-open-resource" class="workbench-button" type="button" disabled>Open linked resource</button>
       </fieldset>
     </aside>
+  </div>
+</div>
+
+<div id="pipeline-visualizer" class="pipeline-visualizer" data-whiteboard-panel="pipeline" hidden>
+  <header class="mode-toolbar">
+    <div>
+      <span>Quick drafting view</span>
+      <h2>Pipeline visualizer</h2>
+      <p>Move work through a sequence without opening a CRM.</p>
+    </div>
+    <form id="pipeline-form" class="pipeline-quick-add">
+      <input name="title" aria-label="Pipeline item" placeholder="Add lead, task, or case" required>
+      <input name="owner" aria-label="Owner" placeholder="Owner">
+      <input name="value" aria-label="Value" type="number" min="0" step="0.01" placeholder="Value">
+      <button class="workbench-button primary" type="submit">Add item</button>
+    </form>
+  </header>
+  <div class="pipeline-controls">
+    <label class="workbench-field"><span>Pipeline pattern</span><select id="pipeline-template">
+      <option value="sales">Sales</option>
+      <option value="delivery">Client delivery</option>
+      <option value="hiring">Hiring</option>
+      <option value="content">Content production</option>
+      <option value="support">Support queue</option>
+    </select></label>
+    <button class="workbench-button" type="button" data-pipeline-action="reset">Reset pattern</button>
+    <output id="pipeline-status" class="tool-status" aria-live="polite"></output>
+  </div>
+  <div id="pipeline-board" class="pipeline-board" aria-label="Pipeline stages"></div>
+</div>
+
+<div id="automation-runner" class="automation-runner" data-whiteboard-panel="automation" hidden>
+  <header class="mode-toolbar">
+    <div>
+      <span>Meeting and design view</span>
+      <h2>Automation Dry Run</h2>
+      <p>Walk through triggers, decisions, actions, and failure paths before building.</p>
+    </div>
+    <label class="workbench-field automation-search">
+      <span>Find a common flow</span>
+      <input id="automation-search" type="search" placeholder="lead, invoice, onboarding, renewal...">
+    </label>
+  </header>
+  <div class="automation-workspace">
+    <nav id="automation-library" class="automation-library" aria-label="Automation flow library"></nav>
+    <section id="automation-detail" class="automation-detail" aria-live="polite"></section>
   </div>
 </div>

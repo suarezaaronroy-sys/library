@@ -1,7 +1,9 @@
 import {
+  buildBudgetSummary,
   buildInvoiceSummary,
   buildPeriodStatuses,
   calculateBilling,
+  calculateBudget,
   cycleDayState,
   daysInMonth,
   formatDateKey,
@@ -10,8 +12,8 @@ import {
   monthLabel,
   monthsInPeriod,
   number
-} from "./billing-core.mjs?v=3";
-import { loadState, saveState } from "./store.js?v=3";
+} from "./billing-core.mjs?v=4";
+import { loadState, saveState } from "./store.js?v=4";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
 const today = new Date();
@@ -20,18 +22,42 @@ const defaultPeriod = {
   start: `${currentMonth}-01`,
   end: `${currentMonth}-${String(daysInMonth(currentMonth)).padStart(2, "0")}`
 };
+const todayKey = formatDateKey(today);
+const dueDate = new Date(today);
+dueDate.setDate(dueDate.getDate() + 14);
+const DEFAULT_BUDGET = {
+  name: "",
+  currency: "GBP",
+  rate: 0,
+  hours: 0,
+  fixedRevenue: 0,
+  fixedCosts: 0,
+  variableCosts: 0,
+  contingency: 10,
+  notes: ""
+};
 const DEFAULT_STATE = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   period: defaultPeriod,
   profile: {
+    providerName: "",
+    providerEmail: "",
     clientName: "",
+    clientEmail: "",
+    invoiceNumber: `INV-${currentMonth.replace("-", "")}-001`,
+    issueDate: todayKey,
+    dueDate: formatDateKey(dueDate),
     currency: "GBP",
     rateType: "hourly",
     rate: 0,
     hoursPerDay: 8,
     fxRate: 74,
-    notes: ""
+    fxSource: "",
+    fxDate: todayKey,
+    notes: "",
+    paymentDetails: ""
   },
+  budget: DEFAULT_BUDGET,
   dates: {}
 };
 
@@ -44,13 +70,22 @@ if (root) {
   const calendar = document.querySelector("#billing-calendar");
   const saveOutput = document.querySelector("#billing-save-state");
   const toast = document.querySelector("#billing-toast");
+  const budgetForm = document.querySelector("#budget-form");
+  const budgetToast = document.querySelector("#budget-toast");
   let toastTimer;
+  let budgetToastTimer;
 
   ensurePeriod();
   hydrateForm();
+  hydrateBudget();
   startInput.value = state.period.start;
   endInput.value = state.period.end;
   render();
+  renderBudget();
+
+  document.querySelectorAll("[data-billing-view]").forEach((button) => {
+    button.addEventListener("click", () => switchBillingView(button.dataset.billingView));
+  });
 
   form.addEventListener("input", () => {
     state.profile = Object.fromEntries(new FormData(form));
@@ -70,8 +105,15 @@ if (root) {
     } else {
       fxInput.disabled = false;
     }
+    renderFxLabel();
     persist();
     renderSummary();
+  });
+
+  budgetForm.addEventListener("input", () => {
+    state.budget = budgetFromForm();
+    persist();
+    renderBudget();
   });
 
   startInput.addEventListener("change", () => updatePeriod("start"));
@@ -109,6 +151,11 @@ if (root) {
         document.querySelector("#invoice-output").select();
         announce("Summary selected. Copy it from the text field.");
       }
+    } else if (action === "print-invoice") {
+      printArtifact(document.querySelector("#invoice-output").value, "Invoice");
+    } else if (action === "download-invoice") {
+      downloadFile(document.querySelector("#invoice-output").value, invoiceFileName("txt"), "text/plain");
+      announce("Invoice text prepared.");
     } else if (action === "download-csv") {
       downloadFile(csvExport(), `billing-${state.period.start}-to-${state.period.end}.csv`, "text/csv");
       announce("CSV prepared.");
@@ -118,17 +165,45 @@ if (root) {
     }
   });
 
+  document.querySelector("#budget-workspace").addEventListener("click", async (event) => {
+    const action = event.target.closest("[data-budget-action]")?.dataset.budgetAction;
+    if (!action) return;
+    if (action === "copy") {
+      try {
+        await navigator.clipboard.writeText(document.querySelector("#budget-output").value);
+        announceBudget("Budget summary copied.");
+      } catch {
+        document.querySelector("#budget-output").select();
+        announceBudget("Budget summary selected. Copy it from the text field.");
+      }
+    } else if (action === "download") {
+      downloadFile(document.querySelector("#budget-output").value, budgetFileName("txt"), "text/plain");
+      announceBudget("Budget text prepared.");
+    } else if (action === "export") {
+      downloadFile(JSON.stringify(state.budget, null, 2), budgetFileName("json"), "application/json");
+      announceBudget("Budget backup prepared.");
+    }
+  });
+
   function migrateState(loaded) {
-    if (Number(loaded.schemaVersion) >= 2 && loaded.period) return loaded;
+    if (Number(loaded.schemaVersion) >= 2 && loaded.period) {
+      return {
+        ...loaded,
+        schemaVersion: 3,
+        profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
+        budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) }
+      };
+    }
     const month = loaded.month || currentMonth;
     const period = {
       start: `${month}-01`,
       end: `${month}-${String(daysInMonth(month)).padStart(2, "0")}`
     };
     return {
-      schemaVersion: 2,
+      schemaVersion: 3,
       period,
       profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
+      budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) },
       dates: { ...(loaded.months?.[month] || loaded.dates || {}) }
     };
   }
@@ -164,6 +239,31 @@ if (root) {
       if (field) field.value = value;
     });
     document.querySelector("#fx-rate").disabled = state.profile.currency === "PHP";
+    renderFxLabel();
+  }
+
+  function hydrateBudget() {
+    Object.entries(state.budget).forEach(([name, value]) => {
+      const field = budgetForm.elements.namedItem(name);
+      if (field) field.value = value;
+    });
+  }
+
+  function renderFxLabel() {
+    const currency = document.querySelector("#currency").value || state.profile.currency;
+    document.querySelector("#fx-rate-label").textContent = currency === "PHP"
+      ? "Manual exchange rate · PHP uses 1"
+      : `Manual exchange rate · 1 ${currency} = PHP`;
+  }
+
+  function switchBillingView(view) {
+    document.querySelectorAll("[data-billing-view]").forEach((button) => {
+      const active = button.dataset.billingView === view;
+      button.setAttribute("aria-selected", String(active));
+    });
+    document.querySelectorAll("[data-billing-view-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.billingViewPanel !== view;
+    });
   }
 
   function render() {
@@ -221,9 +321,30 @@ if (root) {
     document.querySelector("#invoice-output").value = buildInvoiceSummary(state.profile, state.period, totals);
   }
 
+  function budgetFromForm() {
+    const values = Object.fromEntries(new FormData(budgetForm));
+    ["rate", "hours", "fixedRevenue", "fixedCosts", "variableCosts", "contingency"].forEach((name) => {
+      values[name] = Number(values[name]);
+    });
+    return values;
+  }
+
+  function renderBudget() {
+    const totals = calculateBudget(state.budget);
+    const currency = state.budget.currency;
+    document.querySelector("#budget-revenue").textContent = `${currency} ${money(totals.revenue)}`;
+    document.querySelector("#budget-costs").textContent = `${currency} ${money(totals.totalCosts)}`;
+    document.querySelector("#budget-hourly").textContent = `${currency} ${money(totals.effectiveNetHourly)}`;
+    document.querySelector("#budget-remaining").textContent = `${currency} ${money(totals.remaining)}`;
+    document.querySelector("#budget-margin").textContent = `${number(totals.margin)}% estimated margin`;
+    document.querySelector("#budget-output").value = buildBudgetSummary(state.budget, totals);
+  }
+
   function persist() {
     const saved = saveState(STORAGE_KEY, state);
-    saveOutput.textContent = saved ? "Saved locally" : "Local save unavailable";
+    const message = saved ? "Saved locally" : "Local save unavailable";
+    saveOutput.textContent = message;
+    document.querySelector("#budget-save-state").textContent = message;
   }
 
   function announce(message) {
@@ -231,6 +352,14 @@ if (root) {
     window.clearTimeout(toastTimer);
     toastTimer = window.setTimeout(() => {
       toast.textContent = "";
+    }, 2400);
+  }
+
+  function announceBudget(message) {
+    budgetToast.textContent = message;
+    window.clearTimeout(budgetToastTimer);
+    budgetToastTimer = window.setTimeout(() => {
+      budgetToast.textContent = "";
     }, 2400);
   }
 
@@ -257,6 +386,37 @@ if (root) {
 
   function csvCell(value) {
     return `"${String(value ?? "").replaceAll('"', '""')}"`;
+  }
+
+  function invoiceFileName(extension) {
+    const reference = state.profile.invoiceNumber || `invoice-${state.period.start}`;
+    return `${slug(reference)}.${extension}`;
+  }
+
+  function budgetFileName(extension) {
+    return `${slug(state.budget.name || "client-budget")}.${extension}`;
+  }
+
+  function slug(value) {
+    return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  }
+
+  function printArtifact(content, title) {
+    const popup = window.open("", "_blank", "width=800,height=900");
+    if (!popup) {
+      announce("Pop-up blocked. Use Copy invoice instead.");
+      return;
+    }
+    popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${escapeHtml(title)}</title><style>body{max-width:720px;margin:48px auto;padding:0 32px;color:#1c1917;font:14px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap} @media print{body{margin:0}}</style></head><body>${escapeHtml(content)}</body></html>`);
+    popup.document.close();
+    popup.focus();
+    popup.print();
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[character]);
   }
 
   function downloadFile(content, filename, type) {

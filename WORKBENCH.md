@@ -145,6 +145,16 @@ MVP features:
 
 Storage key: `aaron-workbench:v1:canvas`.
 
+The same route also includes two deliberately lighter alternate modes:
+
+- Pipeline Visualizer with five reusable stage patterns and local cards
+- Automation Dry Run with 30 editable-reference flows across Capture, Qualify, Route, Nurture, Transact, and Retain
+
+Mode state:
+
+- Pipeline: `aaron-workbench:v1:pipeline`
+- Automation meeting notes: `aaron-workbench:v1:automation-dry-run`
+
 ```js
 {
   schemaVersion: 1,
@@ -175,7 +185,7 @@ Deferred:
 
 | Workspace | Key | Version |
 |---|---|---|
-| Billing | `aaron-workbench:v1:billing` | schema 2 inside stable key |
+| Billing | `aaron-workbench:v1:billing` | schema 3 inside stable key |
 | Scheduling | `aaron-workbench:v2:scheduling` | 2 |
 | Writing | `aaron-workbench:v2:writing` | 2 |
 | Decisions | `aaron-workbench:v1:decisions` | 1 |
@@ -205,9 +215,13 @@ When changing a stored structure:
 - [x] ~~Support billing periods spanning multiple months.~~
 - [x] ~~Migrate old month-based state.~~
 - [x] ~~Calculate hourly and daily rates, PHP estimates, and half-days.~~
-- [x] ~~Export summary, CSV, and JSON.~~
+- [x] ~~Make manually entered exchange rates and their provenance explicit.~~
+- [x] ~~Produce a full invoice artifact with provider/client details and payment instructions.~~
+- [x] ~~Copy, print/save PDF, and export invoice artifacts.~~
+- [x] ~~Add a Budget mode with rate, cost, contingency, margin, and copy-ready summary.~~
+- [x] ~~Export summary, CSV, TXT, and JSON.~~
 - [ ] Add named client presets.
-- [ ] Add period archives and print-ready invoice drafts.
+- [ ] Add period archives.
 
 ### Scheduling
 
@@ -232,6 +246,8 @@ When changing a stored structure:
 ### Marketing, CRM, Library Tools, Decisions
 
 - [x] ~~Build functional local-first MVPs for all four workspaces.~~
+- [x] ~~Add a persistent campaign brief that exports a handoff-ready artifact.~~
+- [x] ~~Add six editable funnel patterns for local service, agency, SaaS, ecommerce, creator, and recruitment work.~~
 - [ ] Add saved campaign presets.
 - [ ] Add CRM workflow mapping.
 - [ ] Validate publishing scaffolds against every production layout.
@@ -243,8 +259,23 @@ When changing a stored structure:
 - [x] ~~Add search, categories, favorites, private notes, and recents.~~
 - [x] ~~Add Resource memory import/export.~~
 - [x] ~~Mix internal Workbench tools with external resources.~~
+- [x] ~~Add task-oriented doors for media, design, campaigns, funnels, management, automation, writing, finance, and building.~~
+- [x] ~~Expand the curated registry with video, free-media, design-principle, campaign, funnel, and management references.~~
+- [x] ~~Add a local cryptographic password generator with configurable character sets.~~
+- [x] ~~Add a local screenshot studio for capture, paste, redact, highlight, and download.~~
 - [ ] Add user-created resources without editing repository data.
 - [ ] Add optional resource ratings.
+
+### Whiteboard
+
+- [x] ~~Keep the freeform board and its explicit-save workflow.~~
+- [x] ~~Add three-step undo and redo history.~~
+- [x] ~~Add node handles, directional connectors, and grid snapping.~~
+- [x] ~~Add a lightweight five-stage Pipeline view with drag-and-drop cards.~~
+- [x] ~~Add an Automation Dry Run view with 30 patterns across six lifecycle stages.~~
+- [x] ~~Keep pipeline items, dry-run notes, and board data local to the browser.~~
+- [ ] Add pipeline import/export after the drafting workflow settles.
+- [ ] Add editable automation-pattern templates only if the curated set proves limiting.
 
 ### Universal Search
 
@@ -255,13 +286,14 @@ When changing a stored structure:
 
 ## Next Safest Tasks
 
-1. Finish full browser QA for Resource Hub, Whiteboard, universal search, Scheduling, and Writing.
-2. Verify persistence after reload.
-3. Verify Whiteboard JSON, PNG, and SVG downloads.
-4. Verify mobile layout and touch interaction.
-5. Update the final handoff status below.
+1. Add named client presets and period archives to Billing.
+2. Add multiple named notes to Writing.
+3. Add user-created Resource Hub entries with JSON import/export compatibility.
+4. Add pipeline import/export after real daily use confirms the data shape.
+5. Consider optional timer sounds and notifications only with clear user consent.
 
-Do not start groups, AI generation, or live previews until the Whiteboard MVP is stable.
+Keep every addition useful without login, local-first by default, and able to produce a
+portable artifact. Avoid turning quick hand tools into miniature SaaS products.
 
 ## Verification
 
@@ -295,4 +327,7 @@ Confirm:
 ## Last Handoff
 
 - Date: 2026-07-01
-- Status: Resource Hub, Whiteboard, global search, Scheduling clock suite, and formatted Writing notepad are implemented locally. Full browser QA and deployment remain.
+- Status: Round 2 is implemented locally: invoice and budget artifacts, organized
+  Resource Hub doors, Pipeline and Automation Dry Run modes, campaign briefs, funnel
+  patterns, password generation, and screenshot annotation. Focused browser QA has
+  passed; final regression QA and deployment remain.

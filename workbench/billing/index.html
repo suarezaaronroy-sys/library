@@ -9,7 +9,12 @@ workbench_title: Billing Workspace
 workbench_lede: Turn any billing period into invoice-ready numbers without opening a spreadsheet.
 workbench_script: /assets/js/workbench/billing.js
 ---
-<div id="billing-workspace" class="billing-layout">
+<div class="workspace-view-tabs" role="tablist" aria-label="Billing tools">
+  <button type="button" role="tab" aria-selected="true" data-billing-view="invoice">Invoice</button>
+  <button type="button" role="tab" aria-selected="false" data-billing-view="budget">Budget</button>
+</div>
+
+<div id="billing-workspace" class="billing-layout" data-billing-view-panel="invoice">
   <aside class="workbench-panel" aria-labelledby="billing-settings-title">
     <div class="workbench-panel-head">
       <div>
@@ -20,10 +25,43 @@ workbench_script: /assets/js/workbench/billing.js
     </div>
 
     <form id="billing-form" class="billing-form">
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>From / provider</span>
+          <input id="provider-name" name="providerName" autocomplete="name" placeholder="Your name or studio">
+        </label>
+        <label class="workbench-field">
+          <span>Provider email</span>
+          <input id="provider-email" name="providerEmail" type="email" autocomplete="email" placeholder="you@example.com">
+        </label>
+      </div>
+
       <label class="workbench-field">
         <span>Client</span>
         <input id="client-name" name="clientName" autocomplete="organization" placeholder="Client or project">
       </label>
+
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Invoice number</span>
+          <input id="invoice-number" name="invoiceNumber" placeholder="INV-2026-001">
+        </label>
+        <label class="workbench-field">
+          <span>Client email</span>
+          <input id="client-email" name="clientEmail" type="email" placeholder="billing@client.com">
+        </label>
+      </div>
+
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Issue date</span>
+          <input id="issue-date" name="issueDate" type="date">
+        </label>
+        <label class="workbench-field">
+          <span>Due date</span>
+          <input id="due-date" name="dueDate" type="date">
+        </label>
+      </div>
 
       <label class="workbench-field">
         <span>Currency</span>
@@ -56,13 +94,29 @@ workbench_script: /assets/js/workbench/billing.js
       </div>
 
       <label class="workbench-field">
-        <span>1 unit in PHP</span>
+        <span id="fx-rate-label">Manual exchange rate · 1 GBP = PHP</span>
         <input id="fx-rate" name="fxRate" type="number" min="0" step="0.0001" inputmode="decimal" value="58">
+        <small>This rate is entered by you and is never fetched automatically.</small>
       </label>
+
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Rate source / note</span>
+          <input id="fx-source" name="fxSource" placeholder="Wise estimate">
+        </label>
+        <label class="workbench-field">
+          <span>Rate checked</span>
+          <input id="fx-date" name="fxDate" type="date">
+        </label>
+      </div>
 
       <label class="workbench-field">
         <span>Invoice notes</span>
         <textarea id="billing-notes" name="notes" placeholder="Scope, reference, or payment terms"></textarea>
+      </label>
+      <label class="workbench-field">
+        <span>Payment instructions</span>
+        <textarea id="payment-details" name="paymentDetails" placeholder="Bank, Wise, PayPal, or payment link"></textarea>
       </label>
       <output id="billing-save-state" class="workbench-save-state" aria-live="polite">Ready</output>
     </form>
@@ -106,9 +160,9 @@ workbench_script: /assets/js/workbench/billing.js
   <aside class="workbench-panel billing-summary" aria-labelledby="billing-summary-title">
     <div class="workbench-panel-head">
       <div>
-        <span>03 · Invoice working</span>
-        <h2 id="billing-summary-title">Summary</h2>
-        <p>Check the arithmetic before export.</p>
+        <span>03 · Invoice artifact</span>
+        <h2 id="billing-summary-title">Ready to send</h2>
+        <p>Copy it, print it, or save it as PDF.</p>
       </div>
     </div>
 
@@ -123,13 +177,104 @@ workbench_script: /assets/js/workbench/billing.js
       <small id="php-total">PHP 0.00 estimate</small>
     </div>
 
-    <textarea id="invoice-output" class="invoice-output" aria-label="Invoice working summary" readonly></textarea>
+    <textarea id="invoice-output" class="invoice-output" aria-label="Formatted invoice" readonly></textarea>
     <div class="summary-actions">
-      <button class="workbench-button primary" type="button" data-action="copy-summary">Copy summary</button>
+      <button class="workbench-button primary" type="button" data-action="copy-summary">Copy invoice</button>
+      <button class="workbench-button" type="button" data-action="print-invoice">Print / save PDF</button>
+      <button class="workbench-button" type="button" data-action="download-invoice">Download TXT</button>
       <button class="workbench-button" type="button" data-action="download-csv">Download CSV</button>
       <button class="workbench-button" type="button" data-action="export-json">Export JSON</button>
     </div>
     <p class="billing-disclaimer">Exchange rates are estimates. Confirm final payout with Wise, PayPal, or your payment provider.</p>
     <output id="billing-toast" class="workbench-toast" aria-live="polite"></output>
+  </aside>
+</div>
+
+<div id="budget-workspace" class="budget-layout" data-billing-view-panel="budget" hidden>
+  <section class="workbench-panel" aria-labelledby="budget-input-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>01 · Assumptions</span>
+        <h2 id="budget-input-title">Client budget</h2>
+        <p>Estimate the room around a rate before agreeing to it.</p>
+      </div>
+    </div>
+    <form id="budget-form" class="billing-form">
+      <label class="workbench-field">
+        <span>Client / project</span>
+        <input name="name" placeholder="Client or project">
+      </label>
+      <label class="workbench-field">
+        <span>Currency</span>
+        <select name="currency">
+          <option value="GBP">GBP · British pound</option>
+          <option value="USD">USD · US dollar</option>
+          <option value="CAD">CAD · Canadian dollar</option>
+          <option value="AUD">AUD · Australian dollar</option>
+          <option value="PHP">PHP · Philippine peso</option>
+        </select>
+      </label>
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Client rate / hour</span>
+          <input name="rate" type="number" min="0" step="0.01" value="0">
+        </label>
+        <label class="workbench-field">
+          <span>Planned hours</span>
+          <input name="hours" type="number" min="0" step="0.25" value="0">
+        </label>
+      </div>
+      <label class="workbench-field">
+        <span>Fixed project fee, optional</span>
+        <input name="fixedRevenue" type="number" min="0" step="0.01" value="0">
+        <small>When entered, this replaces rate × hours as expected revenue.</small>
+      </label>
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Fixed costs</span>
+          <input name="fixedCosts" type="number" min="0" step="0.01" value="0">
+        </label>
+        <label class="workbench-field">
+          <span>Variable costs</span>
+          <input name="variableCosts" type="number" min="0" step="0.01" value="0">
+        </label>
+      </div>
+      <label class="workbench-field">
+        <span>Contingency</span>
+        <div class="field-with-suffix"><input name="contingency" type="number" min="0" step="1" value="10"><span>%</span></div>
+      </label>
+      <label class="workbench-field">
+        <span>Budget notes</span>
+        <textarea name="notes" placeholder="Assumptions, exclusions, or negotiation notes"></textarea>
+      </label>
+      <output id="budget-save-state" class="workbench-save-state" aria-live="polite">Ready</output>
+    </form>
+  </section>
+
+  <aside class="workbench-panel billing-summary" aria-labelledby="budget-summary-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>02 · Decision artifact</span>
+        <h2 id="budget-summary-title">Budget summary</h2>
+        <p>See the margin, then carry the reasoning forward.</p>
+      </div>
+    </div>
+    <div class="summary-metrics budget-metrics">
+      <div class="summary-metric"><span>Expected revenue</span><strong id="budget-revenue">—</strong></div>
+      <div class="summary-metric"><span>Costs + contingency</span><strong id="budget-costs">—</strong></div>
+      <div class="summary-metric"><span>Effective net / hour</span><strong id="budget-hourly">—</strong></div>
+    </div>
+    <div class="summary-total">
+      <span>Budget remaining</span>
+      <strong id="budget-remaining">—</strong>
+      <small id="budget-margin">0% margin</small>
+    </div>
+    <textarea id="budget-output" class="invoice-output" aria-label="Formatted budget summary" readonly></textarea>
+    <div class="summary-actions">
+      <button class="workbench-button primary" type="button" data-budget-action="copy">Copy budget summary</button>
+      <button class="workbench-button" type="button" data-budget-action="download">Download TXT</button>
+      <button class="workbench-button" type="button" data-budget-action="export">Export JSON</button>
+    </div>
+    <output id="budget-toast" class="workbench-toast" aria-live="polite"></output>
   </aside>
 </div>

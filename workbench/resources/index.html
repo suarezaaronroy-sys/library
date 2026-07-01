@@ -9,7 +9,20 @@ workbench_title: Resource Hub
 workbench_lede: Remember what exists, why it matters, and what you learned while using it.
 workbench_script: /assets/js/workbench/resources.js
 ---
-<div id="resource-hub" class="resource-hub">
+<div class="workspace-view-tabs" role="tablist" aria-label="Resource views">
+  <button type="button" role="tab" aria-selected="true" data-resource-view-panel="directory">Directory</button>
+  <button type="button" role="tab" aria-selected="false" data-resource-view-panel="quick-tools">Quick tools</button>
+</div>
+
+<div id="resource-hub" class="resource-hub" data-resource-panel="directory">
+  <section class="resource-collections" aria-labelledby="resource-collections-title">
+    <div class="resource-collections-head">
+      <div><span>Start with the job</span><h2 id="resource-collections-title">What are you trying to do?</h2></div>
+      <p>A tool may appear through more than one door.</p>
+    </div>
+    <nav id="resource-collection-list" class="resource-collection-list" aria-label="Resource task doors"></nav>
+  </section>
+
   <section class="resource-controls" aria-label="Resource filters">
     <label class="workbench-field resource-search">
       <span>Search the registry</span>
@@ -63,4 +76,53 @@ workbench_script: /assets/js/workbench/resources.js
       <button id="resource-open" class="workbench-button primary" type="button">Open resource</button>
     </aside>
   </div>
+</div>
+
+<div id="resource-quick-tools" class="quick-tools-grid" data-resource-panel="quick-tools" hidden>
+  <section id="password-generator" class="tool-panel password-generator">
+    <div class="tool-panel-head"><div><span>01 · Security</span><h2>Password generator</h2><p class="tool-intro">For the moments when one more password is one decision too many.</p></div></div>
+    <div class="password-output-row">
+      <output id="password-output" aria-label="Generated password"></output>
+      <button class="workbench-button" type="button" data-password-action="copy">Copy</button>
+      <button class="workbench-button primary" type="button" data-password-action="generate">Generate</button>
+    </div>
+    <label class="workbench-field password-length">
+      <span>Length <output id="password-length-value">20</output></span>
+      <input id="password-length" type="range" min="8" max="64" value="20">
+    </label>
+    <fieldset class="password-options">
+      <label><input type="checkbox" data-password-option="lower" checked>Lowercase</label>
+      <label><input type="checkbox" data-password-option="upper" checked>Uppercase</label>
+      <label><input type="checkbox" data-password-option="number" checked>Numbers</label>
+      <label><input type="checkbox" data-password-option="symbol" checked>Symbols</label>
+      <label><input type="checkbox" data-password-option="ambiguous" checked>Exclude ambiguous</label>
+    </fieldset>
+    <div class="password-strength"><span>Estimated entropy</span><strong id="password-entropy">0 bits</strong><small id="password-strength-label">Generate a password</small></div>
+    <p class="privacy-note">Generated locally with browser cryptography. Passwords are never stored, logged, or transmitted.</p>
+  </section>
+
+  <section id="screenshot-studio" class="tool-panel screenshot-studio">
+    <div class="tool-panel-head"><div><span>02 · Capture</span><h2>Screenshot studio</h2><p class="tool-intro">Capture, paste, redact, highlight, and download without uploading the image.</p></div></div>
+    <div class="screenshot-toolbar">
+      <button class="workbench-button primary" type="button" data-screenshot-action="capture">Capture screen</button>
+      <button class="workbench-button" type="button" data-screenshot-action="upload">Open image</button>
+      <input id="screenshot-upload" type="file" accept="image/*" hidden>
+      <div class="workbench-segmented screenshot-mode" role="group" aria-label="Annotation mode">
+        <label><input type="radio" name="screenshotMode" value="redact" checked>Redact</label>
+        <label><input type="radio" name="screenshotMode" value="highlight">Highlight</label>
+      </div>
+      <button class="workbench-button" type="button" data-screenshot-action="undo">Undo</button>
+      <button class="workbench-button" type="button" data-screenshot-action="reset">Reset marks</button>
+    </div>
+    <div class="screenshot-canvas-wrap">
+      <canvas id="screenshot-canvas" width="1280" height="720" aria-label="Screenshot editing canvas"></canvas>
+      <p id="screenshot-empty">Capture a screen, paste an image, or open a file.</p>
+    </div>
+    <div class="screenshot-export">
+      <label class="workbench-field"><span>File name</span><input id="screenshot-name" value="workbench-screenshot"></label>
+      <label class="workbench-field"><span>Format</span><select id="screenshot-format"><option value="png">PNG</option><option value="jpeg">JPEG</option></select></label>
+      <button class="workbench-button primary" type="button" data-screenshot-action="download">Download image</button>
+    </div>
+    <output id="screenshot-status" class="tool-status" aria-live="polite">Nothing leaves this browser.</output>
+  </section>
 </div>
