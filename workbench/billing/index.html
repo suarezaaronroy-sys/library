@@ -11,7 +11,88 @@ workbench_script: /assets/js/workbench/billing.js
 ---
 <div class="workspace-view-tabs" role="tablist" aria-label="Billing tools">
   <button type="button" role="tab" aria-selected="true" data-billing-view="invoice">Invoice</button>
-  <button type="button" role="tab" aria-selected="false" data-billing-view="budget">Budget</button>
+  <button type="button" role="tab" aria-selected="false" data-billing-view="budget">Client budget</button>
+  <button type="button" role="tab" aria-selected="false" data-billing-view="personal">Personal budget</button>
+</div>
+
+<div id="personal-budget-workspace" class="personal-budget-layout" data-billing-view-panel="personal" hidden>
+  <section class="workbench-panel" aria-labelledby="personal-budget-input-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>01 · Monthly plan</span>
+        <h2 id="personal-budget-input-title">Income and reserves</h2>
+        <p>Set the baseline once, then adjust it when life changes.</p>
+      </div>
+    </div>
+    <form id="personal-budget-form" class="billing-form">
+      <label class="workbench-field"><span>Budget label</span><input name="label" placeholder="Monthly baseline"></label>
+      <label class="workbench-field"><span>Currency</span><select name="currency">
+        <option value="PHP">PHP · Philippine peso</option>
+        <option value="USD">USD · US dollar</option>
+        <option value="GBP">GBP · British pound</option>
+        <option value="CAD">CAD · Canadian dollar</option>
+        <option value="AUD">AUD · Australian dollar</option>
+      </select></label>
+      <label class="workbench-field"><span>Monthly net income</span><input name="monthlyIncome" type="number" min="0" step="0.01" value="0"></label>
+      <div class="workbench-field-inline">
+        <label class="workbench-field"><span>Tax reserve</span><div class="field-with-suffix"><input name="taxPercent" type="number" min="0" max="100" step="1" value="10"><span>%</span></div></label>
+        <label class="workbench-field"><span>Savings target</span><input name="savingsTarget" type="number" min="0" step="0.01" value="0"></label>
+      </div>
+      <label class="workbench-field"><span>Planning notes</span><textarea name="notes" placeholder="Irregular income, annual costs, or assumptions"></textarea></label>
+    </form>
+  </section>
+
+  <section class="workbench-panel" aria-labelledby="personal-expense-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>02 · Recurring obligations</span>
+        <h2 id="personal-expense-title">Bills and commitments</h2>
+        <p>Due days become optional recurring calendar reminders.</p>
+      </div>
+    </div>
+    <form id="personal-expense-form" class="expense-form">
+      <label class="workbench-field"><span>Name</span><input name="name" required placeholder="Electricity, insurance, rent"></label>
+      <label class="workbench-field"><span>Category</span><select name="category">
+        <option>Housing</option><option>Utilities</option><option>Insurance</option>
+        <option>Food</option><option>Transport</option><option>Subscription</option>
+        <option>Debt</option><option>Family</option><option>Other</option>
+      </select></label>
+      <label class="workbench-field"><span>Amount</span><input name="amount" type="number" min="0" step="0.01" required></label>
+      <label class="workbench-field"><span>Due day</span><input name="dueDay" type="number" min="1" max="28" value="1" required></label>
+      <button class="workbench-button primary" type="submit">Add expense</button>
+    </form>
+    <div id="personal-expense-list" class="expense-list" aria-live="polite"></div>
+  </section>
+
+  <aside class="workbench-panel billing-summary" aria-labelledby="personal-summary-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>03 · Portable plan</span>
+        <h2 id="personal-summary-title">Budget summary</h2>
+        <p>Readable by you, a calendar, a spreadsheet, or an LLM.</p>
+      </div>
+    </div>
+    <div class="summary-metrics">
+      <div class="summary-metric"><span>Spendable after tax</span><strong id="personal-spendable">—</strong></div>
+      <div class="summary-metric"><span>Recurring expenses</span><strong id="personal-expenses">—</strong></div>
+      <div class="summary-metric"><span>Savings target</span><strong id="personal-savings">—</strong></div>
+    </div>
+    <div class="summary-total">
+      <span>Free cash after plan</span>
+      <strong id="personal-free-cash">—</strong>
+      <small id="personal-commitment">0% of income assigned</small>
+    </div>
+    <textarea id="personal-budget-output" class="invoice-output personal-budget-output" aria-label="Formatted personal budget" readonly></textarea>
+    <div class="summary-actions">
+      <button class="workbench-button primary" type="button" data-personal-budget-action="copy">Copy plan</button>
+      <button class="workbench-button" type="button" data-personal-budget-action="txt">Download TXT</button>
+      <button class="workbench-button" type="button" data-personal-budget-action="csv">Export CSV</button>
+      <button class="workbench-button" type="button" data-personal-budget-action="ics">Export calendar</button>
+      <button class="workbench-button" type="button" data-personal-budget-action="json">Export JSON</button>
+    </div>
+    <p class="billing-disclaimer">This is a planning aid, not tax or financial advice. Review every reminder before paying.</p>
+    <output id="personal-budget-status" class="workbench-toast" aria-live="polite">Saved locally</output>
+  </aside>
 </div>
 
 <div id="billing-workspace" class="billing-layout" data-billing-view-panel="invoice">

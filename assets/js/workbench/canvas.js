@@ -1,5 +1,6 @@
 import { loadState, saveState } from "./store.js?v=4";
-import "./whiteboard-modes.js?v=1";
+import "./whiteboard-modes.js?v=2";
+import { createWorkbenchGraph } from "./graph-engine.js?v=1";
 import {
   escapeHtml,
   getRegistry,
@@ -122,7 +123,7 @@ function renderCanvasSelect() {
 }
 
 function initializeGraph() {
-  cy = window.cytoscape({
+  cy = createWorkbenchGraph({
     container: document.querySelector("#canvas-graph"),
     elements: activeCanvas().elements,
     layout: { name: "preset" },

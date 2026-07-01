@@ -155,6 +155,11 @@ Mode state:
 - Pipeline: `aaron-workbench:v1:pipeline`
 - Automation meeting notes: `aaron-workbench:v1:automation-dry-run`
 
+Board, Pipeline, and Automation Dry Run all render through the shared Cytoscape
+adapter in `assets/js/workbench/graph-engine.js`. Pipeline constrains graph nodes to
+five stage columns. Automation renders its trigger, five actions, and failure gate as
+a directed graph. They are separate workflows, but no longer separate visual engines.
+
 ```js
 {
   schemaVersion: 1,
@@ -181,11 +186,28 @@ Deferred:
 - Multiplayer
 - Fancy connector routing
 
+## Portable Artifact Contract
+
+Workbench exports are designed for both people and language models. A useful artifact:
+
+1. Names its artifact type and schema version.
+2. Uses stable headings and explicit labels instead of relying on visual position.
+3. Preserves decisions, blockers, owners, dates, and next actions.
+4. Offers readable text plus structured JSON when the data has reusable fields.
+5. Never requires an LLM to infer critical context from decorative formatting.
+
+The Desk reporting tools follow this contract for shift-close, task-status, handoff,
+and meeting-debrief packets. Personal Budget adds text, JSON, CSV, and iCalendar
+exports for the same reason: the work should move cleanly between people, calendars,
+spreadsheets, and models.
+
 ## Workspace Storage
 
 | Workspace | Key | Version |
 |---|---|---|
 | Billing | `aaron-workbench:v1:billing` | schema 3 inside stable key |
+| Personal budget | `aaron-workbench:v1:personal-budget` | 1 |
+| Desk reports | `aaron-workbench:v1:desk-reports` | 1 |
 | Scheduling | `aaron-workbench:v2:scheduling` | 2 |
 | Writing | `aaron-workbench:v2:writing` | 2 |
 | Decisions | `aaron-workbench:v1:decisions` | 1 |
@@ -209,6 +231,15 @@ When changing a stored structure:
 - [x] ~~Create the numbered workspace ledger.~~
 - [x] ~~Apply the drafting-paper visual foundation.~~
 - [x] ~~Keep every workspace local-first and static-host compatible.~~
+- [x] ~~Define a dual-purpose artifact contract for human and LLM consumption.~~
+
+### Desk Reporting
+
+- [x] ~~Add shift-close and task-status report templates.~~
+- [x] ~~Add handoff and meeting-debrief templates.~~
+- [x] ~~Export readable text and schema-labelled JSON packets.~~
+- [x] ~~Persist each report template locally without transmitting it.~~
+- [ ] Add optional recurring checklist presets after real reporting use.
 
 ### Billing
 
@@ -220,6 +251,8 @@ When changing a stored structure:
 - [x] ~~Copy, print/save PDF, and export invoice artifacts.~~
 - [x] ~~Add a Budget mode with rate, cost, contingency, margin, and copy-ready summary.~~
 - [x] ~~Export summary, CSV, TXT, and JSON.~~
+- [x] ~~Add a separate Personal Budget mode for income, tax reserve, savings, and recurring expenses.~~
+- [x] ~~Export personal plans as text, JSON, CSV, and recurring iCalendar reminders.~~
 - [ ] Add named client presets.
 - [ ] Add period archives.
 
@@ -271,8 +304,10 @@ When changing a stored structure:
 - [x] ~~Keep the freeform board and its explicit-save workflow.~~
 - [x] ~~Add three-step undo and redo history.~~
 - [x] ~~Add node handles, directional connectors, and grid snapping.~~
-- [x] ~~Add a lightweight five-stage Pipeline view with drag-and-drop cards.~~
-- [x] ~~Add an Automation Dry Run view with 30 patterns across six lifecycle stages.~~
+- [x] ~~Render a five-stage Pipeline as a constrained Whiteboard graph with snapping.~~
+- [x] ~~Render Automation Dry Run patterns as trigger, action, and failure-gate graphs.~~
+- [x] ~~Use one shared graph adapter across Board, Pipeline, and Automation views.~~
+- [x] ~~Export Pipeline and Automation meaning as readable text and structured JSON.~~
 - [x] ~~Keep pipeline items, dry-run notes, and board data local to the browser.~~
 - [ ] Add pipeline import/export after the drafting workflow settles.
 - [ ] Add editable automation-pattern templates only if the curated set proves limiting.
@@ -290,7 +325,7 @@ When changing a stored structure:
 2. Add multiple named notes to Writing.
 3. Add user-created Resource Hub entries with JSON import/export compatibility.
 4. Add pipeline import/export after real daily use confirms the data shape.
-5. Consider optional timer sounds and notifications only with clear user consent.
+5. Add recurring checklist presets only after shift-close reporting sees daily use.
 
 Keep every addition useful without login, local-first by default, and able to produce a
 portable artifact. Avoid turning quick hand tools into miniature SaaS products.
@@ -299,6 +334,7 @@ portable artifact. Avoid turning quick hand tools into miniature SaaS products.
 
 ```powershell
 node --test tests/workbench-billing.test.mjs
+node --test tests/workbench-artifacts.test.mjs
 Get-ChildItem assets/js/workbench/*.*js | ForEach-Object { node --check $_.FullName }
 node --check assets/js/site-search.js
 bundle exec jekyll build
@@ -328,6 +364,7 @@ Confirm:
 
 - Date: 2026-07-01
 - Status: Round 2 is implemented locally: invoice and budget artifacts, organized
-  Resource Hub doors, Pipeline and Automation Dry Run modes, campaign briefs, funnel
-  patterns, password generation, and screenshot annotation. Focused browser QA has
-  passed; final regression QA and deployment remain.
+  Resource Hub doors, campaign briefs, funnel patterns, password generation, and
+  screenshot annotation. Round 3 adds portable Desk reporting, a Personal Budget
+  with calendar export, and shared-engine Pipeline and Automation graph views.
+  Desktop interaction QA has passed; mobile and final deployment QA remain.

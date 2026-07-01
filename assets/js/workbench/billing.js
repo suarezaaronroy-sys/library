@@ -14,6 +14,7 @@ import {
   number
 } from "./billing-core.mjs?v=4";
 import { loadState, saveState } from "./store.js?v=4";
+import "./personal-budget.js?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
 const today = new Date();

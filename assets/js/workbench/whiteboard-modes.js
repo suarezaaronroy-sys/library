@@ -1,4 +1,9 @@
 import { loadState, saveState } from "./store.js?v=4";
+import {
+  createWorkbenchGraph,
+  fitWorkbenchGraph,
+  replaceGraphElements
+} from "./graph-engine.js?v=1";
 
 const PIPELINE_KEY = "aaron-workbench:v1:pipeline";
 const AUTOMATION_KEY = "aaron-workbench:v1:automation-dry-run";
@@ -65,15 +70,47 @@ function switchView(view) {
     panel.hidden = panel.dataset.whiteboardPanel !== view;
   });
   if (view === "board") window.dispatchEvent(new CustomEvent("whiteboard:board-shown"));
+  if (view === "pipeline") window.dispatchEvent(new CustomEvent("whiteboard:pipeline-shown"));
+  if (view === "automation") window.dispatchEvent(new CustomEvent("whiteboard:automation-shown"));
 }
 
 function initPipeline() {
   let state = loadState(PIPELINE_KEY, createPipelineState("sales"));
+  let selectedCardId = "";
   const form = document.querySelector("#pipeline-form");
   const template = document.querySelector("#pipeline-template");
-  const board = document.querySelector("#pipeline-board");
+  const properties = document.querySelector("#pipeline-properties");
+  const graph = createWorkbenchGraph({
+    container: document.querySelector("#pipeline-graph"),
+    elements: [],
+    layout: { name: "preset" },
+    style: [
+      { selector: "node", style: {
+        "width": 170, "height": 62, "shape": "round-rectangle",
+        "background-color": "#fdfcf9", "border-width": 1.5, "border-color": "#0d9488",
+        "label": "data(label)", "font-family": "DM Sans", "font-size": 11,
+        "text-wrap": "wrap", "text-max-width": 145, "text-valign": "center",
+        "color": "#1c1917", "overlay-opacity": 0
+      }},
+      { selector: 'node[kind = "stage"]', style: {
+        "width": 180, "height": 48, "background-color": "#1c1917",
+        "border-color": "#1c1917", "color": "#f5f2ec", "font-family": "DM Mono",
+        "font-size": 9
+      }},
+      { selector: 'node[kind = "item"]', style: {
+        "background-opacity": 0.94, "border-width": 2
+      }},
+      { selector: "edge", style: {
+        "width": 1.5, "line-color": "#a8a29e", "target-arrow-color": "#78716c",
+        "target-arrow-shape": "triangle", "curve-style": "straight", "arrow-scale": 0.8
+      }},
+      { selector: ":selected", style: {
+        "border-width": 4, "border-color": "#c2410c"
+      }}
+    ]
+  });
   template.value = state.template;
-  render();
+  render(true);
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -85,83 +122,176 @@ function initPipeline() {
       value: Number(values.value) || 0,
       stageId: state.stages[0].id
     });
+    selectedCardId = state.cards[state.cards.length - 1].id;
     form.reset();
-    persist("Item added");
+    persist("Item added", true);
   });
 
   template.addEventListener("change", () => {
     state = createPipelineState(template.value);
-    persist("Pattern changed");
+    selectedCardId = "";
+    persist("Pattern changed", true);
   });
 
-  pipelineRoot.addEventListener("click", (event) => {
+  pipelineRoot.addEventListener("click", async (event) => {
     const action = event.target.closest("[data-pipeline-action]")?.dataset.pipelineAction;
-    const deleteId = event.target.closest("[data-pipeline-delete]")?.dataset.pipelineDelete;
     if (action === "reset") {
       state = createPipelineState(template.value);
-      persist("Pipeline reset");
+      selectedCardId = "";
+      persist("Pipeline reset", true);
     }
-    if (deleteId) {
-      state.cards = state.cards.filter((card) => card.id !== deleteId);
-      persist("Item removed");
+    if (action === "fit") fitWorkbenchGraph(graph);
+    if (action === "copy") {
+      try {
+        await navigator.clipboard.writeText(pipelineText(state));
+        document.querySelector("#pipeline-status").textContent = "Pipeline brief copied";
+      } catch {
+        document.querySelector("#pipeline-status").textContent = "Copy unavailable - export JSON instead";
+      }
+    }
+    if (action === "export") {
+      downloadFile(JSON.stringify({
+        schemaVersion: 1,
+        artifactType: "pipeline-draft",
+        generatedAt: new Date().toISOString(),
+        ...state
+      }, null, 2), `${state.template}-pipeline.json`, "application/json");
+      document.querySelector("#pipeline-status").textContent = "Pipeline JSON prepared";
+    }
+    if (action === "delete" && selectedCardId) {
+      state.cards = state.cards.filter((card) => card.id !== selectedCardId);
+      selectedCardId = "";
+      persist("Item removed", true);
     }
   });
 
-  board.addEventListener("change", (event) => {
-    const cardId = event.target.dataset.cardStage;
-    if (!cardId) return;
-    const card = state.cards.find((item) => item.id === cardId);
-    if (card) card.stageId = event.target.value;
-    persist("Stage updated");
+  properties.addEventListener("input", () => {
+    const card = state.cards.find((item) => item.id === selectedCardId);
+    if (!card) return;
+    const values = Object.fromEntries(
+      ["title", "owner", "value", "stageId"].map((name) => [name, properties.elements.namedItem(name).value])
+    );
+    card.title = values.title.trim() || "Untitled item";
+    card.owner = values.owner.trim();
+    card.value = Number(values.value) || 0;
+    card.stageId = values.stageId;
+    persist("Item updated");
   });
 
-  board.addEventListener("dragstart", (event) => {
-    const card = event.target.closest("[data-pipeline-card]");
-    if (card) event.dataTransfer.setData("text/plain", card.dataset.pipelineCard);
+  graph.on("select", 'node[kind = "item"]', (event) => {
+    selectedCardId = event.target.id();
+    renderInspector();
   });
-  board.addEventListener("dragover", (event) => {
-    if (event.target.closest("[data-pipeline-stage]")) event.preventDefault();
+  graph.on("unselect", 'node[kind = "item"]', () => {
+    if (!graph.$('node[kind = "item"]:selected').length) {
+      selectedCardId = "";
+      renderInspector();
+    }
   });
-  board.addEventListener("drop", (event) => {
-    const stage = event.target.closest("[data-pipeline-stage]");
-    if (!stage) return;
-    event.preventDefault();
-    const card = state.cards.find((item) => item.id === event.dataTransfer.getData("text/plain"));
-    if (card) card.stageId = stage.dataset.pipelineStage;
-    persist("Item moved");
+  graph.on("dragfree", 'node[kind = "item"]', (event) => {
+    const card = state.cards.find((item) => item.id === event.target.id());
+    if (!card) return;
+    const nearest = state.stages.reduce((best, stage) => {
+      const stageNode = graph.getElementById(stage.id);
+      const distance = Math.abs(stageNode.position("x") - event.target.position("x"));
+      return !best || distance < best.distance ? { id: stage.id, distance } : best;
+    }, null);
+    card.stageId = nearest.id;
+    selectedCardId = card.id;
+    persist("Item moved and snapped");
   });
 
-  function persist(message) {
+  window.addEventListener("whiteboard:pipeline-shown", () => {
+    fitWorkbenchGraph(graph);
+  });
+
+  function persist(message, fit = false) {
     saveState(PIPELINE_KEY, state);
     document.querySelector("#pipeline-status").textContent = `${message} - saved locally`;
-    render();
+    render(fit);
   }
 
-  function render() {
-    const options = state.stages.map((stage) => `<option value="${stage.id}">${escapeHtml(stage.name)}</option>`).join("");
-    board.innerHTML = state.stages.map((stage) => {
+  function render(fit = false) {
+    const elements = [];
+    state.stages.forEach((stage, stageIndex) => {
       const cards = state.cards.filter((card) => card.stageId === stage.id);
       const total = cards.reduce((sum, card) => sum + card.value, 0);
-      return `<section class="pipeline-stage" data-pipeline-stage="${stage.id}">
-        <header><span>${String(cards.length).padStart(2, "0")}</span><strong>${escapeHtml(stage.name)}</strong><small>${total ? numberMoney(total) : ""}</small></header>
-        <div class="pipeline-card-list">${cards.map((card) => `
-          <article class="pipeline-card" draggable="true" data-pipeline-card="${card.id}">
-            <strong>${escapeHtml(card.title)}</strong>
-            <small>${escapeHtml(card.owner || "Unassigned")}${card.value ? ` - ${numberMoney(card.value)}` : ""}</small>
-            <div><select data-card-stage="${card.id}" aria-label="Move ${escapeHtml(card.title)}">${options.replace(`value="${card.stageId}"`, `value="${card.stageId}" selected`)}</select><button type="button" data-pipeline-delete="${card.id}" aria-label="Delete ${escapeHtml(card.title)}">x</button></div>
-          </article>`).join("") || `<p>Drop an item here.</p>`}</div>
-      </section>`;
+      elements.push({
+        data: {
+          id: stage.id,
+          kind: "stage",
+          label: `${String(cards.length).padStart(2, "0")}  ${stage.name}${total ? `  ${numberMoney(total)}` : ""}`
+        },
+        position: { x: 130 + stageIndex * 240, y: 70 }
+      });
+      if (stageIndex) {
+        elements.push({
+          data: {
+            id: `stage-edge-${stageIndex}`,
+            source: state.stages[stageIndex - 1].id,
+            target: stage.id
+          }
+        });
+      }
+      cards.forEach((card, cardIndex) => {
+        elements.push({
+          data: {
+            id: card.id,
+            kind: "item",
+            label: `${card.title}\n${card.owner || "Unassigned"}${card.value ? ` - ${numberMoney(card.value)}` : ""}`
+          },
+          position: { x: 130 + stageIndex * 240, y: 165 + cardIndex * 88 }
+        });
+      });
+    });
+    replaceGraphElements(graph, elements);
+    graph.nodes('[kind = "stage"]').lock();
+    if (selectedCardId && graph.getElementById(selectedCardId).length) {
+      graph.getElementById(selectedCardId).select();
+    }
+    document.querySelector("#pipeline-empty").hidden = state.cards.length > 0;
+    renderStageStrip();
+    renderInspector();
+    if (fit) fitWorkbenchGraph(graph, 54);
+  }
+
+  function renderStageStrip() {
+    document.querySelector("#pipeline-stage-strip").innerHTML = state.stages.map((stage) => {
+      const cards = state.cards.filter((card) => card.stageId === stage.id);
+      return `<div><span>${String(cards.length).padStart(2, "0")}</span><strong>${escapeHtml(stage.name)}</strong></div>`;
     }).join("");
+  }
+
+  function renderInspector() {
+    const card = state.cards.find((item) => item.id === selectedCardId);
+    properties.disabled = !card;
+    document.querySelector("#pipeline-inspector-title").textContent = card?.title || "Nothing selected";
+    properties.elements.namedItem("stageId").innerHTML = state.stages.map((stage) =>
+      `<option value="${stage.id}">${escapeHtml(stage.name)}</option>`
+    ).join("");
+    if (!card) {
+      ["title", "owner", "value"].forEach((name) => {
+        properties.elements.namedItem(name).value = "";
+      });
+      return;
+    }
+    ["title", "owner", "value", "stageId"].forEach((name) => {
+      properties.elements.namedItem(name).value = card[name];
+    });
   }
 }
 
 function initAutomation() {
   let state = loadState(AUTOMATION_KEY, { selectedId: FLOW_LIBRARY[0].id, notes: {} });
+  let automationGraph;
   const library = document.querySelector("#automation-library");
   const detail = document.querySelector("#automation-detail");
   const search = document.querySelector("#automation-search");
   renderLibrary();
   renderDetail();
+  window.addEventListener("whiteboard:automation-shown", () => {
+    fitWorkbenchGraph(automationGraph);
+  });
 
   search.addEventListener("input", renderLibrary);
   library.addEventListener("click", (event) => {
@@ -176,6 +306,17 @@ function initAutomation() {
     const action = event.target.closest("[data-automation-action]")?.dataset.automationAction;
     const selected = FLOW_LIBRARY.find((item) => item.id === state.selectedId);
     if (action === "run") renderRun(selected);
+    if (action === "fit") fitWorkbenchGraph(automationGraph);
+    if (action === "export") {
+      downloadFile(JSON.stringify({
+        schemaVersion: 1,
+        artifactType: "automation-dry-run",
+        generatedAt: new Date().toISOString(),
+        ...selected,
+        meetingNotes: state.notes[selected.id] || ""
+      }, null, 2), `${selected.id}.json`, "application/json");
+      document.querySelector("#automation-run-status").textContent = "Flow JSON prepared";
+    }
     if (action === "copy") {
       const text = flowText(selected);
       try {
@@ -211,17 +352,22 @@ function initAutomation() {
     const selected = FLOW_LIBRARY.find((item) => item.id === state.selectedId) || FLOW_LIBRARY[0];
     detail.innerHTML = `<div class="automation-detail-head"><span>${selected.stage}</span><h2>${escapeHtml(selected.title)}</h2><p>${escapeHtml(selected.trigger)}</p></div>
       <ol class="automation-steps">${selected.steps.map((step) => `<li><span></span><p>${escapeHtml(step)}</p></li>`).join("")}</ol>
+      <div class="mode-graph-shell automation-graph-shell"><div id="automation-graph" class="mode-graph" aria-label="${escapeHtml(selected.title)} visual flow"></div></div>
       <div class="automation-guardrails">
         <div><span>Best practice</span><p>${escapeHtml(selected.best)}</p></div>
         <div><span>Failure to test</span><p>${escapeHtml(selected.failure)}</p></div>
       </div>
       <label class="workbench-field"><span>Meeting notes</span><textarea id="automation-notes" placeholder="What changed during the walkthrough?">${escapeHtml(state.notes[selected.id] || "")}</textarea></label>
-      <div class="tool-actions"><button class="workbench-button primary" type="button" data-automation-action="run">Run dry test</button><button class="workbench-button" type="button" data-automation-action="copy">Copy flow</button></div>
+      <div class="tool-actions"><button class="workbench-button primary" type="button" data-automation-action="run">Run dry test</button><button class="workbench-button" type="button" data-automation-action="fit">Fit view</button><button class="workbench-button" type="button" data-automation-action="copy">Copy flow</button><button class="workbench-button" type="button" data-automation-action="export">Export JSON</button></div>
       <output id="automation-run-status" class="tool-status" aria-live="polite">Ready to walk through</output>
       <div id="automation-run-output" class="automation-run-output"></div>`;
+    renderAutomationGraph(selected);
   }
 
   function renderRun(selected) {
+    automationGraph.elements().removeClass("is-passed");
+    automationGraph.nodes('[kind != "failure"]').addClass("is-passed");
+    automationGraph.nodes('[kind = "failure"]').addClass("is-reviewed");
     document.querySelector("#automation-run-output").innerHTML = [
       `Trigger accepted: ${selected.trigger}`,
       ...selected.steps.map((step, index) => `Step ${index + 1} passed: ${step}`),
@@ -229,6 +375,53 @@ function initAutomation() {
       `Dry run complete - no external actions were sent.`
     ].map((line, index) => `<div><span>${String(index + 1).padStart(2, "0")}</span><p>${escapeHtml(line)}</p></div>`).join("");
     document.querySelector("#automation-run-status").textContent = "Dry run complete";
+  }
+
+  function renderAutomationGraph(selected) {
+    automationGraph?.destroy();
+    const nodes = [
+      { data: { id: "trigger", kind: "trigger", label: `TRIGGER\n${selected.trigger}` }, position: { x: 110, y: 110 } },
+      ...selected.steps.map((step, index) => ({
+        data: { id: `step-${index + 1}`, kind: "step", label: `${String(index + 1).padStart(2, "0")}\n${step}` },
+        position: { x: 330 + index * 230, y: 110 }
+      })),
+      { data: { id: "failure", kind: "failure", label: `FAILURE GATE\n${selected.failure}` }, position: { x: 790, y: 300 } }
+    ];
+    const edges = [
+      { data: { id: "edge-trigger", source: "trigger", target: "step-1" } },
+      ...selected.steps.slice(1).map((_, index) => ({
+        data: { id: `edge-${index + 1}`, source: `step-${index + 1}`, target: `step-${index + 2}` }
+      })),
+      { data: { id: "edge-failure", source: "step-3", target: "failure", kind: "failure" } }
+    ];
+    automationGraph = createWorkbenchGraph({
+      container: document.querySelector("#automation-graph"),
+      elements: [...nodes, ...edges],
+      layout: { name: "preset" },
+      userPanningEnabled: true,
+      autoungrabify: true,
+      style: [
+        { selector: "node", style: {
+          "width": 175, "height": 72, "shape": "round-rectangle",
+          "background-color": "#fdfcf9", "border-width": 1.5, "border-color": "#0d9488",
+          "label": "data(label)", "font-family": "DM Sans", "font-size": 10,
+          "text-wrap": "wrap", "text-max-width": 150, "text-valign": "center",
+          "color": "#1c1917"
+        }},
+        { selector: 'node[kind = "trigger"]', style: { "shape": "round-hexagon", "border-color": "#15803d" }},
+        { selector: 'node[kind = "failure"]', style: { "shape": "diamond", "width": 150, "height": 120, "border-color": "#c2410c", "text-max-width": 105 }},
+        { selector: "edge", style: {
+          "width": 1.5, "line-color": "#a8a29e", "target-arrow-color": "#78716c",
+          "target-arrow-shape": "triangle", "curve-style": "straight", "arrow-scale": 0.8
+        }},
+        { selector: 'edge[kind = "failure"]', style: {
+          "line-style": "dashed", "line-color": "#c2410c", "target-arrow-color": "#c2410c"
+        }},
+        { selector: ".is-passed", style: { "background-color": "#dcfce7", "border-width": 3, "border-color": "#15803d" }},
+        { selector: ".is-reviewed", style: { "background-color": "#ffedd5", "border-width": 3, "border-color": "#c2410c" }}
+      ]
+    });
+    fitWorkbenchGraph(automationGraph, 42);
   }
 }
 
@@ -258,6 +451,26 @@ function flowText(item) {
   ].join("\n");
 }
 
+function pipelineText(state) {
+  return [
+    "# PIPELINE DRAFT",
+    "",
+    "Artifact type: pipeline-draft",
+    `Pattern: ${state.template}`,
+    "",
+    ...state.stages.flatMap((stage) => {
+      const cards = state.cards.filter((card) => card.stageId === stage.id);
+      return [
+        `## ${stage.name}`,
+        ...(cards.length ? cards.map((card) =>
+          `- ${card.title} | Owner: ${card.owner || "Unassigned"} | Value: ${numberMoney(card.value)}`
+        ) : ["None recorded."]),
+        ""
+      ];
+    })
+  ].join("\n").trim();
+}
+
 function numberMoney(value) {
   return new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(Number(value) || 0);
 }
@@ -266,4 +479,13 @@ function escapeHtml(value) {
   return String(value || "").replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[character]);
+}
+
+function downloadFile(content, filename, type) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
 }

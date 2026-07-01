@@ -140,9 +140,30 @@ workbench_script: /assets/js/workbench/canvas.js
       <option value="support">Support queue</option>
     </select></label>
     <button class="workbench-button" type="button" data-pipeline-action="reset">Reset pattern</button>
+    <button class="workbench-button" type="button" data-pipeline-action="fit">Fit view</button>
+    <button class="workbench-button" type="button" data-pipeline-action="copy">Copy brief</button>
+    <button class="workbench-button" type="button" data-pipeline-action="export">Export JSON</button>
     <output id="pipeline-status" class="tool-status" aria-live="polite"></output>
   </div>
-  <div id="pipeline-board" class="pipeline-board" aria-label="Pipeline stages"></div>
+  <div id="pipeline-stage-strip" class="pipeline-stage-strip" aria-label="Pipeline stage summary"></div>
+  <div class="pipeline-graph-workspace">
+    <div class="mode-graph-shell">
+      <div id="pipeline-graph" class="mode-graph" aria-label="Pipeline visual canvas"></div>
+      <p id="pipeline-empty">Add an item to begin the visual draft.</p>
+    </div>
+    <aside class="pipeline-inspector" aria-labelledby="pipeline-inspector-title">
+      <span>Selected item</span>
+      <h3 id="pipeline-inspector-title">Nothing selected</h3>
+      <fieldset id="pipeline-properties" class="tool-form" disabled>
+        <label class="workbench-field"><span>Title</span><input name="title"></label>
+        <label class="workbench-field"><span>Owner</span><input name="owner"></label>
+        <label class="workbench-field"><span>Value</span><input name="value" type="number" min="0" step="0.01"></label>
+        <label class="workbench-field"><span>Stage</span><select name="stageId"></select></label>
+        <button class="workbench-button" type="button" data-pipeline-action="delete">Delete item</button>
+      </fieldset>
+      <p>Drag an item toward another stage. It will snap into that column.</p>
+    </aside>
+  </div>
 </div>
 
 <div id="automation-runner" class="automation-runner" data-whiteboard-panel="automation" hidden>

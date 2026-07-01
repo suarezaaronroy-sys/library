@@ -7,7 +7,14 @@ workbench: true
 workspace: index
 workbench_title: Operator Workbench
 workbench_lede: Small, local-first tools for recurring operational work.
+workbench_script: /assets/js/workbench/desk.js
 ---
+<div class="workspace-view-tabs" role="tablist" aria-label="Desk views">
+  <button type="button" role="tab" aria-selected="true" data-desk-view="workspaces">Workspaces</button>
+  <button type="button" role="tab" aria-selected="false" data-desk-view="reporting">Reporting</button>
+</div>
+
+<div data-desk-panel="workspaces">
 <section class="workbench-ledger" aria-label="Workspace status">
   <a class="workbench-ledger-row" href="{{ '/workbench/billing/' | relative_url }}">
     <span>01</span><h2>Billing</h2><p>Cutoff calendar, rates, currency estimates, and invoice-ready exports.</p><b class="workbench-ledger-state">Open workspace</b>
@@ -42,3 +49,52 @@ workbench_lede: Small, local-first tools for recurring operational work.
   <span>Operating principle</span>
   <p>The Library captures knowledge. The Workbench removes the repeated calculation, formatting, and recall surrounding the work.</p>
 </aside>
+</div>
+
+<div class="desk-reporting" data-desk-panel="reporting" hidden>
+  <nav class="report-template-tabs" role="tablist" aria-label="Reporting templates">
+    <button type="button" role="tab" aria-selected="true" data-report-template="eod">Shift close</button>
+    <button type="button" role="tab" aria-selected="false" data-report-template="status">Task status</button>
+    <button type="button" role="tab" aria-selected="false" data-report-template="handoff">Handoff</button>
+    <button type="button" role="tab" aria-selected="false" data-report-template="meeting">Meeting debrief</button>
+  </nav>
+
+  <div class="artifact-workspace report-artifact-workspace">
+    <section class="tool-panel">
+      <div class="tool-panel-head">
+        <div>
+          <span>01 · Structured context</span>
+          <h2 id="report-form-title">End-of-day report</h2>
+          <p class="tool-intro" id="report-form-intro">Close the shift without reconstructing the day from memory.</p>
+        </div>
+      </div>
+      <form id="report-form" class="tool-form">
+        <div class="tool-row">
+          <label class="workbench-field"><span>Project / client</span><input name="project" placeholder="Project, client, or team"></label>
+          <label class="workbench-field"><span>Report date</span><input name="date" type="date"></label>
+        </div>
+        <label class="workbench-field"><span>Prepared by</span><input name="author" placeholder="Your name"></label>
+        <div id="report-fields" class="tool-form"></div>
+      </form>
+      <p class="privacy-note">Saved only in this browser. No report is transmitted automatically.</p>
+    </section>
+
+    <aside class="tool-panel artifact-output-panel">
+      <div class="tool-panel-head">
+        <div>
+          <span>02 · Portable artifact</span>
+          <h2>Ready for a person or an LLM</h2>
+          <p class="tool-intro">Stable headings preserve meaning when the report moves between tools.</p>
+        </div>
+      </div>
+      <textarea id="report-output" class="tool-output artifact-output" aria-label="Formatted report" readonly></textarea>
+      <div class="tool-actions">
+        <button class="workbench-button primary" type="button" data-report-action="copy">Copy report</button>
+        <button class="workbench-button" type="button" data-report-action="download">Download TXT</button>
+        <button class="workbench-button" type="button" data-report-action="json">Export JSON</button>
+        <button class="workbench-button" type="button" data-report-action="clear">Clear template</button>
+      </div>
+      <output id="report-status" class="tool-status" aria-live="polite">Saved locally</output>
+    </aside>
+  </div>
+</div>
