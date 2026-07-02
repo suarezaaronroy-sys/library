@@ -13,6 +13,7 @@ workbench_script: /assets/js/workbench/billing.js
   <button type="button" role="tab" aria-selected="true" data-billing-view="invoice">Invoice</button>
   <button type="button" role="tab" aria-selected="false" data-billing-view="budget">Client budget</button>
   <button type="button" role="tab" aria-selected="false" data-billing-view="personal">Personal budget</button>
+  <button type="button" role="tab" aria-selected="false" data-billing-view="calculator">Calculator</button>
 </div>
 
 <div id="personal-budget-workspace" class="personal-budget-layout" data-billing-view-panel="personal" hidden>
@@ -92,6 +93,77 @@ workbench_script: /assets/js/workbench/billing.js
     </div>
     <p class="billing-disclaimer">This is a planning aid, not tax or financial advice. Review every reminder before paying.</p>
     <output id="personal-budget-status" class="workbench-toast" aria-live="polite">Saved locally</output>
+  </aside>
+</div>
+
+<div id="calculator-workspace" class="calculator-layout" data-billing-view-panel="calculator" hidden>
+  <section class="workbench-panel" aria-labelledby="calculator-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>Quick math</span>
+        <h2 id="calculator-title">Calculator</h2>
+        <p>Type or tap an expression. Percentages, parentheses, and <code>ans</code> all work.</p>
+      </div>
+      <div id="calc-memory" class="calc-memory" hidden>M</div>
+    </div>
+    <div class="calc-display">
+      <input id="calc-expression" class="calc-input" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="e.g. 1200 * 20% + 50" aria-label="Calculator expression">
+      <output id="calc-preview" class="calc-preview" aria-live="polite">0</output>
+    </div>
+    <div class="calc-keypad" role="group" aria-label="Calculator keypad">
+      <button type="button" class="calc-key fn" data-calc-action="clear">AC</button>
+      <button type="button" class="calc-key fn" data-calc-key="(">(</button>
+      <button type="button" class="calc-key fn" data-calc-key=")">)</button>
+      <button type="button" class="calc-key fn" data-calc-action="backspace" aria-label="Backspace">&#9003;</button>
+
+      <button type="button" class="calc-key" data-calc-key="7">7</button>
+      <button type="button" class="calc-key" data-calc-key="8">8</button>
+      <button type="button" class="calc-key" data-calc-key="9">9</button>
+      <button type="button" class="calc-key op" data-calc-key="/">&divide;</button>
+
+      <button type="button" class="calc-key" data-calc-key="4">4</button>
+      <button type="button" class="calc-key" data-calc-key="5">5</button>
+      <button type="button" class="calc-key" data-calc-key="6">6</button>
+      <button type="button" class="calc-key op" data-calc-key="*">&times;</button>
+
+      <button type="button" class="calc-key" data-calc-key="1">1</button>
+      <button type="button" class="calc-key" data-calc-key="2">2</button>
+      <button type="button" class="calc-key" data-calc-key="3">3</button>
+      <button type="button" class="calc-key op" data-calc-key="-">&minus;</button>
+
+      <button type="button" class="calc-key" data-calc-key="0">0</button>
+      <button type="button" class="calc-key" data-calc-key=".">.</button>
+      <button type="button" class="calc-key op" data-calc-key="%">%</button>
+      <button type="button" class="calc-key op" data-calc-key="+">+</button>
+
+      <button type="button" class="calc-key equals" data-calc-action="equals">=</button>
+    </div>
+    <div class="calc-secondary">
+      <button type="button" class="workbench-button" data-calc-key="sqrt(" title="Square root">&radic;</button>
+      <button type="button" class="workbench-button" data-calc-key="^" title="Power">x^y</button>
+      <button type="button" class="workbench-button" data-calc-key="pi" title="Pi">&pi;</button>
+      <button type="button" class="workbench-button" data-calc-key="ans" title="Last result">ans</button>
+      <button type="button" class="workbench-button" data-calc-action="mem-plus">M+</button>
+      <button type="button" class="workbench-button" data-calc-action="mem-minus">M&minus;</button>
+      <button type="button" class="workbench-button" data-calc-action="mem-recall">MR</button>
+      <button type="button" class="workbench-button" data-calc-action="mem-clear">MC</button>
+      <button type="button" class="workbench-button primary" data-calc-action="copy">Copy result</button>
+    </div>
+    <output id="calc-status" class="workbench-toast" aria-live="polite">Saved locally</output>
+  </section>
+
+  <aside class="workbench-panel billing-summary" aria-labelledby="calc-tape-title">
+    <div class="workbench-panel-head">
+      <div>
+        <span>History</span>
+        <h2 id="calc-tape-title">Tape</h2>
+        <p>Click an entry to reuse its result. Stored only in this browser.</p>
+      </div>
+    </div>
+    <div id="calc-tape" class="calc-tape" aria-live="polite"></div>
+    <div class="summary-actions">
+      <button type="button" class="workbench-button" data-calc-action="clear-tape">Clear tape</button>
+    </div>
   </aside>
 </div>
 

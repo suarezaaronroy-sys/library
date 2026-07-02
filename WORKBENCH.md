@@ -378,3 +378,16 @@ Confirm:
   screenshot annotation. Round 3 adds portable Desk reporting, a Personal Budget
   with calendar export, and shared-engine Pipeline and Automation graph views.
   Desktop interaction QA has passed; mobile and final deployment QA remain.
+
+
+## Billing Sub-Views
+
+The Billing workspace hosts sibling views toggled by `data-billing-view`:
+`Invoice · Client budget · Personal budget · Calculator`.
+
+The Calculator is a local-first expression calculator (safe parser, no `eval`)
+that sits beside the Personal budget. Smart percentages (`200 + 10%` = 220),
+parentheses, powers, `ans`, constants, a reusable tape, and memory. Engine:
+`assets/js/workbench/calculator-core.mjs` (pure, covered by
+`tests/workbench-calculator.test.mjs`). UI: `assets/js/workbench/calculator.js`.
+Storage key: `aaron-workbench:v1:calculator`.
