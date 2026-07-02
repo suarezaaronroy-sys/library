@@ -96,75 +96,85 @@ workbench_script: /assets/js/workbench/billing.js
   </aside>
 </div>
 
-<div id="calculator-workspace" class="calculator-layout" data-billing-view-panel="calculator" hidden>
-  <section class="workbench-panel" aria-labelledby="calculator-title">
-    <div class="workbench-panel-head">
-      <div>
-        <span>Quick math</span>
-        <h2 id="calculator-title">Calculator</h2>
-        <p>Type or tap an expression. Percentages, parentheses, and <code>ans</code> all work.</p>
+<div id="calculator-workspace" class="calc-embed" data-billing-view-panel="calculator" data-calc-root hidden>
+<div class="calc-shell">
+    <section class="calc-panel" aria-labelledby="calc-title">
+      <div class="calc-panel-head">
+        <div>
+          <span>01 · Compute</span>
+          <h2 id="calc-title">Keypad</h2>
+          <p>Type or click. <kbd>Enter</kbd> = equals, <kbd>Esc</kbd> clears, <kbd>Backspace</kbd> deletes.</p>
+        </div>
       </div>
-      <div id="calc-memory" class="calc-memory" hidden>M</div>
-    </div>
-    <div class="calc-display">
-      <input id="calc-expression" class="calc-input" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="e.g. 1200 * 20% + 50" aria-label="Calculator expression">
-      <output id="calc-preview" class="calc-preview" aria-live="polite">0</output>
-    </div>
-    <div class="calc-keypad" role="group" aria-label="Calculator keypad">
-      <button type="button" class="calc-key fn" data-calc-action="clear">AC</button>
-      <button type="button" class="calc-key fn" data-calc-key="(">(</button>
-      <button type="button" class="calc-key fn" data-calc-key=")">)</button>
-      <button type="button" class="calc-key fn" data-calc-action="backspace" aria-label="Backspace">&#9003;</button>
 
-      <button type="button" class="calc-key" data-calc-key="7">7</button>
-      <button type="button" class="calc-key" data-calc-key="8">8</button>
-      <button type="button" class="calc-key" data-calc-key="9">9</button>
-      <button type="button" class="calc-key op" data-calc-key="/">&divide;</button>
-
-      <button type="button" class="calc-key" data-calc-key="4">4</button>
-      <button type="button" class="calc-key" data-calc-key="5">5</button>
-      <button type="button" class="calc-key" data-calc-key="6">6</button>
-      <button type="button" class="calc-key op" data-calc-key="*">&times;</button>
-
-      <button type="button" class="calc-key" data-calc-key="1">1</button>
-      <button type="button" class="calc-key" data-calc-key="2">2</button>
-      <button type="button" class="calc-key" data-calc-key="3">3</button>
-      <button type="button" class="calc-key op" data-calc-key="-">&minus;</button>
-
-      <button type="button" class="calc-key" data-calc-key="0">0</button>
-      <button type="button" class="calc-key" data-calc-key=".">.</button>
-      <button type="button" class="calc-key op" data-calc-key="%">%</button>
-      <button type="button" class="calc-key op" data-calc-key="+">+</button>
-
-      <button type="button" class="calc-key equals" data-calc-action="equals">=</button>
-    </div>
-    <div class="calc-secondary">
-      <button type="button" class="workbench-button" data-calc-key="sqrt(" title="Square root">&radic;</button>
-      <button type="button" class="workbench-button" data-calc-key="^" title="Power">x^y</button>
-      <button type="button" class="workbench-button" data-calc-key="pi" title="Pi">&pi;</button>
-      <button type="button" class="workbench-button" data-calc-key="ans" title="Last result">ans</button>
-      <button type="button" class="workbench-button" data-calc-action="mem-plus">M+</button>
-      <button type="button" class="workbench-button" data-calc-action="mem-minus">M&minus;</button>
-      <button type="button" class="workbench-button" data-calc-action="mem-recall">MR</button>
-      <button type="button" class="workbench-button" data-calc-action="mem-clear">MC</button>
-      <button type="button" class="workbench-button primary" data-calc-action="copy">Copy result</button>
-    </div>
-    <output id="calc-status" class="workbench-toast" aria-live="polite">Saved locally</output>
-  </section>
-
-  <aside class="workbench-panel billing-summary" aria-labelledby="calc-tape-title">
-    <div class="workbench-panel-head">
-      <div>
-        <span>History</span>
-        <h2 id="calc-tape-title">Tape</h2>
-        <p>Click an entry to reuse its result. Stored only in this browser.</p>
+      <div class="calc-toggles">
+        <div class="calc-seg" role="group" aria-label="Mode">
+          <button type="button" data-mode="standard" aria-pressed="true">Standard</button>
+          <button type="button" data-mode="scientific" aria-pressed="false">Scientific</button>
+          <button type="button" data-mode="currency" aria-pressed="false">Currency</button>
+        </div>
+        <div class="calc-seg" role="group" aria-label="Angle unit" data-angle-group hidden>
+          <button type="button" data-angle="deg" aria-pressed="true">DEG</button>
+          <button type="button" data-angle="rad" aria-pressed="false">RAD</button>
+        </div>
       </div>
-    </div>
-    <div id="calc-tape" class="calc-tape" aria-live="polite"></div>
-    <div class="summary-actions">
-      <button type="button" class="workbench-button" data-calc-action="clear-tape">Clear tape</button>
-    </div>
-  </aside>
+
+      <div class="calc-display">
+        <span class="calc-mem-flag" data-mem-flag>M</span>
+        <div class="calc-expr" data-expr aria-live="off">&nbsp;</div>
+        <div class="calc-resultline">
+          <span class="calc-cur-chip" data-cur-chip></span>
+          <div class="calc-result" data-result aria-live="polite">0</div>
+        </div>
+      </div>
+
+      <div class="calc-mem-row" role="group" aria-label="Memory">
+        <button type="button" class="calc-key mem" data-mem="mc">MC</button>
+        <button type="button" class="calc-key mem" data-mem="mr">MR</button>
+        <button type="button" class="calc-key mem" data-mem="m+">M+</button>
+        <button type="button" class="calc-key mem" data-mem="m-">M&minus;</button>
+        <button type="button" class="calc-key mem" data-mem="ms">MS</button>
+      </div>
+
+      <div class="calc-cur-row" data-cur-row hidden></div>
+      <div class="calc-sci" data-sci hidden></div>
+      <div class="calc-keys" data-keys></div>
+    </section>
+
+    <aside class="calc-panel calc-side">
+      <div class="calc-card" aria-labelledby="calc-var-title">
+        <h3 id="calc-var-title">Variables <button type="button" data-clear-vars>clear</button></h3>
+        <form class="calc-mini-form" data-var-form>
+          <input data-var-name placeholder="name" aria-label="Variable name" autocomplete="off" spellcheck="false">
+          <input data-var-expr placeholder="value / expr" aria-label="Variable value" autocomplete="off" spellcheck="false">
+          <button type="submit">Set</button>
+        </form>
+        <ul class="calc-var-list" data-var-list></ul>
+        <p class="calc-note">Use them in any expression. They can reference currencies and each other.</p>
+      </div>
+
+      <div class="calc-card" aria-labelledby="calc-rate-title">
+        <h3 id="calc-rate-title">Manual rates</h3>
+        <div class="calc-rate-head">
+          <span>Show results in</span>
+          <select data-display-cur aria-label="Display currency"></select>
+        </div>
+        <div class="calc-rates" data-rates></div>
+        <p class="calc-note">Entered by you — never fetched. 1 unit = value in base. Edit freely.</p>
+      </div>
+
+      <div class="calc-card" aria-labelledby="calc-hist-title">
+        <h3 id="calc-hist-title">History</h3>
+        <div class="calc-side-actions">
+          <button type="button" data-copy>Copy result</button>
+          <button type="button" data-clear-history>Clear tape</button>
+        </div>
+        <ul class="calc-history" data-history></ul>
+        <output class="calc-toast" data-toast aria-live="polite"></output>
+        <div class="calc-selftest" data-selftest>self-check…</div>
+      </div>
+    </aside>
+  </div>
 </div>
 
 <div id="billing-workspace" class="billing-layout" data-billing-view-panel="invoice">

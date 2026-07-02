@@ -385,9 +385,4 @@ Confirm:
 The Billing workspace hosts sibling views toggled by `data-billing-view`:
 `Invoice · Client budget · Personal budget · Calculator`.
 
-The Calculator is a local-first expression calculator (safe parser, no `eval`)
-that sits beside the Personal budget. Smart percentages (`200 + 10%` = 220),
-parentheses, powers, `ans`, constants, a reusable tape, and memory. Engine:
-`assets/js/workbench/calculator-core.mjs` (pure, covered by
-`tests/workbench-calculator.test.mjs`). UI: `assets/js/workbench/calculator.js`.
-Storage key: `aaron-workbench:v1:calculator`.
+The Calculator is a local-first scientific calculator (safe shunting-yard/RPN engine, no `eval`) beside the Personal budget. It adds **currency-aware math** (`120 GBP + 4000 PHP` via your own manual rates, base PHP, never fetched), **named variables** (`rate = 45`, then `rate*hrs*1.1`), scientific functions, memory, and a tape. Engine: `assets/js/workbench/calculator-core.mjs` (pure, covered by `tests/workbench-calculator.test.mjs` plus an in-panel self-check). UI: `assets/js/workbench/calculator.js`. Local storage keys: `asuarez.calc.*`.
