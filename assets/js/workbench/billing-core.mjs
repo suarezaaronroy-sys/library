@@ -1,4 +1,4 @@
-export const DAY_STATES = ["full", "half", "holiday", "off"];
+export const DAY_STATES = ["full", "half", "custom", "holiday", "off"];
 
 export function formatMonthKey(date = new Date()) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
@@ -60,17 +60,21 @@ export function monthsInPeriod(start, end) {
 }
 
 export function cycleDayState(state) {
-  const index = DAY_STATES.indexOf(state);
+  const base = typeof state === "string" && state.startsWith("custom") ? "custom" : state;
+  const index = DAY_STATES.indexOf(base);
   return DAY_STATES[(index + 1) % DAY_STATES.length];
 }
 
 export function calculateBilling(profile, statuses) {
   const weights = { full: 1, half: 0.5, holiday: 0, off: 0 };
-  const billableDays = Object.values(statuses).reduce(
-    (total, state) => total + (weights[state] || 0),
-    0
-  );
   const hoursPerDay = positiveNumber(profile.hoursPerDay, 8);
+  const billableDays = Object.values(statuses).reduce((total, state) => {
+    if (typeof state === "string" && state.startsWith("custom")) {
+      const h = Number(state.split(":")[1]) || 0;
+      return total + (hoursPerDay > 0 ? h / hoursPerDay : 0);
+    }
+    return total + (weights[state] || 0);
+  }, 0);
   const rate = positiveNumber(profile.rate, 0);
   const fxRate = positiveNumber(profile.fxRate, profile.currency === "PHP" ? 1 : 0);
   const billableHours = billableDays * hoursPerDay;

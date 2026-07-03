@@ -55,7 +55,9 @@ test("daily billing weights half days", () => {
 test("calendar helpers handle leap years and state order", () => {
   assert.equal(daysInMonth("2028-02"), 29);
   assert.equal(cycleDayState("full"), "half");
-  assert.equal(cycleDayState("half"), "holiday");
+  assert.equal(cycleDayState("half"), "custom");
+  assert.equal(cycleDayState("custom"), "holiday");
+  assert.equal(cycleDayState("custom:6"), "holiday");
   assert.equal(cycleDayState("holiday"), "off");
   assert.equal(cycleDayState("off"), "full");
 });
@@ -111,4 +113,15 @@ test("budget output exposes costs, margin, and effective hourly net", () => {
   assert.equal(totals.effectiveNetHourly, 15.875);
   assert.match(summary, /Budget remaining: USD 635.00/);
   assert.match(summary, /Estimated margin: 79.38%/);
+});
+
+test("custom-hours days bill their exact hours", () => {
+  const totals = calculateBilling(
+    { currency: "USD", rateType: "hourly", rate: 10, hoursPerDay: 8, fxRate: 1 },
+    { a: "full", b: "custom:6", c: "half" }
+  );
+  // full 8h + custom 6h + half 4h = 18h => 2.25 day-units
+  assert.equal(totals.billableHours, 18);
+  assert.equal(totals.billableDays, 2.25);
+  assert.equal(totals.nativeTotal, 180);
 });

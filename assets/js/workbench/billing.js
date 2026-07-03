@@ -12,7 +12,7 @@ import {
   monthLabel,
   monthsInPeriod,
   number
-} from "./billing-core.mjs?v=4";
+} from "./billing-core.mjs?v=5";
 import { loadState, saveState } from "./store.js?v=4";
 import "./personal-budget.js?v=1";
 import "./calculator.js?v=2";
@@ -125,7 +125,18 @@ if (root) {
     const day = event.target.closest(".billing-day[data-date]");
     if (!day) return;
     const date = day.dataset.date;
-    state.dates[date] = cycleDayState(state.dates[date]);
+    const next = cycleDayState(state.dates[date]);
+    if (next === "custom") {
+      const prev = String(state.dates[date] || "");
+      const suggested = prev.startsWith("custom") ? prev.split(":")[1] : state.profile.hoursPerDay;
+      const input = window.prompt(`Custom hours for ${date}:`, suggested);
+      if (input === null) return;
+      const hours = Number(input);
+      if (!Number.isFinite(hours) || hours < 0) { announce("Enter hours as a number (0 or more)."); return; }
+      state.dates[date] = `custom:${hours}`;
+    } else {
+      state.dates[date] = next;
+    }
     persist();
     render();
   });
@@ -292,13 +303,16 @@ if (root) {
         cells.push(`<span class="billing-day is-empty" aria-hidden="true"></span>`);
         continue;
       }
-      const status = state.dates[date] || "off";
+      const raw = state.dates[date] || "off";
+      const isCustom = typeof raw === "string" && raw.startsWith("custom");
+      const stateAttr = isCustom ? "custom" : raw;
+      const label = isCustom ? `${Number(raw.split(":")[1]) || 0}h` : raw;
       const weekday = new Date(year, month - 1, day).getDay();
       const weekend = weekday === 0 || weekday === 6 ? " is-weekend" : "";
       cells.push(
-        `<button type="button" class="billing-day${weekend}" role="gridcell" data-date="${date}" data-state="${status}" aria-label="${date}: ${status} day">
+        `<button type="button" class="billing-day${weekend}" role="gridcell" data-date="${date}" data-state="${stateAttr}" aria-label="${date}: ${label} day">
           <span class="billing-day-number">${day}</span>
-          <span class="billing-day-state">${status}</span>
+          <span class="billing-day-state">${label}</span>
         </button>`
       );
     }
