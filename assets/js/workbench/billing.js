@@ -125,15 +125,23 @@ if (root) {
     const day = event.target.closest(".billing-day[data-date]");
     if (!day) return;
     const date = day.dataset.date;
+
+    const adjust = event.target.closest("[data-adjust]");
+    if (adjust) {
+      const current = String(state.dates[date] || "");
+      const base = current.startsWith("custom") ? Number(current.split(":")[1]) || 0 : 0;
+      const hours = Math.max(0, Math.min(24, base + Number(adjust.dataset.adjust)));
+      state.dates[date] = `custom:${hours}`;
+      persist();
+      render();
+      return;
+    }
+
     const next = cycleDayState(state.dates[date]);
     if (next === "custom") {
       const prev = String(state.dates[date] || "");
-      const suggested = prev.startsWith("custom") ? prev.split(":")[1] : state.profile.hoursPerDay;
-      const input = window.prompt(`Custom hours for ${date}:`, suggested);
-      if (input === null) return;
-      const hours = Number(input);
-      if (!Number.isFinite(hours) || hours < 0) { announce("Enter hours as a number (0 or more)."); return; }
-      state.dates[date] = `custom:${hours}`;
+      const seed = prev.startsWith("custom") ? Number(prev.split(":")[1]) || 0 : Number(state.profile.hoursPerDay) || 0;
+      state.dates[date] = `custom:${seed}`;
     } else {
       state.dates[date] = next;
     }
@@ -306,13 +314,21 @@ if (root) {
       const raw = state.dates[date] || "off";
       const isCustom = typeof raw === "string" && raw.startsWith("custom");
       const stateAttr = isCustom ? "custom" : raw;
-      const label = isCustom ? `${Number(raw.split(":")[1]) || 0}h` : raw;
+      const customHours = isCustom ? Number(raw.split(":")[1]) || 0 : 0;
       const weekday = new Date(year, month - 1, day).getDay();
       const weekend = weekday === 0 || weekday === 6 ? " is-weekend" : "";
+      const foot = isCustom
+        ? `<span class="billing-day-custom">
+            <span class="cust-adj" data-adjust="-1" role="button" aria-label="Decrease hours">&#8722;</span>
+            <span class="cust-val">${customHours}h</span>
+            <span class="cust-adj" data-adjust="1" role="button" aria-label="Increase hours">+</span>
+          </span>`
+        : `<span class="billing-day-state">${raw}</span>`;
+      const aria = isCustom ? `${date}: ${customHours} custom hours` : `${date}: ${raw} day`;
       cells.push(
-        `<button type="button" class="billing-day${weekend}" role="gridcell" data-date="${date}" data-state="${stateAttr}" aria-label="${date}: ${label} day">
+        `<button type="button" class="billing-day${weekend}" role="gridcell" data-date="${date}" data-state="${stateAttr}" aria-label="${aria}">
           <span class="billing-day-number">${day}</span>
-          <span class="billing-day-state">${label}</span>
+          ${foot}
         </button>`
       );
     }

@@ -89,6 +89,10 @@ a.workbench-ledger-row .workbench-ledger-state{color:var(--green)}
 .billing-day[data-state="holiday"]{border-color:rgba(194,65,12,.35);background:repeating-linear-gradient(135deg,rgba(194,65,12,.08),rgba(194,65,12,.08) 5px,transparent 5px,transparent 10px);color:var(--accent)}
 .billing-day[data-state="off"]{color:var(--ink4)}
 .billing-day[data-state="custom"]{border-color:rgba(29,78,216,.36);background:rgba(29,78,216,.1);color:#1741ba}
+.billing-day-custom{display:flex;align-items:center;justify-content:space-between;gap:.1rem;width:100%;font-family:var(--mono)}
+.billing-day-custom .cust-val{font-size:.6rem;font-weight:500;color:#1741ba;white-space:nowrap}
+.billing-day-custom .cust-adj{display:grid;place-items:center;width:15px;height:15px;border-radius:3px;color:var(--ink3);font-size:.72rem;line-height:1;cursor:pointer;transition:.12s}
+.billing-day-custom .cust-adj:hover{background:rgba(29,78,216,.16);color:#1741ba}
 .billing-day.is-weekend .billing-day-number{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
 .calendar-actions{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
 .workbench-button{min-height:36px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--ink2);padding:.45rem .7rem;font-family:var(--mono);font-size:.61rem;cursor:pointer;transition:.14s}
