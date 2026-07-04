@@ -1,0 +1,28 @@
+{% assign cl_latest = site.data.changelog | first %}
+<div class="cl-backdrop" id="cl-backdrop" role="dialog" aria-modal="true" aria-labelledby="cl-title" hidden>
+  <div class="cl-panel">
+    <div class="cl-head">
+      <div>
+        <h2 id="cl-title">Changelog</h2>
+        <div class="cl-sub">v{{ cl_latest.version }} · current</div>
+      </div>
+      <button type="button" class="cl-close" id="cl-close" aria-label="Close changelog">✕</button>
+    </div>
+    <div class="cl-body">
+      {% for entry in site.data.changelog %}
+      <div class="cl-entry">
+        <div class="cl-top">
+          <span class="cl-v">v{{ entry.version }}</span>
+          {% if entry.major %}<span class="cl-major">major</span>{% endif %}
+          <span class="cl-date">{{ entry.date }} PHT</span>
+        </div>
+        <div class="cl-title">{{ entry.title | escape }}</div>
+        <p class="cl-text">{{ entry.text | escape }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="cl-foot">
+      <span>Times in Asia/Manila (PHT)</span>
+    </div>
+  </div>
+</div>

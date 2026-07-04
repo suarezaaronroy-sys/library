@@ -2,6 +2,8 @@
   <div class="shell footer-line">
     <div>© <span id="yr"></span> {{ site.title }} · operational systems builder · <a href="{{ '/feed.xml' | relative_url }}" class="footer-link">RSS</a></div>
     <div class="footer-links">
+      {% assign cl_latest = site.data.changelog | first %}
+      <button type="button" class="ver-chip" id="cl-chip" aria-haspopup="dialog">changelog <b>v{{ cl_latest.version }}</b></button>
       <span>{{ site.author.location }}</span>
       <a href="mailto:{{ site.author.email }}" class="footer-link">Email</a>
       <a href="{{ site.author.linkedin }}" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>

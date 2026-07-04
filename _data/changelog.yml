@@ -1,0 +1,107 @@
+# Site changelog — newest first. Rendered by _includes/changelog.html.
+# major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "3.5"
+  major: false
+  date: "2026-07-05 · 02:10"
+  title: "QA hardening"
+  text: "A full audit of the Billing Workspace, then the fixes: a calculator crash-loop that could block saved data from loading, silent period-date corruption, low-contrast small text, negative-rate and empty-export edge cases, keyboard access for the custom-hours stepper. Every repair verified live."
+- version: "3.4"
+  major: false
+  date: "2026-07-03 · 21:10"
+  title: "Invoice: custom hours"
+  text: "A fifth “custom” state joined the calendar’s click cycle, with an inline − h + stepper right in the day cell so anyone whose hours vary can bill exact hours per day. Totals count them precisely in both hourly and daily modes."
+- version: "3.3"
+  major: false
+  date: "2026-07-03 · 05:55"
+  title: "The billing calculator"
+  text: "A calculator arrived beside the personal budget — rebuilt around a strong engine: scientific functions, currency-aware math on your own manual rates, and named variables. Local-first, tested."
+- version: "3.2"
+  major: false
+  date: "2026-07-02 · 14:57"
+  title: "Workbench hardening and QA"
+  text: "A quality pass across the live site: mobile overflow and metadata fixed, a written QA handoff recorded, and favicons declared on the standalone grimoire pages."
+- version: "3.1"
+  major: false
+  date: "2026-07-01 · 20:32"
+  title: "The Workbench, expanded"
+  text: "More operational tools, a whiteboard reworked around editable templates with smoother interactions, and additional hand tools for everyday work."
+- version: "3.0"
+  major: true
+  date: "2026-07-01 · 00:33"
+  title: "The Operator Workbench"
+  text: "A new wing of the site: local-first instruments, starting with billing, that run entirely in your browser with nothing leaving the page. The Library captures knowledge; the Workbench removes the busywork."
+- version: "2.1"
+  major: false
+  date: "2026-06-29 · 22:57"
+  title: "Identity and polish"
+  text: "SEO and discovery metadata repaired, a portrait sign-off blended into a full-width band on About, a live world-clock added to Contact, and the G017 essay tightened."
+- version: "2.0"
+  major: true
+  date: "2026-06-29 · 03:42"
+  title: "The redesign"
+  text: "The entire library was redesigned — a cleaner, more considered look and structure that set the visual language everything since has followed."
+- version: "1.5"
+  major: false
+  date: "2026-06-26 · 21:28"
+  title: "G017, the quiet trades"
+  text: "A new grimoire — an essay on the quiet trades — added and brought fully in line with the library’s chrome and voice."
+- version: "1.4"
+  major: false
+  date: "2026-06-23 · 08:28"
+  title: "The application grimoires"
+  text: "Two flagship pieces built for job interviews arrived as gated previews: G015 “The GHL Admin’s Build” and G016 “Lessons from a Bespoke Project Business.” The two were rebuilt on a shared design system so the pair match, and kept unlisted."
+- version: "1.3"
+  major: false
+  date: "2026-06-14 · 10:14"
+  title: "Depth and polish"
+  text: "The reading-guide “ghost” refined and fixed; editorial passes gave grimoires a consistent voice; thin modules expanded to full depth; nav and layout bugs squashed; a “Start Here” routing block added."
+- version: "1.2"
+  major: false
+  date: "2026-06-13 · 21:26"
+  title: "Remote Work 101"
+  text: "Grimoire 014 added as a 30-chapter field manual — the front gate for newcomers — indexed, cross-linked, illustrated, and capped with a visual “Speedrun.” The favicon became an open book."
+- version: "1.1"
+  major: false
+  date: "2026-06-13 · 17:48"
+  title: "More manuals, and a personality"
+  text: "Grimoires 012 and 013 published, a light reading-guide personality layer added, layouts unified, and SEO plus “Related Grimoires” links rolled out across the shelf."
+- version: "1.0"
+  major: true
+  date: "2026-06-13 · 05:59"
+  title: "The Library launches"
+  text: "Everything moved to a dedicated repository and relaunched as “The Library”: grimoires 001–008, the money/work/organizations trilogy (009–011), and eleven field notes, under a uniform look with a full SEO foundation. The old site was retired the same day behind redirects that preserve every URL."
+- version: "0.7"
+  major: false
+  date: "2026-06-12 · 22:26"
+  title: "The shelf nears its final shape"
+  text: "More grimoires given their lasting names — agentic AI, payment processing, orchestration layer, organizational physics — the GHL manual bumped to v4, and metadata cleaned up."
+- version: "0.6"
+  major: false
+  date: "2026-05-22 · 00:12"
+  title: "Shared chrome, cleaner shell"
+  text: "Projects and About rebuilt on shared header/footer includes with a reworked stylesheet; navigation simplified. The site began to feel like one coherent thing."
+- version: "0.5"
+  major: false
+  date: "2026-05-06 · 00:05"
+  title: "The field notes"
+  text: "An articles system: a template plus ~17 short essays from real ops work — the single source of truth, the five-minute rule, institutional memory, builder-to-architect, and more."
+- version: "0.4"
+  major: false
+  date: "2026-04-27 · 17:58"
+  title: "Structure and character"
+  text: "An ambient-sound page, a theming system, a UI-behavior script, a semantic-HTML cleanup, a README, and a reorganized numbered shelf. The first touches of personality."
+- version: "0.3"
+  major: false
+  date: "2026-04-18 · 18:02"
+  title: "The first grimoires"
+  text: "The first two build write-ups: a full-stack CRM engine (a construction build, then “v8.1”) and the Dual Wing rental marketing engine — the earliest receipts — renamed into the 001 / 002 scheme still used today."
+- version: "0.2"
+  major: false
+  date: "2026-03-11 · 22:25"
+  title: "Analytics and navigation"
+  text: "A revamp added Google Analytics, hash-based window navigation, and the SEO bones — a sitemap and robots file. The interactive “notebook” concept matured."
+- version: "0.1"
+  major: true
+  date: "2026-03-02 · 10:12"
+  title: "Genesis"
+  text: "The very first version went public: an experimental, interactive “notebook window” homepage. The seed of everything that followed."
