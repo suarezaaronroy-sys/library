@@ -15,16 +15,20 @@ layout: default
   </header>
 
   <nav class="workbench-nav" aria-label="Workbench navigation">
-    <a href="{{ '/workbench/' | relative_url }}"{% if page.workspace == 'index' %} aria-current="page"{% endif %}>Desk</a>
-    <a href="{{ '/workbench/billing/' | relative_url }}"{% if page.workspace == 'billing' %} aria-current="page"{% endif %}>Billing</a>
-    <a href="{{ '/workbench/scheduling/' | relative_url }}"{% if page.workspace == 'scheduling' %} aria-current="page"{% endif %}>Scheduling</a>
-    <a href="{{ '/workbench/writing/' | relative_url }}"{% if page.workspace == 'writing' %} aria-current="page"{% endif %}>Writing</a>
-    <a href="{{ '/workbench/marketing/' | relative_url }}"{% if page.workspace == 'marketing' %} aria-current="page"{% endif %}>Marketing</a>
-    <a href="{{ '/workbench/crm/' | relative_url }}"{% if page.workspace == 'crm' %} aria-current="page"{% endif %}>CRM</a>
-    <a href="{{ '/workbench/library-tools/' | relative_url }}"{% if page.workspace == 'library-tools' %} aria-current="page"{% endif %}>Library tools</a>
-    <a href="{{ '/workbench/decisions/' | relative_url }}"{% if page.workspace == 'decisions' %} aria-current="page"{% endif %}>Decisions</a>
-    <a href="{{ '/workbench/whiteboard/' | relative_url }}"{% if page.workspace == 'canvas' %} aria-current="page"{% endif %}>Whiteboard</a>
-    <a href="{{ '/workbench/resources/' | relative_url }}"{% if page.workspace == 'resources' %} aria-current="page"{% endif %}>Resources</a>
+    <a href="{{ '/workbench/' | relative_url }}"{% if page.workspace == 'index' %} aria-current="page"{% endif %} title="Overview of every workspace, plus reporting templates">Desk</a>
+    <span class="workbench-nav-group" aria-hidden="true">Operations</span>
+    <a href="{{ '/workbench/billing/' | relative_url }}"{% if page.workspace == 'billing' %} aria-current="page"{% endif %} title="Billing calendar, rates, currency estimates, invoice-ready exports">Billing</a>
+    <a href="{{ '/workbench/scheduling/' | relative_url }}"{% if page.workspace == 'scheduling' %} aria-current="page"{% endif %} title="Clock, stopwatch, countdowns, timezone overlap">Scheduling</a>
+    <a href="{{ '/workbench/marketing/' | relative_url }}"{% if page.workspace == 'marketing' %} aria-current="page"{% endif %} title="Campaign naming, UTM builder, funnel math, ROI models">Marketing</a>
+    <a href="{{ '/workbench/crm/' | relative_url }}"{% if page.workspace == 'crm' %} aria-current="page"{% endif %} title="Pipeline simulation, workflow mapping, JSON / regex / request tools">CRM</a>
+    <span class="workbench-nav-group" aria-hidden="true">Writing desk</span>
+    <a href="{{ '/workbench/writing/' | relative_url }}"{% if page.workspace == 'writing' %} aria-current="page"{% endif %} title="Formatted notepad, snippets, text cleanup, Markdown preview">Writing</a>
+    <a href="{{ '/workbench/library-tools/' | relative_url }}"{% if page.workspace == 'library-tools' %} aria-current="page"{% endif %} title="Grimoire and Note builders, metadata, related-link helpers">Library tools</a>
+    <span class="workbench-nav-group" aria-hidden="true">Thinking</span>
+    <a href="{{ '/workbench/decisions/' | relative_url }}"{% if page.workspace == 'decisions' %} aria-current="page"{% endif %} title="Decision records, changed beliefs, outcomes, future review">Decisions</a>
+    <a href="{{ '/workbench/whiteboard/' | relative_url }}"{% if page.workspace == 'canvas' %} aria-current="page"{% endif %} title="Editable flow starters for quick mapping and dry runs">Whiteboard</a>
+    <span class="workbench-nav-group" aria-hidden="true">Reference</span>
+    <a href="{{ '/workbench/resources/' | relative_url }}"{% if page.workspace == 'resources' %} aria-current="page"{% endif %} title="Curated tools, favorites, recents, searchable metadata">Resources</a>
   </nav>
 
   <div class="workbench-content">

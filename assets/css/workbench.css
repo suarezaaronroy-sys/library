@@ -507,3 +507,11 @@ textarea.tool-output{resize:vertical}
   .calc-shell{grid-template-columns:1fr}
   .calc-panel+.calc-panel{border-left:0;border-top:1px solid var(--border)}
 }
+
+/* ── grouped nav + desk ledger groups ── */
+.workbench-nav-group{flex-shrink:0;align-self:center;margin:0 .15rem 0 .9rem;padding-left:.9rem;border-left:1px solid var(--border);color:var(--ink4);font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.workbench-nav-group:first-of-type{border-left:0}
+.workbench-ledger-group{display:flex;align-items:baseline;gap:.7rem;padding:1.25rem 0 .45rem;border-bottom:1px solid var(--border)}
+.workbench-ledger-group span{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.workbench-ledger-group em{font-style:normal;color:var(--ink3);font-size:.74rem}
+@media(max-width:760px){.workbench-nav-group{margin-left:.5rem;padding-left:.5rem}.workbench-ledger-group{flex-direction:column;gap:.15rem}}
