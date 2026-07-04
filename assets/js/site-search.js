@@ -1,11 +1,16 @@
 import {
   escapeHtml,
   getRegistry,
-  openResource,
-  searchResources
+  openResource
 } from "./workbench/registry.mjs?v=2";
+import {
+  groupResults,
+  highlight,
+  makeSnippet,
+  searchEntries,
+  tokenize
+} from "./workbench/search-core.mjs?v=1";
 
-const registry = getRegistry();
 const config = readJson("#workbench-config", { baseUrl: "" });
 const sitePages = [
   page("site-home", "Home", "/", "The front page of Aaron Suarez's working library.", ["home"], "Site › Home"),
@@ -14,11 +19,18 @@ const sitePages = [
   page("site-notes", "Notes", "/notes/", "Short field notes from systems and operational work.", ["notes", "writing"], "Library › Notes"),
   page("site-contact", "Contacts", "/contact/", "Direct and studio routes for working together.", ["contact", "email"], "Site › Contacts")
 ];
-const searchable = [...sitePages, ...registry];
+
+// Registry note entries are shallow (title + lede); the fetched index carries
+// full-text versions of the same notes, so registry notes are filtered out.
+const registry = getRegistry().filter((item) => !item.id.startsWith("note-"));
+let searchable = [...sitePages, ...registry];
+let indexLoaded = false;
+let indexFailed = false;
+
 const dialog = document.querySelector("#site-search");
 const query = document.querySelector("#site-search-query");
 const results = document.querySelector("#site-search-results");
-let matches = [];
+let flat = [];
 let activeIndex = 0;
 
 if (dialog && query && results) {
@@ -38,15 +50,15 @@ if (dialog && query && results) {
   query.addEventListener("keydown", (event) => {
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      activeIndex = Math.min(activeIndex + 1, matches.length - 1);
+      activeIndex = Math.min(activeIndex + 1, flat.length - 1);
       render();
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       activeIndex = Math.max(activeIndex - 1, 0);
       render();
-    } else if (event.key === "Enter" && matches[activeIndex]) {
+    } else if (event.key === "Enter" && flat[activeIndex]) {
       event.preventDefault();
-      choose(matches[activeIndex]);
+      choose(flat[activeIndex]);
     }
   });
   results.addEventListener("click", (event) => {
@@ -63,25 +75,68 @@ function openSearch() {
   if (!dialog.open) dialog.showModal();
   query.value = "";
   activeIndex = 0;
+  loadIndex();
   render();
   query.focus();
 }
 
+// The full-text index (notes content, grimoire sections, changelog) is
+// fetched once, on first open — pages stay light until search is used.
+async function loadIndex() {
+  if (indexLoaded || indexFailed) return;
+  try {
+    const response = await fetch(`${config.baseUrl}/search-index.json`.replace(/\/{2,}/g, "/"), { cache: "no-cache" });
+    if (!response.ok) throw new Error(String(response.status));
+    const data = await response.json();
+    searchable = [...searchable, ...(data.entries || [])];
+    indexLoaded = true;
+    if (dialog.open) render();
+  } catch (err) {
+    indexFailed = true; // registry-only search still works
+    console.error("Search index unavailable:", err);
+  }
+}
+
 function render() {
-  matches = searchResources(searchable, query.value).slice(0, 14);
-  if (activeIndex >= matches.length) activeIndex = 0;
-  results.innerHTML = matches.length ? matches.map((item, index) => `
+  const value = query.value;
+  const tokens = tokenize(value);
+  flat = [];
+  if (!tokens.length) {
+    const defaults = [...sitePages, ...registry.slice(0, 9)];
+    flat = defaults;
+    results.innerHTML = defaults.map((item, index) => renderResult(item, index, [])).join("")
+      + `<p class="site-search-hint">Type to search tools, Grimoire chapters, Notes${indexLoaded ? "" : "…"} — ↑↓ to move, Enter to open.</p>`;
+    return;
+  }
+  const matched = searchEntries(searchable, value, 40);
+  const groups = groupResults(matched, 6);
+  if (activeIndex >= matched.length) activeIndex = 0;
+  if (!groups.length) {
+    results.innerHTML = `<p class="site-search-empty">No matching path found${indexFailed ? " (deep index unavailable)" : ""}.</p>`;
+    return;
+  }
+  let cursor = 0;
+  results.innerHTML = groups.map((group) => {
+    const rows = group.items.map((item) => renderResult(item, cursor++, tokens)).join("");
+    flat.push(...group.items);
+    return `<div class="site-search-group">${escapeHtml(group.label)}</div>${rows}`;
+  }).join("");
+}
+
+function renderResult(item, index, tokens) {
+  const snippet = item.content ? makeSnippet(item.content, tokens) : "";
+  const detail = snippet || item.description || "";
+  return `
     <button type="button" class="site-search-result${index === activeIndex ? " is-active" : ""}" data-search-result="${escapeHtml(item.id)}">
       <span class="site-search-crumb">${escapeHtml(breadcrumb(item))}</span>
-      <strong>${escapeHtml(item.name)}</strong>
-      <small>${escapeHtml(item.description)}</small>
-    </button>`).join("") : `<p class="site-search-empty">No matching path found.</p>`;
+      <strong>${highlight(escapeHtml(item.name), tokens)}</strong>
+      <small>${highlight(escapeHtml(detail), tokens)}</small>
+    </button>`;
 }
 
 function breadcrumb(item) {
   if (item.breadcrumb) return item.breadcrumb;
   if (item.id.startsWith("grimoire-")) return `Library › Grimoires › G${item.id.replace("grimoire-", "")}`;
-  if (item.id.startsWith("note-")) return "Library › Notes";
   if (item.kind === "external") return `Resource Hub › ${item.category} › External`;
   if (item.url.startsWith("/workbench/")) return `Workbench › ${item.category}`;
   return item.category;
@@ -90,7 +145,11 @@ function breadcrumb(item) {
 function choose(item) {
   if (!item) return;
   dialog.close();
-  if (item.id.startsWith("site-")) {
+  if (item.kind === "changelog") {
+    const chip = document.getElementById("cl-chip");
+    if (chip) { chip.click(); return; }
+  }
+  if (item.id.startsWith("site-") || ["note", "grimoire-section", "changelog"].includes(item.kind)) {
     window.location.href = `${config.baseUrl}${item.url}`.replace(/\/{2,}/g, "/");
   } else {
     openResource(item);

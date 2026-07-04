@@ -1,0 +1,45 @@
+---
+layout: null
+sitemap: false
+permalink: /search-index.json
+---
+{% assign notes = site.notes | sort: "date" | reverse %}
+{
+"generated": {{ site.time | date_to_xmlschema | jsonify }},
+"entries": [
+{% for note in notes %}
+  {"id":{{ note.slug | prepend: "note-" | jsonify }},
+   "name":{{ note.title | jsonify }},
+   "url":{{ note.url | jsonify }},
+   "kind":"note",
+   "category":"Notes",
+   "breadcrumb":"Library › Notes",
+   "description":{{ note.lede | default: note.description | default: "" | jsonify }},
+   "tags":["note",{{ note.category | default: "" | downcase | jsonify }}],
+   "content":{{ note.content | markdownify | strip_html | normalize_whitespace | truncate: 1400, "" | jsonify }}},
+{% endfor %}
+{% for section in site.data.grimoire_sections %}
+  {% assign crumb = "Grimoires › G" | append: section.num %}
+  {% assign gtag = "g" | append: section.num %}
+  {"id":{{ section.href | append: "#" | append: section.anchor | jsonify }},
+   "name":{{ section.title | jsonify }},
+   "url":{{ section.href | append: "#" | append: section.anchor | jsonify }},
+   "kind":"grimoire-section",
+   "category":"Grimoires",
+   "breadcrumb":{{ crumb | jsonify }},
+   "description":{{ section.grimoire | jsonify }},
+   "tags":["grimoire","section",{{ gtag | jsonify }}]},
+{% endfor %}
+{% for entry in site.data.changelog %}
+  {% assign vname = "v" | append: entry.version | append: " — " | append: entry.title %}
+  {"id":{{ entry.version | prepend: "changelog-" | jsonify }},
+   "name":{{ vname | jsonify }},
+   "url":"/",
+   "kind":"changelog",
+   "category":"Changelog",
+   "breadcrumb":{{ entry.date | prepend: "Changelog › " | jsonify }},
+   "description":{{ entry.text | jsonify }},
+   "tags":["changelog","release","version"]}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]
+}
