@@ -1,7 +1,7 @@
 ---
 layout: workbench
 title: Billing Workspace
-description: "A local-first billing calendar, rate calculator, currency estimator, and invoice summary tool."
+description: "A local-first billing calendar, rate calculator, currency estimator, and invoice summary tool for freelancers — turn any billing period into invoice-ready numbers."
 permalink: /workbench/billing/
 workbench: true
 workspace: billing
@@ -59,7 +59,7 @@ workbench_script: /assets/js/workbench/billing.js
         <option>Debt</option><option>Family</option><option>Other</option>
       </select></label>
       <label class="workbench-field"><span>Amount</span><input name="amount" type="number" min="0" step="0.01" required></label>
-      <label class="workbench-field"><span>Due day</span><input name="dueDay" type="number" min="1" max="28" value="1" required></label>
+      <label class="workbench-field"><span>Due day (1–28)</span><input name="dueDay" type="number" min="1" max="28" value="1" required></label>
       <button class="workbench-button primary" type="submit">Add expense</button>
     </form>
     <div id="personal-expense-list" class="expense-list" aria-live="polite"></div>

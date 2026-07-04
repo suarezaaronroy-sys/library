@@ -212,6 +212,7 @@ var BASE = 'PHP';
 
   /* ---------------- number formatting ---------------- */
   function fmt(n){
+    if(typeof n!=='number' || Number.isNaN(n)) return '—';
     if(!isFinite(n)) return n>0?'∞':'-∞';
     if(n===0) return '0';
     var abs=Math.abs(n), s;

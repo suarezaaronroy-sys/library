@@ -14,8 +14,8 @@ import {
   number
 } from "./billing-core.mjs?v=5";
 import { loadState, saveState } from "./store.js?v=4";
-import "./personal-budget.js?v=1";
-import "./calculator.js?v=2";
+import "./personal-budget.js?v=2";
+import "./calculator.js?v=3";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
 const today = new Date();
@@ -77,13 +77,20 @@ if (root) {
   let toastTimer;
   let budgetToastTimer;
 
-  ensurePeriod();
-  hydrateForm();
-  hydrateBudget();
-  startInput.value = state.period.start;
-  endInput.value = state.period.end;
-  render();
-  renderBudget();
+  // Isolated so a bad saved state in one panel can never leave the whole
+  // workspace un-hydrated (which silently overwrites good data on next edit).
+  try {
+    ensurePeriod();
+    hydrateForm();
+    hydrateBudget();
+    startInput.value = state.period.start;
+    endInput.value = state.period.end;
+    render();
+    renderBudget();
+  } catch (err) {
+    console.error("Billing workspace failed to hydrate saved state:", err);
+    announce("Couldn't load saved data. Avoid editing until the page is reloaded.");
+  }
 
   document.querySelectorAll("[data-billing-view]").forEach((button) => {
     button.addEventListener("click", () => switchBillingView(button.dataset.billingView));
@@ -94,6 +101,11 @@ if (root) {
     state.profile.rate = Number(state.profile.rate);
     state.profile.hoursPerDay = Number(state.profile.hoursPerDay);
     state.profile.fxRate = Number(state.profile.fxRate);
+    if (state.profile.rate < 0) {
+      state.profile.rate = 0;
+      form.elements.namedItem("rate").value = "0";
+      announce("Rate can't be negative - reset to 0.");
+    }
     persist();
     renderSummary();
   });
@@ -149,6 +161,14 @@ if (root) {
     render();
   });
 
+  // Keyboard access for the custom-hours +/- controls (role="button" spans).
+  calendar.addEventListener("keydown", (event) => {
+    if ((event.key === "Enter" || event.key === " ") && event.target.classList && event.target.classList.contains("cust-adj")) {
+      event.preventDefault();
+      event.target.click();
+    }
+  });
+
   root.addEventListener("click", async (event) => {
     const action = event.target.closest("[data-action]")?.dataset.action;
     if (!action) return;
@@ -175,9 +195,17 @@ if (root) {
     } else if (action === "print-invoice") {
       printArtifact(document.querySelector("#invoice-output").value, "Invoice");
     } else if (action === "download-invoice") {
+      if (!calculateBilling(state.profile, periodDates()).billableDays) {
+        announce("Nothing billable yet - mark days on the calendar first.");
+        return;
+      }
       downloadFile(document.querySelector("#invoice-output").value, invoiceFileName("txt"), "text/plain");
       announce("Invoice text prepared.");
     } else if (action === "download-csv") {
+      if (!calculateBilling(state.profile, periodDates()).billableDays) {
+        announce("Nothing billable yet - mark days on the calendar first.");
+        return;
+      }
       downloadFile(csvExport(), `billing-${state.period.start}-to-${state.period.end}.csv`, "text/csv");
       announce("CSV prepared.");
     } else if (action === "export-json") {
@@ -232,8 +260,14 @@ if (root) {
   function updatePeriod(changed) {
     if (!startInput.value || !endInput.value) return;
     if (startInput.value > endInput.value) {
-      if (changed === "start") endInput.value = startInput.value;
-      else startInput.value = endInput.value;
+      // Invalid range: revert the edit instead of silently rewriting the
+      // other bound (which used to corrupt the saved period start).
+      startInput.value = state.period.start;
+      endInput.value = state.period.end;
+      announce(changed === "end"
+        ? "Period end can't be before the start - change reverted."
+        : "Period start can't be after the end - change reverted.");
+      return;
     }
     state.period = { start: startInput.value, end: endInput.value };
     ensurePeriod();
@@ -319,14 +353,14 @@ if (root) {
       const weekend = weekday === 0 || weekday === 6 ? " is-weekend" : "";
       const foot = isCustom
         ? `<span class="billing-day-custom">
-            <span class="cust-adj" data-adjust="-1" role="button" aria-label="Decrease hours">&#8722;</span>
+            <span class="cust-adj" data-adjust="-1" role="button" tabindex="0" aria-label="Decrease hours">&#8722;</span>
             <span class="cust-val">${customHours}h</span>
-            <span class="cust-adj" data-adjust="1" role="button" aria-label="Increase hours">+</span>
+            <span class="cust-adj" data-adjust="1" role="button" tabindex="0" aria-label="Increase hours">+</span>
           </span>`
         : `<span class="billing-day-state">${raw}</span>`;
       const aria = isCustom ? `${date}: ${customHours} custom hours` : `${date}: ${raw} day`;
       cells.push(
-        `<button type="button" class="billing-day${weekend}" role="gridcell" data-date="${date}" data-state="${stateAttr}" aria-label="${aria}">
+        `<button type="button" class="billing-day${weekend}" data-date="${date}" data-state="${stateAttr}" aria-label="${aria}">
           <span class="billing-day-number">${day}</span>
           ${foot}
         </button>`
@@ -338,7 +372,7 @@ if (root) {
       <div class="calendar-weekdays" aria-hidden="true">
         <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
       </div>
-      <div class="billing-calendar" role="grid" aria-label="${monthLabel(monthKey)} billing days">${cells.join("")}</div>
+      <div class="billing-calendar" role="group" aria-label="${monthLabel(monthKey)} billing days">${cells.join("")}</div>
     </section>`;
   }
 
@@ -417,7 +451,13 @@ if (root) {
   }
 
   function csvCell(value) {
-    return `"${String(value ?? "").replaceAll('"', '""')}"`;
+    let cell = String(value ?? "");
+    // Guard against spreadsheet formula injection for text cells that start
+    // with a formula trigger character (=, +, @, tab) or a non-numeric "-".
+    if (/^[=+@\t\r]/.test(cell) || (/^-/.test(cell) && !/^-?\d+(\.\d+)?$/.test(cell))) {
+      cell = `'${cell}`;
+    }
+    return `"${cell.replaceAll('"', '""')}"`;
   }
 
   function invoiceFileName(extension) {

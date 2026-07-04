@@ -28,8 +28,14 @@ if (root) {
   const output = document.querySelector("#personal-budget-output");
   const status = document.querySelector("#personal-budget-status");
 
-  hydrateProfile();
-  render();
+  // Isolated so a bad saved state here can never block the other billing
+  // widgets (this module is imported by billing.js before it runs).
+  try {
+    hydrateProfile();
+    render();
+  } catch (err) {
+    console.error("Personal budget failed to hydrate saved state:", err);
+  }
 
   profileForm.addEventListener("input", () => {
     state.profile = profileFromForm();
@@ -70,8 +76,12 @@ if (root) {
     if (action === "txt") download(output.value, filename("txt"), "text/plain");
     if (action === "csv") download(expenseCsv(), filename("csv"), "text/csv");
     if (action === "ics") {
-      download(buildExpenseCalendar(state.profile, state.expenses), filename("ics"), "text/calendar");
-      status.textContent = state.expenses.length ? "Recurring calendar prepared" : "Calendar contains no expenses yet";
+      if (!state.expenses.length) {
+        status.textContent = "Add an expense with a due day first - nothing to export yet";
+      } else {
+        download(buildExpenseCalendar(state.profile, state.expenses), filename("ics"), "text/calendar");
+        status.textContent = "Recurring calendar prepared";
+      }
     }
     if (action === "json") {
       download(JSON.stringify({

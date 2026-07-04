@@ -1,4 +1,4 @@
-import { evaluate, isReserved, fmt, group, CUR_CODES, BASE, DEFAULT_RATES } from "./calculator-core.mjs?v=2";
+import { evaluate, isReserved, fmt, group, CUR_CODES, BASE, DEFAULT_RATES } from "./calculator-core.mjs?v=3";
 
 (function(){
   "use strict";
@@ -21,6 +21,10 @@ var root=document.querySelector('[data-calc-root]');
 
   var state={ expr:'', angle:'deg', mode:'standard', mem:0, memSet:false, ans:0, justEvaluated:false };
   var history=load(K.hist, []);
+  // Non-finite results (e.g. 1/0 -> Infinity) serialize to null in JSON and
+  // previously crashed renderHistory on every load. Drop invalid entries.
+  if(!Array.isArray(history)) history=[];
+  history=history.filter(function(h){ return h && typeof h.v==='number' && isFinite(h.v); });
   var vars=load(K.vars, {});
   var rates=Object.assign({}, DEFAULT_RATES, load(K.rates, {}));
   var displayCur=load(K.disp, BASE);
@@ -111,6 +115,7 @@ var root=document.querySelector('[data-calc-root]');
   }
 
   function pushHistory(expr, val, cur){
+    if(typeof val!=='number' || !isFinite(val)) return; // never persist non-finite values
     history.unshift({e:expr, v:val, c:!!cur, d:displayCur, t:Date.now()});
     history=history.slice(0,50); store(K.hist, history); renderHistory();
   }
@@ -273,12 +278,19 @@ var root=document.querySelector('[data-calc-root]');
   }
 
   /* ---- boot ---- */
-  renderKeys(el.keys, MAIN);
-  renderKeys(el.sci, SCI);
-  renderCurRow();
-  renderVars();
-  renderRates();
-  renderHistory();
-  render();
-  selfTest();
+  // Isolated so a calculator failure can never block other workbench widgets
+  // (billing.js imports this module; an uncaught throw here would abort it).
+  try{
+    renderKeys(el.keys, MAIN);
+    renderKeys(el.sci, SCI);
+    renderCurRow();
+    renderVars();
+    renderRates();
+    renderHistory();
+    render();
+    selfTest();
+  }catch(err){
+    console.error('Calculator failed to initialise:', err);
+    if(el.selftest){ el.selftest.textContent='self-check: failed to start'; el.selftest.classList.add('bad'); }
+  }
 })();
