@@ -1106,5 +1106,18 @@ function updateNav() {
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 </script>
+<!-- anchor-fix: make #section links land correctly despite smooth-scroll cancellation (added by search overhaul; keep before </body>) -->
+<style>[id]{scroll-margin-top:84px}</style>
+<script>
+(function(){
+  if(!location.hash) return;
+  addEventListener('load', function(){
+    setTimeout(function(){
+      var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if(t) t.scrollIntoView({behavior:'instant', block:'start'});
+    }, 80);
+  });
+})();
+</script>
 </body>
 </html>

@@ -1503,5 +1503,18 @@ details .d-body{padding:0 1rem 1rem;font-size:13px;color:var(--ink2)}
   }catch(err){}
 })();
 </script>
+<!-- anchor-fix: make #section links land correctly despite smooth-scroll cancellation (added by search overhaul; keep before </body>) -->
+<style>[id]{scroll-margin-top:84px}</style>
+<script>
+(function(){
+  if(!location.hash) return;
+  addEventListener('load', function(){
+    setTimeout(function(){
+      var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if(t) t.scrollIntoView({behavior:'instant', block:'start'});
+    }, 80);
+  });
+})();
+</script>
 </body>
 </html>
