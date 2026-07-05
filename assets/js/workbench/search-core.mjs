@@ -36,9 +36,7 @@ const FIELD_WEIGHTS = [
 ];
 
 // Score one entry against pre-tokenized query words.
-// Every token must land somewhere (typo-tolerant on name) or score is 0.
-export function scoreEntry(entry, tokens) {
-  if (!tokens.length) return 0;
+function scoreTokens(entry, tokens) {
   const cache = {};
   const words = (field) => {
     if (!cache[field]) {
@@ -48,6 +46,7 @@ export function scoreEntry(entry, tokens) {
     return cache[field];
   };
   let total = 0;
+  let matched = 0;
   for (const token of tokens) {
     let best = 0;
     for (const [field, weight] of FIELD_WEIGHTS) {
@@ -60,22 +59,44 @@ export function scoreEntry(entry, tokens) {
       }
       if (best >= weight * 2) break; // exact hit at this weight tier — done
     }
-    if (!best) return 0;
-    total += best;
+    if (best) { matched += 1; total += best; }
   }
-  if (words("name").join(" ") === tokens.join(" ")) total += 8;
-  return total;
+  if (matched === tokens.length && words("name").join(" ") === tokens.join(" ")) total += 8;
+  return { total, matched };
+}
+
+// Strict scoring: every token must land somewhere (typo-tolerant on name).
+export function scoreEntry(entry, tokens) {
+  if (!tokens.length) return 0;
+  const { total, matched } = scoreTokens(entry, tokens);
+  return matched === tokens.length ? total : 0;
+}
+
+// Strict pass first; when nothing matches every word, fall back to
+// closest matches — most words matched wins, then score.
+export function searchWithMeta(entries, query, limit = 40) {
+  const tokens = tokenize(query);
+  if (!tokens.length) return { results: [], partial: false };
+  const strict = rank(entries, tokens, limit, tokens.length);
+  if (strict.length) return { results: strict, partial: false };
+  const minimum = Math.max(1, Math.ceil(tokens.length / 2));
+  return { results: rank(entries, tokens, limit, minimum), partial: true };
+}
+
+function rank(entries, tokens, limit, minimumMatched) {
+  return entries
+    .map((entry) => ({ entry, ...scoreTokens(entry, tokens) }))
+    .filter((item) => item.matched >= minimumMatched && item.total > 0)
+    .sort((a, b) => b.matched - a.matched || b.total - a.total
+      || String(a.entry.name).localeCompare(String(b.entry.name)))
+    .slice(0, limit)
+    .map((item) => item.entry);
 }
 
 export function searchEntries(entries, query, limit = 40) {
   const tokens = tokenize(query);
   if (!tokens.length) return [];
-  return entries
-    .map((entry) => ({ entry, score: scoreEntry(entry, tokens) }))
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score || String(a.entry.name).localeCompare(String(b.entry.name)))
-    .slice(0, limit)
-    .map((item) => item.entry);
+  return rank(entries, tokens, limit, tokens.length);
 }
 
 // Context snippet around the first matched token in long text.

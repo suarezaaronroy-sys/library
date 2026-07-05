@@ -76,3 +76,14 @@ test("groups map kinds to labels in stable order", () => {
   const grouped = groupResults(entries);
   assert.deepEqual(grouped.map((g) => g.label), ["Site", "Workbench", "Grimoires", "Notes", "Changelog"]);
 });
+
+test("partial fallback: unmatched extra word degrades instead of dead-ending", async () => {
+  const { searchWithMeta } = await import("../assets/js/workbench/search-core.mjs");
+  const strict = searchWithMeta(entries, "billing workspace");
+  assert.equal(strict.partial, false);
+  const fallback = searchWithMeta(entries, "billing zebra");
+  assert.equal(fallback.partial, true);
+  assert.equal(fallback.results[0].id, "billing");
+  const nothing = searchWithMeta(entries, "zzz qqq");
+  assert.equal(nothing.results.length, 0);
+});

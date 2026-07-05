@@ -7,9 +7,9 @@ import {
   groupResults,
   highlight,
   makeSnippet,
-  searchEntries,
+  searchWithMeta,
   tokenize
-} from "./workbench/search-core.mjs?v=1";
+} from "./workbench/search-core.mjs?v=2";
 
 const config = readJson("#workbench-config", { baseUrl: "" });
 const sitePages = [
@@ -108,7 +108,7 @@ function render() {
       + `<p class="site-search-hint">Type to search tools, Grimoire chapters, Notes${indexLoaded ? "" : "…"} — ↑↓ to move, Enter to open.</p>`;
     return;
   }
-  const matched = searchEntries(searchable, value, 40);
+  const { results: matched, partial } = searchWithMeta(searchable, value, 40);
   const groups = groupResults(matched, 6);
   if (activeIndex >= matched.length) activeIndex = 0;
   if (!groups.length) {
@@ -116,7 +116,10 @@ function render() {
     return;
   }
   let cursor = 0;
-  results.innerHTML = groups.map((group) => {
+  const notice = partial
+    ? `<p class="site-search-hint">Nothing matches every word — showing the closest matches.</p>`
+    : "";
+  results.innerHTML = notice + groups.map((group) => {
     const rows = group.items.map((item) => renderResult(item, cursor++, tokens)).join("");
     flat.push(...group.items);
     return `<div class="site-search-group">${escapeHtml(group.label)}</div>${rows}`;
