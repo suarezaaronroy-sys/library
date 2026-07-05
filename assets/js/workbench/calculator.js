@@ -1,4 +1,5 @@
 import { evaluate, isReserved, fmt, group, CUR_CODES, BASE, DEFAULT_RATES } from "./calculator-core.mjs?v=3";
+import { loadValue, saveState } from "./store.js?v=5";
 
 (function(){
   "use strict";
@@ -16,8 +17,8 @@ var root=document.querySelector('[data-calc-root]');
   };
 
   var K={ hist:'asuarez.calc.history.v2', vars:'asuarez.calc.vars.v1', rates:'asuarez.calc.rates.v1', disp:'asuarez.calc.display.v1' };
-  function load(key, fb){ try{ var v=JSON.parse(localStorage.getItem(key)); return v==null?fb:v; }catch(e){ return fb; } }
-  function store(key, v){ try{ localStorage.setItem(key, JSON.stringify(v)); }catch(e){} }
+  function load(key, fb){ return loadValue(key, fb); }
+  function store(key, v){ saveState(key, v); }
 
   var state={ expr:'', angle:'deg', mode:'standard', mem:0, memSet:false, ans:0, justEvaluated:false };
   var history=load(K.hist, []);

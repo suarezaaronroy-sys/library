@@ -1,4 +1,4 @@
-import { loadState, saveState } from "./store.js?v=4";
+import { loadState, saveState } from "./store.js?v=5";
 
 const STORAGE_KEY = "aaron-workbench:v2:marketing";
 const FUNNEL_PATTERNS = {

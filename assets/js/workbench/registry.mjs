@@ -1,4 +1,4 @@
-import { loadState, saveState } from "./store.js?v=4";
+import { loadState, saveState } from "./store.js?v=5";
 
 export const RESOURCE_STORAGE_KEY = "aaron-workbench:v1:resources";
 export const RESOURCE_STATE_DEFAULTS = {

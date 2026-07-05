@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 GRIMOIRES = ROOT / "grimoires"
 OUT = ROOT / "_data" / "grimoire_sections.json"
 
-TAG_RE = re.compile(r'<(section|h2|h3)\b([^>]*)\bid="([a-zA-Z][\w-]*)"([^>]*)>', re.I)
+TAG_RE = re.compile(r'<(section|h2|h3|div)\b([^>]*)\bid="([a-zA-Z][\w-]*)"([^>]*)>', re.I)
 HEAD_RE = re.compile(r'<h[1-6][^>]*>(.*?)</h[1-6]>', re.I | re.S)
 MODULE_TITLE_RE = re.compile(r'class="module-title"[^>]*>(.*?)</', re.I | re.S)
 MODULE_NUM_RE = re.compile(r'class="module-num"[^>]*>(.*?)</', re.I | re.S)
@@ -55,6 +55,11 @@ def label_for(match, body):
         if text:
             return text
     window = body[match.end():match.end() + 2500]
+    ch = re.search(r'class="chapter-num"[^>]*>(.*?)</', window, re.I | re.S)
+    if ch:
+        head2 = HEAD_RE.search(window)
+        if head2:
+            return clean(ch.group(1)) + " · " + clean(head2.group(1))
     mt = MODULE_TITLE_RE.search(window)
     head = HEAD_RE.search(window)
     pick, at = None, None
@@ -85,6 +90,8 @@ def main():
             anchor = m.group(3)
             if anchor in seen or anchor in ("top", "main", "main-content"):
                 continue
+            if m.group(1).lower() == "div" and "chapter" not in (m.group(2) + m.group(4)):
+                continue  # divs only count when they are chapter containers
             seen.add(anchor)
             title = html.unescape(re.sub(r"\s+", " ", label_for(m, body)))[:90]
             out.append({"num": meta["num"], "grimoire": meta.get("title", ""),

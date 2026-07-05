@@ -1,4 +1,4 @@
-import { loadState, saveState } from "./store.js?v=4";
+import { loadState, saveState } from "./store.js?v=5";
 import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=3";
 import { createWorkbenchGraph } from "./graph-engine.js?v=1";
 import {

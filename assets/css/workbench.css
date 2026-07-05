@@ -519,3 +519,7 @@ textarea.tool-output{resize:vertical}
 .workbench-ledger-group span{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
 .workbench-ledger-group em{font-style:normal;color:var(--ink3);font-size:.74rem}
 @media(max-width:760px){.workbench-nav-set>span{padding:.35rem .7rem .1rem}.workbench-ledger-group{flex-direction:column;gap:.15rem}}
+
+/* ── desk backup panel ── */
+.workbench-backup-actions{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+#backup-status{font-family:var(--mono);font-size:.62rem;color:var(--teal)}

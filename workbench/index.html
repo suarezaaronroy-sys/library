@@ -53,6 +53,17 @@ workbench_script: /assets/js/workbench/desk.js
   <span>Operating principle</span>
   <p>The Library captures knowledge. The Workbench removes the repeated calculation, formatting, and recall surrounding the work.</p>
 </aside>
+
+<aside class="workbench-desk-note workbench-backup" aria-label="Workbench data backup">
+  <span>Your data</span>
+  <p>Every workspace saves only to this browser. Export one file with all of it — invoices, budgets, calculator, reports — and restore it here on any machine.</p>
+  <div class="workbench-backup-actions">
+    <button type="button" class="workbench-button primary" id="backup-export">Export all data</button>
+    <button type="button" class="workbench-button" id="backup-import">Import backup</button>
+    <input type="file" id="backup-file" accept="application/json,.json" hidden>
+    <span id="backup-status" role="status"></span>
+  </div>
+</aside>
 </div>
 
 <div class="desk-reporting" data-desk-panel="reporting" hidden>

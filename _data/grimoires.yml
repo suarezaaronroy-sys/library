@@ -1,7 +1,9 @@
 # ── Single source of truth for the library ─────────────────────────
 # Every page (home shelf, projects, footer) renders from this file.
 # To publish a new grimoire: add the HTML file to /grimoires/ and one
-# entry here. tier: built | manual | trilogy   status: live | soon
+# entry here. The search section index regenerates automatically on
+# push (see .github/workflows/update-search-index.yml) — or run
+# tools/extract-grimoire-sections.py locally. tier: built | manual | trilogy   status: live | soon
 - num: "001"
   title: "ASMC Full Stack CRM Engine"
   tier: built

@@ -1,4 +1,4 @@
-import { loadState, saveState } from "./store.js?v=4";
+import { loadState, saveState } from "./store.js?v=5";
 
 const KEY = "aaron-workbench:v2:writing";
 const legacy = loadState("aaron-workbench:v1:writing", { scratchpad: "", markdown: "", snippets: [], clipboard: [] });

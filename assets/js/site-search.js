@@ -2,7 +2,7 @@ import {
   escapeHtml,
   getRegistry,
   openResource
-} from "./workbench/registry.mjs?v=2";
+} from "./workbench/registry.mjs?v=3";
 import {
   groupResults,
   highlight,

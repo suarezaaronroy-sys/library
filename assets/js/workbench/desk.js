@@ -1,4 +1,4 @@
-import { loadState, saveState } from "./store.js?v=4";
+import { exportAllState, importAllState, loadState, saveState } from "./store.js?v=5";
 
 const STORAGE_KEY = "aaron-workbench:v1:desk-reports";
 const today = new Date().toISOString().slice(0, 10);
@@ -61,6 +61,9 @@ if (root) {
   document.querySelectorAll("[data-desk-view]").forEach((button) => {
     button.addEventListener("click", () => switchDeskView(button.dataset.deskView));
   });
+
+  // Deep-linkable views: /workbench/#reporting
+  if (window.location.hash === "#reporting") switchDeskView("reporting");
   document.querySelectorAll("[data-report-template]").forEach((button) => {
     button.addEventListener("click", () => {
       activeTemplate = button.dataset.reportTemplate;
@@ -104,6 +107,8 @@ if (root) {
   renderTemplate();
 
   function switchDeskView(view) {
+    const hash = view === "workspaces" ? window.location.pathname + window.location.search : `#${view}`;
+    window.history.replaceState(null, "", hash);
     document.querySelectorAll("[data-desk-view]").forEach((button) => {
       button.setAttribute("aria-selected", String(button.dataset.deskView === view));
     });
@@ -190,4 +195,39 @@ function download(content, filename, type) {
   link.download = filename;
   link.click();
   URL.revokeObjectURL(url);
+}
+
+// ---- whole-workbench backup (Desk · Data) ----
+const backupExport = document.querySelector("#backup-export");
+const backupImportBtn = document.querySelector("#backup-import");
+const backupFile = document.querySelector("#backup-file");
+const backupStatus = document.querySelector("#backup-status");
+if (backupExport && backupFile) {
+  backupExport.addEventListener("click", () => {
+    const payload = exportAllState();
+    const count = Object.keys(payload.data).length;
+    const stamp = payload.exportedAt.slice(0, 10);
+    const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `workbench-backup-${stamp}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    backupStatus.textContent = `Backup prepared — ${count} saved ${count === 1 ? "key" : "keys"}.`;
+  });
+  backupImportBtn.addEventListener("click", () => backupFile.click());
+  backupFile.addEventListener("change", () => {
+    const file = backupFile.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      let imported = -1;
+      try { imported = importAllState(JSON.parse(String(reader.result))); } catch {}
+      backupStatus.textContent = imported < 0
+        ? "That file isn't a Workbench backup."
+        : `Restored ${imported} ${imported === 1 ? "key" : "keys"} — reload any open workspace to apply.`;
+      backupFile.value = "";
+    };
+    reader.readAsText(file);
+  });
 }

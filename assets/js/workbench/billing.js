@@ -13,9 +13,9 @@ import {
   monthsInPeriod,
   number
 } from "./billing-core.mjs?v=5";
-import { loadState, saveState } from "./store.js?v=4";
-import "./personal-budget.js?v=2";
-import "./calculator.js?v=3";
+import { loadState, saveState } from "./store.js?v=5";
+import "./personal-budget.js?v=3";
+import "./calculator.js?v=4";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
 const today = new Date();
@@ -95,6 +95,10 @@ if (root) {
   document.querySelectorAll("[data-billing-view]").forEach((button) => {
     button.addEventListener("click", () => switchBillingView(button.dataset.billingView));
   });
+
+  // Deep-linkable views: /workbench/billing/#calculator etc.
+  const initialView = window.location.hash.slice(1);
+  if (["budget", "personal", "calculator"].includes(initialView)) switchBillingView(initialView);
 
   form.addEventListener("input", () => {
     state.profile = Object.fromEntries(new FormData(form));
@@ -312,6 +316,8 @@ if (root) {
   }
 
   function switchBillingView(view) {
+    const hash = view === "invoice" ? window.location.pathname + window.location.search : `#${view}`;
+    window.history.replaceState(null, "", hash);
     document.querySelectorAll("[data-billing-view]").forEach((button) => {
       const active = button.dataset.billingView === view;
       button.setAttribute("aria-selected", String(active));
