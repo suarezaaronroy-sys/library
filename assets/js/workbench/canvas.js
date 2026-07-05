@@ -1,9 +1,11 @@
 import { loadState, saveState } from "./store.js?v=5";
 import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=3";
+import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=1";
 import { createWorkbenchGraph } from "./graph-engine.js?v=1";
 import {
   escapeHtml,
   getRegistry,
+  getWorkbenchConfig,
   openResource
 } from "./registry.mjs?v=1";
 
@@ -205,6 +207,12 @@ function populateTemplateSelect() {
       decision: "Creates labelled branches and editable outcomes.",
       mindmap: "Creates a central idea with movable thought branches."
     }[kind];
+  } else if (kind === "grimoire") {
+    select.disabled = false;
+    select.innerHTML = GRIMOIRE_MAPS.map((map) =>
+      `<option value="${escapeHtml(map.id)}">${escapeHtml(map.label)}</option>`
+    ).join("");
+    note.textContent = "Visualizes a Grimoire's framework — every purple node opens the section it maps to.";
   } else {
     select.disabled = true;
     select.innerHTML = `<option value="blank">Blank canvas</option>`;
@@ -335,7 +343,14 @@ function bindControls() {
   });
   document.querySelector("#canvas-open-resource").addEventListener("click", () => {
     const resource = registry.find((item) => item.id === selectedNode?.data("resourceId"));
-    openResource(resource);
+    const link = String(selectedNode?.data("links") || "").trim();
+    if (link) {
+      const base = getWorkbenchConfig().baseUrl || "";
+      const url = /^https?:\/\//i.test(link) ? link : `${base}${link}`.replace(/([^:]\/)\/+/g, "$1");
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else if (resource) {
+      openResource(resource);
+    }
   });
   document.querySelector("#canvas-search-trigger").addEventListener("click", openCanvasSearch);
   document.querySelector("#canvas-search").addEventListener("input", searchCanvas);
@@ -388,7 +403,7 @@ function selectNode(node) {
     const field = properties.elements.namedItem(name);
     if (field) field.value = node.data(name) || (name === "color" ? NODE_COLORS[node.data("type")] : "");
   });
-  document.querySelector("#canvas-open-resource").disabled = !node.data("resourceId");
+  document.querySelector("#canvas-open-resource").disabled = !node.data("resourceId") && !String(node.data("links") || "").trim();
   updateNodePorts();
 }
 
@@ -406,7 +421,7 @@ function updateSelectedNode(event) {
   selectedNode.data(name, event.target.value);
   if (name === "type" && !selectedNode.data("color")) selectedNode.data("color", NODE_COLORS[event.target.value]);
   document.querySelector("#canvas-inspector-title").textContent = selectedNode.data("title") || "Untitled node";
-  document.querySelector("#canvas-open-resource").disabled = !selectedNode.data("resourceId");
+  document.querySelector("#canvas-open-resource").disabled = !selectedNode.data("resourceId") && !String(selectedNode.data("links") || "").trim();
   scheduleSave();
 }
 
@@ -448,6 +463,7 @@ function createCanvasFromStarter() {
   let canvas;
   if (kind === "pipeline") canvas = createPipelineCanvas(id, templateId);
   else if (kind === "automation") canvas = createAutomationCanvas(id, templateId);
+  else if (kind === "grimoire") canvas = createGrimoireCanvas(id, templateId);
   else if (GENERAL_STARTERS[kind]) canvas = createGeneralStarterCanvas(id, kind, templateId);
   else canvas = createCanvas(id, `Canvas ${Object.keys(state.canvases).length + 1}`);
   state.canvases[id] = canvas;
@@ -508,6 +524,25 @@ function createAutomationCanvas(id, templateId) {
     edgeJson("automation-edge-guidance", trigger.data.id, bestPractice.data.id, "Guidance")
   ];
   canvas.elements = { nodes: [trigger, ...actions, failure, bestPractice], edges };
+  return canvas;
+}
+
+function createGrimoireCanvas(id, templateId) {
+  const map = GRIMOIRE_MAPS.find((item) => item.id === templateId) || GRIMOIRE_MAPS[0];
+  const canvas = createCanvas(id, map.label, false, { boardType: "grimoire", templateId: map.id });
+  const nodes = map.nodes.map((n) => {
+    const node = nodeJson(n.id, n.type, n.title, n.x, n.y, NODE_COLORS[n.type]);
+    node.data.category = map.label;
+    node.data.description = n.desc || "";
+    if (n.anchor) {
+      node.data.links = `${map.href}#${n.anchor}`;
+      node.data.resourceId = map.grimoireId;
+    }
+    return node;
+  });
+  const edges = map.edges.map(([from, to, label], index) =>
+    edgeJson(`${map.id}-edge-${index + 1}`, from, to, label || ""));
+  canvas.elements = { nodes, edges };
   return canvas;
 }
 
