@@ -1,0 +1,8904 @@
+[
+ {
+  "id": "gflow-004-s1",
+  "label": "G004 · The AI Agent node — how it actually works — steps 1",
+  "note": "A step sequence from n8n 101 (4 steps).",
+  "grimoireId": "grimoire-004",
+  "href": "/grimoires/004-n8n-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "User message → Agent",
+    "x": 140,
+    "y": 200,
+    "anchor": "m11"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "LLM decides next action",
+    "x": 440,
+    "y": 200,
+    "anchor": "m11"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Tool executes",
+    "x": 740,
+    "y": 200,
+    "anchor": "m11"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Repeat or respond",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m11"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-004-s2",
+  "label": "G004 · WhatsApp landlord lead handler — steps 2",
+  "note": "A step sequence from n8n 101 (5 steps).",
+  "grimoireId": "grimoire-004",
+  "href": "/grimoires/004-n8n-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Meta Business Account",
+    "x": 140,
+    "y": 200,
+    "anchor": "m15"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "WhatsApp Business Account (WABA)",
+    "x": 440,
+    "y": 200,
+    "anchor": "m15"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Message Template Approval",
+    "x": 740,
+    "y": 200,
+    "anchor": "m15"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Webhook Configuration",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m15"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Test with sandbox number",
+    "x": 140,
+    "y": 365,
+    "anchor": "m15"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-004-s3",
+  "label": "G004 · Testing workflows — the discipline that prevents 3am incidents ",
+  "note": "A step sequence from n8n 101 (4 steps).",
+  "grimoireId": "grimoire-004",
+  "href": "/grimoires/004-n8n-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Node-level test",
+    "x": 140,
+    "y": 200,
+    "anchor": "m21"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Partial workflow test",
+    "x": 440,
+    "y": 200,
+    "anchor": "m21"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Full workflow test",
+    "x": 740,
+    "y": 200,
+    "anchor": "m21"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Test mode isolation",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m21"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-005-s1",
+  "label": "G005 · Design before you build — steps 1",
+  "note": "A step sequence from Zapier 101 (5 steps).",
+  "grimoireId": "grimoire-005",
+  "href": "/grimoires/005-zapier-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "What exactly triggers this?",
+    "x": 140,
+    "y": 200,
+    "anchor": "m4"
+   },
+   {
+    "id": "s1",
+    "type": "condition",
+    "title": "What does it do, in sequence?",
+    "x": 440,
+    "y": 200,
+    "anchor": "m4"
+   },
+   {
+    "id": "s2",
+    "type": "condition",
+    "title": "What breaks if step N fails?",
+    "x": 740,
+    "y": 200,
+    "anchor": "m4"
+   },
+   {
+    "id": "s3",
+    "type": "condition",
+    "title": "Who owns this when something goes wrong?",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m4"
+   },
+   {
+    "id": "s4",
+    "type": "condition",
+    "title": "What does success actually look like?",
+    "x": 140,
+    "y": 365,
+    "anchor": "m4"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-005-s2",
+  "label": "G005 · The day Sarah quit — steps 2",
+  "note": "A step sequence from Zapier 101 (4 steps).",
+  "grimoireId": "grimoire-005",
+  "href": "/grimoires/005-zapier-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "What starts it?",
+    "x": 140,
+    "y": 200,
+    "anchor": "m8"
+   },
+   {
+    "id": "s1",
+    "type": "condition",
+    "title": "What does it do?",
+    "x": 440,
+    "y": 200,
+    "anchor": "m8"
+   },
+   {
+    "id": "s2",
+    "type": "condition",
+    "title": "Who owns it?",
+    "x": 740,
+    "y": 200,
+    "anchor": "m8"
+   },
+   {
+    "id": "s3",
+    "type": "condition",
+    "title": "What breaks if it stops working?",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m8"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-005-s3",
+  "label": "G005 · Seven mistakes that cause 80% of automation disasters — steps 3",
+  "note": "A step sequence from Zapier 101 (7 steps).",
+  "grimoireId": "grimoire-005",
+  "href": "/grimoires/005-zapier-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Automating a broken process",
+    "x": 140,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Building before documenting",
+    "x": 440,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "No ownership",
+    "x": 740,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "No failure alerts",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Creating without checking — the duplicate trap",
+    "x": 140,
+    "y": 365,
+    "anchor": "m22"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Using Zapier as a database",
+    "x": 440,
+    "y": 365,
+    "anchor": "m22"
+   },
+   {
+    "id": "s6",
+    "type": "action",
+    "title": "Overengineering",
+    "x": 740,
+    "y": 365,
+    "anchor": "m22"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ],
+   [
+    "s5",
+    "s6",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m1",
+  "label": "G006 · Why AI Is Just a Cog — flow 1",
+  "note": "A flowchart from Automations 101 (8 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Trigger Event",
+    "x": 140,
+    "y": 160,
+    "anchor": "ch1"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Deterministic Logic",
+    "x": 440,
+    "y": 160,
+    "anchor": "ch1"
+   },
+   {
+    "id": "C",
+    "type": "condition",
+    "title": "AI Needed?",
+    "x": 740,
+    "y": 160,
+    "anchor": "ch1"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "AI Cog: classify, extract, generate",
+    "x": 1040,
+    "y": 160,
+    "anchor": "ch1"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Confidence > threshold?",
+    "x": 1340,
+    "y": 160,
+    "anchor": "ch1"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Human Cog: review, correct, approve",
+    "x": 1640,
+    "y": 160,
+    "anchor": "ch1"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Execute Action",
+    "x": 740,
+    "y": 310,
+    "anchor": "ch1"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Log Outcome",
+    "x": 1040,
+    "y": 310,
+    "anchor": "ch1"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    "Yes"
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "B",
+    "Yes"
+   ],
+   [
+    "E",
+    "F",
+    "No"
+   ],
+   [
+    "F",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m10",
+  "label": "G006 · Self-Service Appointment Booking with Confirmation — flow 10",
+  "note": "A flowchart from Automations 101 (13 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Lead enters QUALIFIED stage",
+    "x": 160,
+    "y": 140,
+    "anchor": "p05"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Send booking link via SMS/email",
+    "x": 160,
+    "y": 290,
+    "anchor": "p05"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Start 48h booking timer",
+    "x": 160,
+    "y": 440,
+    "anchor": "p05"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Lead clicks booking link?",
+    "x": 160,
+    "y": 590,
+    "anchor": "p05"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Calendar integration creates event",
+    "x": 160,
+    "y": 740,
+    "anchor": "p05"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Send reminder SMS with link",
+    "x": 460,
+    "y": 740,
+    "anchor": "p05"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "Booked within next 24h?",
+    "x": 160,
+    "y": 890,
+    "anchor": "p05"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Move to REACTIVATION stage",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p05"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Store appointment details: time, timezone, duration",
+    "x": 460,
+    "y": 890,
+    "anchor": "p05"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Send confirmation SMS with calendar invite",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p05"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Schedule reminders: 24h, 3h, 1h before",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p05"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Update CRM stage to APPOINTMENT_BOOKED",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p05"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Log booking event to Airtable",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p05"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    "Yes"
+   ],
+   [
+    "D",
+    "F",
+    "No, after 48h"
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "E",
+    "Yes"
+   ],
+   [
+    "G",
+    "H",
+    "No"
+   ],
+   [
+    "E",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "H",
+    "M",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m11",
+  "label": "G006 · Multi-Channel Reminders with Confirmation — flow 11",
+  "note": "A flowchart from Automations 101 (13 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Appointment booked, stage = APPOINTMENT_BOOKED",
+    "x": 160,
+    "y": 140,
+    "anchor": "p06"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Schedule confirmation request: 48h before",
+    "x": 160,
+    "y": 290,
+    "anchor": "p06"
+   },
+   {
+    "id": "C",
+    "type": "condition",
+    "title": "Lead confirms? reply YES",
+    "x": 160,
+    "y": 440,
+    "anchor": "p06"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Send reminder SMS + email at 24h",
+    "x": 160,
+    "y": 590,
+    "anchor": "p06"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Lead confirms?",
+    "x": 160,
+    "y": 740,
+    "anchor": "p06"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Send final reminder 3h before",
+    "x": 160,
+    "y": 890,
+    "anchor": "p06"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "Lead confirms?",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p06"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Send 1h reminder with meeting link",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p06"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "After appointment time, check if completed",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p06"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "No‑show: trigger recovery",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p06"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Mark confirmed = true",
+    "x": 460,
+    "y": 590,
+    "anchor": "p06"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Reduce reminder frequency",
+    "x": 460,
+    "y": 740,
+    "anchor": "p06"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Log all reminders to Airtable",
+    "x": 460,
+    "y": 890,
+    "anchor": "p06"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    "No response after 24h"
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "No"
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    "No"
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    "Not completed"
+   ],
+   [
+    "C",
+    "K",
+    "Yes"
+   ],
+   [
+    "E",
+    "K",
+    "Yes"
+   ],
+   [
+    "G",
+    "K",
+    "Yes"
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "H",
+    "M",
+    ""
+   ],
+   [
+    "J",
+    "M",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m12",
+  "label": "G006 · No-Show Detection and Auto-Reschedule — flow 12",
+  "note": "A flowchart from Automations 101 (18 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Appointment end time reached",
+    "x": 160,
+    "y": 140,
+    "anchor": "p07"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Wait 30 minutes grace period",
+    "x": 160,
+    "y": 290,
+    "anchor": "p07"
+   },
+   {
+    "id": "C",
+    "type": "condition",
+    "title": "Appointment marked completed?",
+    "x": 160,
+    "y": 440,
+    "anchor": "p07"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "End – no action",
+    "x": 160,
+    "y": 590,
+    "anchor": "p07"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Detect no‑show",
+    "x": 460,
+    "y": 590,
+    "anchor": "p07"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Send immediate SMS: “We missed you – click to reschedule”",
+    "x": 160,
+    "y": 740,
+    "anchor": "p07"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Generate unique reschedule link same rep, available slots",
+    "x": 160,
+    "y": 890,
+    "anchor": "p07"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Create task for rep: “Follow up with no‑show lead”",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p07"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Add tag `no_show` and move stage to `REACTIVATION`",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p07"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Log no‑show event to Airtable",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p07"
+   },
+   {
+    "id": "K",
+    "type": "condition",
+    "title": "Lead reschedules within 24h?",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p07"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Remove `no_show` tag, move back to `APPOINTMENT_BOOKED`",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p07"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Send confirmation of new time, cancel old task",
+    "x": 160,
+    "y": 1790,
+    "anchor": "p07"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log reschedule to Airtable",
+    "x": 160,
+    "y": 1940,
+    "anchor": "p07"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Escalate: second SMS, reassign task to manager",
+    "x": 460,
+    "y": 1640,
+    "anchor": "p07"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "After 7 days with no reschedule, mark as lost lead",
+    "x": 460,
+    "y": 1790,
+    "anchor": "p07"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Move to `CLOSED_LOST` with reason = “no_show”",
+    "x": 460,
+    "y": 1940,
+    "anchor": "p07"
+   },
+   {
+    "id": "R",
+    "type": "action",
+    "title": "Schedule reactivation after 90 days",
+    "x": 160,
+    "y": 2090,
+    "anchor": "p07"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    "Yes"
+   ],
+   [
+    "C",
+    "E",
+    "No"
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    "Yes via link"
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "K",
+    "O",
+    "No after 24h"
+   ],
+   [
+    "O",
+    "P",
+    ""
+   ],
+   [
+    "P",
+    "Q",
+    ""
+   ],
+   [
+    "Q",
+    "R",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m13",
+  "label": "G006 · Document Generation from Template + Dynamic Data — flow 13",
+  "note": "A flowchart from Automations 101 (13 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Trigger: estimate ready to send",
+    "x": 160,
+    "y": 140,
+    "anchor": "p08"
+   },
+   {
+    "id": "B",
+    "type": "condition",
+    "title": "Fetch lead data: name, service, amount, options",
+    "x": 160,
+    "y": 290,
+    "anchor": "p08"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Load template from document store DOCX/PDF/HTML",
+    "x": 160,
+    "y": 440,
+    "anchor": "p08"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Data validation: all required fields present?",
+    "x": 160,
+    "y": 590,
+    "anchor": "p08"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Create task for rep: missing information",
+    "x": 160,
+    "y": 740,
+    "anchor": "p08"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Populate template with dynamic fields",
+    "x": 460,
+    "y": 740,
+    "anchor": "p08"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Generate final document PDF",
+    "x": 160,
+    "y": 890,
+    "anchor": "p08"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Save document to cloud storage Google Drive, AWS S3",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p08"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Generate unique access link signed URL, short expiry",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p08"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Attach link to CRM record `estimate_document_link`",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p08"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Send delivery SMS/email to customer",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p08"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Log document generation event to Airtable",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p08"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Move stage to `ESTIMATE_SENT`",
+    "x": 160,
+    "y": 1790,
+    "anchor": "p08"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    "No"
+   ],
+   [
+    "D",
+    "F",
+    "Yes"
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m14",
+  "label": "G006 · Open/Click Tracking with Webhooks — flow 14",
+  "note": "A flowchart from Automations 101 (12 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Estimate document sent with tracking pixel and links",
+    "x": 160,
+    "y": 140,
+    "anchor": "p09"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Embed invisible pixel and unique click URLs",
+    "x": 160,
+    "y": 290,
+    "anchor": "p09"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Recipient opens email or clicks link",
+    "x": 160,
+    "y": 440,
+    "anchor": "p09"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Tracking pixel fires OR link redirects via tracking server",
+    "x": 160,
+    "y": 590,
+    "anchor": "p09"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Webhook sends event to orchestration layer",
+    "x": 160,
+    "y": 740,
+    "anchor": "p09"
+   },
+   {
+    "id": "F",
+    "type": "condition",
+    "title": "Event type?",
+    "x": 160,
+    "y": 890,
+    "anchor": "p09"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Update `estimate_opened = true`, increment `open_count`",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p09"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Determine link type: accept, financing, question",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p09"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Trigger specific action: e.g., send financing breakdown",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p09"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "If open_count > 3 with no action, flag for rep review",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p09"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Log event to Airtable",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p09"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "If engagement signal high, optionally send follow‑up",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p09"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    "Open"
+   ],
+   [
+    "F",
+    "H",
+    "Click on link X"
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "G",
+    "J",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m15",
+  "label": "G006 · Timer-Based Follow-Up Sequence — flow 15",
+  "note": "A flowchart from Automations 101 (15 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Estimate sent, stage = ESTIMATE_SENT",
+    "x": 160,
+    "y": 140,
+    "anchor": "p10"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Start decision timer 72 hours",
+    "x": 160,
+    "y": 290,
+    "anchor": "p10"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Send follow‑up 1 hour after estimate",
+    "x": 160,
+    "y": 440,
+    "anchor": "p10"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Send follow‑up 24 hours after estimate",
+    "x": 160,
+    "y": 590,
+    "anchor": "p10"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Send follow‑up 48 hours after estimate",
+    "x": 160,
+    "y": 740,
+    "anchor": "p10"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Send follow‑up 72 hours after estimate",
+    "x": 160,
+    "y": 890,
+    "anchor": "p10"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Move to DECISION_PENDING",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p10"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Send final reminder after 5 days",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p10"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "If no response after 7 days, move to REACTIVATION",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p10"
+   },
+   {
+    "id": "J",
+    "type": "condition",
+    "title": "Lead action detected? accept or reject or objection",
+    "x": 460,
+    "y": 440,
+    "anchor": "p10"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Cancel timer and sequence",
+    "x": 460,
+    "y": 590,
+    "anchor": "p10"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Pause follow‑up sequence, route to objection handling",
+    "x": 760,
+    "y": 590,
+    "anchor": "p10"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "After objection resolved, resume sequence",
+    "x": 460,
+    "y": 740,
+    "anchor": "p10"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log sequence cancelled",
+    "x": 760,
+    "y": 740,
+    "anchor": "p10"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Reset timer",
+    "x": 460,
+    "y": 890,
+    "anchor": "p10"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "B",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    "Accept"
+   ],
+   [
+    "J",
+    "K",
+    "Reject"
+   ],
+   [
+    "J",
+    "L",
+    "Objection"
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "K",
+    "N",
+    ""
+   ],
+   [
+    "M",
+    "O",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m16",
+  "label": "G006 · Objection Detection and Auto-Response — flow 16",
+  "note": "A flowchart from Automations 101 (18 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Lead reply to estimate follow‑up",
+    "x": 160,
+    "y": 140,
+    "anchor": "p11"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Capture message text, lead context",
+    "x": 160,
+    "y": 290,
+    "anchor": "p11"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Classify objection type via AI",
+    "x": 160,
+    "y": 440,
+    "anchor": "p11"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Confidence > 0.8?",
+    "x": 160,
+    "y": 590,
+    "anchor": "p11"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Route to predefined response type",
+    "x": 160,
+    "y": 740,
+    "anchor": "p11"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Create task for human review",
+    "x": 460,
+    "y": 740,
+    "anchor": "p11"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "price → send financing offer",
+    "x": 160,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "trust → send testimonials, license info",
+    "x": 460,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "timing → send urgency, availability message",
+    "x": 760,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "competitor → send differentiators, guarantee",
+    "x": 1060,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "confusion → send one‑page summary, offer call",
+    "x": 1360,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "accept → move to CLOSED_WON",
+    "x": 1660,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "reject → move to CLOSED_LOST",
+    "x": 1960,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log response and increment attempt counter",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p11"
+   },
+   {
+    "id": "O",
+    "type": "condition",
+    "title": "Attempt count > 2?",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p11"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "Escalate to human rep",
+    "x": 2260,
+    "y": 890,
+    "anchor": "p11"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Wait for lead reply",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p11"
+   },
+   {
+    "id": "R",
+    "type": "action",
+    "title": "Create task: call lead, review objection",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p11"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    "Yes"
+   ],
+   [
+    "D",
+    "F",
+    "No"
+   ],
+   [
+    "E",
+    "G",
+    ""
+   ],
+   [
+    "E",
+    "H",
+    ""
+   ],
+   [
+    "E",
+    "I",
+    ""
+   ],
+   [
+    "E",
+    "J",
+    ""
+   ],
+   [
+    "E",
+    "K",
+    ""
+   ],
+   [
+    "E",
+    "L",
+    ""
+   ],
+   [
+    "E",
+    "M",
+    ""
+   ],
+   [
+    "G",
+    "N",
+    ""
+   ],
+   [
+    "H",
+    "N",
+    ""
+   ],
+   [
+    "I",
+    "N",
+    ""
+   ],
+   [
+    "J",
+    "N",
+    ""
+   ],
+   [
+    "K",
+    "N",
+    ""
+   ],
+   [
+    "N",
+    "O",
+    ""
+   ],
+   [
+    "O",
+    "P",
+    "Yes"
+   ],
+   [
+    "O",
+    "Q",
+    "No"
+   ],
+   [
+    "F",
+    "P",
+    ""
+   ],
+   [
+    "P",
+    "R",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m17",
+  "label": "G006 · Multi-Stage Approval Workflow — flow 17",
+  "note": "A flowchart from Automations 101 (16 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Document submitted for approval",
+    "x": 160,
+    "y": 140,
+    "anchor": "p12"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Determine approval chain based on amount, type",
+    "x": 160,
+    "y": 290,
+    "anchor": "p12"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Create approval record with step list",
+    "x": 160,
+    "y": 440,
+    "anchor": "p12"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Step 1: Notify approver A via Slack, email",
+    "x": 160,
+    "y": 590,
+    "anchor": "p12"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Approver A approves?",
+    "x": 160,
+    "y": 740,
+    "anchor": "p12"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Move to step 2",
+    "x": 160,
+    "y": 890,
+    "anchor": "p12"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Escalate to manager, reassign step",
+    "x": 460,
+    "y": 890,
+    "anchor": "p12"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Notify submitter, stop workflow",
+    "x": 760,
+    "y": 890,
+    "anchor": "p12"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Step 2: Notify approver B",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p12"
+   },
+   {
+    "id": "J",
+    "type": "condition",
+    "title": "Approver B approves?",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p12"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "All approvals complete",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p12"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Escalate",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p12"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Update document status to Approved",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p12"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Trigger next stage initial pay",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p12"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Log escalation to Airtable",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p12"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "Create task for ops",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p12"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Yes within SLA"
+   ],
+   [
+    "E",
+    "G",
+    "No after SLA"
+   ],
+   [
+    "E",
+    "H",
+    "Reject"
+   ],
+   [
+    "F",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    "Yes within SLA"
+   ],
+   [
+    "J",
+    "L",
+    "No after SLA"
+   ],
+   [
+    "J",
+    "H",
+    "Reject"
+   ],
+   [
+    "K",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "G",
+    "O",
+    ""
+   ],
+   [
+    "L",
+    "O",
+    ""
+   ],
+   [
+    "H",
+    "O",
+    ""
+   ],
+   [
+    "O",
+    "P",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m18",
+  "label": "G006 · E-Signature Collection with Audit Trail — flow 18",
+  "note": "A flowchart from Automations 101 (18 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Document ready for signature",
+    "x": 160,
+    "y": 140,
+    "anchor": "p13"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Create signature envelope via DocuSign or PandaDoc",
+    "x": 160,
+    "y": 290,
+    "anchor": "p13"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Send signature request to customer email and SMS",
+    "x": 160,
+    "y": 440,
+    "anchor": "p13"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Store envelope ID in CRM, start monitoring",
+    "x": 160,
+    "y": 590,
+    "anchor": "p13"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Customer opens email? tracking pixel",
+    "x": 160,
+    "y": 740,
+    "anchor": "p13"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Log opened event",
+    "x": 160,
+    "y": 890,
+    "anchor": "p13"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Send reminder after 24h",
+    "x": 460,
+    "y": 890,
+    "anchor": "p13"
+   },
+   {
+    "id": "H",
+    "type": "condition",
+    "title": "Customer clicks sign link",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p13"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Redirect to signature portal",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p13"
+   },
+   {
+    "id": "J",
+    "type": "condition",
+    "title": "Customer signs and completes",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p13"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Webhook received: signing completed",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p13"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Download signed PDF, store in cloud",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p13"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Update CRM: contract_signed = true, signed_at timestamp",
+    "x": 160,
+    "y": 1790,
+    "anchor": "p13"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Attach signed PDF link to contact record",
+    "x": 160,
+    "y": 1940,
+    "anchor": "p13"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Trigger next stage: initial pay",
+    "x": 160,
+    "y": 2090,
+    "anchor": "p13"
+   },
+   {
+    "id": "P",
+    "type": "condition",
+    "title": "No signature after 48h",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p13"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Escalate to rep for follow‑up",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p13"
+   },
+   {
+    "id": "R",
+    "type": "action",
+    "title": "Create task: call customer about signature",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p13"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Yes"
+   ],
+   [
+    "E",
+    "G",
+    "No"
+   ],
+   [
+    "F",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    "Yes"
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    "Yes"
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "N",
+    "O",
+    ""
+   ],
+   [
+    "G",
+    "P",
+    ""
+   ],
+   [
+    "P",
+    "Q",
+    "Yes"
+   ],
+   [
+    "Q",
+    "R",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m19",
+  "label": "G006 · Payment Processing with Idempotent Webhooks — flow 19",
+  "note": "A flowchart from Automations 101 (19 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Customer initiates payment",
+    "x": 160,
+    "y": 140,
+    "anchor": "p14"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Redirect to payment gateway Stripe, Square, Authorize.net",
+    "x": 160,
+    "y": 290,
+    "anchor": "p14"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Gateway processes payment, sends webhook",
+    "x": 160,
+    "y": 440,
+    "anchor": "p14"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Webhook endpoint receives event with idempotency key",
+    "x": 160,
+    "y": 590,
+    "anchor": "p14"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Check if event already processed? lookup key in data store",
+    "x": 160,
+    "y": 740,
+    "anchor": "p14"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Ignore duplicate, log skipped event",
+    "x": 160,
+    "y": 890,
+    "anchor": "p14"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Parse event type payment succeeded, failed, refunded",
+    "x": 460,
+    "y": 890,
+    "anchor": "p14"
+   },
+   {
+    "id": "H",
+    "type": "condition",
+    "title": "Event type?",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p14"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Update CRM: payment_status = paid, amount, timestamp",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p14"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Increment retry count, send failure notification",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p14"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Update CRM: payment_status = refunded, log reason",
+    "x": 760,
+    "y": 1190,
+    "anchor": "p14"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Send receipt to customer email/SMS",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p14"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "If this is final payment, change stage to FULFILL",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p14"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "If progress payment, update milestone, schedule next payment",
+    "x": 460,
+    "y": 1490,
+    "anchor": "p14"
+   },
+   {
+    "id": "O",
+    "type": "condition",
+    "title": "Retry count < 3?",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p14"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "Retry after delay 1 day, 3 days, 7 days",
+    "x": 760,
+    "y": 1490,
+    "anchor": "p14"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Create task for collections team, move stage to PAYMENT_FAILED",
+    "x": 1060,
+    "y": 1490,
+    "anchor": "p14"
+   },
+   {
+    "id": "R",
+    "type": "action",
+    "title": "Notify customer of refund, update accounting",
+    "x": 760,
+    "y": 1340,
+    "anchor": "p14"
+   },
+   {
+    "id": "S",
+    "type": "action",
+    "title": "Log all events to Airtable",
+    "x": 1360,
+    "y": 1490,
+    "anchor": "p14"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Already processed"
+   ],
+   [
+    "E",
+    "G",
+    "New"
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    "payment_intent.succeeded"
+   ],
+   [
+    "H",
+    "J",
+    "payment_intent.payment_failed"
+   ],
+   [
+    "H",
+    "K",
+    "charge.refunded"
+   ],
+   [
+    "I",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "L",
+    "N",
+    ""
+   ],
+   [
+    "J",
+    "O",
+    ""
+   ],
+   [
+    "O",
+    "P",
+    "Yes"
+   ],
+   [
+    "O",
+    "Q",
+    "No"
+   ],
+   [
+    "K",
+    "R",
+    ""
+   ],
+   [
+    "M",
+    "S",
+    ""
+   ],
+   [
+    "N",
+    "S",
+    ""
+   ],
+   [
+    "P",
+    "S",
+    ""
+   ],
+   [
+    "Q",
+    "S",
+    ""
+   ],
+   [
+    "R",
+    "S",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m2",
+  "label": "G006 · Failure Families & Observability — flow 2",
+  "note": "A flowchart from Automations 101 (11 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Action fails",
+    "x": 160,
+    "y": 140,
+    "anchor": "ch3"
+   },
+   {
+    "id": "B",
+    "type": "condition",
+    "title": "Retry < 5?",
+    "x": 160,
+    "y": 290,
+    "anchor": "ch3"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Wait exponential backoff",
+    "x": 160,
+    "y": 440,
+    "anchor": "ch3"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Retry action",
+    "x": 160,
+    "y": 590,
+    "anchor": "ch3"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Fallback available?",
+    "x": 460,
+    "y": 440,
+    "anchor": "ch3"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Execute fallback (degraded mode",
+    "x": 460,
+    "y": 590,
+    "anchor": "ch3"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "Fallback succeeds?",
+    "x": 160,
+    "y": 740,
+    "anchor": "ch3"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Log success with fallback flag",
+    "x": 160,
+    "y": 890,
+    "anchor": "ch3"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Escalate to human",
+    "x": 760,
+    "y": 590,
+    "anchor": "ch3"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Create task, send Slack/SMS alert",
+    "x": 460,
+    "y": 740,
+    "anchor": "ch3"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Log escalation",
+    "x": 460,
+    "y": 890,
+    "anchor": "ch3"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    "Yes"
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "A",
+    ""
+   ],
+   [
+    "B",
+    "E",
+    "No"
+   ],
+   [
+    "E",
+    "F",
+    "Yes"
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    "Yes"
+   ],
+   [
+    "G",
+    "I",
+    "No"
+   ],
+   [
+    "E",
+    "I",
+    "No"
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m20",
+  "label": "G006 · Dunning Management for Recurring Payments — flow 20",
+  "note": "A flowchart from Automations 101 (18 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Recurring payment attempt fails",
+    "x": 160,
+    "y": 140,
+    "anchor": "p15"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Capture failure reason decline, expired card, insufficient funds",
+    "x": 160,
+    "y": 290,
+    "anchor": "p15"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Notify customer via SMS/email: payment failed",
+    "x": 160,
+    "y": 440,
+    "anchor": "p15"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Retry count < max attempts",
+    "x": 160,
+    "y": 590,
+    "anchor": "p15"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Schedule retry with exponential backoff day 1, day 3, day 7",
+    "x": 160,
+    "y": 740,
+    "anchor": "p15"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Customer updates payment method via link",
+    "x": 160,
+    "y": 890,
+    "anchor": "p15"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "Payment method updated?",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p15"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Retry immediately with new method",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p15"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Continue scheduled retries",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p15"
+   },
+   {
+    "id": "J",
+    "type": "condition",
+    "title": "Retry succeeds?",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p15"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Mark subscription as active, clear failure flags",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p15"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "If still failing after max retries, escalate",
+    "x": 460,
+    "y": 740,
+    "anchor": "p15"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Move customer to dunning state",
+    "x": 460,
+    "y": 890,
+    "anchor": "p15"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Create task for collections team",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p15"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Send final notice: account will be suspended",
+    "x": 760,
+    "y": 1190,
+    "anchor": "p15"
+   },
+   {
+    "id": "P",
+    "type": "condition",
+    "title": "Payment received within grace period",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p15"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Cancel subscription, move to REACTIVATION",
+    "x": 460,
+    "y": 1490,
+    "anchor": "p15"
+   },
+   {
+    "id": "R",
+    "type": "action",
+    "title": "Log all events to Airtable",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p15"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    "Yes"
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    "Yes"
+   ],
+   [
+    "G",
+    "I",
+    "No"
+   ],
+   [
+    "H",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    "Yes"
+   ],
+   [
+    "J",
+    "L",
+    "No"
+   ],
+   [
+    "D",
+    "L",
+    "No after 3 retries"
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "N",
+    "O",
+    ""
+   ],
+   [
+    "O",
+    "P",
+    ""
+   ],
+   [
+    "P",
+    "K",
+    "Yes"
+   ],
+   [
+    "P",
+    "Q",
+    "No"
+   ],
+   [
+    "K",
+    "R",
+    ""
+   ],
+   [
+    "Q",
+    "R",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m21",
+  "label": "G006 · Financing Application and Approval Workflow — flow 21",
+  "note": "A flowchart from Automations 101 (16 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Price objection detected or customer requests financing",
+    "x": 160,
+    "y": 140,
+    "anchor": "p16"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Send financing offer SMS/email with application link",
+    "x": 160,
+    "y": 290,
+    "anchor": "p16"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Customer clicks link, fills lender application pre-filled with estimate amount",
+    "x": 160,
+    "y": 440,
+    "anchor": "p16"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Lender processes application",
+    "x": 160,
+    "y": 590,
+    "anchor": "p16"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Webhook received from lender",
+    "x": 160,
+    "y": 740,
+    "anchor": "p16"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Update CRM: financing_status = approved, approved_amount, terms",
+    "x": 160,
+    "y": 890,
+    "anchor": "p16"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Update CRM: financing_status = denied, denial_reason",
+    "x": 460,
+    "y": 890,
+    "anchor": "p16"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Create task for rep: request additional docs from customer",
+    "x": 760,
+    "y": 890,
+    "anchor": "p16"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Send approval SMS: Your financing is approved! Accept estimate here link",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p16"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Reset decision timer, move to DECISION_PENDING or CLOSED_WON if auto-accept",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p16"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Notify rep via Slack: Lead approved for financing",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p16"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Send denial SMS with in‑house payment plan offer",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p16"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Create task for rep: offer in‑house plan",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p16"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Move back to OBJECTION_HANDLING with price objection",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p16"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Rep follows up, resubmits application",
+    "x": 760,
+    "y": 1040,
+    "anchor": "p16"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "Log all events to Airtable",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p16"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "approved"
+   ],
+   [
+    "E",
+    "G",
+    "denied"
+   ],
+   [
+    "E",
+    "H",
+    "pending more info"
+   ],
+   [
+    "F",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "G",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "H",
+    "O",
+    ""
+   ],
+   [
+    "O",
+    "D",
+    ""
+   ],
+   [
+    "K",
+    "P",
+    ""
+   ],
+   [
+    "N",
+    "P",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m22",
+  "label": "G006 · Purchase Order Generation and Vendor Routing — flow 22",
+  "note": "A flowchart from Automations 101 (15 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Job approved and deposit received",
+    "x": 160,
+    "y": 140,
+    "anchor": "p17"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Extract materials list from estimate",
+    "x": 160,
+    "y": 290,
+    "anchor": "p17"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Determine vendor for each item based on price, availability",
+    "x": 160,
+    "y": 440,
+    "anchor": "p17"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Generate purchase order PDF",
+    "x": 160,
+    "y": 590,
+    "anchor": "p17"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Send PO to vendor via email or vendor portal",
+    "x": 160,
+    "y": 740,
+    "anchor": "p17"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Store PO copy in cloud storage, link to CRM",
+    "x": 160,
+    "y": 890,
+    "anchor": "p17"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Start acknowledgment timer 24h",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p17"
+   },
+   {
+    "id": "H",
+    "type": "condition",
+    "title": "Vendor acknowledges PO?",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p17"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Update CRM: PO_acknowledged = true",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p17"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Send reminder to vendor",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p17"
+   },
+   {
+    "id": "K",
+    "type": "condition",
+    "title": "No acknowledgment after 48h",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p17"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Escalate to purchasing manager, create task",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p17"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Schedule delivery tracking Pattern 18",
+    "x": 460,
+    "y": 1490,
+    "anchor": "p17"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log escalation to Airtable",
+    "x": 160,
+    "y": 1790,
+    "anchor": "p17"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Log PO generation event",
+    "x": 460,
+    "y": 1640,
+    "anchor": "p17"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    "Yes"
+   ],
+   [
+    "H",
+    "J",
+    "No after 24h"
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    "Yes"
+   ],
+   [
+    "I",
+    "M",
+    ""
+   ],
+   [
+    "L",
+    "N",
+    ""
+   ],
+   [
+    "M",
+    "O",
+    ""
+   ],
+   [
+    "N",
+    "O",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m23",
+  "label": "G006 · Shipment Tracking with Delay Alerts — flow 23",
+  "note": "A flowchart from Automations 101 (17 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Purchase order fulfilled, tracking number received",
+    "x": 160,
+    "y": 140,
+    "anchor": "p18"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Store tracking number and carrier in CRM",
+    "x": 160,
+    "y": 290,
+    "anchor": "p18"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Fetch initial estimated delivery date from carrier API",
+    "x": 160,
+    "y": 440,
+    "anchor": "p18"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Schedule daily tracking check webhook",
+    "x": 160,
+    "y": 590,
+    "anchor": "p18"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Call carrier API for current status",
+    "x": 160,
+    "y": 740,
+    "anchor": "p18"
+   },
+   {
+    "id": "F",
+    "type": "condition",
+    "title": "Status changed?",
+    "x": 160,
+    "y": 890,
+    "anchor": "p18"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Calculate new estimated delivery date",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p18"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Log status, continue monitoring",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p18"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Stop monitoring, trigger schedule work",
+    "x": 760,
+    "y": 1040,
+    "anchor": "p18"
+   },
+   {
+    "id": "J",
+    "type": "condition",
+    "title": "Delay > 2 days?",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p18"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Send delay alert SMS to customer",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p18"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Log delay, no customer notification",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p18"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Create internal task: reschedule installation",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p18"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Notify ops team via Slack",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p18"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Continue monitoring",
+    "x": 460,
+    "y": 1490,
+    "anchor": "p18"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "Change stage to DELIVERY_COMPLETE",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p18"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Trigger schedule work workflow",
+    "x": 760,
+    "y": 1340,
+    "anchor": "p18"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    "Delayed"
+   ],
+   [
+    "F",
+    "H",
+    "On time"
+   ],
+   [
+    "F",
+    "I",
+    "Delivered"
+   ],
+   [
+    "G",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    "Yes"
+   ],
+   [
+    "J",
+    "L",
+    "No"
+   ],
+   [
+    "K",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "L",
+    "O",
+    ""
+   ],
+   [
+    "I",
+    "P",
+    ""
+   ],
+   [
+    "P",
+    "Q",
+    ""
+   ],
+   [
+    "O",
+    "D",
+    ""
+   ],
+   [
+    "N",
+    "D",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m24",
+  "label": "G006 · Resource-Aware Scheduling (Crews, Rooms, Equipment) — flow 24",
+  "note": "A flowchart from Automations 101 (14 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Delivery complete, ready to schedule",
+    "x": 160,
+    "y": 140,
+    "anchor": "p19"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Extract resource requirements from estimate service type, size, complexity",
+    "x": 160,
+    "y": 290,
+    "anchor": "p19"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Query resource availability calendar for matching skills",
+    "x": 160,
+    "y": 440,
+    "anchor": "p19"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Available resources found?",
+    "x": 160,
+    "y": 590,
+    "anchor": "p19"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Create task for ops manager: find alternative resource",
+    "x": 160,
+    "y": 740,
+    "anchor": "p19"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Select best match proximity, skill match, workload balance",
+    "x": 460,
+    "y": 740,
+    "anchor": "p19"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Propose time slots to customer via SMS link",
+    "x": 160,
+    "y": 890,
+    "anchor": "p19"
+   },
+   {
+    "id": "H",
+    "type": "condition",
+    "title": "Customer selects time within 48h?",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p19"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Book resource, confirm with calendar invite",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p19"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Send reminder, auto-select best available after 48h",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p19"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Send confirmation to customer with resource name, arrival window",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p19"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Send notification to resource crew lead with job details",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p19"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Update CRM stage to WORK_SCHEDULED",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p19"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log scheduling event to Airtable",
+    "x": 460,
+    "y": 890,
+    "anchor": "p19"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    "No"
+   ],
+   [
+    "D",
+    "F",
+    "Yes"
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    "Yes"
+   ],
+   [
+    "H",
+    "J",
+    "No"
+   ],
+   [
+    "I",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "J",
+    "I",
+    ""
+   ],
+   [
+    "E",
+    "N",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m25",
+  "label": "G006 · Multi-Phase Milestone Tracking and Notifications — flow 25",
+  "note": "A flowchart from Automations 101 (14 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Job scheduled, stage = WORK_SCHEDULED",
+    "x": 160,
+    "y": 140,
+    "anchor": "p20"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Load project template with predefined phases and durations",
+    "x": 160,
+    "y": 290,
+    "anchor": "p20"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Create milestone records in CRM",
+    "x": 160,
+    "y": 440,
+    "anchor": "p20"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Phase 1 start date reached",
+    "x": 160,
+    "y": 590,
+    "anchor": "p20"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Send start notification to crew and customer",
+    "x": 160,
+    "y": 740,
+    "anchor": "p20"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Crew marks phase as complete in mobile app or SMS",
+    "x": 160,
+    "y": 890,
+    "anchor": "p20"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "Phase completed on time?",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p20"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Log completion, update phase status",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p20"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Escalate to project manager",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p20"
+   },
+   {
+    "id": "J",
+    "type": "condition",
+    "title": "More phases remaining?",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p20"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Schedule next phase start notification",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p20"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "All phases complete, move to job finished",
+    "x": 460,
+    "y": 1490,
+    "anchor": "p20"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Send delay alert to customer, create task for ops",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p20"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Trigger final inspection and sign‑off workflow",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p20"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    "Yes"
+   ],
+   [
+    "G",
+    "I",
+    "No after SLA"
+   ],
+   [
+    "H",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    "Yes"
+   ],
+   [
+    "J",
+    "L",
+    "No"
+   ],
+   [
+    "I",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "D",
+    ""
+   ],
+   [
+    "L",
+    "N",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m26",
+  "label": "G006 · Digital Sign-Off on Completion — flow 26",
+  "note": "A flowchart from Automations 101 (15 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "All phases complete, stage = JOB_FINISHED",
+    "x": 160,
+    "y": 140,
+    "anchor": "p21"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Generate digital sign‑off request with completion summary",
+    "x": 160,
+    "y": 290,
+    "anchor": "p21"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Send sign‑off link via SMS and email",
+    "x": 160,
+    "y": 440,
+    "anchor": "p21"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Customer opens link, reviews completion details",
+    "x": 160,
+    "y": 590,
+    "anchor": "p21"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Customer approves?",
+    "x": 160,
+    "y": 740,
+    "anchor": "p21"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Capture signature, timestamp, IP address",
+    "x": 160,
+    "y": 890,
+    "anchor": "p21"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Customer submits issues in form",
+    "x": 460,
+    "y": 890,
+    "anchor": "p21"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Generate signed PDF, store in cloud",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p21"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Update CRM: signed_off = true, signed_at timestamp",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p21"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Trigger final payment invoice Pattern 14",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p21"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Notify ops: job ready for final close",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p21"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Create task for project manager: address issues",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p21"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Send acknowledgment to customer: we will fix issues",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p21"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log issue report to Airtable",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p21"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Archive signed document, log completion",
+    "x": 460,
+    "y": 1490,
+    "anchor": "p21"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Yes"
+   ],
+   [
+    "E",
+    "G",
+    "No with issues"
+   ],
+   [
+    "F",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "G",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "K",
+    "O",
+    ""
+   ],
+   [
+    "N",
+    "O",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m27",
+  "label": "G006 · Warranty Registration and Document Delivery — flow 27",
+  "note": "A flowchart from Automations 101 (13 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Job completed and signed off",
+    "x": 160,
+    "y": 140,
+    "anchor": "p22"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Extract product information from estimate materials list",
+    "x": 160,
+    "y": 290,
+    "anchor": "p22"
+   },
+   {
+    "id": "C",
+    "type": "condition",
+    "title": "Manufacturer warranty registration required?",
+    "x": 160,
+    "y": 440,
+    "anchor": "p22"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Call manufacturer API or submit web form",
+    "x": 160,
+    "y": 590,
+    "anchor": "p22"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Generate warranty document from template",
+    "x": 460,
+    "y": 590,
+    "anchor": "p22"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Store warranty registration confirmation",
+    "x": 160,
+    "y": 740,
+    "anchor": "p22"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Generate customer warranty PDF with registration number",
+    "x": 460,
+    "y": 740,
+    "anchor": "p22"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Upload warranty PDF to cloud storage",
+    "x": 160,
+    "y": 890,
+    "anchor": "p22"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Send warranty document link to customer via SMS/email",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p22"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Store warranty expiry date in CRM",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p22"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Schedule renewal reminders at 11 months, 30 days, 7 days before expiry",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p22"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Log warranty registration event to Airtable",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p22"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Trigger review request Pattern 23",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p22"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    "Yes"
+   ],
+   [
+    "C",
+    "E",
+    "No"
+   ],
+   [
+    "D",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "E",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m28",
+  "label": "G006 · Review Request with Reputation Monitoring — flow 28",
+  "note": "A flowchart from Automations 101 (11 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Job completed and signed off",
+    "x": 160,
+    "y": 140,
+    "anchor": "p23"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Wait 5 days for customer to experience result",
+    "x": 160,
+    "y": 290,
+    "anchor": "p23"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Send review request via SMS and email with direct links",
+    "x": 160,
+    "y": 440,
+    "anchor": "p23"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Start review reminder timer 7 days",
+    "x": 160,
+    "y": 590,
+    "anchor": "p23"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Review submitted? webhook received",
+    "x": 160,
+    "y": 740,
+    "anchor": "p23"
+   },
+   {
+    "id": "F",
+    "type": "condition",
+    "title": "Review rating >= 4?",
+    "x": 160,
+    "y": 890,
+    "anchor": "p23"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Stop asking, tag review_unresponsive",
+    "x": 460,
+    "y": 890,
+    "anchor": "p23"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Send thank you message with referral link Pattern 24",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p23"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Create high-priority task for ops manager",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p23"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Send apology SMS, offer resolution",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p23"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Log review to Airtable",
+    "x": 760,
+    "y": 1040,
+    "anchor": "p23"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Yes"
+   ],
+   [
+    "E",
+    "G",
+    "No after 14d"
+   ],
+   [
+    "F",
+    "H",
+    "Yes"
+   ],
+   [
+    "F",
+    "I",
+    "No rating <= 3"
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "H",
+    "K",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "G",
+    "K",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m29",
+  "label": "G006 · Referral Program with Unique Links and Reward Tracking — flow 2",
+  "note": "A flowchart from Automations 101 (15 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Trigger: positive review OR job completion + 14 days",
+    "x": 160,
+    "y": 140,
+    "anchor": "p24"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Generate unique referral code and link for customer",
+    "x": 160,
+    "y": 290,
+    "anchor": "p24"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Send referral offer SMS/email with link",
+    "x": 160,
+    "y": 440,
+    "anchor": "p24"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Store referral code in CRM, track clicks",
+    "x": 160,
+    "y": 590,
+    "anchor": "p24"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Friend clicks link, fills lead form",
+    "x": 160,
+    "y": 740,
+    "anchor": "p24"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Create lead with source=referral, referrer_id",
+    "x": 160,
+    "y": 890,
+    "anchor": "p24"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Referral lead progresses through pipeline",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p24"
+   },
+   {
+    "id": "H",
+    "type": "condition",
+    "title": "Referred lead reaches CLOSED_WON?",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p24"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Mark referral as successful",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p24"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Calculate reward amount based on program rules",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p24"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Update referrer reward balance",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p24"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Send notification to referrer: reward earned",
+    "x": 160,
+    "y": 1790,
+    "anchor": "p24"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Trigger reward fulfillment gift card, discount, cash",
+    "x": 160,
+    "y": 1940,
+    "anchor": "p24"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log referral conversion to Airtable",
+    "x": 160,
+    "y": 2090,
+    "anchor": "p24"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Expire referral offer, tag as expired",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p24"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    "Yes"
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "H",
+    "O",
+    "No after 90 days"
+   ],
+   [
+    "N",
+    "O",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m3",
+  "label": "G006 · The Human Handoff Taxonomy — flow 3",
+  "note": "A flowchart from Automations 101 (7 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Automation executes",
+    "x": 140,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "B",
+    "type": "condition",
+    "title": "Confidence > threshold?",
+    "x": 440,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Create task for human",
+    "x": 740,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Human reviews, overrides if needed",
+    "x": 1040,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Human action logged",
+    "x": 1340,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Automation continues with override value",
+    "x": 1640,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Automation decides",
+    "x": 740,
+    "y": 310,
+    "anchor": "ch4"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    "No"
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "B",
+    "G",
+    "Yes"
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m30",
+  "label": "G006 · Reactivation Sequence (Lost Leads / Dormant Customers) — flow 3",
+  "note": "A flowchart from Automations 101 (14 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Trigger: reactivation_date reached OR 365d since last job",
+    "x": 160,
+    "y": 140,
+    "anchor": "p25"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Move contact from CLOSED_LOST or DORMANT to REACTIVATION stage",
+    "x": 160,
+    "y": 290,
+    "anchor": "p25"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Send first reactivation SMS/email offer",
+    "x": 160,
+    "y": 440,
+    "anchor": "p25"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Start 14d timer for second touch",
+    "x": 160,
+    "y": 590,
+    "anchor": "p25"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Lead replies?",
+    "x": 160,
+    "y": 740,
+    "anchor": "p25"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Move back to NEW_LEAD or QUALIFIED preserving estimate history",
+    "x": 160,
+    "y": 890,
+    "anchor": "p25"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Send second reactivation message with stronger offer",
+    "x": 460,
+    "y": 890,
+    "anchor": "p25"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Start 14d timer for third touch",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p25"
+   },
+   {
+    "id": "I",
+    "type": "condition",
+    "title": "Lead replies?",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p25"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Send final reactivation message with expiry",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p25"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Start 14d timer for archive",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p25"
+   },
+   {
+    "id": "L",
+    "type": "condition",
+    "title": "Lead replies?",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p25"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Archive to DORMANT_ARCHIVE, suppress future contact",
+    "x": 160,
+    "y": 1790,
+    "anchor": "p25"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Log reactivation event to Airtable",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p25"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Yes"
+   ],
+   [
+    "E",
+    "G",
+    "No after 14d"
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "F",
+    "Yes"
+   ],
+   [
+    "I",
+    "J",
+    "No after 14d"
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "F",
+    "Yes"
+   ],
+   [
+    "L",
+    "M",
+    "No after 14d"
+   ],
+   [
+    "F",
+    "N",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m31",
+  "label": "G006 · Compliance Wrappers — flow 31",
+  "note": "A flowchart from Automations 101 (11 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Incoming data or request",
+    "x": 160,
+    "y": 140,
+    "anchor": "ch26"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Compliance Wrapper",
+    "x": 160,
+    "y": 290,
+    "anchor": "ch26"
+   },
+   {
+    "id": "C",
+    "type": "condition",
+    "title": "Check: consent on file?",
+    "x": 160,
+    "y": 440,
+    "anchor": "ch26"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Reject, log, notify compliance officer",
+    "x": 160,
+    "y": 590,
+    "anchor": "ch26"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Check: data retention policy",
+    "x": 460,
+    "y": 590,
+    "anchor": "ch26"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Purge old data before processing",
+    "x": 160,
+    "y": 740,
+    "anchor": "ch26"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Anonymize PHI if not required",
+    "x": 460,
+    "y": 740,
+    "anchor": "ch26"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Execute core automation",
+    "x": 160,
+    "y": 890,
+    "anchor": "ch26"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Log all actions to immutable audit trail",
+    "x": 160,
+    "y": 1040,
+    "anchor": "ch26"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "If data stored, encrypt at rest",
+    "x": 160,
+    "y": 1190,
+    "anchor": "ch26"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "If data transmitted, use TLS",
+    "x": 160,
+    "y": 1340,
+    "anchor": "ch26"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    "No"
+   ],
+   [
+    "C",
+    "E",
+    "Yes"
+   ],
+   [
+    "E",
+    "F",
+    "Expired"
+   ],
+   [
+    "E",
+    "G",
+    "OK"
+   ],
+   [
+    "G",
+    "H",
+    ""
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m32",
+  "label": "G006 · Idempotency, Retries, and Dead-Letter Queues — flow 32",
+  "note": "A flowchart from Automations 101 (6 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Module execution",
+    "x": 140,
+    "y": 160,
+    "anchor": "ch28"
+   },
+   {
+    "id": "B",
+    "type": "condition",
+    "title": "Success?",
+    "x": 440,
+    "y": 160,
+    "anchor": "ch28"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Continue",
+    "x": 740,
+    "y": 160,
+    "anchor": "ch28"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Retry count <5?",
+    "x": 740,
+    "y": 310,
+    "anchor": "ch28"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Sleep 2^retry seconds",
+    "x": 1040,
+    "y": 160,
+    "anchor": "ch28"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Send to dead‑letter queue",
+    "x": 1040,
+    "y": 310,
+    "anchor": "ch28"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    "Yes"
+   ],
+   [
+    "B",
+    "D",
+    "No"
+   ],
+   [
+    "D",
+    "E",
+    "Yes"
+   ],
+   [
+    "E",
+    "A",
+    ""
+   ],
+   [
+    "D",
+    "F",
+    "No"
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m33",
+  "label": "G006 · Idempotency, Retries, and Dead-Letter Queues — flow 33",
+  "note": "A flowchart from Automations 101 (12 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Event received",
+    "x": 160,
+    "y": 140,
+    "anchor": "ch28"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Idempotency check",
+    "x": 160,
+    "y": 290,
+    "anchor": "ch28"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Log duplicate, ignore",
+    "x": 160,
+    "y": 440,
+    "anchor": "ch28"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Execute action",
+    "x": 460,
+    "y": 440,
+    "anchor": "ch28"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Success?",
+    "x": 160,
+    "y": 590,
+    "anchor": "ch28"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Log success, done",
+    "x": 160,
+    "y": 740,
+    "anchor": "ch28"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "Transient error?",
+    "x": 460,
+    "y": 740,
+    "anchor": "ch28"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Retry with backoff",
+    "x": 160,
+    "y": 890,
+    "anchor": "ch28"
+   },
+   {
+    "id": "I",
+    "type": "condition",
+    "title": "Retry count < max?",
+    "x": 160,
+    "y": 1040,
+    "anchor": "ch28"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Send to dead‑letter queue",
+    "x": 460,
+    "y": 890,
+    "anchor": "ch28"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Alert ops, create task",
+    "x": 460,
+    "y": 1040,
+    "anchor": "ch28"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Manual or automated reprocess",
+    "x": 160,
+    "y": 1190,
+    "anchor": "ch28"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    "Duplicate"
+   ],
+   [
+    "B",
+    "D",
+    "New"
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Yes"
+   ],
+   [
+    "E",
+    "G",
+    "No"
+   ],
+   [
+    "G",
+    "H",
+    "Yes"
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "D",
+    "Yes"
+   ],
+   [
+    "I",
+    "J",
+    "No"
+   ],
+   [
+    "G",
+    "J",
+    "No"
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "D",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m34",
+  "label": "G006 · Testing Automations — flow 34",
+  "note": "A flowchart from Automations 101 (4 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Synthetic health checks",
+    "x": 160,
+    "y": 140,
+    "anchor": "ch29"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Chaos tests",
+    "x": 160,
+    "y": 290,
+    "anchor": "ch29"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Integration tests",
+    "x": 160,
+    "y": 440,
+    "anchor": "ch29"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Unit tests",
+    "x": 160,
+    "y": 590,
+    "anchor": "ch29"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m35",
+  "label": "G006 · Handoff Decision Guide — flow 35",
+  "note": "A flowchart from Automations 101 (11 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Identify automation candidate",
+    "x": 160,
+    "y": 140,
+    "anchor": "ch31"
+   },
+   {
+    "id": "B",
+    "type": "condition",
+    "title": "Is human input legally or regulatory required?",
+    "x": 160,
+    "y": 290,
+    "anchor": "ch31"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Necessary Handoff",
+    "x": 160,
+    "y": 440,
+    "anchor": "ch31"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Can AI achieve >95% accuracy consistently?",
+    "x": 460,
+    "y": 440,
+    "anchor": "ch31"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Fully automatable no handoff",
+    "x": 160,
+    "y": 590,
+    "anchor": "ch31"
+   },
+   {
+    "id": "F",
+    "type": "condition",
+    "title": "What is the cost of a wrong automation decision?",
+    "x": 460,
+    "y": 590,
+    "anchor": "ch31"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Optional Handoff allow override",
+    "x": 160,
+    "y": 740,
+    "anchor": "ch31"
+   },
+   {
+    "id": "H",
+    "type": "condition",
+    "title": "Does human add trust or relationship value?",
+    "x": 460,
+    "y": 740,
+    "anchor": "ch31"
+   },
+   {
+    "id": "I",
+    "type": "condition",
+    "title": "Volume > 100/month?",
+    "x": 160,
+    "y": 890,
+    "anchor": "ch31"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Build automation with fallback to human",
+    "x": 160,
+    "y": 1040,
+    "anchor": "ch31"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Questionable keep manual or build helper",
+    "x": 460,
+    "y": 1040,
+    "anchor": "ch31"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    "Yes"
+   ],
+   [
+    "B",
+    "D",
+    "No"
+   ],
+   [
+    "D",
+    "E",
+    "Yes"
+   ],
+   [
+    "D",
+    "F",
+    "No"
+   ],
+   [
+    "F",
+    "C",
+    "High > $1,000 or reputation damage"
+   ],
+   [
+    "F",
+    "G",
+    "Medium $100–$1,000"
+   ],
+   [
+    "F",
+    "H",
+    "Low < $100"
+   ],
+   [
+    "H",
+    "G",
+    "Yes"
+   ],
+   [
+    "H",
+    "I",
+    "No"
+   ],
+   [
+    "I",
+    "J",
+    "Yes"
+   ],
+   [
+    "I",
+    "K",
+    "No"
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m4",
+  "label": "G006 · The Human Handoff Taxonomy — flow 4",
+  "note": "A flowchart from Automations 101 (7 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Automation prepares data",
+    "x": 140,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Creates notification + task",
+    "x": 440,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Human reviews and decides",
+    "x": 740,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Approved?",
+    "x": 1040,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Automation executes next step",
+    "x": 1340,
+    "y": 160,
+    "anchor": "ch4"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Automation stops, logs rejection",
+    "x": 1340,
+    "y": 310,
+    "anchor": "ch4"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Log decision",
+    "x": 1640,
+    "y": 160,
+    "anchor": "ch4"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    "Yes"
+   ],
+   [
+    "D",
+    "F",
+    "No"
+   ],
+   [
+    "E",
+    "G",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m5",
+  "label": "G006 · The Human Handoff Taxonomy — flow 5",
+  "note": "A flowchart from Automations 101 (10 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Is human input legally required?",
+    "x": 160,
+    "y": 140,
+    "anchor": "ch4"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Necessary Handoff",
+    "x": 160,
+    "y": 290,
+    "anchor": "ch4"
+   },
+   {
+    "id": "C",
+    "type": "condition",
+    "title": "Can AI make decision with >95% accuracy?",
+    "x": 460,
+    "y": 290,
+    "anchor": "ch4"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Fully automatable (no handoff",
+    "x": 160,
+    "y": 440,
+    "anchor": "ch4"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Is cost of wrong decision > $1,000?",
+    "x": 460,
+    "y": 440,
+    "anchor": "ch4"
+   },
+   {
+    "id": "F",
+    "type": "condition",
+    "title": "Does human add trust or relationship value?",
+    "x": 160,
+    "y": 590,
+    "anchor": "ch4"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Optional Handoff - allow override",
+    "x": 160,
+    "y": 740,
+    "anchor": "ch4"
+   },
+   {
+    "id": "H",
+    "type": "condition",
+    "title": "Volume > 100/month?",
+    "x": 460,
+    "y": 740,
+    "anchor": "ch4"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Build automation with fallback to human",
+    "x": 160,
+    "y": 890,
+    "anchor": "ch4"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Questionable - keep manual or build helper",
+    "x": 460,
+    "y": 890,
+    "anchor": "ch4"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    "Yes"
+   ],
+   [
+    "A",
+    "C",
+    "No"
+   ],
+   [
+    "C",
+    "D",
+    "Yes"
+   ],
+   [
+    "C",
+    "E",
+    "No"
+   ],
+   [
+    "E",
+    "B",
+    "Yes"
+   ],
+   [
+    "E",
+    "F",
+    "No"
+   ],
+   [
+    "F",
+    "G",
+    "Yes"
+   ],
+   [
+    "F",
+    "H",
+    "No"
+   ],
+   [
+    "H",
+    "I",
+    "Yes"
+   ],
+   [
+    "H",
+    "J",
+    "No"
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m6",
+  "label": "G006 · Capture Inbound Lead from Any Channel — flow 6",
+  "note": "A flowchart from Automations 101 (15 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Inbound event: form, call, chat, email, referral",
+    "x": 160,
+    "y": 140,
+    "anchor": "p01"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Normalize to standard event schema",
+    "x": 160,
+    "y": 290,
+    "anchor": "p01"
+   },
+   {
+    "id": "C",
+    "type": "condition",
+    "title": "Check for duplicate? phone/email",
+    "x": 160,
+    "y": 440,
+    "anchor": "p01"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Merge: update source, preserve oldest created_at",
+    "x": 160,
+    "y": 590,
+    "anchor": "p01"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Create contact in CRM (GHL",
+    "x": 460,
+    "y": 590,
+    "anchor": "p01"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Apply source tag and UTM attribution",
+    "x": 160,
+    "y": 740,
+    "anchor": "p01"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "SMS consent given?",
+    "x": 160,
+    "y": 890,
+    "anchor": "p01"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Send welcome SMS (idempotent",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p01"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Send welcome email only",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p01"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Create task for rep with SLA",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p01"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Change stage to CONTACTED",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p01"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Log event to Airtable",
+    "x": 460,
+    "y": 740,
+    "anchor": "p01"
+   },
+   {
+    "id": "M",
+    "type": "condition",
+    "title": "High intent? (source=google or budget=high",
+    "x": 460,
+    "y": 890,
+    "anchor": "p01"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Slack alert to sales channel",
+    "x": 760,
+    "y": 1040,
+    "anchor": "p01"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "End",
+    "x": 1060,
+    "y": 1040,
+    "anchor": "p01"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    "Duplicate found"
+   ],
+   [
+    "C",
+    "E",
+    "No duplicate"
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    "Yes"
+   ],
+   [
+    "G",
+    "I",
+    "No"
+   ],
+   [
+    "H",
+    "J",
+    ""
+   ],
+   [
+    "I",
+    "J",
+    ""
+   ],
+   [
+    "J",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    "Yes"
+   ],
+   [
+    "M",
+    "O",
+    "No"
+   ],
+   [
+    "D",
+    "L",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m7",
+  "label": "G006 · Deduplicate and Merge Duplicate Records — flow 7",
+  "note": "A flowchart from Automations 101 (15 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Incoming lead data",
+    "x": 160,
+    "y": 140,
+    "anchor": "p02"
+   },
+   {
+    "id": "B",
+    "type": "condition",
+    "title": "Search existing contacts by phone and email",
+    "x": 160,
+    "y": 290,
+    "anchor": "p02"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Create new contact",
+    "x": 160,
+    "y": 440,
+    "anchor": "p02"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "Compare confidence: exact phone? exact email?",
+    "x": 460,
+    "y": 440,
+    "anchor": "p02"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Merge: update existing contact",
+    "x": 160,
+    "y": 590,
+    "anchor": "p02"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Queue for manual review",
+    "x": 460,
+    "y": 590,
+    "anchor": "p02"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Preserve oldest created_at timestamp",
+    "x": 160,
+    "y": 740,
+    "anchor": "p02"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Append new source tag to existing source list",
+    "x": 460,
+    "y": 740,
+    "anchor": "p02"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Update last_contacted timestamp",
+    "x": 760,
+    "y": 740,
+    "anchor": "p02"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "If existing stage is earlier than qualified, keep qualified stage",
+    "x": 1060,
+    "y": 740,
+    "anchor": "p02"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Log merge event to Airtable",
+    "x": 1360,
+    "y": 740,
+    "anchor": "p02"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Suppress duplicate welcome SMS",
+    "x": 1660,
+    "y": 740,
+    "anchor": "p02"
+   },
+   {
+    "id": "M",
+    "type": "action",
+    "title": "Create task for ops: review potential duplicate",
+    "x": 1960,
+    "y": 740,
+    "anchor": "p02"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Send Slack alert to #duplicate-review",
+    "x": 160,
+    "y": 890,
+    "anchor": "p02"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Continue to Pattern 1 intake flow",
+    "x": 760,
+    "y": 590,
+    "anchor": "p02"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    "No match"
+   ],
+   [
+    "B",
+    "D",
+    "Match found"
+   ],
+   [
+    "D",
+    "E",
+    "High confidence"
+   ],
+   [
+    "D",
+    "F",
+    "Low confidence"
+   ],
+   [
+    "E",
+    "G",
+    ""
+   ],
+   [
+    "E",
+    "H",
+    ""
+   ],
+   [
+    "E",
+    "I",
+    ""
+   ],
+   [
+    "E",
+    "J",
+    ""
+   ],
+   [
+    "E",
+    "K",
+    ""
+   ],
+   [
+    "E",
+    "L",
+    ""
+   ],
+   [
+    "F",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    ""
+   ],
+   [
+    "C",
+    "O",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m8",
+  "label": "G006 · Round-Robin / Territory Assignment — flow 8",
+  "note": "A flowchart from Automations 101 (18 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Lead created in CRM, stage = NEW_LEAD",
+    "x": 160,
+    "y": 140,
+    "anchor": "p03"
+   },
+   {
+    "id": "B",
+    "type": "condition",
+    "title": "Lead source defined?",
+    "x": 160,
+    "y": 290,
+    "anchor": "p03"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Assign to default queue for manual triage",
+    "x": 160,
+    "y": 440,
+    "anchor": "p03"
+   },
+   {
+    "id": "D",
+    "type": "action",
+    "title": "Determine assignment rule: territory, round‑robin, or load‑balanced",
+    "x": 460,
+    "y": 440,
+    "anchor": "p03"
+   },
+   {
+    "id": "E",
+    "type": "condition",
+    "title": "Territory-based? (zip code, region",
+    "x": 160,
+    "y": 590,
+    "anchor": "p03"
+   },
+   {
+    "id": "F",
+    "type": "action",
+    "title": "Map territory to rep(s",
+    "x": 160,
+    "y": 740,
+    "anchor": "p03"
+   },
+   {
+    "id": "G",
+    "type": "condition",
+    "title": "Multiple reps in territory?",
+    "x": 160,
+    "y": 890,
+    "anchor": "p03"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Round‑robin within territory",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p03"
+   },
+   {
+    "id": "I",
+    "type": "action",
+    "title": "Assign to single rep",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p03"
+   },
+   {
+    "id": "J",
+    "type": "condition",
+    "title": "Round‑robin only?",
+    "x": 460,
+    "y": 740,
+    "anchor": "p03"
+   },
+   {
+    "id": "K",
+    "type": "action",
+    "title": "Select next rep from global list (round‑robin",
+    "x": 460,
+    "y": 890,
+    "anchor": "p03"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Check rep’s current open tasks count",
+    "x": 760,
+    "y": 1040,
+    "anchor": "p03"
+   },
+   {
+    "id": "M",
+    "type": "condition",
+    "title": "Over capacity? (>10 open tasks",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p03"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Skip rep, go to next in round‑robin",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p03"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Assign lead to selected rep",
+    "x": 460,
+    "y": 590,
+    "anchor": "p03"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "Create assignment record (who, when, method",
+    "x": 760,
+    "y": 740,
+    "anchor": "p03"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Send Slack notification to rep (optional",
+    "x": 760,
+    "y": 890,
+    "anchor": "p03"
+   },
+   {
+    "id": "R",
+    "type": "action",
+    "title": "Log assignment to Airtable",
+    "x": 1060,
+    "y": 1040,
+    "anchor": "p03"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    "No"
+   ],
+   [
+    "B",
+    "D",
+    "Yes"
+   ],
+   [
+    "D",
+    "E",
+    ""
+   ],
+   [
+    "E",
+    "F",
+    "Yes"
+   ],
+   [
+    "F",
+    "G",
+    ""
+   ],
+   [
+    "G",
+    "H",
+    "Yes"
+   ],
+   [
+    "G",
+    "I",
+    "No"
+   ],
+   [
+    "E",
+    "J",
+    "No"
+   ],
+   [
+    "J",
+    "K",
+    "Yes"
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    "Yes"
+   ],
+   [
+    "M",
+    "O",
+    "No"
+   ],
+   [
+    "H",
+    "O",
+    ""
+   ],
+   [
+    "I",
+    "O",
+    ""
+   ],
+   [
+    "C",
+    "O",
+    ""
+   ],
+   [
+    "O",
+    "P",
+    ""
+   ],
+   [
+    "P",
+    "Q",
+    ""
+   ],
+   [
+    "Q",
+    "R",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-006-m9",
+  "label": "G006 · AI Classification of Intent / BANT — flow 9",
+  "note": "A flowchart from Automations 101 (20 nodes).",
+  "grimoireId": "grimoire-006",
+  "href": "/grimoires/006-automations-101.html",
+  "nodes": [
+   {
+    "id": "A",
+    "type": "action",
+    "title": "Lead replies to SMS/email/chat",
+    "x": 160,
+    "y": 140,
+    "anchor": "p04"
+   },
+   {
+    "id": "B",
+    "type": "action",
+    "title": "Extract message text, lead context",
+    "x": 160,
+    "y": 290,
+    "anchor": "p04"
+   },
+   {
+    "id": "C",
+    "type": "action",
+    "title": "Call OpenAI API with classification prompt",
+    "x": 160,
+    "y": 440,
+    "anchor": "p04"
+   },
+   {
+    "id": "D",
+    "type": "condition",
+    "title": "API success?",
+    "x": 160,
+    "y": 590,
+    "anchor": "p04"
+   },
+   {
+    "id": "E",
+    "type": "action",
+    "title": "Fallback: rule‑based keyword matching",
+    "x": 160,
+    "y": 740,
+    "anchor": "p04"
+   },
+   {
+    "id": "F",
+    "type": "condition",
+    "title": "Confidence > 0.7?",
+    "x": 460,
+    "y": 740,
+    "anchor": "p04"
+   },
+   {
+    "id": "G",
+    "type": "action",
+    "title": "Parse extracted fields: budget, timeline, authority, need, overall_intent",
+    "x": 160,
+    "y": 890,
+    "anchor": "p04"
+   },
+   {
+    "id": "H",
+    "type": "action",
+    "title": "Send clarifying question max 2 attempts",
+    "x": 460,
+    "y": 890,
+    "anchor": "p04"
+   },
+   {
+    "id": "I",
+    "type": "condition",
+    "title": "Clarification received?",
+    "x": 160,
+    "y": 1040,
+    "anchor": "p04"
+   },
+   {
+    "id": "J",
+    "type": "action",
+    "title": "Move to REACTIVATION stage",
+    "x": 160,
+    "y": 1190,
+    "anchor": "p04"
+   },
+   {
+    "id": "K",
+    "type": "condition",
+    "title": "Score calculated?",
+    "x": 460,
+    "y": 1040,
+    "anchor": "p04"
+   },
+   {
+    "id": "L",
+    "type": "action",
+    "title": "Score = budget + timeline + authority + need + source bonus",
+    "x": 460,
+    "y": 1190,
+    "anchor": "p04"
+   },
+   {
+    "id": "M",
+    "type": "condition",
+    "title": "Score >= 70?",
+    "x": 160,
+    "y": 1340,
+    "anchor": "p04"
+   },
+   {
+    "id": "N",
+    "type": "action",
+    "title": "Update lead score, add intent:high tag",
+    "x": 160,
+    "y": 1490,
+    "anchor": "p04"
+   },
+   {
+    "id": "O",
+    "type": "action",
+    "title": "Change stage to QUALIFIED",
+    "x": 160,
+    "y": 1640,
+    "anchor": "p04"
+   },
+   {
+    "id": "P",
+    "type": "action",
+    "title": "Send appointment booking link",
+    "x": 160,
+    "y": 1790,
+    "anchor": "p04"
+   },
+   {
+    "id": "Q",
+    "type": "action",
+    "title": "Send clarifying SMS for missing fields",
+    "x": 460,
+    "y": 1490,
+    "anchor": "p04"
+   },
+   {
+    "id": "R",
+    "type": "action",
+    "title": "Wait 24h for reply, then re‑evaluate",
+    "x": 460,
+    "y": 1640,
+    "anchor": "p04"
+   },
+   {
+    "id": "S",
+    "type": "action",
+    "title": "Add intent:low tag, move to nurture sequence",
+    "x": 760,
+    "y": 1490,
+    "anchor": "p04"
+   },
+   {
+    "id": "T",
+    "type": "action",
+    "title": "Log event to Airtable",
+    "x": 460,
+    "y": 1340,
+    "anchor": "p04"
+   }
+  ],
+  "edges": [
+   [
+    "A",
+    "B",
+    ""
+   ],
+   [
+    "B",
+    "C",
+    ""
+   ],
+   [
+    "C",
+    "D",
+    ""
+   ],
+   [
+    "D",
+    "E",
+    "No, after retries"
+   ],
+   [
+    "D",
+    "F",
+    "Yes"
+   ],
+   [
+    "F",
+    "G",
+    "Yes"
+   ],
+   [
+    "F",
+    "H",
+    "No"
+   ],
+   [
+    "H",
+    "I",
+    ""
+   ],
+   [
+    "I",
+    "C",
+    "Yes"
+   ],
+   [
+    "I",
+    "J",
+    "No"
+   ],
+   [
+    "G",
+    "K",
+    ""
+   ],
+   [
+    "K",
+    "L",
+    ""
+   ],
+   [
+    "L",
+    "M",
+    ""
+   ],
+   [
+    "M",
+    "N",
+    "Yes"
+   ],
+   [
+    "N",
+    "O",
+    ""
+   ],
+   [
+    "O",
+    "P",
+    ""
+   ],
+   [
+    "M",
+    "Q",
+    "Score 40-69"
+   ],
+   [
+    "Q",
+    "R",
+    ""
+   ],
+   [
+    "M",
+    "S",
+    "Score < 40"
+   ],
+   [
+    "E",
+    "F",
+    ""
+   ],
+   [
+    "J",
+    "T",
+    ""
+   ],
+   [
+    "P",
+    "T",
+    ""
+   ],
+   [
+    "S",
+    "T",
+    ""
+   ],
+   [
+    "R",
+    "T",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s1",
+  "label": "G007 · The Agent Stack — steps 1",
+  "note": "A step sequence from Agentic AI 101 (5 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Goal",
+    "x": 140,
+    "y": 200,
+    "anchor": "m6"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Instructions",
+    "x": 440,
+    "y": 200,
+    "anchor": "m6"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Tools",
+    "x": 740,
+    "y": 200,
+    "anchor": "m6"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "State",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m6"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Control",
+    "x": 140,
+    "y": 365,
+    "anchor": "m6"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s2",
+  "label": "G007 · Basic Safety Gates — steps 2",
+  "note": "A step sequence from Agentic AI 101 (4 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Read before write",
+    "x": 140,
+    "y": 200,
+    "anchor": "m11"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Preview before execute",
+    "x": 440,
+    "y": 200,
+    "anchor": "m11"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Approve high-impact actions",
+    "x": 740,
+    "y": 200,
+    "anchor": "m11"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Limit the loop",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m11"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s3",
+  "label": "G007 · Tools Over Integration, Then Infrastructure — steps 3",
+  "note": "A step sequence from Agentic AI 101 (4 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Manual tool",
+    "x": 140,
+    "y": 200,
+    "anchor": "m15"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Reusable connector",
+    "x": 440,
+    "y": 200,
+    "anchor": "m15"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "MCP server or integration layer",
+    "x": 740,
+    "y": 200,
+    "anchor": "m15"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Governed platform",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m15"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s4",
+  "label": "G007 · Example: Multi-Agent CRM — steps 4",
+  "note": "A step sequence from Agentic AI 101 (6 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Intake workflow",
+    "x": 140,
+    "y": 200,
+    "anchor": "m21"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Research agent",
+    "x": 440,
+    "y": 200,
+    "anchor": "m21"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Qualification agent",
+    "x": 740,
+    "y": 200,
+    "anchor": "m21"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Personalization agent",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m21"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Executor workflow",
+    "x": 140,
+    "y": 365,
+    "anchor": "m21"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Reporter agent",
+    "x": 440,
+    "y": 365,
+    "anchor": "m21"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s5",
+  "label": "G007 · Multi-Agent Failure Modes — steps 5",
+  "note": "A step sequence from Agentic AI 101 (6 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Coordination collapse",
+    "x": 140,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Infinite delegation",
+    "x": 440,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Cost explosion",
+    "x": 740,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Authority confusion",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m22"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Prompt injection by tool output",
+    "x": 140,
+    "y": 365,
+    "anchor": "m22"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Memory pollution",
+    "x": 440,
+    "y": 365,
+    "anchor": "m22"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s6",
+  "label": "G007 · Basic Build: The Safe First Version — steps 6",
+  "note": "A step sequence from Agentic AI 101 (7 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Webhook or form trigger",
+    "x": 140,
+    "y": 200,
+    "anchor": "m25"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Edit Fields node",
+    "x": 440,
+    "y": 200,
+    "anchor": "m25"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "HighLevel: Get many contacts",
+    "x": 740,
+    "y": 200,
+    "anchor": "m25"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "AI Agent node",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m25"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "IF or Switch node",
+    "x": 140,
+    "y": 365,
+    "anchor": "m25"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "HighLevel: Create or update contact",
+    "x": 440,
+    "y": 365,
+    "anchor": "m25"
+   },
+   {
+    "id": "s6",
+    "type": "action",
+    "title": "HighLevel: Create task",
+    "x": 740,
+    "y": 365,
+    "anchor": "m25"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ],
+   [
+    "s5",
+    "s6",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s7",
+  "label": "G007 · Best Practices For n8n + GHL Agents — steps 7",
+  "note": "A step sequence from Agentic AI 101 (7 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Search before create",
+    "x": 140,
+    "y": 200,
+    "anchor": "m27"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Let deterministic nodes do deterministic work",
+    "x": 440,
+    "y": 200,
+    "anchor": "m27"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Keep the AI output typed",
+    "x": 740,
+    "y": 200,
+    "anchor": "m27"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Use tags as audit breadcrumbs",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m27"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Do not auto-send in v1",
+    "x": 140,
+    "y": 365,
+    "anchor": "m27"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Log agent decisions",
+    "x": 440,
+    "y": 365,
+    "anchor": "m27"
+   },
+   {
+    "id": "s6",
+    "type": "action",
+    "title": "Separate staging and production",
+    "x": 740,
+    "y": 365,
+    "anchor": "m27"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ],
+   [
+    "s5",
+    "s6",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-007-s8",
+  "label": "G007 · Advanced Build: Multi-Agent Lead Desk — steps 8",
+  "note": "A step sequence from Agentic AI 101 (7 steps).",
+  "grimoireId": "grimoire-007",
+  "href": "/grimoires/007-agentic-ai-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Intake workflow",
+    "x": 140,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Research agent",
+    "x": 440,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Qualification agent",
+    "x": 740,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Compliance/review agent",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Personalization agent",
+    "x": 140,
+    "y": 365,
+    "anchor": "m28"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Executor workflow",
+    "x": 440,
+    "y": 365,
+    "anchor": "m28"
+   },
+   {
+    "id": "s6",
+    "type": "action",
+    "title": "Reporting workflow",
+    "x": 740,
+    "y": 365,
+    "anchor": "m28"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ],
+   [
+    "s5",
+    "s6",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s1",
+  "label": "G008 · Crawl: Can Search Engines Reach You? — steps 1",
+  "note": "A step sequence from SEO 101 (4 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Submit XML sitemap",
+    "x": 140,
+    "y": 200,
+    "anchor": "m5"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Check robots.txt",
+    "x": 440,
+    "y": 200,
+    "anchor": "m5"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Use internal links",
+    "x": 740,
+    "y": 200,
+    "anchor": "m5"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Inspect logs",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m5"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s10",
+  "label": "G008 · AI Search Visibility SOP — steps 10",
+  "note": "A step sequence from SEO 101 (4 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Create 10-25 saved prompts",
+    "x": 140,
+    "y": 200,
+    "anchor": "m37"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Run monthly",
+    "x": 440,
+    "y": 200,
+    "anchor": "m37"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Record citations",
+    "x": 740,
+    "y": 200,
+    "anchor": "m37"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Extract gaps",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m37"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s2",
+  "label": "G008 · On-Page SEO — steps 2",
+  "note": "A step sequence from SEO 101 (5 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Title",
+    "x": 140,
+    "y": 200,
+    "anchor": "m9"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "H1",
+    "x": 440,
+    "y": 200,
+    "anchor": "m9"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Intro",
+    "x": 740,
+    "y": 200,
+    "anchor": "m9"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Sections",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m9"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Media",
+    "x": 140,
+    "y": 365,
+    "anchor": "m9"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s3",
+  "label": "G008 · Citation Design — steps 3",
+  "note": "A step sequence from SEO 101 (4 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "State the claim",
+    "x": 140,
+    "y": 200,
+    "anchor": "m14"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Show the evidence",
+    "x": 440,
+    "y": 200,
+    "anchor": "m14"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Explain the caveat",
+    "x": 740,
+    "y": 200,
+    "anchor": "m14"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Format for extraction",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m14"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s4",
+  "label": "G008 · The AI-Ready Page Template — steps 4",
+  "note": "A step sequence from SEO 101 (6 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Direct answer",
+    "x": 140,
+    "y": 200,
+    "anchor": "m18"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Definition block",
+    "x": 440,
+    "y": 200,
+    "anchor": "m18"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Context and caveats",
+    "x": 740,
+    "y": 200,
+    "anchor": "m18"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Evidence",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m18"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Comparison",
+    "x": 140,
+    "y": 365,
+    "anchor": "m18"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Next action",
+    "x": 440,
+    "y": 365,
+    "anchor": "m18"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s5",
+  "label": "G008 · Topical Authority — steps 5",
+  "note": "A step sequence from SEO 101 (4 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Define the topic map",
+    "x": 140,
+    "y": 200,
+    "anchor": "m23"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Create hub pages",
+    "x": 440,
+    "y": 200,
+    "anchor": "m23"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Add proof pages",
+    "x": 740,
+    "y": 200,
+    "anchor": "m23"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Interlink intentionally",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m23"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s6",
+  "label": "G008 · The 90-Day SEO + AI Search Plan — steps 6",
+  "note": "A step sequence from SEO 101 (6 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Days 1-15: Baseline",
+    "x": 140,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Days 16-30: Technical cleanup",
+    "x": 440,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Days 31-45: Entity foundation",
+    "x": 740,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Days 46-65: Content rebuild",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m28"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Days 66-80: Authority push",
+    "x": 140,
+    "y": 365,
+    "anchor": "m28"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Days 81-90: Measure and iterate",
+    "x": 440,
+    "y": 365,
+    "anchor": "m28"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s7",
+  "label": "G008 · Weekly SEO Support Routine — steps 7",
+  "note": "A step sequence from SEO 101 (5 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Monday: Search Console health",
+    "x": 140,
+    "y": 200,
+    "anchor": "m30"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Tuesday: Content queue",
+    "x": 440,
+    "y": 200,
+    "anchor": "m30"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Wednesday: Local and reputation",
+    "x": 740,
+    "y": 200,
+    "anchor": "m30"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Thursday: Competitor and AI visibility",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m30"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Friday: Report and cleanup",
+    "x": 140,
+    "y": 365,
+    "anchor": "m30"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s8",
+  "label": "G008 · Keyword Research SOP For VAs — steps 8",
+  "note": "A step sequence from SEO 101 (5 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Start from existing data",
+    "x": 140,
+    "y": 200,
+    "anchor": "m31"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Group by intent",
+    "x": 440,
+    "y": 200,
+    "anchor": "m31"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Find page match",
+    "x": 740,
+    "y": 200,
+    "anchor": "m31"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Check the SERP manually",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m31"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Collect competitor examples",
+    "x": 140,
+    "y": 365,
+    "anchor": "m31"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-008-s9",
+  "label": "G008 · Publishing SOP — steps 9",
+  "note": "A step sequence from SEO 101 (4 steps).",
+  "grimoireId": "grimoire-008",
+  "href": "/grimoires/008-seo-101.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Before upload",
+    "x": 140,
+    "y": 200,
+    "anchor": "m34"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "During upload",
+    "x": 440,
+    "y": 200,
+    "anchor": "m34"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Before publish",
+    "x": 740,
+    "y": 200,
+    "anchor": "m34"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "After publish",
+    "x": 1040,
+    "y": 200,
+    "anchor": "m34"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s1",
+  "label": "G009 · C17 · Understanding Merchant Statements — steps 1",
+  "note": "A step sequence from Payment Processing (4 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Find volume",
+    "x": 140,
+    "y": 200,
+    "anchor": "c17"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Find total fees",
+    "x": 440,
+    "y": 200,
+    "anchor": "c17"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Calculate effective rate",
+    "x": 740,
+    "y": 200,
+    "anchor": "c17"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Separate pass-through from markup",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c17"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s2",
+  "label": "G009 · C32 · The Missing Money Ticket — steps 2",
+  "note": "A step sequence from Payment Processing (5 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Identify the transaction or batch",
+    "x": 140,
+    "y": 200,
+    "anchor": "c32"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Check state",
+    "x": 440,
+    "y": 200,
+    "anchor": "c32"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Check batch timing",
+    "x": 740,
+    "y": 200,
+    "anchor": "c32"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Check bank account",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c32"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Check risk notes",
+    "x": 140,
+    "y": 365,
+    "anchor": "c32"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s3",
+  "label": "G009 · C34 · The Terminal Isn't Working — steps 3",
+  "note": "A step sequence from Payment Processing (5 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Power",
+    "x": 140,
+    "y": 200,
+    "anchor": "c34"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Network",
+    "x": 440,
+    "y": 200,
+    "anchor": "c34"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Scope",
+    "x": 740,
+    "y": 200,
+    "anchor": "c34"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Error",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c34"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Fallback",
+    "x": 140,
+    "y": 365,
+    "anchor": "c34"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s4",
+  "label": "G009 · C45 · The First Chargeback Case — steps 4",
+  "note": "A step sequence from Payment Processing (4 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Dispute arrives",
+    "x": 140,
+    "y": 200,
+    "anchor": "c45"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Merchant gathers evidence",
+    "x": 440,
+    "y": 200,
+    "anchor": "c45"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Representment",
+    "x": 740,
+    "y": 200,
+    "anchor": "c45"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Decision",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c45"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s5",
+  "label": "G009 · C50 · Rekey Same Auth — steps 5",
+  "note": "A step sequence from Payment Processing (4 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Verify original approval",
+    "x": 140,
+    "y": 200,
+    "anchor": "c50"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Check current state",
+    "x": 440,
+    "y": 200,
+    "anchor": "c50"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Prevent duplicate billing",
+    "x": 740,
+    "y": 200,
+    "anchor": "c50"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Document",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c50"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s6",
+  "label": "G009 · C67 · 30-Day Training Plan For A New Payments Support Agent — s",
+  "note": "A step sequence from Payment Processing (4 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Week 1: Vocabulary and maps",
+    "x": 140,
+    "y": 200,
+    "anchor": "c67"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Week 2: Ticket patterns",
+    "x": 440,
+    "y": 200,
+    "anchor": "c67"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Week 3: Risk and escalation",
+    "x": 740,
+    "y": 200,
+    "anchor": "c67"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Week 4: Systems thinking",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c67"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s7",
+  "label": "G009 · C78 · Test Mode And Sandbox Survival — steps 7",
+  "note": "A step sequence from Payment Processing (5 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Test successful payment",
+    "x": 140,
+    "y": 200,
+    "anchor": "c78"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Test failed payment",
+    "x": 440,
+    "y": 200,
+    "anchor": "c78"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Test webhook retry",
+    "x": 740,
+    "y": 200,
+    "anchor": "c78"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Test refund",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c78"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Test abandoned checkout",
+    "x": 140,
+    "y": 365,
+    "anchor": "c78"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-009-s8",
+  "label": "G009 · C86 · 3D Secure (3DS) — steps 8",
+  "note": "A step sequence from Payment Processing (5 steps).",
+  "grimoireId": "grimoire-009",
+  "href": "/grimoires/009-payment-processing.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Customer enters payment details",
+    "x": 140,
+    "y": 200,
+    "anchor": "c86"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Risk check runs in the background",
+    "x": 440,
+    "y": 200,
+    "anchor": "c86"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Challenge triggered if needed",
+    "x": 740,
+    "y": 200,
+    "anchor": "c86"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Issuing bank authenticates",
+    "x": 1040,
+    "y": 200,
+    "anchor": "c86"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Transaction approved — liability shifted",
+    "x": 140,
+    "y": 365,
+    "anchor": "c86"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ }
+]

@@ -1,8 +1,8 @@
 import { loadState, saveState } from "./store.js?v=5";
 import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=3";
-import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=2";
-const AUTO_MAPS = readAutoGrimoireMaps();
-const ALL_GRIMOIRE_MAPS = [...GRIMOIRE_MAPS, ...AUTO_MAPS];
+import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=3";
+const FLOWCHART_MAPS = readGrimoireFlowcharts();
+const ALL_GRIMOIRE_MAPS = [...GRIMOIRE_MAPS, ...FLOWCHART_MAPS];
 import { createWorkbenchGraph } from "./graph-engine.js?v=1";
 import {
   escapeHtml,
@@ -213,11 +213,11 @@ function populateTemplateSelect() {
     select.disabled = false;
     const framework = GRIMOIRE_MAPS.map((map) =>
       `<option value="${escapeHtml(map.id)}">${escapeHtml(map.label)}</option>`).join("");
-    const chapters = AUTO_MAPS.map((map) =>
+    const flows = FLOWCHART_MAPS.map((map) =>
       `<option value="${escapeHtml(map.id)}">${escapeHtml(map.label)}</option>`).join("");
     select.innerHTML = `<optgroup label="Framework maps">${framework}</optgroup>` +
-      (chapters ? `<optgroup label="Full chapter maps">${chapters}</optgroup>` : "");
-    note.textContent = "Visualizes a Grimoire — double-click any node to open its section in a new window.";
+      (flows ? `<optgroup label="Flowcharts from the Grimoires">${flows}</optgroup>` : "");
+    note.textContent = "Rebuilds a flowchart taught in a Grimoire — editable, and every node double-clicks to its source.";
   } else {
     select.disabled = true;
     select.innerHTML = `<option value="blank">Blank canvas</option>`;
@@ -1151,9 +1151,9 @@ function safeColor(value) {
   return /^#[0-9a-f]{6}$/i.test(value) ? value : "#0d9488";
 }
 
-function readAutoGrimoireMaps() {
+function readGrimoireFlowcharts() {
   try {
-    const raw = document.querySelector("#workbench-grimoire-maps")?.textContent;
+    const raw = document.querySelector("#workbench-grimoire-flowcharts")?.textContent;
     const parsed = raw ? JSON.parse(raw) : [];
     return Array.isArray(parsed) ? parsed : [];
   } catch {
