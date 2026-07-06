@@ -1,4 +1,5 @@
 import { loadState, saveState } from "./store.js?v=5";
+import { escapeHtml } from "./utils.mjs?v=1";
 
 const ZONES = [
   ["Asia/Manila", "Manila"],
@@ -303,6 +304,3 @@ function remainingLabel(milliseconds) {
   return days ? `${days}d ${hours % 24}h remaining` : `${hours}h ${Math.floor((milliseconds % 3600000) / 60000)}m remaining`;
 }
 
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-}

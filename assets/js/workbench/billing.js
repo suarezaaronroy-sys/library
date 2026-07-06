@@ -14,8 +14,9 @@ import {
   number
 } from "./billing-core.mjs?v=5";
 import { loadState, saveState } from "./store.js?v=5";
-import "./personal-budget.js?v=3";
+import "./personal-budget.js?v=4";
 import "./calculator.js?v=4";
+import { downloadFile, escapeHtml, slug } from "./utils.mjs?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
 const today = new Date();
@@ -475,9 +476,6 @@ if (root) {
     return `${slug(state.budget.name || "client-budget")}.${extension}`;
   }
 
-  function slug(value) {
-    return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  }
 
   function printArtifact(content, title) {
     const popup = window.open("", "_blank", "width=800,height=900");
@@ -491,18 +489,5 @@ if (root) {
     popup.print();
   }
 
-  function escapeHtml(value) {
-    return String(value).replace(/[&<>"']/g, (character) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-    })[character]);
-  }
 
-  function downloadFile(content, filename, type) {
-    const url = URL.createObjectURL(new Blob([content], { type }));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    link.click();
-    URL.revokeObjectURL(url);
-  }
 }

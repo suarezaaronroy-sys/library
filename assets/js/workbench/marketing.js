@@ -1,4 +1,5 @@
 import { loadState, saveState } from "./store.js?v=5";
+import { escapeHtml, slug } from "./utils.mjs?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v2:marketing";
 const FUNNEL_PATTERNS = {
@@ -309,12 +310,4 @@ function clamp(value, minimum, maximum) {
   return Math.min(maximum, Math.max(minimum, Number(value) || 0));
 }
 
-function slug(value) {
-  return String(value).trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}
 
-function escapeHtml(value) {
-  return String(value || "").replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-  })[character]);
-}

@@ -1,3 +1,4 @@
+import { escapeHtml } from "./utils.mjs?v=1";
 const root = document.querySelector("#library-tools-workspace");
 
 if (root) {
@@ -46,7 +47,4 @@ function slugify(value) {
 }
 function quote(value) {
   return String(value).replaceAll('"', '\\"').replace(/\s+/g, " ").trim();
-}
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 }

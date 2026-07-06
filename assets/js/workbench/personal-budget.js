@@ -1,4 +1,5 @@
 import { loadState, saveState } from "./store.js?v=5";
+import { downloadFile, escapeHtml, money, number, slug } from "./utils.mjs?v=1";
 import {
   buildExpenseCalendar,
   buildPersonalBudgetSummary,
@@ -73,18 +74,18 @@ if (root) {
         status.textContent = "Budget plan selected - copy it from the text field";
       }
     }
-    if (action === "txt") download(output.value, filename("txt"), "text/plain");
-    if (action === "csv") download(expenseCsv(), filename("csv"), "text/csv");
+    if (action === "txt") downloadFile(output.value, filename("txt"), "text/plain");
+    if (action === "csv") downloadFile(expenseCsv(), filename("csv"), "text/csv");
     if (action === "ics") {
       if (!state.expenses.length) {
         status.textContent = "Add an expense with a due day first - nothing to export yet";
       } else {
-        download(buildExpenseCalendar(state.profile, state.expenses), filename("ics"), "text/calendar");
+        downloadFile(buildExpenseCalendar(state.profile, state.expenses), filename("ics"), "text/calendar");
         status.textContent = "Recurring calendar prepared";
       }
     }
     if (action === "json") {
-      download(JSON.stringify({
+      downloadFile(JSON.stringify({
         schemaVersion: 1,
         artifactType: "personal-budget",
         generatedAt: new Date().toISOString(),
@@ -155,29 +156,7 @@ function normalizeState(loaded) {
   };
 }
 
-function money(value) {
-  return (Number(value) || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
 
-function number(value) {
-  return (Number(value) || 0).toLocaleString("en-US", { maximumFractionDigits: 1 });
-}
 
-function slug(value) {
-  return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "personal-budget";
-}
 
-function escapeHtml(value) {
-  return String(value || "").replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-  })[character]);
-}
 
-function download(content, filename, type) {
-  const url = URL.createObjectURL(new Blob([content], { type }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}

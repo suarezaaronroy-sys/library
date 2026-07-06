@@ -1,4 +1,5 @@
 import { exportAllState, importAllState, loadState, saveState } from "./store.js?v=5";
+import { downloadFile, slug } from "./utils.mjs?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v1:desk-reports";
 const today = new Date().toISOString().slice(0, 10);
@@ -89,11 +90,11 @@ if (root) {
       }
     }
     if (action === "download") {
-      download(output.value, reportFilename("txt"), "text/plain");
+      downloadFile(output.value, reportFilename("txt"), "text/plain");
       status.textContent = "Text report prepared";
     }
     if (action === "json") {
-      download(JSON.stringify(reportPacket(), null, 2), reportFilename("json"), "application/json");
+      downloadFile(JSON.stringify(reportPacket(), null, 2), reportFilename("json"), "application/json");
       status.textContent = "Structured report prepared";
     }
     if (action === "clear") {
@@ -184,18 +185,7 @@ function field(name, label, placeholder) {
   return { name, label, placeholder };
 }
 
-function slug(value) {
-  return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "report";
-}
 
-function download(content, filename, type) {
-  const url = URL.createObjectURL(new Blob([content], { type }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}
 
 // ---- whole-workbench backup (Desk · Data) ----
 const backupExport = document.querySelector("#backup-export");

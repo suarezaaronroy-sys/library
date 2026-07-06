@@ -1,4 +1,5 @@
 import { loadState, saveState } from "./store.js?v=5";
+import { downloadFile, escapeHtml } from "./utils.mjs?v=1";
 import {
   createWorkbenchGraph,
   fitWorkbenchGraph,
@@ -475,17 +476,4 @@ function numberMoney(value) {
   return new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(Number(value) || 0);
 }
 
-function escapeHtml(value) {
-  return String(value || "").replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-  })[character]);
-}
 
-function downloadFile(content, filename, type) {
-  const url = URL.createObjectURL(new Blob([content], { type }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}

@@ -1,4 +1,5 @@
 import { loadState, saveState } from "./store.js?v=3";
+import { escapeHtml } from "./utils.mjs?v=1";
 
 const KEY = "aaron-workbench:v1:decisions";
 const state = loadState(KEY, { records: [] });
@@ -41,6 +42,3 @@ if (root) {
   }
 }
 
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-}

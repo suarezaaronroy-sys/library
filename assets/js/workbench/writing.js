@@ -1,4 +1,5 @@
 import { loadState, saveState } from "./store.js?v=5";
+import { downloadFile, escapeHtml } from "./utils.mjs?v=1";
 
 const KEY = "aaron-workbench:v2:writing";
 const legacy = loadState("aaron-workbench:v1:writing", { scratchpad: "", markdown: "", snippets: [], clipboard: [] });
@@ -64,9 +65,9 @@ if (root) {
         status.textContent = "Clipboard permission was not granted.";
       }
     } else if (action === "export-text") {
-      download(notepad.innerText, "workbench-note.txt", "text/plain");
+      downloadFile(notepad.innerText, "workbench-note.txt", "text/plain");
     } else if (action === "export-html") {
-      download(`<!doctype html><meta charset="utf-8"><title>Workbench note</title><article>${notepad.innerHTML}</article>`, "workbench-note.html", "text/html");
+      downloadFile(`<!doctype html><meta charset="utf-8"><title>Workbench note</title><article>${notepad.innerHTML}</article>`, "workbench-note.html", "text/html");
     } else if (snippetId) {
       const snippet = state.snippets.find((item) => item.id === snippetId);
       if (snippet) appendParagraph(snippet.text);
@@ -224,15 +225,4 @@ async function copyText(text, output) {
   }
 }
 
-function download(content, filename, type) {
-  const url = URL.createObjectURL(new Blob([content], { type }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}
 
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-}
