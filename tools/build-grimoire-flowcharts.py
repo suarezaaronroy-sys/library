@@ -202,6 +202,7 @@ def main():
         num = f.name[:3]
         m = meta.get(num)
         if not m or m.get("status") != "live": continue
+        if num in ("001", "002"): continue  # hand-authored as curated framework maps
         doc = f.read_text(encoding="utf-8", errors="replace")
         idx = anchor_index(doc, valid_by_num.get(num, set()))
         # mermaid

@@ -1,6 +1,6 @@
 import { loadState, saveState } from "./store.js?v=5";
 import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=3";
-import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=3";
+import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=4";
 const FLOWCHART_MAPS = readGrimoireFlowcharts();
 const ALL_GRIMOIRE_MAPS = [...GRIMOIRE_MAPS, ...FLOWCHART_MAPS];
 import { createWorkbenchGraph } from "./graph-engine.js?v=1";
