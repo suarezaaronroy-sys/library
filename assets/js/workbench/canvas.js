@@ -1,6 +1,8 @@
 import { loadState, saveState } from "./store.js?v=5";
 import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=3";
-import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=1";
+import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=2";
+const AUTO_MAPS = readAutoGrimoireMaps();
+const ALL_GRIMOIRE_MAPS = [...GRIMOIRE_MAPS, ...AUTO_MAPS];
 import { createWorkbenchGraph } from "./graph-engine.js?v=1";
 import {
   escapeHtml,
@@ -209,10 +211,13 @@ function populateTemplateSelect() {
     }[kind];
   } else if (kind === "grimoire") {
     select.disabled = false;
-    select.innerHTML = GRIMOIRE_MAPS.map((map) =>
-      `<option value="${escapeHtml(map.id)}">${escapeHtml(map.label)}</option>`
-    ).join("");
-    note.textContent = "Visualizes a Grimoire's framework — every purple node opens the section it maps to.";
+    const framework = GRIMOIRE_MAPS.map((map) =>
+      `<option value="${escapeHtml(map.id)}">${escapeHtml(map.label)}</option>`).join("");
+    const chapters = AUTO_MAPS.map((map) =>
+      `<option value="${escapeHtml(map.id)}">${escapeHtml(map.label)}</option>`).join("");
+    select.innerHTML = `<optgroup label="Framework maps">${framework}</optgroup>` +
+      (chapters ? `<optgroup label="Full chapter maps">${chapters}</optgroup>` : "");
+    note.textContent = "Visualizes a Grimoire — double-click any node to open its section in a new window.";
   } else {
     select.disabled = true;
     select.innerHTML = `<option value="blank">Blank canvas</option>`;
@@ -280,6 +285,13 @@ function initializeGraph() {
   if (viewport?.zoom) cy.zoom(viewport.zoom);
   if (viewport?.pan) cy.pan(viewport.pan);
   cy.on("select", "node", (event) => selectNode(event.target));
+  let lastTap = { id: null, t: 0 };
+  cy.on("tap", "node", (event) => {
+    const nodeId = event.target.id();
+    const now = Date.now();
+    if (lastTap.id === nodeId && now - lastTap.t < 350) { openNodeTarget(event.target); lastTap = { id: null, t: 0 }; }
+    else lastTap = { id: nodeId, t: now };
+  });
   cy.on("unselect", "node", () => {
     if (!cy.$("node:selected").length) clearInspector();
   });
@@ -342,15 +354,7 @@ function bindControls() {
     }
   });
   document.querySelector("#canvas-open-resource").addEventListener("click", () => {
-    const resource = registry.find((item) => item.id === selectedNode?.data("resourceId"));
-    const link = String(selectedNode?.data("links") || "").trim();
-    if (link) {
-      const base = getWorkbenchConfig().baseUrl || "";
-      const url = /^https?:\/\//i.test(link) ? link : `${base}${link}`.replace(/([^:]\/)\/+/g, "$1");
-      window.open(url, "_blank", "noopener,noreferrer");
-    } else if (resource) {
-      openResource(resource);
-    }
+    if (selectedNode) openNodeTarget(selectedNode);
   });
   document.querySelector("#canvas-search-trigger").addEventListener("click", openCanvasSearch);
   document.querySelector("#canvas-search").addEventListener("input", searchCanvas);
@@ -528,21 +532,33 @@ function createAutomationCanvas(id, templateId) {
 }
 
 function createGrimoireCanvas(id, templateId) {
-  const map = GRIMOIRE_MAPS.find((item) => item.id === templateId) || GRIMOIRE_MAPS[0];
+  const map = ALL_GRIMOIRE_MAPS.find((item) => item.id === templateId) || ALL_GRIMOIRE_MAPS[0];
   const canvas = createCanvas(id, map.label, false, { boardType: "grimoire", templateId: map.id });
-  const nodes = map.nodes.map((n) => {
+  const source = map.nodes.slice();
+  // Every board gets a title node linking to the grimoire (opens in a new
+  // window). Auto-generated maps ship one (id "g-title"); curated maps don't.
+  let edges = map.edges.slice();
+  if (!source.some((n) => n.id === "g-title")) {
+    const minX = Math.min(...source.map((n) => n.x));
+    const minY = Math.min(...source.map((n) => n.y));
+    source.unshift({ id: "g-title", type: "document", title: map.label, x: minX, y: minY - 120, link: map.href });
+    if (source[1]) edges = [["g-title", source[1].id, "open ↗"], ...edges];
+  }
+  const nodes = source.map((n) => {
     const node = nodeJson(n.id, n.type, n.title, n.x, n.y, NODE_COLORS[n.type]);
     node.data.category = map.label;
     node.data.description = n.desc || "";
-    if (n.anchor) {
-      node.data.links = `${map.href}#${n.anchor}`;
+    const url = n.link ? n.link : (n.anchor ? `${map.href}#${n.anchor}` : "");
+    if (url) {
+      node.data.links = url;
       node.data.resourceId = map.grimoireId;
     }
     return node;
   });
-  const edges = map.edges.map(([from, to, label], index) =>
+  const built = map.edges === edges ? map.edges : edges;
+  const finalEdges = built.map(([from, to, label], index) =>
     edgeJson(`${map.id}-edge-${index + 1}`, from, to, label || ""));
-  canvas.elements = { nodes, edges };
+  canvas.elements = { nodes, edges: finalEdges };
   return canvas;
 }
 
@@ -1133,4 +1149,26 @@ function escapeXml(value) {
 
 function safeColor(value) {
   return /^#[0-9a-f]{6}$/i.test(value) ? value : "#0d9488";
+}
+
+function readAutoGrimoireMaps() {
+  try {
+    const raw = document.querySelector("#workbench-grimoire-maps")?.textContent;
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function openNodeTarget(node) {
+  const link = String(node?.data("links") || "").trim();
+  if (link) {
+    const base = getWorkbenchConfig().baseUrl || "";
+    const url = /^https?:\/\//i.test(link) ? link : `${base}${link}`.replace(/([^:]\/)\/+/g, "$1");
+    window.open(url, "_blank", "noopener,noreferrer");
+    return;
+  }
+  const resource = registry.find((item) => item.id === node?.data("resourceId"));
+  if (resource) openResource(resource);
 }
