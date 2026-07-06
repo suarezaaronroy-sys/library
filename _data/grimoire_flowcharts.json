@@ -1,5 +1,341 @@
 [
  {
+  "id": "gflow-001-s101",
+  "label": "G001 · ASMC Full Stack CRM Engine — steps 101",
+  "note": "A step sequence from ASMC Full Stack CRM Engine (5 steps).",
+  "grimoireId": "grimoire-001",
+  "href": "/grimoires/001-asmc-crm-engine.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "PandaDoc document.completed → GHL update",
+    "x": 140,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "Enrol in Contract Win sequence",
+    "x": 440,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Send Pre-Construction Welcome Packet (PandaDoc)",
+    "x": 740,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Create PM task: \"Prepare for {{first_name}} — DO NOT",
+    "x": 1040,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Fire Meta CAPI Purchase event",
+    "x": 140,
+    "y": 365,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-001-s102",
+  "label": "G001 · ASMC Full Stack CRM Engine — steps 102",
+  "note": "A step sequence from ASMC Full Stack CRM Engine (4 steps).",
+  "grimoireId": "grimoire-001",
+  "href": "/grimoires/001-asmc-crm-engine.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "Stripe/Square payment.cleared webhook fires",
+    "x": 140,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "3 same-day tasks fire automatically",
+    "x": 440,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "SMS to client",
+    "x": 740,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Update deposit_received_date",
+    "x": 1040,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-001-s103",
+  "label": "G001 · ASMC Full Stack CRM Engine — steps 103",
+  "note": "A step sequence from ASMC Full Stack CRM Engine (7 steps).",
+  "grimoireId": "grimoire-001",
+  "href": "/grimoires/001-asmc-crm-engine.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "final_payment_date set by PM → Zap 8 fires",
+    "x": 140,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "NPS survey SMS",
+    "x": 440,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Detractor — PM call within 24hr",
+    "x": 740,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "Passive — review ask only",
+    "x": 1040,
+    "y": 200,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Review ask (NPS 9+)",
+    "x": 140,
+    "y": 365,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "Referral ask with unique tracking link",
+    "x": 440,
+    "y": 365,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   },
+   {
+    "id": "s6",
+    "type": "action",
+    "title": "Referral re-enters Phase 1",
+    "x": 740,
+    "y": 365,
+    "link": "/grimoires/001-asmc-crm-engine.html"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ],
+   [
+    "s5",
+    "s6",
+    ""
+   ]
+  ]
+ },
+ {
+  "id": "gflow-002-s201",
+  "label": "G002 · SEO — pipeline 201",
+  "note": "A step sequence from Dual Wing Rental Marketing Engine (8 steps).",
+  "grimoireId": "grimoire-002",
+  "href": "/grimoires/002-dual-wing-rental.html",
+  "nodes": [
+   {
+    "id": "s0",
+    "type": "trigger",
+    "title": "GSC Rank",
+    "x": 140,
+    "y": 200,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   },
+   {
+    "id": "s1",
+    "type": "action",
+    "title": "SERP Click",
+    "x": 440,
+    "y": 200,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   },
+   {
+    "id": "s2",
+    "type": "action",
+    "title": "Landing Page",
+    "x": 740,
+    "y": 200,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   },
+   {
+    "id": "s3",
+    "type": "action",
+    "title": "CTA Click",
+    "x": 1040,
+    "y": 200,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   },
+   {
+    "id": "s4",
+    "type": "action",
+    "title": "Form Submit",
+    "x": 140,
+    "y": 365,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   },
+   {
+    "id": "s5",
+    "type": "action",
+    "title": "CRM Entry",
+    "x": 440,
+    "y": 365,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   },
+   {
+    "id": "s6",
+    "type": "action",
+    "title": "Email Seq",
+    "x": 740,
+    "y": 365,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   },
+   {
+    "id": "s7",
+    "type": "action",
+    "title": "Conversion",
+    "x": 1040,
+    "y": 365,
+    "link": "/grimoires/002-dual-wing-rental.html#m1-seo"
+   }
+  ],
+  "edges": [
+   [
+    "s0",
+    "s1",
+    ""
+   ],
+   [
+    "s1",
+    "s2",
+    ""
+   ],
+   [
+    "s2",
+    "s3",
+    ""
+   ],
+   [
+    "s3",
+    "s4",
+    ""
+   ],
+   [
+    "s4",
+    "s5",
+    ""
+   ],
+   [
+    "s5",
+    "s6",
+    ""
+   ],
+   [
+    "s6",
+    "s7",
+    ""
+   ]
+  ]
+ },
+ {
   "id": "gflow-004-s1",
   "label": "G004 · The AI Agent node — how it actually works — steps 1",
   "note": "A step sequence from n8n 101 (4 steps).",
@@ -12,7 +348,7 @@
     "title": "User message → Agent",
     "x": 140,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/004-n8n-101.html#m11"
    },
    {
     "id": "s1",
@@ -20,7 +356,7 @@
     "title": "LLM decides next action",
     "x": 440,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/004-n8n-101.html#m11"
    },
    {
     "id": "s2",
@@ -28,7 +364,7 @@
     "title": "Tool executes",
     "x": 740,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/004-n8n-101.html#m11"
    },
    {
     "id": "s3",
@@ -36,7 +372,7 @@
     "title": "Repeat or respond",
     "x": 1040,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/004-n8n-101.html#m11"
    }
   ],
   "edges": [
@@ -70,7 +406,7 @@
     "title": "Meta Business Account",
     "x": 140,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/004-n8n-101.html#m15"
    },
    {
     "id": "s1",
@@ -78,7 +414,7 @@
     "title": "WhatsApp Business Account (WABA)",
     "x": 440,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/004-n8n-101.html#m15"
    },
    {
     "id": "s2",
@@ -86,7 +422,7 @@
     "title": "Message Template Approval",
     "x": 740,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/004-n8n-101.html#m15"
    },
    {
     "id": "s3",
@@ -94,7 +430,7 @@
     "title": "Webhook Configuration",
     "x": 1040,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/004-n8n-101.html#m15"
    },
    {
     "id": "s4",
@@ -102,7 +438,7 @@
     "title": "Test with sandbox number",
     "x": 140,
     "y": 365,
-    "anchor": "m15"
+    "link": "/grimoires/004-n8n-101.html#m15"
    }
   ],
   "edges": [
@@ -141,7 +477,7 @@
     "title": "Node-level test",
     "x": 140,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/004-n8n-101.html#m21"
    },
    {
     "id": "s1",
@@ -149,7 +485,7 @@
     "title": "Partial workflow test",
     "x": 440,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/004-n8n-101.html#m21"
    },
    {
     "id": "s2",
@@ -157,7 +493,7 @@
     "title": "Full workflow test",
     "x": 740,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/004-n8n-101.html#m21"
    },
    {
     "id": "s3",
@@ -165,7 +501,7 @@
     "title": "Test mode isolation",
     "x": 1040,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/004-n8n-101.html#m21"
    }
   ],
   "edges": [
@@ -199,7 +535,7 @@
     "title": "What exactly triggers this?",
     "x": 140,
     "y": 200,
-    "anchor": "m4"
+    "link": "/grimoires/005-zapier-101.html#m4"
    },
    {
     "id": "s1",
@@ -207,7 +543,7 @@
     "title": "What does it do, in sequence?",
     "x": 440,
     "y": 200,
-    "anchor": "m4"
+    "link": "/grimoires/005-zapier-101.html#m4"
    },
    {
     "id": "s2",
@@ -215,7 +551,7 @@
     "title": "What breaks if step N fails?",
     "x": 740,
     "y": 200,
-    "anchor": "m4"
+    "link": "/grimoires/005-zapier-101.html#m4"
    },
    {
     "id": "s3",
@@ -223,7 +559,7 @@
     "title": "Who owns this when something goes wrong?",
     "x": 1040,
     "y": 200,
-    "anchor": "m4"
+    "link": "/grimoires/005-zapier-101.html#m4"
    },
    {
     "id": "s4",
@@ -231,7 +567,7 @@
     "title": "What does success actually look like?",
     "x": 140,
     "y": 365,
-    "anchor": "m4"
+    "link": "/grimoires/005-zapier-101.html#m4"
    }
   ],
   "edges": [
@@ -270,7 +606,7 @@
     "title": "What starts it?",
     "x": 140,
     "y": 200,
-    "anchor": "m8"
+    "link": "/grimoires/005-zapier-101.html#m8"
    },
    {
     "id": "s1",
@@ -278,7 +614,7 @@
     "title": "What does it do?",
     "x": 440,
     "y": 200,
-    "anchor": "m8"
+    "link": "/grimoires/005-zapier-101.html#m8"
    },
    {
     "id": "s2",
@@ -286,7 +622,7 @@
     "title": "Who owns it?",
     "x": 740,
     "y": 200,
-    "anchor": "m8"
+    "link": "/grimoires/005-zapier-101.html#m8"
    },
    {
     "id": "s3",
@@ -294,7 +630,7 @@
     "title": "What breaks if it stops working?",
     "x": 1040,
     "y": 200,
-    "anchor": "m8"
+    "link": "/grimoires/005-zapier-101.html#m8"
    }
   ],
   "edges": [
@@ -328,7 +664,7 @@
     "title": "Automating a broken process",
     "x": 140,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/005-zapier-101.html#m22"
    },
    {
     "id": "s1",
@@ -336,7 +672,7 @@
     "title": "Building before documenting",
     "x": 440,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/005-zapier-101.html#m22"
    },
    {
     "id": "s2",
@@ -344,7 +680,7 @@
     "title": "No ownership",
     "x": 740,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/005-zapier-101.html#m22"
    },
    {
     "id": "s3",
@@ -352,7 +688,7 @@
     "title": "No failure alerts",
     "x": 1040,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/005-zapier-101.html#m22"
    },
    {
     "id": "s4",
@@ -360,7 +696,7 @@
     "title": "Creating without checking — the duplicate trap",
     "x": 140,
     "y": 365,
-    "anchor": "m22"
+    "link": "/grimoires/005-zapier-101.html#m22"
    },
    {
     "id": "s5",
@@ -368,7 +704,7 @@
     "title": "Using Zapier as a database",
     "x": 440,
     "y": 365,
-    "anchor": "m22"
+    "link": "/grimoires/005-zapier-101.html#m22"
    },
    {
     "id": "s6",
@@ -376,7 +712,7 @@
     "title": "Overengineering",
     "x": 740,
     "y": 365,
-    "anchor": "m22"
+    "link": "/grimoires/005-zapier-101.html#m22"
    }
   ],
   "edges": [
@@ -425,7 +761,7 @@
     "title": "Trigger Event",
     "x": 140,
     "y": 160,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    },
    {
     "id": "B",
@@ -433,7 +769,7 @@
     "title": "Deterministic Logic",
     "x": 440,
     "y": 160,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    },
    {
     "id": "C",
@@ -441,7 +777,7 @@
     "title": "AI Needed?",
     "x": 740,
     "y": 160,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    },
    {
     "id": "D",
@@ -449,7 +785,7 @@
     "title": "AI Cog: classify, extract, generate",
     "x": 1040,
     "y": 160,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    },
    {
     "id": "E",
@@ -457,7 +793,7 @@
     "title": "Confidence > threshold?",
     "x": 1340,
     "y": 160,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    },
    {
     "id": "F",
@@ -465,7 +801,7 @@
     "title": "Human Cog: review, correct, approve",
     "x": 1640,
     "y": 160,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    },
    {
     "id": "G",
@@ -473,7 +809,7 @@
     "title": "Execute Action",
     "x": 740,
     "y": 310,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    },
    {
     "id": "H",
@@ -481,7 +817,7 @@
     "title": "Log Outcome",
     "x": 1040,
     "y": 310,
-    "anchor": "ch1"
+    "link": "/grimoires/006-automations-101.html#ch1"
    }
   ],
   "edges": [
@@ -545,7 +881,7 @@
     "title": "Lead enters QUALIFIED stage",
     "x": 160,
     "y": 140,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "B",
@@ -553,7 +889,7 @@
     "title": "Send booking link via SMS/email",
     "x": 160,
     "y": 290,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "C",
@@ -561,7 +897,7 @@
     "title": "Start 48h booking timer",
     "x": 160,
     "y": 440,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "D",
@@ -569,7 +905,7 @@
     "title": "Lead clicks booking link?",
     "x": 160,
     "y": 590,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "E",
@@ -577,7 +913,7 @@
     "title": "Calendar integration creates event",
     "x": 160,
     "y": 740,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "F",
@@ -585,7 +921,7 @@
     "title": "Send reminder SMS with link",
     "x": 460,
     "y": 740,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "G",
@@ -593,7 +929,7 @@
     "title": "Booked within next 24h?",
     "x": 160,
     "y": 890,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "H",
@@ -601,7 +937,7 @@
     "title": "Move to REACTIVATION stage",
     "x": 160,
     "y": 1040,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "I",
@@ -609,7 +945,7 @@
     "title": "Store appointment details: time, timezone, duration",
     "x": 460,
     "y": 890,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "J",
@@ -617,7 +953,7 @@
     "title": "Send confirmation SMS with calendar invite",
     "x": 460,
     "y": 1040,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "K",
@@ -625,7 +961,7 @@
     "title": "Schedule reminders: 24h, 3h, 1h before",
     "x": 160,
     "y": 1190,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "L",
@@ -633,7 +969,7 @@
     "title": "Update CRM stage to APPOINTMENT_BOOKED",
     "x": 160,
     "y": 1340,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    },
    {
     "id": "M",
@@ -641,7 +977,7 @@
     "title": "Log booking event to Airtable",
     "x": 460,
     "y": 1190,
-    "anchor": "p05"
+    "link": "/grimoires/006-automations-101.html#p05"
    }
   ],
   "edges": [
@@ -730,7 +1066,7 @@
     "title": "Appointment booked, stage = APPOINTMENT_BOOKED",
     "x": 160,
     "y": 140,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "B",
@@ -738,7 +1074,7 @@
     "title": "Schedule confirmation request: 48h before",
     "x": 160,
     "y": 290,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "C",
@@ -746,7 +1082,7 @@
     "title": "Lead confirms? reply YES",
     "x": 160,
     "y": 440,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "D",
@@ -754,7 +1090,7 @@
     "title": "Send reminder SMS + email at 24h",
     "x": 160,
     "y": 590,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "E",
@@ -762,7 +1098,7 @@
     "title": "Lead confirms?",
     "x": 160,
     "y": 740,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "F",
@@ -770,7 +1106,7 @@
     "title": "Send final reminder 3h before",
     "x": 160,
     "y": 890,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "G",
@@ -778,7 +1114,7 @@
     "title": "Lead confirms?",
     "x": 160,
     "y": 1040,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "H",
@@ -786,7 +1122,7 @@
     "title": "Send 1h reminder with meeting link",
     "x": 160,
     "y": 1190,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "I",
@@ -794,7 +1130,7 @@
     "title": "After appointment time, check if completed",
     "x": 160,
     "y": 1340,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "J",
@@ -802,7 +1138,7 @@
     "title": "No‑show: trigger recovery",
     "x": 160,
     "y": 1490,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "K",
@@ -810,7 +1146,7 @@
     "title": "Mark confirmed = true",
     "x": 460,
     "y": 590,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "L",
@@ -818,7 +1154,7 @@
     "title": "Reduce reminder frequency",
     "x": 460,
     "y": 740,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    },
    {
     "id": "M",
@@ -826,7 +1162,7 @@
     "title": "Log all reminders to Airtable",
     "x": 460,
     "y": 890,
-    "anchor": "p06"
+    "link": "/grimoires/006-automations-101.html#p06"
    }
   ],
   "edges": [
@@ -925,7 +1261,7 @@
     "title": "Appointment end time reached",
     "x": 160,
     "y": 140,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "B",
@@ -933,7 +1269,7 @@
     "title": "Wait 30 minutes grace period",
     "x": 160,
     "y": 290,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "C",
@@ -941,7 +1277,7 @@
     "title": "Appointment marked completed?",
     "x": 160,
     "y": 440,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "D",
@@ -949,7 +1285,7 @@
     "title": "End – no action",
     "x": 160,
     "y": 590,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "E",
@@ -957,7 +1293,7 @@
     "title": "Detect no‑show",
     "x": 460,
     "y": 590,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "F",
@@ -965,7 +1301,7 @@
     "title": "Send immediate SMS: “We missed you – click to reschedule”",
     "x": 160,
     "y": 740,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "G",
@@ -973,7 +1309,7 @@
     "title": "Generate unique reschedule link same rep, available slots",
     "x": 160,
     "y": 890,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "H",
@@ -981,7 +1317,7 @@
     "title": "Create task for rep: “Follow up with no‑show lead”",
     "x": 160,
     "y": 1040,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "I",
@@ -989,7 +1325,7 @@
     "title": "Add tag `no_show` and move stage to `REACTIVATION`",
     "x": 160,
     "y": 1190,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "J",
@@ -997,7 +1333,7 @@
     "title": "Log no‑show event to Airtable",
     "x": 160,
     "y": 1340,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "K",
@@ -1005,7 +1341,7 @@
     "title": "Lead reschedules within 24h?",
     "x": 160,
     "y": 1490,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "L",
@@ -1013,7 +1349,7 @@
     "title": "Remove `no_show` tag, move back to `APPOINTMENT_BOOKED`",
     "x": 160,
     "y": 1640,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "M",
@@ -1021,7 +1357,7 @@
     "title": "Send confirmation of new time, cancel old task",
     "x": 160,
     "y": 1790,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "N",
@@ -1029,7 +1365,7 @@
     "title": "Log reschedule to Airtable",
     "x": 160,
     "y": 1940,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "O",
@@ -1037,7 +1373,7 @@
     "title": "Escalate: second SMS, reassign task to manager",
     "x": 460,
     "y": 1640,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "P",
@@ -1045,7 +1381,7 @@
     "title": "After 7 days with no reschedule, mark as lost lead",
     "x": 460,
     "y": 1790,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "Q",
@@ -1053,7 +1389,7 @@
     "title": "Move to `CLOSED_LOST` with reason = “no_show”",
     "x": 460,
     "y": 1940,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    },
    {
     "id": "R",
@@ -1061,7 +1397,7 @@
     "title": "Schedule reactivation after 90 days",
     "x": 160,
     "y": 2090,
-    "anchor": "p07"
+    "link": "/grimoires/006-automations-101.html#p07"
    }
   ],
   "edges": [
@@ -1165,7 +1501,7 @@
     "title": "Trigger: estimate ready to send",
     "x": 160,
     "y": 140,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "B",
@@ -1173,7 +1509,7 @@
     "title": "Fetch lead data: name, service, amount, options",
     "x": 160,
     "y": 290,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "C",
@@ -1181,7 +1517,7 @@
     "title": "Load template from document store DOCX/PDF/HTML",
     "x": 160,
     "y": 440,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "D",
@@ -1189,7 +1525,7 @@
     "title": "Data validation: all required fields present?",
     "x": 160,
     "y": 590,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "E",
@@ -1197,7 +1533,7 @@
     "title": "Create task for rep: missing information",
     "x": 160,
     "y": 740,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "F",
@@ -1205,7 +1541,7 @@
     "title": "Populate template with dynamic fields",
     "x": 460,
     "y": 740,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "G",
@@ -1213,7 +1549,7 @@
     "title": "Generate final document PDF",
     "x": 160,
     "y": 890,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "H",
@@ -1221,7 +1557,7 @@
     "title": "Save document to cloud storage Google Drive, AWS S3",
     "x": 160,
     "y": 1040,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "I",
@@ -1229,7 +1565,7 @@
     "title": "Generate unique access link signed URL, short expiry",
     "x": 160,
     "y": 1190,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "J",
@@ -1237,7 +1573,7 @@
     "title": "Attach link to CRM record `estimate_document_link`",
     "x": 160,
     "y": 1340,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "K",
@@ -1245,7 +1581,7 @@
     "title": "Send delivery SMS/email to customer",
     "x": 160,
     "y": 1490,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "L",
@@ -1253,7 +1589,7 @@
     "title": "Log document generation event to Airtable",
     "x": 160,
     "y": 1640,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    },
    {
     "id": "M",
@@ -1261,7 +1597,7 @@
     "title": "Move stage to `ESTIMATE_SENT`",
     "x": 160,
     "y": 1790,
-    "anchor": "p08"
+    "link": "/grimoires/006-automations-101.html#p08"
    }
   ],
   "edges": [
@@ -1340,7 +1676,7 @@
     "title": "Estimate document sent with tracking pixel and links",
     "x": 160,
     "y": 140,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "B",
@@ -1348,7 +1684,7 @@
     "title": "Embed invisible pixel and unique click URLs",
     "x": 160,
     "y": 290,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "C",
@@ -1356,7 +1692,7 @@
     "title": "Recipient opens email or clicks link",
     "x": 160,
     "y": 440,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "D",
@@ -1364,7 +1700,7 @@
     "title": "Tracking pixel fires OR link redirects via tracking server",
     "x": 160,
     "y": 590,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "E",
@@ -1372,7 +1708,7 @@
     "title": "Webhook sends event to orchestration layer",
     "x": 160,
     "y": 740,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "F",
@@ -1380,7 +1716,7 @@
     "title": "Event type?",
     "x": 160,
     "y": 890,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "G",
@@ -1388,7 +1724,7 @@
     "title": "Update `estimate_opened = true`, increment `open_count`",
     "x": 160,
     "y": 1040,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "H",
@@ -1396,7 +1732,7 @@
     "title": "Determine link type: accept, financing, question",
     "x": 460,
     "y": 1040,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "I",
@@ -1404,7 +1740,7 @@
     "title": "Trigger specific action: e.g., send financing breakdown",
     "x": 160,
     "y": 1190,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "J",
@@ -1412,7 +1748,7 @@
     "title": "If open_count > 3 with no action, flag for rep review",
     "x": 460,
     "y": 1190,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "K",
@@ -1420,7 +1756,7 @@
     "title": "Log event to Airtable",
     "x": 160,
     "y": 1340,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    },
    {
     "id": "L",
@@ -1428,7 +1764,7 @@
     "title": "If engagement signal high, optionally send follow‑up",
     "x": 160,
     "y": 1490,
-    "anchor": "p09"
+    "link": "/grimoires/006-automations-101.html#p09"
    }
   ],
   "edges": [
@@ -1507,7 +1843,7 @@
     "title": "Estimate sent, stage = ESTIMATE_SENT",
     "x": 160,
     "y": 140,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "B",
@@ -1515,7 +1851,7 @@
     "title": "Start decision timer 72 hours",
     "x": 160,
     "y": 290,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "C",
@@ -1523,7 +1859,7 @@
     "title": "Send follow‑up 1 hour after estimate",
     "x": 160,
     "y": 440,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "D",
@@ -1531,7 +1867,7 @@
     "title": "Send follow‑up 24 hours after estimate",
     "x": 160,
     "y": 590,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "E",
@@ -1539,7 +1875,7 @@
     "title": "Send follow‑up 48 hours after estimate",
     "x": 160,
     "y": 740,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "F",
@@ -1547,7 +1883,7 @@
     "title": "Send follow‑up 72 hours after estimate",
     "x": 160,
     "y": 890,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "G",
@@ -1555,7 +1891,7 @@
     "title": "Move to DECISION_PENDING",
     "x": 160,
     "y": 1040,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "H",
@@ -1563,7 +1899,7 @@
     "title": "Send final reminder after 5 days",
     "x": 160,
     "y": 1190,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "I",
@@ -1571,7 +1907,7 @@
     "title": "If no response after 7 days, move to REACTIVATION",
     "x": 160,
     "y": 1340,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "J",
@@ -1579,7 +1915,7 @@
     "title": "Lead action detected? accept or reject or objection",
     "x": 460,
     "y": 440,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "K",
@@ -1587,7 +1923,7 @@
     "title": "Cancel timer and sequence",
     "x": 460,
     "y": 590,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "L",
@@ -1595,7 +1931,7 @@
     "title": "Pause follow‑up sequence, route to objection handling",
     "x": 760,
     "y": 590,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "M",
@@ -1603,7 +1939,7 @@
     "title": "After objection resolved, resume sequence",
     "x": 460,
     "y": 740,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "N",
@@ -1611,7 +1947,7 @@
     "title": "Log sequence cancelled",
     "x": 760,
     "y": 740,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    },
    {
     "id": "O",
@@ -1619,7 +1955,7 @@
     "title": "Reset timer",
     "x": 460,
     "y": 890,
-    "anchor": "p10"
+    "link": "/grimoires/006-automations-101.html#p10"
    }
   ],
   "edges": [
@@ -1713,7 +2049,7 @@
     "title": "Lead reply to estimate follow‑up",
     "x": 160,
     "y": 140,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "B",
@@ -1721,7 +2057,7 @@
     "title": "Capture message text, lead context",
     "x": 160,
     "y": 290,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "C",
@@ -1729,7 +2065,7 @@
     "title": "Classify objection type via AI",
     "x": 160,
     "y": 440,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "D",
@@ -1737,7 +2073,7 @@
     "title": "Confidence > 0.8?",
     "x": 160,
     "y": 590,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "E",
@@ -1745,7 +2081,7 @@
     "title": "Route to predefined response type",
     "x": 160,
     "y": 740,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "F",
@@ -1753,7 +2089,7 @@
     "title": "Create task for human review",
     "x": 460,
     "y": 740,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "G",
@@ -1761,7 +2097,7 @@
     "title": "price → send financing offer",
     "x": 160,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "H",
@@ -1769,7 +2105,7 @@
     "title": "trust → send testimonials, license info",
     "x": 460,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "I",
@@ -1777,7 +2113,7 @@
     "title": "timing → send urgency, availability message",
     "x": 760,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "J",
@@ -1785,7 +2121,7 @@
     "title": "competitor → send differentiators, guarantee",
     "x": 1060,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "K",
@@ -1793,7 +2129,7 @@
     "title": "confusion → send one‑page summary, offer call",
     "x": 1360,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "L",
@@ -1801,7 +2137,7 @@
     "title": "accept → move to CLOSED_WON",
     "x": 1660,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "M",
@@ -1809,7 +2145,7 @@
     "title": "reject → move to CLOSED_LOST",
     "x": 1960,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "N",
@@ -1817,7 +2153,7 @@
     "title": "Log response and increment attempt counter",
     "x": 160,
     "y": 1040,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "O",
@@ -1825,7 +2161,7 @@
     "title": "Attempt count > 2?",
     "x": 160,
     "y": 1190,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "P",
@@ -1833,7 +2169,7 @@
     "title": "Escalate to human rep",
     "x": 2260,
     "y": 890,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "Q",
@@ -1841,7 +2177,7 @@
     "title": "Wait for lead reply",
     "x": 160,
     "y": 1340,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    },
    {
     "id": "R",
@@ -1849,7 +2185,7 @@
     "title": "Create task: call lead, review objection",
     "x": 460,
     "y": 1040,
-    "anchor": "p11"
+    "link": "/grimoires/006-automations-101.html#p11"
    }
   ],
   "edges": [
@@ -1978,7 +2314,7 @@
     "title": "Document submitted for approval",
     "x": 160,
     "y": 140,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "B",
@@ -1986,7 +2322,7 @@
     "title": "Determine approval chain based on amount, type",
     "x": 160,
     "y": 290,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "C",
@@ -1994,7 +2330,7 @@
     "title": "Create approval record with step list",
     "x": 160,
     "y": 440,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "D",
@@ -2002,7 +2338,7 @@
     "title": "Step 1: Notify approver A via Slack, email",
     "x": 160,
     "y": 590,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "E",
@@ -2010,7 +2346,7 @@
     "title": "Approver A approves?",
     "x": 160,
     "y": 740,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "F",
@@ -2018,7 +2354,7 @@
     "title": "Move to step 2",
     "x": 160,
     "y": 890,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "G",
@@ -2026,7 +2362,7 @@
     "title": "Escalate to manager, reassign step",
     "x": 460,
     "y": 890,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "H",
@@ -2034,7 +2370,7 @@
     "title": "Notify submitter, stop workflow",
     "x": 760,
     "y": 890,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "I",
@@ -2042,7 +2378,7 @@
     "title": "Step 2: Notify approver B",
     "x": 160,
     "y": 1040,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "J",
@@ -2050,7 +2386,7 @@
     "title": "Approver B approves?",
     "x": 160,
     "y": 1190,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "K",
@@ -2058,7 +2394,7 @@
     "title": "All approvals complete",
     "x": 160,
     "y": 1340,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "L",
@@ -2066,7 +2402,7 @@
     "title": "Escalate",
     "x": 460,
     "y": 1340,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "M",
@@ -2074,7 +2410,7 @@
     "title": "Update document status to Approved",
     "x": 160,
     "y": 1490,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "N",
@@ -2082,7 +2418,7 @@
     "title": "Trigger next stage initial pay",
     "x": 160,
     "y": 1640,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "O",
@@ -2090,7 +2426,7 @@
     "title": "Log escalation to Airtable",
     "x": 460,
     "y": 1040,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    },
    {
     "id": "P",
@@ -2098,7 +2434,7 @@
     "title": "Create task for ops",
     "x": 460,
     "y": 1190,
-    "anchor": "p12"
+    "link": "/grimoires/006-automations-101.html#p12"
    }
   ],
   "edges": [
@@ -2207,7 +2543,7 @@
     "title": "Document ready for signature",
     "x": 160,
     "y": 140,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "B",
@@ -2215,7 +2551,7 @@
     "title": "Create signature envelope via DocuSign or PandaDoc",
     "x": 160,
     "y": 290,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "C",
@@ -2223,7 +2559,7 @@
     "title": "Send signature request to customer email and SMS",
     "x": 160,
     "y": 440,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "D",
@@ -2231,7 +2567,7 @@
     "title": "Store envelope ID in CRM, start monitoring",
     "x": 160,
     "y": 590,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "E",
@@ -2239,7 +2575,7 @@
     "title": "Customer opens email? tracking pixel",
     "x": 160,
     "y": 740,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "F",
@@ -2247,7 +2583,7 @@
     "title": "Log opened event",
     "x": 160,
     "y": 890,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "G",
@@ -2255,7 +2591,7 @@
     "title": "Send reminder after 24h",
     "x": 460,
     "y": 890,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "H",
@@ -2263,7 +2599,7 @@
     "title": "Customer clicks sign link",
     "x": 160,
     "y": 1040,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "I",
@@ -2271,7 +2607,7 @@
     "title": "Redirect to signature portal",
     "x": 160,
     "y": 1190,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "J",
@@ -2279,7 +2615,7 @@
     "title": "Customer signs and completes",
     "x": 160,
     "y": 1340,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "K",
@@ -2287,7 +2623,7 @@
     "title": "Webhook received: signing completed",
     "x": 160,
     "y": 1490,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "L",
@@ -2295,7 +2631,7 @@
     "title": "Download signed PDF, store in cloud",
     "x": 160,
     "y": 1640,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "M",
@@ -2303,7 +2639,7 @@
     "title": "Update CRM: contract_signed = true, signed_at timestamp",
     "x": 160,
     "y": 1790,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "N",
@@ -2311,7 +2647,7 @@
     "title": "Attach signed PDF link to contact record",
     "x": 160,
     "y": 1940,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "O",
@@ -2319,7 +2655,7 @@
     "title": "Trigger next stage: initial pay",
     "x": 160,
     "y": 2090,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "P",
@@ -2327,7 +2663,7 @@
     "title": "No signature after 48h",
     "x": 460,
     "y": 1040,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "Q",
@@ -2335,7 +2671,7 @@
     "title": "Escalate to rep for follow‑up",
     "x": 460,
     "y": 1190,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    },
    {
     "id": "R",
@@ -2343,7 +2679,7 @@
     "title": "Create task: call customer about signature",
     "x": 460,
     "y": 1340,
-    "anchor": "p13"
+    "link": "/grimoires/006-automations-101.html#p13"
    }
   ],
   "edges": [
@@ -2447,7 +2783,7 @@
     "title": "Customer initiates payment",
     "x": 160,
     "y": 140,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "B",
@@ -2455,7 +2791,7 @@
     "title": "Redirect to payment gateway Stripe, Square, Authorize.net",
     "x": 160,
     "y": 290,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "C",
@@ -2463,7 +2799,7 @@
     "title": "Gateway processes payment, sends webhook",
     "x": 160,
     "y": 440,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "D",
@@ -2471,7 +2807,7 @@
     "title": "Webhook endpoint receives event with idempotency key",
     "x": 160,
     "y": 590,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "E",
@@ -2479,7 +2815,7 @@
     "title": "Check if event already processed? lookup key in data store",
     "x": 160,
     "y": 740,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "F",
@@ -2487,7 +2823,7 @@
     "title": "Ignore duplicate, log skipped event",
     "x": 160,
     "y": 890,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "G",
@@ -2495,7 +2831,7 @@
     "title": "Parse event type payment succeeded, failed, refunded",
     "x": 460,
     "y": 890,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "H",
@@ -2503,7 +2839,7 @@
     "title": "Event type?",
     "x": 160,
     "y": 1040,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "I",
@@ -2511,7 +2847,7 @@
     "title": "Update CRM: payment_status = paid, amount, timestamp",
     "x": 160,
     "y": 1190,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "J",
@@ -2519,7 +2855,7 @@
     "title": "Increment retry count, send failure notification",
     "x": 460,
     "y": 1190,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "K",
@@ -2527,7 +2863,7 @@
     "title": "Update CRM: payment_status = refunded, log reason",
     "x": 760,
     "y": 1190,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "L",
@@ -2535,7 +2871,7 @@
     "title": "Send receipt to customer email/SMS",
     "x": 160,
     "y": 1340,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "M",
@@ -2543,7 +2879,7 @@
     "title": "If this is final payment, change stage to FULFILL",
     "x": 160,
     "y": 1490,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "N",
@@ -2551,7 +2887,7 @@
     "title": "If progress payment, update milestone, schedule next payment",
     "x": 460,
     "y": 1490,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "O",
@@ -2559,7 +2895,7 @@
     "title": "Retry count < 3?",
     "x": 460,
     "y": 1340,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "P",
@@ -2567,7 +2903,7 @@
     "title": "Retry after delay 1 day, 3 days, 7 days",
     "x": 760,
     "y": 1490,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "Q",
@@ -2575,7 +2911,7 @@
     "title": "Create task for collections team, move stage to PAYMENT_FAILED",
     "x": 1060,
     "y": 1490,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "R",
@@ -2583,7 +2919,7 @@
     "title": "Notify customer of refund, update accounting",
     "x": 760,
     "y": 1340,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    },
    {
     "id": "S",
@@ -2591,7 +2927,7 @@
     "title": "Log all events to Airtable",
     "x": 1360,
     "y": 1490,
-    "anchor": "p14"
+    "link": "/grimoires/006-automations-101.html#p14"
    }
   ],
   "edges": [
@@ -2720,7 +3056,7 @@
     "title": "Action fails",
     "x": 160,
     "y": 140,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "B",
@@ -2728,7 +3064,7 @@
     "title": "Retry < 5?",
     "x": 160,
     "y": 290,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "C",
@@ -2736,7 +3072,7 @@
     "title": "Wait exponential backoff",
     "x": 160,
     "y": 440,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "D",
@@ -2744,7 +3080,7 @@
     "title": "Retry action",
     "x": 160,
     "y": 590,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "E",
@@ -2752,7 +3088,7 @@
     "title": "Fallback available?",
     "x": 460,
     "y": 440,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "F",
@@ -2760,7 +3096,7 @@
     "title": "Execute fallback (degraded mode",
     "x": 460,
     "y": 590,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "G",
@@ -2768,7 +3104,7 @@
     "title": "Fallback succeeds?",
     "x": 160,
     "y": 740,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "H",
@@ -2776,7 +3112,7 @@
     "title": "Log success with fallback flag",
     "x": 160,
     "y": 890,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "I",
@@ -2784,7 +3120,7 @@
     "title": "Escalate to human",
     "x": 760,
     "y": 590,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "J",
@@ -2792,7 +3128,7 @@
     "title": "Create task, send Slack/SMS alert",
     "x": 460,
     "y": 740,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    },
    {
     "id": "K",
@@ -2800,7 +3136,7 @@
     "title": "Log escalation",
     "x": 460,
     "y": 890,
-    "anchor": "ch3"
+    "link": "/grimoires/006-automations-101.html#ch3"
    }
   ],
   "edges": [
@@ -2879,7 +3215,7 @@
     "title": "Recurring payment attempt fails",
     "x": 160,
     "y": 140,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "B",
@@ -2887,7 +3223,7 @@
     "title": "Capture failure reason decline, expired card, insufficient funds",
     "x": 160,
     "y": 290,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "C",
@@ -2895,7 +3231,7 @@
     "title": "Notify customer via SMS/email: payment failed",
     "x": 160,
     "y": 440,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "D",
@@ -2903,7 +3239,7 @@
     "title": "Retry count < max attempts",
     "x": 160,
     "y": 590,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "E",
@@ -2911,7 +3247,7 @@
     "title": "Schedule retry with exponential backoff day 1, day 3, day 7",
     "x": 160,
     "y": 740,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "F",
@@ -2919,7 +3255,7 @@
     "title": "Customer updates payment method via link",
     "x": 160,
     "y": 890,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "G",
@@ -2927,7 +3263,7 @@
     "title": "Payment method updated?",
     "x": 160,
     "y": 1040,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "H",
@@ -2935,7 +3271,7 @@
     "title": "Retry immediately with new method",
     "x": 160,
     "y": 1190,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "I",
@@ -2943,7 +3279,7 @@
     "title": "Continue scheduled retries",
     "x": 460,
     "y": 1190,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "J",
@@ -2951,7 +3287,7 @@
     "title": "Retry succeeds?",
     "x": 160,
     "y": 1340,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "K",
@@ -2959,7 +3295,7 @@
     "title": "Mark subscription as active, clear failure flags",
     "x": 160,
     "y": 1490,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "L",
@@ -2967,7 +3303,7 @@
     "title": "If still failing after max retries, escalate",
     "x": 460,
     "y": 740,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "M",
@@ -2975,7 +3311,7 @@
     "title": "Move customer to dunning state",
     "x": 460,
     "y": 890,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "N",
@@ -2983,7 +3319,7 @@
     "title": "Create task for collections team",
     "x": 460,
     "y": 1040,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "O",
@@ -2991,7 +3327,7 @@
     "title": "Send final notice: account will be suspended",
     "x": 760,
     "y": 1190,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "P",
@@ -2999,7 +3335,7 @@
     "title": "Payment received within grace period",
     "x": 460,
     "y": 1340,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "Q",
@@ -3007,7 +3343,7 @@
     "title": "Cancel subscription, move to REACTIVATION",
     "x": 460,
     "y": 1490,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    },
    {
     "id": "R",
@@ -3015,7 +3351,7 @@
     "title": "Log all events to Airtable",
     "x": 160,
     "y": 1640,
-    "anchor": "p15"
+    "link": "/grimoires/006-automations-101.html#p15"
    }
   ],
   "edges": [
@@ -3134,7 +3470,7 @@
     "title": "Price objection detected or customer requests financing",
     "x": 160,
     "y": 140,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "B",
@@ -3142,7 +3478,7 @@
     "title": "Send financing offer SMS/email with application link",
     "x": 160,
     "y": 290,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "C",
@@ -3150,7 +3486,7 @@
     "title": "Customer clicks link, fills lender application pre-filled with estimate amount",
     "x": 160,
     "y": 440,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "D",
@@ -3158,7 +3494,7 @@
     "title": "Lender processes application",
     "x": 160,
     "y": 590,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "E",
@@ -3166,7 +3502,7 @@
     "title": "Webhook received from lender",
     "x": 160,
     "y": 740,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "F",
@@ -3174,7 +3510,7 @@
     "title": "Update CRM: financing_status = approved, approved_amount, terms",
     "x": 160,
     "y": 890,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "G",
@@ -3182,7 +3518,7 @@
     "title": "Update CRM: financing_status = denied, denial_reason",
     "x": 460,
     "y": 890,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "H",
@@ -3190,7 +3526,7 @@
     "title": "Create task for rep: request additional docs from customer",
     "x": 760,
     "y": 890,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "I",
@@ -3198,7 +3534,7 @@
     "title": "Send approval SMS: Your financing is approved! Accept estimate here link",
     "x": 160,
     "y": 1040,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "J",
@@ -3206,7 +3542,7 @@
     "title": "Reset decision timer, move to DECISION_PENDING or CLOSED_WON if auto-accept",
     "x": 160,
     "y": 1190,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "K",
@@ -3214,7 +3550,7 @@
     "title": "Notify rep via Slack: Lead approved for financing",
     "x": 160,
     "y": 1340,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "L",
@@ -3222,7 +3558,7 @@
     "title": "Send denial SMS with in‑house payment plan offer",
     "x": 460,
     "y": 1040,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "M",
@@ -3230,7 +3566,7 @@
     "title": "Create task for rep: offer in‑house plan",
     "x": 460,
     "y": 1190,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "N",
@@ -3238,7 +3574,7 @@
     "title": "Move back to OBJECTION_HANDLING with price objection",
     "x": 460,
     "y": 1340,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "O",
@@ -3246,7 +3582,7 @@
     "title": "Rep follows up, resubmits application",
     "x": 760,
     "y": 1040,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    },
    {
     "id": "P",
@@ -3254,7 +3590,7 @@
     "title": "Log all events to Airtable",
     "x": 160,
     "y": 1490,
-    "anchor": "p16"
+    "link": "/grimoires/006-automations-101.html#p16"
    }
   ],
   "edges": [
@@ -3358,7 +3694,7 @@
     "title": "Job approved and deposit received",
     "x": 160,
     "y": 140,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "B",
@@ -3366,7 +3702,7 @@
     "title": "Extract materials list from estimate",
     "x": 160,
     "y": 290,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "C",
@@ -3374,7 +3710,7 @@
     "title": "Determine vendor for each item based on price, availability",
     "x": 160,
     "y": 440,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "D",
@@ -3382,7 +3718,7 @@
     "title": "Generate purchase order PDF",
     "x": 160,
     "y": 590,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "E",
@@ -3390,7 +3726,7 @@
     "title": "Send PO to vendor via email or vendor portal",
     "x": 160,
     "y": 740,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "F",
@@ -3398,7 +3734,7 @@
     "title": "Store PO copy in cloud storage, link to CRM",
     "x": 160,
     "y": 890,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "G",
@@ -3406,7 +3742,7 @@
     "title": "Start acknowledgment timer 24h",
     "x": 160,
     "y": 1040,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "H",
@@ -3414,7 +3750,7 @@
     "title": "Vendor acknowledges PO?",
     "x": 160,
     "y": 1190,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "I",
@@ -3422,7 +3758,7 @@
     "title": "Update CRM: PO_acknowledged = true",
     "x": 160,
     "y": 1340,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "J",
@@ -3430,7 +3766,7 @@
     "title": "Send reminder to vendor",
     "x": 460,
     "y": 1340,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "K",
@@ -3438,7 +3774,7 @@
     "title": "No acknowledgment after 48h",
     "x": 160,
     "y": 1490,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "L",
@@ -3446,7 +3782,7 @@
     "title": "Escalate to purchasing manager, create task",
     "x": 160,
     "y": 1640,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "M",
@@ -3454,7 +3790,7 @@
     "title": "Schedule delivery tracking Pattern 18",
     "x": 460,
     "y": 1490,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "N",
@@ -3462,7 +3798,7 @@
     "title": "Log escalation to Airtable",
     "x": 160,
     "y": 1790,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    },
    {
     "id": "O",
@@ -3470,7 +3806,7 @@
     "title": "Log PO generation event",
     "x": 460,
     "y": 1640,
-    "anchor": "p17"
+    "link": "/grimoires/006-automations-101.html#p17"
    }
   ],
   "edges": [
@@ -3564,7 +3900,7 @@
     "title": "Purchase order fulfilled, tracking number received",
     "x": 160,
     "y": 140,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "B",
@@ -3572,7 +3908,7 @@
     "title": "Store tracking number and carrier in CRM",
     "x": 160,
     "y": 290,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "C",
@@ -3580,7 +3916,7 @@
     "title": "Fetch initial estimated delivery date from carrier API",
     "x": 160,
     "y": 440,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "D",
@@ -3588,7 +3924,7 @@
     "title": "Schedule daily tracking check webhook",
     "x": 160,
     "y": 590,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "E",
@@ -3596,7 +3932,7 @@
     "title": "Call carrier API for current status",
     "x": 160,
     "y": 740,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "F",
@@ -3604,7 +3940,7 @@
     "title": "Status changed?",
     "x": 160,
     "y": 890,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "G",
@@ -3612,7 +3948,7 @@
     "title": "Calculate new estimated delivery date",
     "x": 160,
     "y": 1040,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "H",
@@ -3620,7 +3956,7 @@
     "title": "Log status, continue monitoring",
     "x": 460,
     "y": 1040,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "I",
@@ -3628,7 +3964,7 @@
     "title": "Stop monitoring, trigger schedule work",
     "x": 760,
     "y": 1040,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "J",
@@ -3636,7 +3972,7 @@
     "title": "Delay > 2 days?",
     "x": 160,
     "y": 1190,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "K",
@@ -3644,7 +3980,7 @@
     "title": "Send delay alert SMS to customer",
     "x": 160,
     "y": 1340,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "L",
@@ -3652,7 +3988,7 @@
     "title": "Log delay, no customer notification",
     "x": 460,
     "y": 1340,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "M",
@@ -3660,7 +3996,7 @@
     "title": "Create internal task: reschedule installation",
     "x": 160,
     "y": 1490,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "N",
@@ -3668,7 +4004,7 @@
     "title": "Notify ops team via Slack",
     "x": 160,
     "y": 1640,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "O",
@@ -3676,7 +4012,7 @@
     "title": "Continue monitoring",
     "x": 460,
     "y": 1490,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "P",
@@ -3684,7 +4020,7 @@
     "title": "Change stage to DELIVERY_COMPLETE",
     "x": 460,
     "y": 1190,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    },
    {
     "id": "Q",
@@ -3692,7 +4028,7 @@
     "title": "Trigger schedule work workflow",
     "x": 760,
     "y": 1340,
-    "anchor": "p18"
+    "link": "/grimoires/006-automations-101.html#p18"
    }
   ],
   "edges": [
@@ -3801,7 +4137,7 @@
     "title": "Delivery complete, ready to schedule",
     "x": 160,
     "y": 140,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "B",
@@ -3809,7 +4145,7 @@
     "title": "Extract resource requirements from estimate service type, size, complexity",
     "x": 160,
     "y": 290,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "C",
@@ -3817,7 +4153,7 @@
     "title": "Query resource availability calendar for matching skills",
     "x": 160,
     "y": 440,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "D",
@@ -3825,7 +4161,7 @@
     "title": "Available resources found?",
     "x": 160,
     "y": 590,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "E",
@@ -3833,7 +4169,7 @@
     "title": "Create task for ops manager: find alternative resource",
     "x": 160,
     "y": 740,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "F",
@@ -3841,7 +4177,7 @@
     "title": "Select best match proximity, skill match, workload balance",
     "x": 460,
     "y": 740,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "G",
@@ -3849,7 +4185,7 @@
     "title": "Propose time slots to customer via SMS link",
     "x": 160,
     "y": 890,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "H",
@@ -3857,7 +4193,7 @@
     "title": "Customer selects time within 48h?",
     "x": 160,
     "y": 1040,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "I",
@@ -3865,7 +4201,7 @@
     "title": "Book resource, confirm with calendar invite",
     "x": 160,
     "y": 1190,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "J",
@@ -3873,7 +4209,7 @@
     "title": "Send reminder, auto-select best available after 48h",
     "x": 460,
     "y": 1190,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "K",
@@ -3881,7 +4217,7 @@
     "title": "Send confirmation to customer with resource name, arrival window",
     "x": 160,
     "y": 1340,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "L",
@@ -3889,7 +4225,7 @@
     "title": "Send notification to resource crew lead with job details",
     "x": 160,
     "y": 1490,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "M",
@@ -3897,7 +4233,7 @@
     "title": "Update CRM stage to WORK_SCHEDULED",
     "x": 160,
     "y": 1640,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    },
    {
     "id": "N",
@@ -3905,7 +4241,7 @@
     "title": "Log scheduling event to Airtable",
     "x": 460,
     "y": 890,
-    "anchor": "p19"
+    "link": "/grimoires/006-automations-101.html#p19"
    }
   ],
   "edges": [
@@ -3999,7 +4335,7 @@
     "title": "Job scheduled, stage = WORK_SCHEDULED",
     "x": 160,
     "y": 140,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "B",
@@ -4007,7 +4343,7 @@
     "title": "Load project template with predefined phases and durations",
     "x": 160,
     "y": 290,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "C",
@@ -4015,7 +4351,7 @@
     "title": "Create milestone records in CRM",
     "x": 160,
     "y": 440,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "D",
@@ -4023,7 +4359,7 @@
     "title": "Phase 1 start date reached",
     "x": 160,
     "y": 590,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "E",
@@ -4031,7 +4367,7 @@
     "title": "Send start notification to crew and customer",
     "x": 160,
     "y": 740,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "F",
@@ -4039,7 +4375,7 @@
     "title": "Crew marks phase as complete in mobile app or SMS",
     "x": 160,
     "y": 890,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "G",
@@ -4047,7 +4383,7 @@
     "title": "Phase completed on time?",
     "x": 160,
     "y": 1040,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "H",
@@ -4055,7 +4391,7 @@
     "title": "Log completion, update phase status",
     "x": 160,
     "y": 1190,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "I",
@@ -4063,7 +4399,7 @@
     "title": "Escalate to project manager",
     "x": 460,
     "y": 1190,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "J",
@@ -4071,7 +4407,7 @@
     "title": "More phases remaining?",
     "x": 160,
     "y": 1340,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "K",
@@ -4079,7 +4415,7 @@
     "title": "Schedule next phase start notification",
     "x": 160,
     "y": 1490,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "L",
@@ -4087,7 +4423,7 @@
     "title": "All phases complete, move to job finished",
     "x": 460,
     "y": 1490,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "M",
@@ -4095,7 +4431,7 @@
     "title": "Send delay alert to customer, create task for ops",
     "x": 460,
     "y": 1340,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    },
    {
     "id": "N",
@@ -4103,7 +4439,7 @@
     "title": "Trigger final inspection and sign‑off workflow",
     "x": 160,
     "y": 1640,
-    "anchor": "p20"
+    "link": "/grimoires/006-automations-101.html#p20"
    }
   ],
   "edges": [
@@ -4197,7 +4533,7 @@
     "title": "All phases complete, stage = JOB_FINISHED",
     "x": 160,
     "y": 140,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "B",
@@ -4205,7 +4541,7 @@
     "title": "Generate digital sign‑off request with completion summary",
     "x": 160,
     "y": 290,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "C",
@@ -4213,7 +4549,7 @@
     "title": "Send sign‑off link via SMS and email",
     "x": 160,
     "y": 440,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "D",
@@ -4221,7 +4557,7 @@
     "title": "Customer opens link, reviews completion details",
     "x": 160,
     "y": 590,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "E",
@@ -4229,7 +4565,7 @@
     "title": "Customer approves?",
     "x": 160,
     "y": 740,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "F",
@@ -4237,7 +4573,7 @@
     "title": "Capture signature, timestamp, IP address",
     "x": 160,
     "y": 890,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "G",
@@ -4245,7 +4581,7 @@
     "title": "Customer submits issues in form",
     "x": 460,
     "y": 890,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "H",
@@ -4253,7 +4589,7 @@
     "title": "Generate signed PDF, store in cloud",
     "x": 160,
     "y": 1040,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "I",
@@ -4261,7 +4597,7 @@
     "title": "Update CRM: signed_off = true, signed_at timestamp",
     "x": 160,
     "y": 1190,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "J",
@@ -4269,7 +4605,7 @@
     "title": "Trigger final payment invoice Pattern 14",
     "x": 160,
     "y": 1340,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "K",
@@ -4277,7 +4613,7 @@
     "title": "Notify ops: job ready for final close",
     "x": 160,
     "y": 1490,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "L",
@@ -4285,7 +4621,7 @@
     "title": "Create task for project manager: address issues",
     "x": 460,
     "y": 1040,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "M",
@@ -4293,7 +4629,7 @@
     "title": "Send acknowledgment to customer: we will fix issues",
     "x": 460,
     "y": 1190,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "N",
@@ -4301,7 +4637,7 @@
     "title": "Log issue report to Airtable",
     "x": 460,
     "y": 1340,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    },
    {
     "id": "O",
@@ -4309,7 +4645,7 @@
     "title": "Archive signed document, log completion",
     "x": 460,
     "y": 1490,
-    "anchor": "p21"
+    "link": "/grimoires/006-automations-101.html#p21"
    }
   ],
   "edges": [
@@ -4403,7 +4739,7 @@
     "title": "Job completed and signed off",
     "x": 160,
     "y": 140,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "B",
@@ -4411,7 +4747,7 @@
     "title": "Extract product information from estimate materials list",
     "x": 160,
     "y": 290,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "C",
@@ -4419,7 +4755,7 @@
     "title": "Manufacturer warranty registration required?",
     "x": 160,
     "y": 440,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "D",
@@ -4427,7 +4763,7 @@
     "title": "Call manufacturer API or submit web form",
     "x": 160,
     "y": 590,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "E",
@@ -4435,7 +4771,7 @@
     "title": "Generate warranty document from template",
     "x": 460,
     "y": 590,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "F",
@@ -4443,7 +4779,7 @@
     "title": "Store warranty registration confirmation",
     "x": 160,
     "y": 740,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "G",
@@ -4451,7 +4787,7 @@
     "title": "Generate customer warranty PDF with registration number",
     "x": 460,
     "y": 740,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "H",
@@ -4459,7 +4795,7 @@
     "title": "Upload warranty PDF to cloud storage",
     "x": 160,
     "y": 890,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "I",
@@ -4467,7 +4803,7 @@
     "title": "Send warranty document link to customer via SMS/email",
     "x": 160,
     "y": 1040,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "J",
@@ -4475,7 +4811,7 @@
     "title": "Store warranty expiry date in CRM",
     "x": 160,
     "y": 1190,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "K",
@@ -4483,7 +4819,7 @@
     "title": "Schedule renewal reminders at 11 months, 30 days, 7 days before expiry",
     "x": 160,
     "y": 1340,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "L",
@@ -4491,7 +4827,7 @@
     "title": "Log warranty registration event to Airtable",
     "x": 160,
     "y": 1490,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    },
    {
     "id": "M",
@@ -4499,7 +4835,7 @@
     "title": "Trigger review request Pattern 23",
     "x": 160,
     "y": 1640,
-    "anchor": "p22"
+    "link": "/grimoires/006-automations-101.html#p22"
    }
   ],
   "edges": [
@@ -4583,7 +4919,7 @@
     "title": "Job completed and signed off",
     "x": 160,
     "y": 140,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "B",
@@ -4591,7 +4927,7 @@
     "title": "Wait 5 days for customer to experience result",
     "x": 160,
     "y": 290,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "C",
@@ -4599,7 +4935,7 @@
     "title": "Send review request via SMS and email with direct links",
     "x": 160,
     "y": 440,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "D",
@@ -4607,7 +4943,7 @@
     "title": "Start review reminder timer 7 days",
     "x": 160,
     "y": 590,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "E",
@@ -4615,7 +4951,7 @@
     "title": "Review submitted? webhook received",
     "x": 160,
     "y": 740,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "F",
@@ -4623,7 +4959,7 @@
     "title": "Review rating >= 4?",
     "x": 160,
     "y": 890,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "G",
@@ -4631,7 +4967,7 @@
     "title": "Stop asking, tag review_unresponsive",
     "x": 460,
     "y": 890,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "H",
@@ -4639,7 +4975,7 @@
     "title": "Send thank you message with referral link Pattern 24",
     "x": 160,
     "y": 1040,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "I",
@@ -4647,7 +4983,7 @@
     "title": "Create high-priority task for ops manager",
     "x": 460,
     "y": 1040,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "J",
@@ -4655,7 +4991,7 @@
     "title": "Send apology SMS, offer resolution",
     "x": 160,
     "y": 1190,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    },
    {
     "id": "K",
@@ -4663,7 +4999,7 @@
     "title": "Log review to Airtable",
     "x": 760,
     "y": 1040,
-    "anchor": "p23"
+    "link": "/grimoires/006-automations-101.html#p23"
    }
   ],
   "edges": [
@@ -4742,7 +5078,7 @@
     "title": "Trigger: positive review OR job completion + 14 days",
     "x": 160,
     "y": 140,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "B",
@@ -4750,7 +5086,7 @@
     "title": "Generate unique referral code and link for customer",
     "x": 160,
     "y": 290,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "C",
@@ -4758,7 +5094,7 @@
     "title": "Send referral offer SMS/email with link",
     "x": 160,
     "y": 440,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "D",
@@ -4766,7 +5102,7 @@
     "title": "Store referral code in CRM, track clicks",
     "x": 160,
     "y": 590,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "E",
@@ -4774,7 +5110,7 @@
     "title": "Friend clicks link, fills lead form",
     "x": 160,
     "y": 740,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "F",
@@ -4782,7 +5118,7 @@
     "title": "Create lead with source=referral, referrer_id",
     "x": 160,
     "y": 890,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "G",
@@ -4790,7 +5126,7 @@
     "title": "Referral lead progresses through pipeline",
     "x": 160,
     "y": 1040,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "H",
@@ -4798,7 +5134,7 @@
     "title": "Referred lead reaches CLOSED_WON?",
     "x": 160,
     "y": 1190,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "I",
@@ -4806,7 +5142,7 @@
     "title": "Mark referral as successful",
     "x": 160,
     "y": 1340,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "J",
@@ -4814,7 +5150,7 @@
     "title": "Calculate reward amount based on program rules",
     "x": 160,
     "y": 1490,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "K",
@@ -4822,7 +5158,7 @@
     "title": "Update referrer reward balance",
     "x": 160,
     "y": 1640,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "L",
@@ -4830,7 +5166,7 @@
     "title": "Send notification to referrer: reward earned",
     "x": 160,
     "y": 1790,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "M",
@@ -4838,7 +5174,7 @@
     "title": "Trigger reward fulfillment gift card, discount, cash",
     "x": 160,
     "y": 1940,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "N",
@@ -4846,7 +5182,7 @@
     "title": "Log referral conversion to Airtable",
     "x": 160,
     "y": 2090,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    },
    {
     "id": "O",
@@ -4854,7 +5190,7 @@
     "title": "Expire referral offer, tag as expired",
     "x": 460,
     "y": 1340,
-    "anchor": "p24"
+    "link": "/grimoires/006-automations-101.html#p24"
    }
   ],
   "edges": [
@@ -4948,7 +5284,7 @@
     "title": "Automation executes",
     "x": 140,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "B",
@@ -4956,7 +5292,7 @@
     "title": "Confidence > threshold?",
     "x": 440,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "C",
@@ -4964,7 +5300,7 @@
     "title": "Create task for human",
     "x": 740,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "D",
@@ -4972,7 +5308,7 @@
     "title": "Human reviews, overrides if needed",
     "x": 1040,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "E",
@@ -4980,7 +5316,7 @@
     "title": "Human action logged",
     "x": 1340,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "F",
@@ -4988,7 +5324,7 @@
     "title": "Automation continues with override value",
     "x": 1640,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "G",
@@ -4996,7 +5332,7 @@
     "title": "Automation decides",
     "x": 740,
     "y": 310,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    }
   ],
   "edges": [
@@ -5045,7 +5381,7 @@
     "title": "Trigger: reactivation_date reached OR 365d since last job",
     "x": 160,
     "y": 140,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "B",
@@ -5053,7 +5389,7 @@
     "title": "Move contact from CLOSED_LOST or DORMANT to REACTIVATION stage",
     "x": 160,
     "y": 290,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "C",
@@ -5061,7 +5397,7 @@
     "title": "Send first reactivation SMS/email offer",
     "x": 160,
     "y": 440,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "D",
@@ -5069,7 +5405,7 @@
     "title": "Start 14d timer for second touch",
     "x": 160,
     "y": 590,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "E",
@@ -5077,7 +5413,7 @@
     "title": "Lead replies?",
     "x": 160,
     "y": 740,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "F",
@@ -5085,7 +5421,7 @@
     "title": "Move back to NEW_LEAD or QUALIFIED preserving estimate history",
     "x": 160,
     "y": 890,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "G",
@@ -5093,7 +5429,7 @@
     "title": "Send second reactivation message with stronger offer",
     "x": 460,
     "y": 890,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "H",
@@ -5101,7 +5437,7 @@
     "title": "Start 14d timer for third touch",
     "x": 160,
     "y": 1040,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "I",
@@ -5109,7 +5445,7 @@
     "title": "Lead replies?",
     "x": 160,
     "y": 1190,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "J",
@@ -5117,7 +5453,7 @@
     "title": "Send final reactivation message with expiry",
     "x": 160,
     "y": 1340,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "K",
@@ -5125,7 +5461,7 @@
     "title": "Start 14d timer for archive",
     "x": 160,
     "y": 1490,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "L",
@@ -5133,7 +5469,7 @@
     "title": "Lead replies?",
     "x": 160,
     "y": 1640,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "M",
@@ -5141,7 +5477,7 @@
     "title": "Archive to DORMANT_ARCHIVE, suppress future contact",
     "x": 160,
     "y": 1790,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    },
    {
     "id": "N",
@@ -5149,7 +5485,7 @@
     "title": "Log reactivation event to Airtable",
     "x": 460,
     "y": 1040,
-    "anchor": "p25"
+    "link": "/grimoires/006-automations-101.html#p25"
    }
   ],
   "edges": [
@@ -5248,7 +5584,7 @@
     "title": "Incoming data or request",
     "x": 160,
     "y": 140,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "B",
@@ -5256,7 +5592,7 @@
     "title": "Compliance Wrapper",
     "x": 160,
     "y": 290,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "C",
@@ -5264,7 +5600,7 @@
     "title": "Check: consent on file?",
     "x": 160,
     "y": 440,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "D",
@@ -5272,7 +5608,7 @@
     "title": "Reject, log, notify compliance officer",
     "x": 160,
     "y": 590,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "E",
@@ -5280,7 +5616,7 @@
     "title": "Check: data retention policy",
     "x": 460,
     "y": 590,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "F",
@@ -5288,7 +5624,7 @@
     "title": "Purge old data before processing",
     "x": 160,
     "y": 740,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "G",
@@ -5296,7 +5632,7 @@
     "title": "Anonymize PHI if not required",
     "x": 460,
     "y": 740,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "H",
@@ -5304,7 +5640,7 @@
     "title": "Execute core automation",
     "x": 160,
     "y": 890,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "I",
@@ -5312,7 +5648,7 @@
     "title": "Log all actions to immutable audit trail",
     "x": 160,
     "y": 1040,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "J",
@@ -5320,7 +5656,7 @@
     "title": "If data stored, encrypt at rest",
     "x": 160,
     "y": 1190,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    },
    {
     "id": "K",
@@ -5328,7 +5664,7 @@
     "title": "If data transmitted, use TLS",
     "x": 160,
     "y": 1340,
-    "anchor": "ch26"
+    "link": "/grimoires/006-automations-101.html#ch26"
    }
   ],
   "edges": [
@@ -5397,7 +5733,7 @@
     "title": "Module execution",
     "x": 140,
     "y": 160,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "B",
@@ -5405,7 +5741,7 @@
     "title": "Success?",
     "x": 440,
     "y": 160,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "C",
@@ -5413,7 +5749,7 @@
     "title": "Continue",
     "x": 740,
     "y": 160,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "D",
@@ -5421,7 +5757,7 @@
     "title": "Retry count <5?",
     "x": 740,
     "y": 310,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "E",
@@ -5429,7 +5765,7 @@
     "title": "Sleep 2^retry seconds",
     "x": 1040,
     "y": 160,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "F",
@@ -5437,7 +5773,7 @@
     "title": "Send to dead‑letter queue",
     "x": 1040,
     "y": 310,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    }
   ],
   "edges": [
@@ -5486,7 +5822,7 @@
     "title": "Event received",
     "x": 160,
     "y": 140,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "B",
@@ -5494,7 +5830,7 @@
     "title": "Idempotency check",
     "x": 160,
     "y": 290,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "C",
@@ -5502,7 +5838,7 @@
     "title": "Log duplicate, ignore",
     "x": 160,
     "y": 440,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "D",
@@ -5510,7 +5846,7 @@
     "title": "Execute action",
     "x": 460,
     "y": 440,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "E",
@@ -5518,7 +5854,7 @@
     "title": "Success?",
     "x": 160,
     "y": 590,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "F",
@@ -5526,7 +5862,7 @@
     "title": "Log success, done",
     "x": 160,
     "y": 740,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "G",
@@ -5534,7 +5870,7 @@
     "title": "Transient error?",
     "x": 460,
     "y": 740,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "H",
@@ -5542,7 +5878,7 @@
     "title": "Retry with backoff",
     "x": 160,
     "y": 890,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "I",
@@ -5550,7 +5886,7 @@
     "title": "Retry count < max?",
     "x": 160,
     "y": 1040,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "J",
@@ -5558,7 +5894,7 @@
     "title": "Send to dead‑letter queue",
     "x": 460,
     "y": 890,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "K",
@@ -5566,7 +5902,7 @@
     "title": "Alert ops, create task",
     "x": 460,
     "y": 1040,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    },
    {
     "id": "L",
@@ -5574,7 +5910,7 @@
     "title": "Manual or automated reprocess",
     "x": 160,
     "y": 1190,
-    "anchor": "ch28"
+    "link": "/grimoires/006-automations-101.html#ch28"
    }
   ],
   "edges": [
@@ -5663,7 +5999,7 @@
     "title": "Synthetic health checks",
     "x": 160,
     "y": 140,
-    "anchor": "ch29"
+    "link": "/grimoires/006-automations-101.html#ch29"
    },
    {
     "id": "B",
@@ -5671,7 +6007,7 @@
     "title": "Chaos tests",
     "x": 160,
     "y": 290,
-    "anchor": "ch29"
+    "link": "/grimoires/006-automations-101.html#ch29"
    },
    {
     "id": "C",
@@ -5679,7 +6015,7 @@
     "title": "Integration tests",
     "x": 160,
     "y": 440,
-    "anchor": "ch29"
+    "link": "/grimoires/006-automations-101.html#ch29"
    },
    {
     "id": "D",
@@ -5687,7 +6023,7 @@
     "title": "Unit tests",
     "x": 160,
     "y": 590,
-    "anchor": "ch29"
+    "link": "/grimoires/006-automations-101.html#ch29"
    }
   ],
   "edges": [
@@ -5721,7 +6057,7 @@
     "title": "Identify automation candidate",
     "x": 160,
     "y": 140,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "B",
@@ -5729,7 +6065,7 @@
     "title": "Is human input legally or regulatory required?",
     "x": 160,
     "y": 290,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "C",
@@ -5737,7 +6073,7 @@
     "title": "Necessary Handoff",
     "x": 160,
     "y": 440,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "D",
@@ -5745,7 +6081,7 @@
     "title": "Can AI achieve >95% accuracy consistently?",
     "x": 460,
     "y": 440,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "E",
@@ -5753,7 +6089,7 @@
     "title": "Fully automatable no handoff",
     "x": 160,
     "y": 590,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "F",
@@ -5761,7 +6097,7 @@
     "title": "What is the cost of a wrong automation decision?",
     "x": 460,
     "y": 590,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "G",
@@ -5769,7 +6105,7 @@
     "title": "Optional Handoff allow override",
     "x": 160,
     "y": 740,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "H",
@@ -5777,7 +6113,7 @@
     "title": "Does human add trust or relationship value?",
     "x": 460,
     "y": 740,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "I",
@@ -5785,7 +6121,7 @@
     "title": "Volume > 100/month?",
     "x": 160,
     "y": 890,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "J",
@@ -5793,7 +6129,7 @@
     "title": "Build automation with fallback to human",
     "x": 160,
     "y": 1040,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    },
    {
     "id": "K",
@@ -5801,7 +6137,7 @@
     "title": "Questionable keep manual or build helper",
     "x": 460,
     "y": 1040,
-    "anchor": "ch31"
+    "link": "/grimoires/006-automations-101.html#ch31"
    }
   ],
   "edges": [
@@ -5880,7 +6216,7 @@
     "title": "Automation prepares data",
     "x": 140,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "B",
@@ -5888,7 +6224,7 @@
     "title": "Creates notification + task",
     "x": 440,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "C",
@@ -5896,7 +6232,7 @@
     "title": "Human reviews and decides",
     "x": 740,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "D",
@@ -5904,7 +6240,7 @@
     "title": "Approved?",
     "x": 1040,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "E",
@@ -5912,7 +6248,7 @@
     "title": "Automation executes next step",
     "x": 1340,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "F",
@@ -5920,7 +6256,7 @@
     "title": "Automation stops, logs rejection",
     "x": 1340,
     "y": 310,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "G",
@@ -5928,7 +6264,7 @@
     "title": "Log decision",
     "x": 1640,
     "y": 160,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    }
   ],
   "edges": [
@@ -5982,7 +6318,7 @@
     "title": "Is human input legally required?",
     "x": 160,
     "y": 140,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "B",
@@ -5990,7 +6326,7 @@
     "title": "Necessary Handoff",
     "x": 160,
     "y": 290,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "C",
@@ -5998,7 +6334,7 @@
     "title": "Can AI make decision with >95% accuracy?",
     "x": 460,
     "y": 290,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "D",
@@ -6006,7 +6342,7 @@
     "title": "Fully automatable (no handoff",
     "x": 160,
     "y": 440,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "E",
@@ -6014,7 +6350,7 @@
     "title": "Is cost of wrong decision > $1,000?",
     "x": 460,
     "y": 440,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "F",
@@ -6022,7 +6358,7 @@
     "title": "Does human add trust or relationship value?",
     "x": 160,
     "y": 590,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "G",
@@ -6030,7 +6366,7 @@
     "title": "Optional Handoff - allow override",
     "x": 160,
     "y": 740,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "H",
@@ -6038,7 +6374,7 @@
     "title": "Volume > 100/month?",
     "x": 460,
     "y": 740,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "I",
@@ -6046,7 +6382,7 @@
     "title": "Build automation with fallback to human",
     "x": 160,
     "y": 890,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    },
    {
     "id": "J",
@@ -6054,7 +6390,7 @@
     "title": "Questionable - keep manual or build helper",
     "x": 460,
     "y": 890,
-    "anchor": "ch4"
+    "link": "/grimoires/006-automations-101.html#ch4"
    }
   ],
   "edges": [
@@ -6123,7 +6459,7 @@
     "title": "Inbound event: form, call, chat, email, referral",
     "x": 160,
     "y": 140,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "B",
@@ -6131,7 +6467,7 @@
     "title": "Normalize to standard event schema",
     "x": 160,
     "y": 290,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "C",
@@ -6139,7 +6475,7 @@
     "title": "Check for duplicate? phone/email",
     "x": 160,
     "y": 440,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "D",
@@ -6147,7 +6483,7 @@
     "title": "Merge: update source, preserve oldest created_at",
     "x": 160,
     "y": 590,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "E",
@@ -6155,7 +6491,7 @@
     "title": "Create contact in CRM (GHL",
     "x": 460,
     "y": 590,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "F",
@@ -6163,7 +6499,7 @@
     "title": "Apply source tag and UTM attribution",
     "x": 160,
     "y": 740,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "G",
@@ -6171,7 +6507,7 @@
     "title": "SMS consent given?",
     "x": 160,
     "y": 890,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "H",
@@ -6179,7 +6515,7 @@
     "title": "Send welcome SMS (idempotent",
     "x": 160,
     "y": 1040,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "I",
@@ -6187,7 +6523,7 @@
     "title": "Send welcome email only",
     "x": 460,
     "y": 1040,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "J",
@@ -6195,7 +6531,7 @@
     "title": "Create task for rep with SLA",
     "x": 160,
     "y": 1190,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "K",
@@ -6203,7 +6539,7 @@
     "title": "Change stage to CONTACTED",
     "x": 160,
     "y": 1340,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "L",
@@ -6211,7 +6547,7 @@
     "title": "Log event to Airtable",
     "x": 460,
     "y": 740,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "M",
@@ -6219,7 +6555,7 @@
     "title": "High intent? (source=google or budget=high",
     "x": 460,
     "y": 890,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "N",
@@ -6227,7 +6563,7 @@
     "title": "Slack alert to sales channel",
     "x": 760,
     "y": 1040,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    },
    {
     "id": "O",
@@ -6235,7 +6571,7 @@
     "title": "End",
     "x": 1060,
     "y": 1040,
-    "anchor": "p01"
+    "link": "/grimoires/006-automations-101.html#p01"
    }
   ],
   "edges": [
@@ -6334,7 +6670,7 @@
     "title": "Incoming lead data",
     "x": 160,
     "y": 140,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "B",
@@ -6342,7 +6678,7 @@
     "title": "Search existing contacts by phone and email",
     "x": 160,
     "y": 290,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "C",
@@ -6350,7 +6686,7 @@
     "title": "Create new contact",
     "x": 160,
     "y": 440,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "D",
@@ -6358,7 +6694,7 @@
     "title": "Compare confidence: exact phone? exact email?",
     "x": 460,
     "y": 440,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "E",
@@ -6366,7 +6702,7 @@
     "title": "Merge: update existing contact",
     "x": 160,
     "y": 590,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "F",
@@ -6374,7 +6710,7 @@
     "title": "Queue for manual review",
     "x": 460,
     "y": 590,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "G",
@@ -6382,7 +6718,7 @@
     "title": "Preserve oldest created_at timestamp",
     "x": 160,
     "y": 740,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "H",
@@ -6390,7 +6726,7 @@
     "title": "Append new source tag to existing source list",
     "x": 460,
     "y": 740,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "I",
@@ -6398,7 +6734,7 @@
     "title": "Update last_contacted timestamp",
     "x": 760,
     "y": 740,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "J",
@@ -6406,7 +6742,7 @@
     "title": "If existing stage is earlier than qualified, keep qualified stage",
     "x": 1060,
     "y": 740,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "K",
@@ -6414,7 +6750,7 @@
     "title": "Log merge event to Airtable",
     "x": 1360,
     "y": 740,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "L",
@@ -6422,7 +6758,7 @@
     "title": "Suppress duplicate welcome SMS",
     "x": 1660,
     "y": 740,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "M",
@@ -6430,7 +6766,7 @@
     "title": "Create task for ops: review potential duplicate",
     "x": 1960,
     "y": 740,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "N",
@@ -6438,7 +6774,7 @@
     "title": "Send Slack alert to #duplicate-review",
     "x": 160,
     "y": 890,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    },
    {
     "id": "O",
@@ -6446,7 +6782,7 @@
     "title": "Continue to Pattern 1 intake flow",
     "x": 760,
     "y": 590,
-    "anchor": "p02"
+    "link": "/grimoires/006-automations-101.html#p02"
    }
   ],
   "edges": [
@@ -6535,7 +6871,7 @@
     "title": "Lead created in CRM, stage = NEW_LEAD",
     "x": 160,
     "y": 140,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "B",
@@ -6543,7 +6879,7 @@
     "title": "Lead source defined?",
     "x": 160,
     "y": 290,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "C",
@@ -6551,7 +6887,7 @@
     "title": "Assign to default queue for manual triage",
     "x": 160,
     "y": 440,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "D",
@@ -6559,7 +6895,7 @@
     "title": "Determine assignment rule: territory, round‑robin, or load‑balanced",
     "x": 460,
     "y": 440,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "E",
@@ -6567,7 +6903,7 @@
     "title": "Territory-based? (zip code, region",
     "x": 160,
     "y": 590,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "F",
@@ -6575,7 +6911,7 @@
     "title": "Map territory to rep(s",
     "x": 160,
     "y": 740,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "G",
@@ -6583,7 +6919,7 @@
     "title": "Multiple reps in territory?",
     "x": 160,
     "y": 890,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "H",
@@ -6591,7 +6927,7 @@
     "title": "Round‑robin within territory",
     "x": 160,
     "y": 1040,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "I",
@@ -6599,7 +6935,7 @@
     "title": "Assign to single rep",
     "x": 460,
     "y": 1040,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "J",
@@ -6607,7 +6943,7 @@
     "title": "Round‑robin only?",
     "x": 460,
     "y": 740,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "K",
@@ -6615,7 +6951,7 @@
     "title": "Select next rep from global list (round‑robin",
     "x": 460,
     "y": 890,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "L",
@@ -6623,7 +6959,7 @@
     "title": "Check rep’s current open tasks count",
     "x": 760,
     "y": 1040,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "M",
@@ -6631,7 +6967,7 @@
     "title": "Over capacity? (>10 open tasks",
     "x": 160,
     "y": 1190,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "N",
@@ -6639,7 +6975,7 @@
     "title": "Skip rep, go to next in round‑robin",
     "x": 160,
     "y": 1340,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "O",
@@ -6647,7 +6983,7 @@
     "title": "Assign lead to selected rep",
     "x": 460,
     "y": 590,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "P",
@@ -6655,7 +6991,7 @@
     "title": "Create assignment record (who, when, method",
     "x": 760,
     "y": 740,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "Q",
@@ -6663,7 +6999,7 @@
     "title": "Send Slack notification to rep (optional",
     "x": 760,
     "y": 890,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    },
    {
     "id": "R",
@@ -6671,7 +7007,7 @@
     "title": "Log assignment to Airtable",
     "x": 1060,
     "y": 1040,
-    "anchor": "p03"
+    "link": "/grimoires/006-automations-101.html#p03"
    }
   ],
   "edges": [
@@ -6790,7 +7126,7 @@
     "title": "Lead replies to SMS/email/chat",
     "x": 160,
     "y": 140,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "B",
@@ -6798,7 +7134,7 @@
     "title": "Extract message text, lead context",
     "x": 160,
     "y": 290,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "C",
@@ -6806,7 +7142,7 @@
     "title": "Call OpenAI API with classification prompt",
     "x": 160,
     "y": 440,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "D",
@@ -6814,7 +7150,7 @@
     "title": "API success?",
     "x": 160,
     "y": 590,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "E",
@@ -6822,7 +7158,7 @@
     "title": "Fallback: rule‑based keyword matching",
     "x": 160,
     "y": 740,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "F",
@@ -6830,7 +7166,7 @@
     "title": "Confidence > 0.7?",
     "x": 460,
     "y": 740,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "G",
@@ -6838,7 +7174,7 @@
     "title": "Parse extracted fields: budget, timeline, authority, need, overall_intent",
     "x": 160,
     "y": 890,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "H",
@@ -6846,7 +7182,7 @@
     "title": "Send clarifying question max 2 attempts",
     "x": 460,
     "y": 890,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "I",
@@ -6854,7 +7190,7 @@
     "title": "Clarification received?",
     "x": 160,
     "y": 1040,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "J",
@@ -6862,7 +7198,7 @@
     "title": "Move to REACTIVATION stage",
     "x": 160,
     "y": 1190,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "K",
@@ -6870,7 +7206,7 @@
     "title": "Score calculated?",
     "x": 460,
     "y": 1040,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "L",
@@ -6878,7 +7214,7 @@
     "title": "Score = budget + timeline + authority + need + source bonus",
     "x": 460,
     "y": 1190,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "M",
@@ -6886,7 +7222,7 @@
     "title": "Score >= 70?",
     "x": 160,
     "y": 1340,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "N",
@@ -6894,7 +7230,7 @@
     "title": "Update lead score, add intent:high tag",
     "x": 160,
     "y": 1490,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "O",
@@ -6902,7 +7238,7 @@
     "title": "Change stage to QUALIFIED",
     "x": 160,
     "y": 1640,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "P",
@@ -6910,7 +7246,7 @@
     "title": "Send appointment booking link",
     "x": 160,
     "y": 1790,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "Q",
@@ -6918,7 +7254,7 @@
     "title": "Send clarifying SMS for missing fields",
     "x": 460,
     "y": 1490,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "R",
@@ -6926,7 +7262,7 @@
     "title": "Wait 24h for reply, then re‑evaluate",
     "x": 460,
     "y": 1640,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "S",
@@ -6934,7 +7270,7 @@
     "title": "Add intent:low tag, move to nurture sequence",
     "x": 760,
     "y": 1490,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    },
    {
     "id": "T",
@@ -6942,7 +7278,7 @@
     "title": "Log event to Airtable",
     "x": 460,
     "y": 1340,
-    "anchor": "p04"
+    "link": "/grimoires/006-automations-101.html#p04"
    }
   ],
   "edges": [
@@ -7081,7 +7417,7 @@
     "title": "Goal",
     "x": 140,
     "y": 200,
-    "anchor": "m6"
+    "link": "/grimoires/007-agentic-ai-101.html#m6"
    },
    {
     "id": "s1",
@@ -7089,7 +7425,7 @@
     "title": "Instructions",
     "x": 440,
     "y": 200,
-    "anchor": "m6"
+    "link": "/grimoires/007-agentic-ai-101.html#m6"
    },
    {
     "id": "s2",
@@ -7097,7 +7433,7 @@
     "title": "Tools",
     "x": 740,
     "y": 200,
-    "anchor": "m6"
+    "link": "/grimoires/007-agentic-ai-101.html#m6"
    },
    {
     "id": "s3",
@@ -7105,7 +7441,7 @@
     "title": "State",
     "x": 1040,
     "y": 200,
-    "anchor": "m6"
+    "link": "/grimoires/007-agentic-ai-101.html#m6"
    },
    {
     "id": "s4",
@@ -7113,7 +7449,7 @@
     "title": "Control",
     "x": 140,
     "y": 365,
-    "anchor": "m6"
+    "link": "/grimoires/007-agentic-ai-101.html#m6"
    }
   ],
   "edges": [
@@ -7152,7 +7488,7 @@
     "title": "Read before write",
     "x": 140,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/007-agentic-ai-101.html#m11"
    },
    {
     "id": "s1",
@@ -7160,7 +7496,7 @@
     "title": "Preview before execute",
     "x": 440,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/007-agentic-ai-101.html#m11"
    },
    {
     "id": "s2",
@@ -7168,7 +7504,7 @@
     "title": "Approve high-impact actions",
     "x": 740,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/007-agentic-ai-101.html#m11"
    },
    {
     "id": "s3",
@@ -7176,7 +7512,7 @@
     "title": "Limit the loop",
     "x": 1040,
     "y": 200,
-    "anchor": "m11"
+    "link": "/grimoires/007-agentic-ai-101.html#m11"
    }
   ],
   "edges": [
@@ -7210,7 +7546,7 @@
     "title": "Manual tool",
     "x": 140,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/007-agentic-ai-101.html#m15"
    },
    {
     "id": "s1",
@@ -7218,7 +7554,7 @@
     "title": "Reusable connector",
     "x": 440,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/007-agentic-ai-101.html#m15"
    },
    {
     "id": "s2",
@@ -7226,7 +7562,7 @@
     "title": "MCP server or integration layer",
     "x": 740,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/007-agentic-ai-101.html#m15"
    },
    {
     "id": "s3",
@@ -7234,7 +7570,7 @@
     "title": "Governed platform",
     "x": 1040,
     "y": 200,
-    "anchor": "m15"
+    "link": "/grimoires/007-agentic-ai-101.html#m15"
    }
   ],
   "edges": [
@@ -7268,7 +7604,7 @@
     "title": "Intake workflow",
     "x": 140,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/007-agentic-ai-101.html#m21"
    },
    {
     "id": "s1",
@@ -7276,7 +7612,7 @@
     "title": "Research agent",
     "x": 440,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/007-agentic-ai-101.html#m21"
    },
    {
     "id": "s2",
@@ -7284,7 +7620,7 @@
     "title": "Qualification agent",
     "x": 740,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/007-agentic-ai-101.html#m21"
    },
    {
     "id": "s3",
@@ -7292,7 +7628,7 @@
     "title": "Personalization agent",
     "x": 1040,
     "y": 200,
-    "anchor": "m21"
+    "link": "/grimoires/007-agentic-ai-101.html#m21"
    },
    {
     "id": "s4",
@@ -7300,7 +7636,7 @@
     "title": "Executor workflow",
     "x": 140,
     "y": 365,
-    "anchor": "m21"
+    "link": "/grimoires/007-agentic-ai-101.html#m21"
    },
    {
     "id": "s5",
@@ -7308,7 +7644,7 @@
     "title": "Reporter agent",
     "x": 440,
     "y": 365,
-    "anchor": "m21"
+    "link": "/grimoires/007-agentic-ai-101.html#m21"
    }
   ],
   "edges": [
@@ -7352,7 +7688,7 @@
     "title": "Coordination collapse",
     "x": 140,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/007-agentic-ai-101.html#m22"
    },
    {
     "id": "s1",
@@ -7360,7 +7696,7 @@
     "title": "Infinite delegation",
     "x": 440,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/007-agentic-ai-101.html#m22"
    },
    {
     "id": "s2",
@@ -7368,7 +7704,7 @@
     "title": "Cost explosion",
     "x": 740,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/007-agentic-ai-101.html#m22"
    },
    {
     "id": "s3",
@@ -7376,7 +7712,7 @@
     "title": "Authority confusion",
     "x": 1040,
     "y": 200,
-    "anchor": "m22"
+    "link": "/grimoires/007-agentic-ai-101.html#m22"
    },
    {
     "id": "s4",
@@ -7384,7 +7720,7 @@
     "title": "Prompt injection by tool output",
     "x": 140,
     "y": 365,
-    "anchor": "m22"
+    "link": "/grimoires/007-agentic-ai-101.html#m22"
    },
    {
     "id": "s5",
@@ -7392,7 +7728,7 @@
     "title": "Memory pollution",
     "x": 440,
     "y": 365,
-    "anchor": "m22"
+    "link": "/grimoires/007-agentic-ai-101.html#m22"
    }
   ],
   "edges": [
@@ -7436,7 +7772,7 @@
     "title": "Webhook or form trigger",
     "x": 140,
     "y": 200,
-    "anchor": "m25"
+    "link": "/grimoires/007-agentic-ai-101.html#m25"
    },
    {
     "id": "s1",
@@ -7444,7 +7780,7 @@
     "title": "Edit Fields node",
     "x": 440,
     "y": 200,
-    "anchor": "m25"
+    "link": "/grimoires/007-agentic-ai-101.html#m25"
    },
    {
     "id": "s2",
@@ -7452,7 +7788,7 @@
     "title": "HighLevel: Get many contacts",
     "x": 740,
     "y": 200,
-    "anchor": "m25"
+    "link": "/grimoires/007-agentic-ai-101.html#m25"
    },
    {
     "id": "s3",
@@ -7460,7 +7796,7 @@
     "title": "AI Agent node",
     "x": 1040,
     "y": 200,
-    "anchor": "m25"
+    "link": "/grimoires/007-agentic-ai-101.html#m25"
    },
    {
     "id": "s4",
@@ -7468,7 +7804,7 @@
     "title": "IF or Switch node",
     "x": 140,
     "y": 365,
-    "anchor": "m25"
+    "link": "/grimoires/007-agentic-ai-101.html#m25"
    },
    {
     "id": "s5",
@@ -7476,7 +7812,7 @@
     "title": "HighLevel: Create or update contact",
     "x": 440,
     "y": 365,
-    "anchor": "m25"
+    "link": "/grimoires/007-agentic-ai-101.html#m25"
    },
    {
     "id": "s6",
@@ -7484,7 +7820,7 @@
     "title": "HighLevel: Create task",
     "x": 740,
     "y": 365,
-    "anchor": "m25"
+    "link": "/grimoires/007-agentic-ai-101.html#m25"
    }
   ],
   "edges": [
@@ -7533,7 +7869,7 @@
     "title": "Search before create",
     "x": 140,
     "y": 200,
-    "anchor": "m27"
+    "link": "/grimoires/007-agentic-ai-101.html#m27"
    },
    {
     "id": "s1",
@@ -7541,7 +7877,7 @@
     "title": "Let deterministic nodes do deterministic work",
     "x": 440,
     "y": 200,
-    "anchor": "m27"
+    "link": "/grimoires/007-agentic-ai-101.html#m27"
    },
    {
     "id": "s2",
@@ -7549,7 +7885,7 @@
     "title": "Keep the AI output typed",
     "x": 740,
     "y": 200,
-    "anchor": "m27"
+    "link": "/grimoires/007-agentic-ai-101.html#m27"
    },
    {
     "id": "s3",
@@ -7557,7 +7893,7 @@
     "title": "Use tags as audit breadcrumbs",
     "x": 1040,
     "y": 200,
-    "anchor": "m27"
+    "link": "/grimoires/007-agentic-ai-101.html#m27"
    },
    {
     "id": "s4",
@@ -7565,7 +7901,7 @@
     "title": "Do not auto-send in v1",
     "x": 140,
     "y": 365,
-    "anchor": "m27"
+    "link": "/grimoires/007-agentic-ai-101.html#m27"
    },
    {
     "id": "s5",
@@ -7573,7 +7909,7 @@
     "title": "Log agent decisions",
     "x": 440,
     "y": 365,
-    "anchor": "m27"
+    "link": "/grimoires/007-agentic-ai-101.html#m27"
    },
    {
     "id": "s6",
@@ -7581,7 +7917,7 @@
     "title": "Separate staging and production",
     "x": 740,
     "y": 365,
-    "anchor": "m27"
+    "link": "/grimoires/007-agentic-ai-101.html#m27"
    }
   ],
   "edges": [
@@ -7630,7 +7966,7 @@
     "title": "Intake workflow",
     "x": 140,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/007-agentic-ai-101.html#m28"
    },
    {
     "id": "s1",
@@ -7638,7 +7974,7 @@
     "title": "Research agent",
     "x": 440,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/007-agentic-ai-101.html#m28"
    },
    {
     "id": "s2",
@@ -7646,7 +7982,7 @@
     "title": "Qualification agent",
     "x": 740,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/007-agentic-ai-101.html#m28"
    },
    {
     "id": "s3",
@@ -7654,7 +7990,7 @@
     "title": "Compliance/review agent",
     "x": 1040,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/007-agentic-ai-101.html#m28"
    },
    {
     "id": "s4",
@@ -7662,7 +7998,7 @@
     "title": "Personalization agent",
     "x": 140,
     "y": 365,
-    "anchor": "m28"
+    "link": "/grimoires/007-agentic-ai-101.html#m28"
    },
    {
     "id": "s5",
@@ -7670,7 +8006,7 @@
     "title": "Executor workflow",
     "x": 440,
     "y": 365,
-    "anchor": "m28"
+    "link": "/grimoires/007-agentic-ai-101.html#m28"
    },
    {
     "id": "s6",
@@ -7678,7 +8014,7 @@
     "title": "Reporting workflow",
     "x": 740,
     "y": 365,
-    "anchor": "m28"
+    "link": "/grimoires/007-agentic-ai-101.html#m28"
    }
   ],
   "edges": [
@@ -7727,7 +8063,7 @@
     "title": "Submit XML sitemap",
     "x": 140,
     "y": 200,
-    "anchor": "m5"
+    "link": "/grimoires/008-seo-101.html#m5"
    },
    {
     "id": "s1",
@@ -7735,7 +8071,7 @@
     "title": "Check robots.txt",
     "x": 440,
     "y": 200,
-    "anchor": "m5"
+    "link": "/grimoires/008-seo-101.html#m5"
    },
    {
     "id": "s2",
@@ -7743,7 +8079,7 @@
     "title": "Use internal links",
     "x": 740,
     "y": 200,
-    "anchor": "m5"
+    "link": "/grimoires/008-seo-101.html#m5"
    },
    {
     "id": "s3",
@@ -7751,7 +8087,7 @@
     "title": "Inspect logs",
     "x": 1040,
     "y": 200,
-    "anchor": "m5"
+    "link": "/grimoires/008-seo-101.html#m5"
    }
   ],
   "edges": [
@@ -7785,7 +8121,7 @@
     "title": "Create 10-25 saved prompts",
     "x": 140,
     "y": 200,
-    "anchor": "m37"
+    "link": "/grimoires/008-seo-101.html#m37"
    },
    {
     "id": "s1",
@@ -7793,7 +8129,7 @@
     "title": "Run monthly",
     "x": 440,
     "y": 200,
-    "anchor": "m37"
+    "link": "/grimoires/008-seo-101.html#m37"
    },
    {
     "id": "s2",
@@ -7801,7 +8137,7 @@
     "title": "Record citations",
     "x": 740,
     "y": 200,
-    "anchor": "m37"
+    "link": "/grimoires/008-seo-101.html#m37"
    },
    {
     "id": "s3",
@@ -7809,7 +8145,7 @@
     "title": "Extract gaps",
     "x": 1040,
     "y": 200,
-    "anchor": "m37"
+    "link": "/grimoires/008-seo-101.html#m37"
    }
   ],
   "edges": [
@@ -7843,7 +8179,7 @@
     "title": "Title",
     "x": 140,
     "y": 200,
-    "anchor": "m9"
+    "link": "/grimoires/008-seo-101.html#m9"
    },
    {
     "id": "s1",
@@ -7851,7 +8187,7 @@
     "title": "H1",
     "x": 440,
     "y": 200,
-    "anchor": "m9"
+    "link": "/grimoires/008-seo-101.html#m9"
    },
    {
     "id": "s2",
@@ -7859,7 +8195,7 @@
     "title": "Intro",
     "x": 740,
     "y": 200,
-    "anchor": "m9"
+    "link": "/grimoires/008-seo-101.html#m9"
    },
    {
     "id": "s3",
@@ -7867,7 +8203,7 @@
     "title": "Sections",
     "x": 1040,
     "y": 200,
-    "anchor": "m9"
+    "link": "/grimoires/008-seo-101.html#m9"
    },
    {
     "id": "s4",
@@ -7875,7 +8211,7 @@
     "title": "Media",
     "x": 140,
     "y": 365,
-    "anchor": "m9"
+    "link": "/grimoires/008-seo-101.html#m9"
    }
   ],
   "edges": [
@@ -7914,7 +8250,7 @@
     "title": "State the claim",
     "x": 140,
     "y": 200,
-    "anchor": "m14"
+    "link": "/grimoires/008-seo-101.html#m14"
    },
    {
     "id": "s1",
@@ -7922,7 +8258,7 @@
     "title": "Show the evidence",
     "x": 440,
     "y": 200,
-    "anchor": "m14"
+    "link": "/grimoires/008-seo-101.html#m14"
    },
    {
     "id": "s2",
@@ -7930,7 +8266,7 @@
     "title": "Explain the caveat",
     "x": 740,
     "y": 200,
-    "anchor": "m14"
+    "link": "/grimoires/008-seo-101.html#m14"
    },
    {
     "id": "s3",
@@ -7938,7 +8274,7 @@
     "title": "Format for extraction",
     "x": 1040,
     "y": 200,
-    "anchor": "m14"
+    "link": "/grimoires/008-seo-101.html#m14"
    }
   ],
   "edges": [
@@ -7972,7 +8308,7 @@
     "title": "Direct answer",
     "x": 140,
     "y": 200,
-    "anchor": "m18"
+    "link": "/grimoires/008-seo-101.html#m18"
    },
    {
     "id": "s1",
@@ -7980,7 +8316,7 @@
     "title": "Definition block",
     "x": 440,
     "y": 200,
-    "anchor": "m18"
+    "link": "/grimoires/008-seo-101.html#m18"
    },
    {
     "id": "s2",
@@ -7988,7 +8324,7 @@
     "title": "Context and caveats",
     "x": 740,
     "y": 200,
-    "anchor": "m18"
+    "link": "/grimoires/008-seo-101.html#m18"
    },
    {
     "id": "s3",
@@ -7996,7 +8332,7 @@
     "title": "Evidence",
     "x": 1040,
     "y": 200,
-    "anchor": "m18"
+    "link": "/grimoires/008-seo-101.html#m18"
    },
    {
     "id": "s4",
@@ -8004,7 +8340,7 @@
     "title": "Comparison",
     "x": 140,
     "y": 365,
-    "anchor": "m18"
+    "link": "/grimoires/008-seo-101.html#m18"
    },
    {
     "id": "s5",
@@ -8012,7 +8348,7 @@
     "title": "Next action",
     "x": 440,
     "y": 365,
-    "anchor": "m18"
+    "link": "/grimoires/008-seo-101.html#m18"
    }
   ],
   "edges": [
@@ -8056,7 +8392,7 @@
     "title": "Define the topic map",
     "x": 140,
     "y": 200,
-    "anchor": "m23"
+    "link": "/grimoires/008-seo-101.html#m23"
    },
    {
     "id": "s1",
@@ -8064,7 +8400,7 @@
     "title": "Create hub pages",
     "x": 440,
     "y": 200,
-    "anchor": "m23"
+    "link": "/grimoires/008-seo-101.html#m23"
    },
    {
     "id": "s2",
@@ -8072,7 +8408,7 @@
     "title": "Add proof pages",
     "x": 740,
     "y": 200,
-    "anchor": "m23"
+    "link": "/grimoires/008-seo-101.html#m23"
    },
    {
     "id": "s3",
@@ -8080,7 +8416,7 @@
     "title": "Interlink intentionally",
     "x": 1040,
     "y": 200,
-    "anchor": "m23"
+    "link": "/grimoires/008-seo-101.html#m23"
    }
   ],
   "edges": [
@@ -8114,7 +8450,7 @@
     "title": "Days 1-15: Baseline",
     "x": 140,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/008-seo-101.html#m28"
    },
    {
     "id": "s1",
@@ -8122,7 +8458,7 @@
     "title": "Days 16-30: Technical cleanup",
     "x": 440,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/008-seo-101.html#m28"
    },
    {
     "id": "s2",
@@ -8130,7 +8466,7 @@
     "title": "Days 31-45: Entity foundation",
     "x": 740,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/008-seo-101.html#m28"
    },
    {
     "id": "s3",
@@ -8138,7 +8474,7 @@
     "title": "Days 46-65: Content rebuild",
     "x": 1040,
     "y": 200,
-    "anchor": "m28"
+    "link": "/grimoires/008-seo-101.html#m28"
    },
    {
     "id": "s4",
@@ -8146,7 +8482,7 @@
     "title": "Days 66-80: Authority push",
     "x": 140,
     "y": 365,
-    "anchor": "m28"
+    "link": "/grimoires/008-seo-101.html#m28"
    },
    {
     "id": "s5",
@@ -8154,7 +8490,7 @@
     "title": "Days 81-90: Measure and iterate",
     "x": 440,
     "y": 365,
-    "anchor": "m28"
+    "link": "/grimoires/008-seo-101.html#m28"
    }
   ],
   "edges": [
@@ -8198,7 +8534,7 @@
     "title": "Monday: Search Console health",
     "x": 140,
     "y": 200,
-    "anchor": "m30"
+    "link": "/grimoires/008-seo-101.html#m30"
    },
    {
     "id": "s1",
@@ -8206,7 +8542,7 @@
     "title": "Tuesday: Content queue",
     "x": 440,
     "y": 200,
-    "anchor": "m30"
+    "link": "/grimoires/008-seo-101.html#m30"
    },
    {
     "id": "s2",
@@ -8214,7 +8550,7 @@
     "title": "Wednesday: Local and reputation",
     "x": 740,
     "y": 200,
-    "anchor": "m30"
+    "link": "/grimoires/008-seo-101.html#m30"
    },
    {
     "id": "s3",
@@ -8222,7 +8558,7 @@
     "title": "Thursday: Competitor and AI visibility",
     "x": 1040,
     "y": 200,
-    "anchor": "m30"
+    "link": "/grimoires/008-seo-101.html#m30"
    },
    {
     "id": "s4",
@@ -8230,7 +8566,7 @@
     "title": "Friday: Report and cleanup",
     "x": 140,
     "y": 365,
-    "anchor": "m30"
+    "link": "/grimoires/008-seo-101.html#m30"
    }
   ],
   "edges": [
@@ -8269,7 +8605,7 @@
     "title": "Start from existing data",
     "x": 140,
     "y": 200,
-    "anchor": "m31"
+    "link": "/grimoires/008-seo-101.html#m31"
    },
    {
     "id": "s1",
@@ -8277,7 +8613,7 @@
     "title": "Group by intent",
     "x": 440,
     "y": 200,
-    "anchor": "m31"
+    "link": "/grimoires/008-seo-101.html#m31"
    },
    {
     "id": "s2",
@@ -8285,7 +8621,7 @@
     "title": "Find page match",
     "x": 740,
     "y": 200,
-    "anchor": "m31"
+    "link": "/grimoires/008-seo-101.html#m31"
    },
    {
     "id": "s3",
@@ -8293,7 +8629,7 @@
     "title": "Check the SERP manually",
     "x": 1040,
     "y": 200,
-    "anchor": "m31"
+    "link": "/grimoires/008-seo-101.html#m31"
    },
    {
     "id": "s4",
@@ -8301,7 +8637,7 @@
     "title": "Collect competitor examples",
     "x": 140,
     "y": 365,
-    "anchor": "m31"
+    "link": "/grimoires/008-seo-101.html#m31"
    }
   ],
   "edges": [
@@ -8340,7 +8676,7 @@
     "title": "Before upload",
     "x": 140,
     "y": 200,
-    "anchor": "m34"
+    "link": "/grimoires/008-seo-101.html#m34"
    },
    {
     "id": "s1",
@@ -8348,7 +8684,7 @@
     "title": "During upload",
     "x": 440,
     "y": 200,
-    "anchor": "m34"
+    "link": "/grimoires/008-seo-101.html#m34"
    },
    {
     "id": "s2",
@@ -8356,7 +8692,7 @@
     "title": "Before publish",
     "x": 740,
     "y": 200,
-    "anchor": "m34"
+    "link": "/grimoires/008-seo-101.html#m34"
    },
    {
     "id": "s3",
@@ -8364,7 +8700,7 @@
     "title": "After publish",
     "x": 1040,
     "y": 200,
-    "anchor": "m34"
+    "link": "/grimoires/008-seo-101.html#m34"
    }
   ],
   "edges": [
@@ -8398,7 +8734,7 @@
     "title": "Find volume",
     "x": 140,
     "y": 200,
-    "anchor": "c17"
+    "link": "/grimoires/009-payment-processing.html#c17"
    },
    {
     "id": "s1",
@@ -8406,7 +8742,7 @@
     "title": "Find total fees",
     "x": 440,
     "y": 200,
-    "anchor": "c17"
+    "link": "/grimoires/009-payment-processing.html#c17"
    },
    {
     "id": "s2",
@@ -8414,7 +8750,7 @@
     "title": "Calculate effective rate",
     "x": 740,
     "y": 200,
-    "anchor": "c17"
+    "link": "/grimoires/009-payment-processing.html#c17"
    },
    {
     "id": "s3",
@@ -8422,7 +8758,7 @@
     "title": "Separate pass-through from markup",
     "x": 1040,
     "y": 200,
-    "anchor": "c17"
+    "link": "/grimoires/009-payment-processing.html#c17"
    }
   ],
   "edges": [
@@ -8456,7 +8792,7 @@
     "title": "Identify the transaction or batch",
     "x": 140,
     "y": 200,
-    "anchor": "c32"
+    "link": "/grimoires/009-payment-processing.html#c32"
    },
    {
     "id": "s1",
@@ -8464,7 +8800,7 @@
     "title": "Check state",
     "x": 440,
     "y": 200,
-    "anchor": "c32"
+    "link": "/grimoires/009-payment-processing.html#c32"
    },
    {
     "id": "s2",
@@ -8472,7 +8808,7 @@
     "title": "Check batch timing",
     "x": 740,
     "y": 200,
-    "anchor": "c32"
+    "link": "/grimoires/009-payment-processing.html#c32"
    },
    {
     "id": "s3",
@@ -8480,7 +8816,7 @@
     "title": "Check bank account",
     "x": 1040,
     "y": 200,
-    "anchor": "c32"
+    "link": "/grimoires/009-payment-processing.html#c32"
    },
    {
     "id": "s4",
@@ -8488,7 +8824,7 @@
     "title": "Check risk notes",
     "x": 140,
     "y": 365,
-    "anchor": "c32"
+    "link": "/grimoires/009-payment-processing.html#c32"
    }
   ],
   "edges": [
@@ -8527,7 +8863,7 @@
     "title": "Power",
     "x": 140,
     "y": 200,
-    "anchor": "c34"
+    "link": "/grimoires/009-payment-processing.html#c34"
    },
    {
     "id": "s1",
@@ -8535,7 +8871,7 @@
     "title": "Network",
     "x": 440,
     "y": 200,
-    "anchor": "c34"
+    "link": "/grimoires/009-payment-processing.html#c34"
    },
    {
     "id": "s2",
@@ -8543,7 +8879,7 @@
     "title": "Scope",
     "x": 740,
     "y": 200,
-    "anchor": "c34"
+    "link": "/grimoires/009-payment-processing.html#c34"
    },
    {
     "id": "s3",
@@ -8551,7 +8887,7 @@
     "title": "Error",
     "x": 1040,
     "y": 200,
-    "anchor": "c34"
+    "link": "/grimoires/009-payment-processing.html#c34"
    },
    {
     "id": "s4",
@@ -8559,7 +8895,7 @@
     "title": "Fallback",
     "x": 140,
     "y": 365,
-    "anchor": "c34"
+    "link": "/grimoires/009-payment-processing.html#c34"
    }
   ],
   "edges": [
@@ -8598,7 +8934,7 @@
     "title": "Dispute arrives",
     "x": 140,
     "y": 200,
-    "anchor": "c45"
+    "link": "/grimoires/009-payment-processing.html#c45"
    },
    {
     "id": "s1",
@@ -8606,7 +8942,7 @@
     "title": "Merchant gathers evidence",
     "x": 440,
     "y": 200,
-    "anchor": "c45"
+    "link": "/grimoires/009-payment-processing.html#c45"
    },
    {
     "id": "s2",
@@ -8614,7 +8950,7 @@
     "title": "Representment",
     "x": 740,
     "y": 200,
-    "anchor": "c45"
+    "link": "/grimoires/009-payment-processing.html#c45"
    },
    {
     "id": "s3",
@@ -8622,7 +8958,7 @@
     "title": "Decision",
     "x": 1040,
     "y": 200,
-    "anchor": "c45"
+    "link": "/grimoires/009-payment-processing.html#c45"
    }
   ],
   "edges": [
@@ -8656,7 +8992,7 @@
     "title": "Verify original approval",
     "x": 140,
     "y": 200,
-    "anchor": "c50"
+    "link": "/grimoires/009-payment-processing.html#c50"
    },
    {
     "id": "s1",
@@ -8664,7 +9000,7 @@
     "title": "Check current state",
     "x": 440,
     "y": 200,
-    "anchor": "c50"
+    "link": "/grimoires/009-payment-processing.html#c50"
    },
    {
     "id": "s2",
@@ -8672,7 +9008,7 @@
     "title": "Prevent duplicate billing",
     "x": 740,
     "y": 200,
-    "anchor": "c50"
+    "link": "/grimoires/009-payment-processing.html#c50"
    },
    {
     "id": "s3",
@@ -8680,7 +9016,7 @@
     "title": "Document",
     "x": 1040,
     "y": 200,
-    "anchor": "c50"
+    "link": "/grimoires/009-payment-processing.html#c50"
    }
   ],
   "edges": [
@@ -8714,7 +9050,7 @@
     "title": "Week 1: Vocabulary and maps",
     "x": 140,
     "y": 200,
-    "anchor": "c67"
+    "link": "/grimoires/009-payment-processing.html#c67"
    },
    {
     "id": "s1",
@@ -8722,7 +9058,7 @@
     "title": "Week 2: Ticket patterns",
     "x": 440,
     "y": 200,
-    "anchor": "c67"
+    "link": "/grimoires/009-payment-processing.html#c67"
    },
    {
     "id": "s2",
@@ -8730,7 +9066,7 @@
     "title": "Week 3: Risk and escalation",
     "x": 740,
     "y": 200,
-    "anchor": "c67"
+    "link": "/grimoires/009-payment-processing.html#c67"
    },
    {
     "id": "s3",
@@ -8738,7 +9074,7 @@
     "title": "Week 4: Systems thinking",
     "x": 1040,
     "y": 200,
-    "anchor": "c67"
+    "link": "/grimoires/009-payment-processing.html#c67"
    }
   ],
   "edges": [
@@ -8772,7 +9108,7 @@
     "title": "Test successful payment",
     "x": 140,
     "y": 200,
-    "anchor": "c78"
+    "link": "/grimoires/009-payment-processing.html#c78"
    },
    {
     "id": "s1",
@@ -8780,7 +9116,7 @@
     "title": "Test failed payment",
     "x": 440,
     "y": 200,
-    "anchor": "c78"
+    "link": "/grimoires/009-payment-processing.html#c78"
    },
    {
     "id": "s2",
@@ -8788,7 +9124,7 @@
     "title": "Test webhook retry",
     "x": 740,
     "y": 200,
-    "anchor": "c78"
+    "link": "/grimoires/009-payment-processing.html#c78"
    },
    {
     "id": "s3",
@@ -8796,7 +9132,7 @@
     "title": "Test refund",
     "x": 1040,
     "y": 200,
-    "anchor": "c78"
+    "link": "/grimoires/009-payment-processing.html#c78"
    },
    {
     "id": "s4",
@@ -8804,7 +9140,7 @@
     "title": "Test abandoned checkout",
     "x": 140,
     "y": 365,
-    "anchor": "c78"
+    "link": "/grimoires/009-payment-processing.html#c78"
    }
   ],
   "edges": [
@@ -8843,7 +9179,7 @@
     "title": "Customer enters payment details",
     "x": 140,
     "y": 200,
-    "anchor": "c86"
+    "link": "/grimoires/009-payment-processing.html#c86"
    },
    {
     "id": "s1",
@@ -8851,7 +9187,7 @@
     "title": "Risk check runs in the background",
     "x": 440,
     "y": 200,
-    "anchor": "c86"
+    "link": "/grimoires/009-payment-processing.html#c86"
    },
    {
     "id": "s2",
@@ -8859,7 +9195,7 @@
     "title": "Challenge triggered if needed",
     "x": 740,
     "y": 200,
-    "anchor": "c86"
+    "link": "/grimoires/009-payment-processing.html#c86"
    },
    {
     "id": "s3",
@@ -8867,7 +9203,7 @@
     "title": "Issuing bank authenticates",
     "x": 1040,
     "y": 200,
-    "anchor": "c86"
+    "link": "/grimoires/009-payment-processing.html#c86"
    },
    {
     "id": "s4",
@@ -8875,7 +9211,7 @@
     "title": "Transaction approved — liability shifted",
     "x": 140,
     "y": 365,
-    "anchor": "c86"
+    "link": "/grimoires/009-payment-processing.html#c86"
    }
   ],
   "edges": [
