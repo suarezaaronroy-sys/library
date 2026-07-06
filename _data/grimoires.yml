@@ -177,12 +177,12 @@
   desc: "Essays on glass, stone, failure, memory, and the invisible work that lets ordinary buildings keep their dignity."
   stats: ["quiet trades", "heritage", "invisible work"]
 
-- num: "019"
+- num: "018"
   title: "Under: A Field Note From Anesthesia"
   tier: manual
   theme: teal
   date: "Jul 2026"
-  href: /grimoires/019-under.html
+  href: /grimoires/018-under.html
   status: live
   desc: "The hour I went under and everything zoomed in — sound slowed, vision flattened, and I became a single pixel jumping from one colour to the next. A record of a surreal, abstract, oddly liberating state."
   stats: ["anesthesia", "abstract", "pressure release"]
