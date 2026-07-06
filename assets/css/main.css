@@ -689,3 +689,8 @@ a.g-card:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8
 .home-workbench-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-top:1px solid rgba(245,242,236,.16);padding-top:1.5rem}
 .home-workbench-badge{font-family:var(--mono);font-size:.66rem;color:var(--teal)}
 @media(max-width:760px){.home-workbench{padding:2.6rem 0}.home-workbench-grid{grid-template-columns:1fr;gap:.7rem}.home-workbench-head h2{font-size:1.5rem}.home-workbench-foot{flex-direction:column;align-items:flex-start}}
+
+/* ============ smooth image loading — fade in on decode, no pop-in flicker ============ */
+.js-img .home-cover-img,.js-img .about-cover-img,.js-img .notes-cover-img,.js-img .library-cover-img,.js-img .contact-cover-img,.js-img .home-evidence-item img,.js-img .home-proof img,.js-img .about-signature img{opacity:0;transition:opacity .55s ease}
+.js-img .home-cover-img.is-loaded,.js-img .about-cover-img.is-loaded,.js-img .notes-cover-img.is-loaded,.js-img .library-cover-img.is-loaded,.js-img .contact-cover-img.is-loaded,.js-img .home-evidence-item img.is-loaded,.js-img .home-proof img.is-loaded,.js-img .about-signature img.is-loaded{opacity:1}
+@media(prefers-reduced-motion:reduce){.js-img .home-cover-img,.js-img .about-cover-img,.js-img .notes-cover-img,.js-img .library-cover-img,.js-img .contact-cover-img,.js-img .home-evidence-item img,.js-img .home-proof img,.js-img .about-signature img{opacity:1;transition:none}}
