@@ -2,7 +2,7 @@ import { loadState, saveState } from "./store.js?v=5";
 import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=3";
 import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=4";
 const FLOWCHART_MAPS = readGrimoireFlowcharts();
-const ALL_GRIMOIRE_MAPS = [...GRIMOIRE_MAPS, ...FLOWCHART_MAPS];
+const ALL_GRIMOIRE_MAPS = [...GRIMOIRE_MAPS, ...FLOWCHART_MAPS, ...ADVANCED_FLOWS];
 import { createWorkbenchGraph } from "./graph-engine.js?v=1";
 import {
   escapeHtml,
@@ -209,6 +209,11 @@ function populateTemplateSelect() {
       decision: "Creates labelled branches and editable outcomes.",
       mindmap: "Creates a central idea with movable thought branches."
     }[kind];
+  } else if (kind === "advanced") {
+    select.disabled = false;
+    select.innerHTML = ADVANCED_FLOWS.map((flow) =>
+      `<option value="${escapeHtml(flow.id)}">${escapeHtml(flow.label)}</option>`).join("");
+    note.textContent = "Advanced n8n / Make / GHL architectures — editable, and the title node opens the grimoire that teaches the pattern.";
   } else if (kind === "grimoire") {
     select.disabled = false;
     const framework = GRIMOIRE_MAPS.map((map) =>
@@ -467,7 +472,7 @@ function createCanvasFromStarter() {
   let canvas;
   if (kind === "pipeline") canvas = createPipelineCanvas(id, templateId);
   else if (kind === "automation") canvas = createAutomationCanvas(id, templateId);
-  else if (kind === "grimoire") canvas = createGrimoireCanvas(id, templateId);
+  else if (kind === "grimoire" || kind === "advanced") canvas = createGrimoireCanvas(id, templateId);
   else if (GENERAL_STARTERS[kind]) canvas = createGeneralStarterCanvas(id, kind, templateId);
   else canvas = createCanvas(id, `Canvas ${Object.keys(state.canvases).length + 1}`);
   state.canvases[id] = canvas;
