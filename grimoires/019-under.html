@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/library/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/library/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/library/apple-touch-icon.png">
+<meta name="description" content="A field note from under general anesthesia — the hour I was too small to see the whole. Grimoire 019 by Aaron Suarez.">
+<meta name="author" content="Aaron Suarez">
+<meta property="og:title" content="Under — Grimoire 019">
+<meta property="og:description" content="A field note from under anesthesia. Everything zoomed in, sound slowed and simplified, and I became a single pixel jumping from one colour to the next.">
+<meta property="og:type" content="article">
+<title>Under - Grimoire 019 | Aaron Suarez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f1e8; --paper-2:#ebe3d4; --paper-3:#fffaf1;
+    --ink:#17130f; --muted:#655f55; --faint:#8e8577; --line:rgba(23,19,15,.14);
+    --red:#c2410c; --teal:#0d9488; --blue:#1d4ed8; --moss:#2f6f4e; --charcoal:#181512;
+    --serif:"Fraunces",Georgia,serif; --sans:"DM Sans",system-ui,sans-serif; --mono:"DM Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--sans);font-weight:300;color:var(--ink);line-height:1.72;
+    background:
+      linear-gradient(90deg,rgba(23,19,15,.030) 1px,transparent 1px) 0 0/30px 30px,
+      linear-gradient(rgba(23,19,15,.024) 1px,transparent 1px) 0 0/30px 30px,
+      var(--paper);}
+  .bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    height:42px;padding:0 clamp(1rem,4vw,2.4rem);background:rgba(24,21,18,.92);color:var(--paper);
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;backdrop-filter:blur(6px)}
+  .bar a{color:var(--paper);text-decoration:none;opacity:.85}
+  .bar a:hover{opacity:1;color:#e9b8a4}
+  .bar .tag{color:#c9a98c;text-transform:uppercase;letter-spacing:.14em;font-size:9.5px}
+  .wrap{width:min(720px,calc(100% - 2.2rem));margin:0 auto}
+  .lede-wrap{width:min(760px,calc(100% - 2.2rem));margin:0 auto}
+
+  /* ---- masthead ---- */
+  header.mast{padding:clamp(3rem,9vw,6rem) 0 2.4rem;text-align:left}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+  h1.title{font-family:var(--serif);font-weight:300;font-size:clamp(3.4rem,13vw,7rem);line-height:.92;
+    letter-spacing:-.02em;margin:.5rem 0 .3rem}
+  .sub{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.05rem,3.4vw,1.5rem);
+    color:var(--muted);max-width:34ch;line-height:1.3}
+  .disclaim{margin-top:1.6rem;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.03em;max-width:52ch;line-height:1.7}
+
+  /* ---- abstract plates (photos, replaced by pure colour fields) ---- */
+  .plate{position:relative;height:clamp(200px,38vw,340px);margin:2.6rem 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .plate .cap{position:absolute;left:12px;bottom:10px;z-index:2;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:rgba(246,241,232,.86);mix-blend-mode:difference}
+  /* field: soft rothko-like colour wash */
+  .plate.field{background:
+    radial-gradient(120% 90% at 20% 15%,rgba(13,148,136,.55),transparent 60%),
+    radial-gradient(120% 90% at 85% 30%,rgba(194,65,12,.5),transparent 62%),
+    radial-gradient(140% 120% at 60% 100%,rgba(29,78,216,.42),transparent 60%),
+    var(--charcoal)}
+  /* zoom: sharp small squares dissolving into large blurred blocks */
+  .plate.zoom{background:
+    conic-gradient(from 0deg at 12% 50%,var(--teal),var(--blue),var(--red),var(--moss),var(--teal));
+    filter:saturate(.9)}
+  .plate.zoom::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent 0 8%,var(--paper) 78% 100%);
+    -webkit-mask:linear-gradient(90deg,#000,transparent 70%);mask:linear-gradient(90deg,#000,transparent 70%);opacity:.0}
+  /* pixels: a grid of colour cells, the state itself */
+  .plate.pixels{background:var(--paper-2);display:grid;grid-template-columns:repeat(16,1fr);grid-template-rows:repeat(8,1fr);gap:2px;padding:2px}
+  .plate.pixels i{display:block;border-radius:1px}
+  /* onepixel: near-empty, a single lit cell in a dark field */
+  .plate.onepixel{background:#0d0b09}
+  .plate.onepixel i{position:absolute;width:clamp(10px,2vw,16px);aspect-ratio:1;border-radius:2px;top:52%;left:46%;
+    background:var(--teal);box-shadow:0 0 40px 10px rgba(13,148,136,.55)}
+  /* release: everything opening back to paper */
+  .plate.release{background:linear-gradient(105deg,var(--charcoal) 0%,rgba(47,111,78,.6) 34%,rgba(13,148,136,.4) 55%,var(--paper-3) 100%)}
+
+  /* ---- body text ---- */
+  section.blk{padding:.3rem 0 .6rem}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--red);text-transform:uppercase}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,5vw,2.1rem);line-height:1.12;letter-spacing:-.01em;margin:.35rem 0 1rem;max-width:22ch}
+  p{font-size:1.06rem;color:#241f1a;margin:0 0 1.2rem;max-width:64ch}
+  p .em{font-style:italic}
+  p strong{font-weight:500}
+
+  /* ---- pullquote ---- */
+  .pq{margin:2.6rem 0;padding:1.7rem 1.6rem;border-left:2px solid var(--red);background:rgba(255,250,241,.7)}
+  .pq p{font-family:var(--serif);font-weight:300;font-size:clamp(1.4rem,4.6vw,2rem);line-height:1.24;color:var(--ink);margin:0;max-width:26ch}
+  .pq.dark{background:var(--charcoal);border-left-color:var(--teal);border-radius:4px}
+  .pq.dark p{color:var(--paper)}
+
+  /* ---- colophon ---- */
+  .colophon{margin:3.4rem 0 4.5rem;padding-top:1.4rem;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.03em;line-height:1.9}
+  .colophon a{color:var(--red);text-decoration:none}
+  .colophon a:hover{text-decoration:underline}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a href="/library/projects/">&larr; The Library</a>
+  <span class="tag">Grimoire 019 &middot; a field note</span>
+</div>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="eyebrow">Grimoire 019 &middot; under</div>
+    <h1 class="title">Under.</h1>
+    <p class="sub">A field note from the hour I was too small to see the whole.</p>
+    <p class="disclaim">Not a systems manual. A record of an hour I mostly wasn't there for &mdash; the strangest thing my own mind has ever done, written down before it faded, because the parts that fade are usually the parts worth keeping.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="blk" id="descent">
+    <div class="num">I &middot; the descent</div>
+    <h2>There is no line you feel yourself cross.</h2>
+    <p>I don't remember the moment it took. One second the room was the room. Then, with no transition and no sound of a door closing, the room stopped assembling itself the way rooms do. Nobody warns you that consciousness has a resolution &mdash; and that it can be turned down.</p>
+  </section>
+</div>
+
+<div class="lede-wrap"><div class="plate zoom"><span class="cap">the world, losing its detail</span></div></div>
+
+<div class="wrap">
+  <section class="blk" id="zoom">
+    <div class="num">II &middot; everything zoomed in</div>
+    <h2>The world stopped being made of things.</h2>
+    <p>Everything was zoomed in. Not magnified &mdash; <span class="em">zoomed</span>, the way a photo goes when you push past its last real detail and fall into the grain. The world stopped being made of things and started being made of pixels, and I was somewhere down inside them.</p>
+    <p>The sound came with it: slowed, then simplified, then garbled &mdash; not because anything was broken, but because I was too close to it to hear the whole of it. Vision did the same. It flattened. It gave up its depth. Everything arrived one layer thick.</p>
+  </section>
+</div>
+
+<div class="lede-wrap"><div class="plate onepixel"><i></i><span class="cap">one pixel, and the dark around it</span></div></div>
+
+<div class="wrap">
+  <section class="blk" id="pixel">
+    <div class="num">III &middot; one pixel at a time</div>
+    <h2>I was a single pixel, and the only thing that happened was that I moved.</h2>
+    <p>Jumping from one colour to the next. One square of nothing to another. That was the entire content of the hour: colour, then a different colour. I had no body I could find. No edges. One dimension, if that.</p>
+    <p>And here is the part I keep turning over &mdash; my thoughts were completely intact. I was still <strong>me</strong>, still thinking clearly, still narrating. I just couldn't zoom out. I had the mind and none of the map. I was microscopic, genuinely and not as a figure of speech: like an ant standing on a four-lane highway, aware of every grain of the asphalt beneath it, with no possible way to understand that it was standing on a road.</p>
+  </section>
+</div>
+
+<div class="pq"><p>I had the mind and none of the map.</p></div>
+
+<div class="wrap">
+  <section class="blk" id="abstract">
+    <div class="num">IV &middot; the abstract hour</div>
+    <h2>Sensation without a world.</h2>
+    <p>Later I understood what had actually happened. Normally, experience is <span class="em">of</span> something &mdash; it points at a world. Every colour belongs to an object, every sound to a source, the whole thing composed so fast and so automatically that you mistake the finished picture for reality itself. Under, the assembly line stopped. I was left holding the raw material: colour and sound and dimension with nothing they belonged to. Sensation without a referent. The pixels before they resolve into an image.</p>
+    <p>It was abstract in the truest sense. Not a painting <span class="em">of</span> anything &mdash; just form and quality and movement, closer to a colour field than a photograph. And I spend my life <span class="em">making</span> abstractions: models, maps, systems, this whole library, reality turned into clean structure. But I didn't make this one. The world got abstract on its own, and I was only there for it. The abstracter became the abstraction.</p>
+  </section>
+</div>
+
+<div class="lede-wrap"><div class="plate field"><span class="cap">colour with nothing it belonged to</span></div></div>
+
+<div class="wrap">
+  <section class="blk" id="small">
+    <div class="num">V &middot; too small to be responsible</div>
+    <h2>It should have been frightening. It wasn't.</h2>
+    <p>It was liberating. For someone who carries the whole system in his head every waking hour &mdash; who is always holding the overview, always responsible for seeing how the parts fit &mdash; being reduced to a single pixel with nothing to integrate was the closest thing to rest I have felt in a long time.</p>
+    <p>No whole to maintain. No structure to keep aloft. Just the one colour at a time, and no obligation to make it mean anything. There is a freedom, it turns out, in being too small to be responsible for the whole.</p>
+  </section>
+</div>
+
+<div class="pq dark"><p>There is a freedom in being too small to be responsible for the whole.</p></div>
+
+<div class="wrap">
+  <section class="blk" id="release">
+    <div class="num">VI &middot; the pressure release</div>
+    <h2>A valve, opening.</h2>
+    <p>Surreal, and simple, and clean. Not a high &mdash; nothing I'd chase. Just pressure, released. I think the truth is that the anesthesia didn't give me a new feeling so much as it briefly removed an old one, and only then did I notice how much I'd been carrying the entire time. You don't feel the weight until it's set down.</p>
+  </section>
+</div>
+
+<div class="lede-wrap"><div class="plate release"><span class="cap">the resolution, turning back up</span></div></div>
+
+<div class="wrap">
+  <section class="blk" id="back">
+    <div class="num">VII &middot; zoomed back out</div>
+    <h2>Coming back is not dramatic either.</h2>
+    <p>The resolution turns up. The pixels resolve. The room reassembles into a room, depth returns, sound gathers itself back into meaning, and you are the ordinary size of a person again, holding the ordinary weight of a life. It happens so smoothly you'd never know the parts had ever come apart.</p>
+    <p>But I know now. I have seen underneath. For a little while I was too small to see the whole &mdash; and it turned out the whole was the heaviest thing I own.</p>
+  </section>
+
+  <div class="colophon">
+    Recorded soon after, before it faded. Some things are worth writing down precisely because they refuse to stay.<br>
+    Aaron Suarez &middot; Valencia City, PH &middot; <a href="/library/projects/">back to the shelf</a>
+  </div>
+</div>
+
+</body>
+</html>
