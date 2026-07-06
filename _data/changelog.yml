@@ -1,5 +1,25 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "3.9"
+  major: false
+  date: "2026-07-06 · 20:40"
+  title: "Grimoires on the Whiteboard"
+  text: "A new Grimoire-map template kind turns four books into editable diagrams — the automation pattern model, the orchestration layer, organizational physics, and the remote-work path. Every node deep-links to the exact section it maps to, so a board doubles as a guided reading path."
+- version: "3.8"
+  major: false
+  date: "2026-07-06 · 03:15"
+  title: "Wayfinding and a data escape hatch"
+  text: "The Workbench nav and Desk were grouped by job — Operations, Writing desk, Thinking, Reference — so the tools read at a glance instead of as one long row. Added a whole-workbench backup: export every workspace to one file and restore it on any machine. Billing and Desk views became deep-linkable."
+- version: "3.7"
+  major: true
+  date: "2026-07-05 · 22:10"
+  title: "Search, rebuilt"
+  text: "Universal search was rewritten from a flat list into a ranked engine: full-text across every Note, jump-to-section results for 400+ Grimoire chapters, grouped results with snippets and highlighting, typo tolerance, and a closest-match fallback when nothing matches every word. Grimoire sections also gained hover copy-links and an arrival highlight."
+- version: "3.6"
+  major: false
+  date: "2026-07-05 · 12:30"
+  title: "Version history"
+  text: "This changelog — a version chip in the footer that opens the full history of the site, kept as a single editable data file. The thing you are reading now."
 - version: "3.5"
   major: false
   date: "2026-07-05 · 02:10"
