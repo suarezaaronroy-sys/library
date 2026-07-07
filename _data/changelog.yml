@@ -1,5 +1,25 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.3"
+  major: false
+  date: "2026-07-07 · 18:55"
+  title: "Lab, clarified"
+  text: "The top navigation now calls the experimental side door what it is: Lab. The Lab landing page was rebuilt as a cleaner ledger of experiments, with Sari2POS, the trades CRM service experiment, and parked civic tooling separated from the Library archive and the Workbench tools."
+- version: "4.2"
+  major: false
+  date: "2026-07-07 · 18:40"
+  title: "Visual scale pass"
+  text: "A restrained typography and presentation pass brought the public pages back into one family: calmer hero sizes, tighter section heading scale, sharper card geometry, and a quieter Workbench nav and ledger rhythm."
+- version: "4.1"
+  major: false
+  date: "2026-07-07 · 18:20"
+  title: "Billing calculator, aligned"
+  text: "The Billing calculator kept its engine but lost the cockpit feel: history became the first side rail, variables moved behind a details panel, manual exchange rates show only in Currency mode, and the keyboard handler no longer captures input while the tab is hidden."
+- version: "4.0"
+  major: true
+  date: "2026-07-07 · 17:35"
+  title: "Lab and Reading Room arrive"
+  text: "A new Lab wing shipped for experiments like Sari2POS, while the Reading Room gained a multi-book shelf and reader for ANACHRONIZM. Projects/Library was reworked around the archive: systems built, trilogy volumes, operating memory, drafting table, and off-the-clock writing."
 - version: "3.9"
   major: false
   date: "2026-07-06 · 20:40"
