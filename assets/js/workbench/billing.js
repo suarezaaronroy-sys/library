@@ -15,7 +15,7 @@ import {
 } from "./billing-core.mjs?v=5";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
-import "./calculator.js?v=4";
+import "./calculator.js?v=5";
 import { downloadFile, escapeHtml, slug } from "./utils.mjs?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";

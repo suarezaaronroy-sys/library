@@ -97,13 +97,13 @@ workbench_script: /assets/js/workbench/billing.js
 </div>
 
 <div id="calculator-workspace" class="calc-embed" data-billing-view-panel="calculator" data-calc-root hidden>
-<div class="calc-shell">
-    <section class="calc-panel" aria-labelledby="calc-title">
+  <div class="calc-shell">
+    <section class="calc-panel calc-main" aria-labelledby="calc-title">
       <div class="calc-panel-head">
         <div>
           <span>01 · Compute</span>
-          <h2 id="calc-title">Keypad</h2>
-          <p>Type or click. <kbd>Enter</kbd> = equals, <kbd>Esc</kbd> clears, <kbd>Backspace</kbd> deletes.</p>
+          <h2 id="calc-title">Calculator</h2>
+          <p>Click the keys or type while this tab is open.</p>
         </div>
       </div>
 
@@ -136,43 +136,57 @@ workbench_script: /assets/js/workbench/billing.js
         <button type="button" class="calc-key mem" data-mem="ms">MS</button>
       </div>
 
-      <div class="calc-cur-row" data-cur-row hidden></div>
+      <div class="calc-currency-tools" data-currency-tools hidden>
+        <div class="calc-currency-toolbar">
+          <div>
+            <span class="calc-tool-label">Insert currency</span>
+            <div class="calc-cur-row" data-cur-row></div>
+          </div>
+          <label class="calc-display-currency">
+            <span>Show result in</span>
+            <select data-display-cur aria-label="Display currency"></select>
+          </label>
+        </div>
+        <details class="calc-details">
+          <summary>Edit manual exchange rates</summary>
+          <div class="calc-rates" data-rates></div>
+          <p class="calc-note">Rates are entered by you and stored only in this browser. One unit equals the shown PHP value.</p>
+        </details>
+      </div>
       <div class="calc-sci" data-sci hidden></div>
       <div class="calc-keys" data-keys></div>
     </section>
 
-    <aside class="calc-panel calc-side">
-      <div class="calc-card" aria-labelledby="calc-var-title">
-        <h3 id="calc-var-title">Variables <button type="button" data-clear-vars>clear</button></h3>
-        <form class="calc-mini-form" data-var-form>
-          <input data-var-name placeholder="name" aria-label="Variable name" autocomplete="off" spellcheck="false">
-          <input data-var-expr placeholder="value / expr" aria-label="Variable value" autocomplete="off" spellcheck="false">
-          <button type="submit">Set</button>
-        </form>
-        <ul class="calc-var-list" data-var-list></ul>
-        <p class="calc-note">Use them in any expression. They can reference currencies and each other.</p>
-      </div>
-
-      <div class="calc-card" aria-labelledby="calc-rate-title">
-        <h3 id="calc-rate-title">Manual rates</h3>
-        <div class="calc-rate-head">
-          <span>Show results in</span>
-          <select data-display-cur aria-label="Display currency"></select>
+    <aside class="calc-panel calc-side" aria-labelledby="calc-hist-title">
+      <div class="calc-card calc-history-card">
+        <div class="calc-card-head">
+          <div>
+            <span>02 &middot; Recall</span>
+            <h3 id="calc-hist-title">History</h3>
+          </div>
         </div>
-        <div class="calc-rates" data-rates></div>
-        <p class="calc-note">Entered by you — never fetched. 1 unit = value in base. Edit freely.</p>
-      </div>
-
-      <div class="calc-card" aria-labelledby="calc-hist-title">
-        <h3 id="calc-hist-title">History</h3>
         <div class="calc-side-actions">
           <button type="button" data-copy>Copy result</button>
           <button type="button" data-clear-history>Clear tape</button>
         </div>
         <ul class="calc-history" data-history></ul>
-        <output class="calc-toast" data-toast aria-live="polite"></output>
-        <div class="calc-selftest" data-selftest>self-check…</div>
       </div>
+
+      <details class="calc-details calc-variable-tools">
+        <summary>Saved variables</summary>
+        <div class="calc-details-head">
+          <p>Keep a rate or recurring number for this browser.</p>
+          <button type="button" data-clear-vars>Clear</button>
+        </div>
+        <form class="calc-mini-form" data-var-form>
+          <input data-var-name placeholder="name" aria-label="Variable name" autocomplete="off" spellcheck="false">
+          <input data-var-expr placeholder="value or expression" aria-label="Variable value" autocomplete="off" spellcheck="false">
+          <button type="submit">Set</button>
+        </form>
+        <ul class="calc-var-list" data-var-list></ul>
+      </details>
+
+      <output class="calc-toast" data-toast aria-live="polite"></output>
     </aside>
   </div>
 </div>

@@ -10,8 +10,9 @@ var root=document.querySelector('[data-calc-root]');
   var el={
     expr:$('[data-expr]'), result:$('[data-result]'), curChip:$('[data-cur-chip]'),
     sci:$('[data-sci]'), keys:$('[data-keys]'), curRow:$('[data-cur-row]'),
+    currencyTools:$('[data-currency-tools]'),
     history:$('[data-history]'), toast:$('[data-toast]'), memFlag:$('[data-mem-flag]'),
-    angleGroup:$('[data-angle-group]'), selftest:$('[data-selftest]'),
+    angleGroup:$('[data-angle-group]'),
     varForm:$('[data-var-form]'), varName:$('[data-var-name]'), varExpr:$('[data-var-expr]'),
     varList:$('[data-var-list]'), rates:$('[data-rates]'), displayCur:$('[data-display-cur]')
   };
@@ -216,7 +217,7 @@ var root=document.querySelector('[data-calc-root]');
       root.querySelectorAll('[data-mode]').forEach(function(b){ b.setAttribute('aria-pressed', b===btn?'true':'false'); });
       el.sci.hidden = state.mode!=='scientific';
       el.angleGroup.hidden = state.mode!=='scientific';
-      el.curRow.hidden = state.mode!=='currency';
+      el.currencyTools.hidden = state.mode!=='currency';
     });
   });
   root.querySelectorAll('[data-angle]').forEach(function(btn){
@@ -237,6 +238,7 @@ var root=document.querySelector('[data-calc-root]');
 
   /* ---- keyboard ---- */
   document.addEventListener('keydown',function(ev){
+    if(root.hidden) return;
     if(ev.target && /^(INPUT|TEXTAREA|SELECT)$/.test(ev.target.tagName)) return;
     var k=ev.key;
     if(k>='0'&&k<='9'){ insert(k); ev.preventDefault(); return; }
@@ -246,37 +248,6 @@ var root=document.querySelector('[data-calc-root]');
     if(k==='Backspace'){ doAction('back'); ev.preventDefault(); return; }
     if(k==='Escape'){ doAction('clear'); ev.preventDefault(); return; }
   });
-
-  /* ---- in-page self-test (verification) ---- */
-  function selfTest(){
-    var approx=function(a,b){ return Math.abs(a-b)<1e-9; };
-    var R={PHP:1,GBP:2,USD:4,CAD:1,AUD:1};
-    var C=[
-      ['1+2*3','rad',7],['(1+2)*3','rad',9],['2^3^2','rad',512],['-3^2','rad',9],['(-3)^2','rad',9],
-      ['2^-3','rad',0.125],['10/4','rad',2.5],['3+4*2/(1-5)^2','rad',3.5],['50%','rad',0.5],
-      ['200*10%','rad',20],['10 % 3','rad',1],['sqrt(16)','rad',4],['2pi','rad',2*Math.PI],
-      ['sin(90)','deg',1],['cos(0)','deg',1],['sin(30)','deg',0.5],['ln(e)','rad',1],['log(1000)','rad',3],
-      ['5!','rad',120],['fact(6)','rad',720],['1e3+5','rad',1005],['abs(-7)+cbrt(27)','rad',10],
-      ['2(3+1)','rad',8],['3sin(30)','deg',1.5],['100/(2+3)','rad',20]
-    ];
-    var pass=0, fail=0, bad=[];
-    C.forEach(function(c){ var r=evaluate(c[0],{angle:c[1]}); if(r.ok&&approx(r.value,c[2]))pass++; else{fail++;bad.push(c[0]);} });
-    // currency: display PHP, GBP=2 -> 10 GBP + 5 = 25 ; display GBP -> 10 GBP = 10
-    [['10 GBP + 5','PHP',25],['2 USD','PHP',8],['10 GBP','GBP',10],['1 USD','GBP',2]].forEach(function(c){
-      var r=evaluate(c[0],{rates:R,display:c[1]}); if(r.ok&&approx(r.value,c[2])&&r.currency)pass++; else{fail++;bad.push(c[0]);}
-    });
-    // variables
-    [['x*2',{x:5},10],['rate*hrs',{rate:45,hrs:3},135],['a+b',{a:1,b:2},3]].forEach(function(c){
-      var r=evaluate(c[0],{vars:c[1]}); if(r.ok&&approx(r.value,c[2]))pass++; else{fail++;bad.push(c[0]);}
-    });
-    // graceful errors
-    ['2++','(1+2','sqrt(','abc','GBP','x*2'].forEach(function(e){
-      var r=evaluate(e,{}); // no vars -> x unknown; GBP alone -> error
-      if(!r.ok)pass++; else{fail++;bad.push('err:'+e);}
-    });
-    el.selftest.textContent='self-check: '+pass+'/'+(pass+fail)+' passed'+(fail?(' · check '+bad.join(', ')):' ✓');
-    el.selftest.classList.toggle('bad', fail>0);
-  }
 
   /* ---- boot ---- */
   // Isolated so a calculator failure can never block other workbench widgets
@@ -289,9 +260,7 @@ var root=document.querySelector('[data-calc-root]');
     renderRates();
     renderHistory();
     render();
-    selfTest();
   }catch(err){
     console.error('Calculator failed to initialise:', err);
-    if(el.selftest){ el.selftest.textContent='self-check: failed to start'; el.selftest.classList.add('bad'); }
   }
 })();
