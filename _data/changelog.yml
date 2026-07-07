@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.4"
+  major: false
+  date: "2026-07-08 - 07:40"
+  title: "Lab joins the design system"
+  text: "The Lab moved from a text-only side page into the shared visual language: a workflow-diagram cover, public-page typography, ledger rows, responsive Lab principles, and experiment entries styled alongside the Library rather than apart from it."
 - version: "4.3"
   major: false
   date: "2026-07-07 · 18:55"
