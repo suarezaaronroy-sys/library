@@ -43,6 +43,7 @@ redirect_from:
       <a href="#trilogy"><span>02</span><strong>The trilogy</strong><small>{{ trilogy | size }} volumes</small></a>
       <a href="#operating-memory"><span>03</span><strong>Operating memory</strong><small>{{ featured | size | plus: live_manuals.size }} live manuals</small></a>
       <a href="#drafting"><span>04</span><strong>Drafting table</strong><small>{{ drafting | size }} in progress</small></a>
+      <a href="#fiction"><span>05</span><strong>Off the clock</strong><small>writing</small></a>
     </div>
   </nav>
 
@@ -113,6 +114,20 @@ redirect_from:
       <div class="g-grid">
         {% for g in drafting %}{% include grimoire-card.html %}{% endfor %}
       </div>
+    </section>
+
+    <section class="library-section" id="fiction">
+      <header class="library-section-head">
+        <span>05 · Off the clock</span>
+        <div>
+          <h2>Writing</h2>
+          <p>The library isn't only manuals. A quiet corner for things written away from the day job, read in a purpose-built reader.</p>
+        </div>
+      </header>
+      <p style="font-size:.95rem;color:var(--ink2);line-height:1.7;max-width:64ch">
+        <a href="{{ '/read/' | relative_url }}" style="color:var(--accent);text-decoration:none;font-weight:500">ANACHRONIZM</a>
+        &mdash; a sci-fi trilogy under the name A.&nbsp;R.&nbsp;Azure. <span style="color:var(--ink3)">Open the reading room &rarr;</span>
+      </p>
     </section>
 
     <p class="library-no-results" id="lib-no-results" hidden>No artifact matches that search. Try a tool, problem, or practice instead.</p>

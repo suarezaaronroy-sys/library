@@ -8,8 +8,8 @@
       <a href="{{ '/about/' | relative_url }}"{% if page.url == '/about/' %} class="nav-active"{% endif %}>About</a>
       <a href="{{ '/projects/' | relative_url }}"{% if page.url == '/projects/' %} class="nav-active"{% endif %}>Library</a>
       <a href="{{ '/notes/' | relative_url }}"{% if page.url contains '/notes' %} class="nav-active"{% endif %}>Notes</a>
-      <a href="{{ '/workbench/' | relative_url }}"{% if page.url contains '/workbench' %} class="nav-active"{% endif %}>Workbench</a>
       <a href="{{ '/lab/' | relative_url }}"{% if page.url contains '/lab' %} class="nav-active"{% endif %}>Projects</a>
+      <a href="{{ '/workbench/' | relative_url }}"{% if page.url contains '/workbench' %} class="nav-active"{% endif %}>Workbench</a>
       <button class="nav-search" type="button" data-open-site-search aria-label="Search the site"><span>Search</span><kbd>/</kbd></button>
       <a href="{{ '/contact/' | relative_url }}"{% if page.url == '/contact/' %} class="nav-cta nav-active"{% else %} class="nav-cta"{% endif %}>Contacts</a>
     </nav>

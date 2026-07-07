@@ -1,99 +1,75 @@
 ---
 layout: default
 title: Personal Projects
-description: "Things I'm building — shipped early and iterated in public. A sari-sari store POS, a politician tier-list, and CRM design and build for trades."
+description: "Things I build off the clock — shipped early and iterated in public. A sari-sari store POS, CRM design and build for trades, and a politician tier-list."
 permalink: /lab/
 ---
 <style>
-  .lab-hero{max-width:1100px;margin:0 auto;padding:clamp(2.4rem,7vw,4.5rem) clamp(1rem,4vw,2.4rem) 1.5rem}
-  .lab-hero .kicker{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
-  .lab-hero h1{font-family:var(--serif);font-size:clamp(2.2rem,7vw,3.4rem);font-weight:600;line-height:1.02;letter-spacing:-.02em;margin:.4rem 0 .6rem}
-  .lab-hero p{color:var(--ink2);max-width:60ch;font-size:1rem;line-height:1.6}
-  .lab-grid{max-width:1100px;margin:0 auto;padding:1rem clamp(1rem,4vw,2.4rem) 4rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
-  .proj{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:12px;background:var(--bg);overflow:hidden;transition:border-color .15s,transform .15s}
-  .proj:hover{border-color:var(--teal);transform:translateY(-2px)}
-  .proj-top{padding:1.15rem 1.2rem 1rem;border-bottom:1px solid var(--border2)}
-  .proj-status{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-bottom:.7rem}
-  .proj-status.live{color:var(--green);border:1px solid rgba(21,128,61,.4);background:rgba(21,128,61,.07)}
-  .proj-status.building{color:var(--accent);border:1px solid rgba(194,65,12,.4);background:rgba(194,65,12,.06)}
-  .proj-status.concept{color:var(--ink3);border:1px solid var(--border)}
-  .proj-status .d{width:6px;height:6px;border-radius:50%;background:currentColor}
-  .proj h2{font-family:var(--serif);font-size:1.35rem;font-weight:600;line-height:1.08;margin-bottom:.35rem}
-  .proj .sub{font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;color:var(--ink3);text-transform:uppercase}
-  .proj-body{padding:1rem 1.2rem 1.2rem;flex:1;display:flex;flex-direction:column}
-  .proj-body p{font-size:.85rem;line-height:1.6;color:var(--ink2);margin-bottom:.8rem}
-  .proj-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
-  .proj-tag{font-family:var(--mono);font-size:.56rem;color:var(--ink3);border:1px solid var(--border2);border-radius:5px;padding:2px 6px}
-  .proj-cta{margin-top:auto;font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--teal);text-decoration:none}
-  .proj-cta.muted{color:var(--ink3)}
-  .lab-note{max-width:1100px;margin:0 auto;padding:0 clamp(1rem,4vw,2.4rem) 4rem}
-  .lab-note-inner{border-top:1px solid var(--border);padding-top:1.2rem;font-family:var(--mono);font-size:.66rem;color:var(--ink3);line-height:1.9;max-width:70ch}
+  .lab-hero{max-width:1000px;margin:0 auto;padding:clamp(3rem,9vw,6rem) clamp(1rem,4vw,2.4rem) clamp(1.5rem,4vw,2.5rem)}
+  .lab-hero .kicker{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+  .lab-hero h1{font-family:var(--serif);font-size:clamp(2.6rem,8vw,4.4rem);font-weight:600;line-height:.98;letter-spacing:-.025em;margin:.5rem 0 .9rem;max-width:16ch}
+  .lab-hero .lede{color:var(--ink2);max-width:56ch;font-size:1.06rem;line-height:1.62}
+  .lab-hero .lede em{font-style:italic;color:var(--ink)}
+
+  .lab-block{border-top:1px solid var(--border)}
+  .lab-inner{max-width:1000px;margin:0 auto;padding:clamp(2.4rem,6vw,4.2rem) clamp(1rem,4vw,2.4rem);display:grid;grid-template-columns:minmax(0,7rem) 1fr;gap:clamp(1rem,4vw,3rem);align-items:start}
+  .lab-index{font-family:var(--serif);font-size:clamp(2.4rem,6vw,3.6rem);font-weight:300;color:var(--ink4);line-height:1;letter-spacing:-.02em}
+  .lab-status{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.7rem}
+  .lab-status .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .lab-status.live{color:var(--green)} .lab-status.building{color:var(--accent)} .lab-status.concept{color:var(--ink3)}
+  .lab-block h2{font-family:var(--serif);font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:600;line-height:1.04;letter-spacing:-.015em;margin-bottom:.9rem}
+  .lab-block p{color:var(--ink2);font-size:1.04rem;line-height:1.68;max-width:60ch;margin-bottom:1.1rem}
+  .lab-block p em{font-style:italic}
+  .lab-link{font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--teal);text-decoration:none}
+  .lab-link:hover{text-decoration:underline}
+  .lab-link.muted{color:var(--ink3);pointer-events:none}
+  .lab-close{max-width:1000px;margin:0 auto;padding:clamp(2rem,5vw,3rem) clamp(1rem,4vw,2.4rem) 5rem;border-top:1px solid var(--border)}
+  .lab-close p{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink2);max-width:52ch;line-height:1.5}
+  @media(max-width:640px){.lab-inner{grid-template-columns:1fr;gap:.4rem}.lab-index{font-size:1.6rem}}
 </style>
 
 <section class="lab-hero">
   <div class="kicker">Personal Projects · the lab</div>
-  <h1>Things I'm building.</h1>
-  <p>Separate from the Library — that's documentation. This is the workbench with the lights left on: projects shipped early and iterated in public, because visible beats perfect and momentum beats polish.</p>
+  <h1>Things I build off the clock.</h1>
+  <p class="lede">Not the Library, which is documentation — and not the Workbench, which is tools. This is where the building happens for its own sake: things shipped early and iterated in public, because <em>visible beats perfect</em> and half of them exist mostly to give the experimenting somewhere to go.</p>
 </section>
 
-<div class="lab-grid">
-
-  <article class="proj">
-    <div class="proj-top">
-      <span class="proj-status live"><span class="d"></span>In development · playable</span>
+<section class="lab-block">
+  <div class="lab-inner">
+    <div class="lab-index">01</div>
+    <div>
+      <div class="lab-status live"><span class="d"></span>In development · playable</div>
       <h2>Sari2POS</h2>
-      <div class="sub">Point-of-sale for the sari-sari store</div>
+      <p>A point-of-sale built for how Filipino corner stores actually run — the ones on notebooks, mental math, and a good memory for who owes what. Fast product grid, an <em>utang</em> (store-credit) ledger with real per-customer balances, cash / GCash / utang tender, multi-cashier PIN login with roles, restock and low-stock alerts, end-of-day batchout with drawer reconciliation. It runs entirely in the browser and nothing leaves the device.</p>
+      <a class="lab-link" href="{{ '/lab/sari2pos.html' | relative_url }}">Open the app &rarr;</a>
     </div>
-    <div class="proj-body">
-      <p>A local-first POS built for how Filipino corner stores actually run — fast product grid, an <em>utang</em> (store-credit) ledger with per-customer balances, cash/GCash/utang tender, multi-cashier PIN login with roles, restock and low-stock alerts, end-of-day batchout with drawer reconciliation, and receipts. Runs entirely in the browser; nothing leaves the device.</p>
-      <div class="proj-tags"><span class="proj-tag">local-first</span><span class="proj-tag">utang ledger</span><span class="proj-tag">multi-cashier</span><span class="proj-tag">offline</span><span class="proj-tag">EN / TG / Bisaya</span></div>
-      <a class="proj-cta" href="{{ '/lab/sari2pos.html' | relative_url }}">Open the app &rarr;</a>
-    </div>
-  </article>
-
-  <article class="proj">
-    <div class="proj-top">
-      <span class="proj-status live"><span class="d"></span>Published &middot; read now</span>
-      <h2>ANACHRONIZM</h2>
-      <div class="sub">A sci-fi trilogy &middot; in-browser reader</div>
-    </div>
-    <div class="proj-body">
-      <p>A three-book novel &mdash; <em>Anomaly Detection</em>, <em>Consensus Drift</em>, <em>Multi-Truth Architecture</em> &mdash; about a world quietly rewritten by the Continuity Layer, and the few who remember the versions it corrected. Written under the name A.&nbsp;R.&nbsp;Azure. Read it in a purpose-built reading engine: chapters, contents, saved place, and light / sepia / dark.</p>
-      <div class="proj-tags"><span class="proj-tag">fiction</span><span class="proj-tag">trilogy</span><span class="proj-tag">61 chapters</span><span class="proj-tag">reading engine</span></div>
-      <a class="proj-cta" href="{{ '/read/' | relative_url }}">Read the trilogy &rarr;</a>
-    </div>
-  </article>
-
-  <article class="proj">
-    <div class="proj-top">
-      <span class="proj-status building"><span class="d"></span>Open for work</span>
-      <h2>Trades CRM &mdash; design &amp; build</h2>
-      <div class="sub">Operating systems for trades businesses</div>
-    </div>
-    <div class="proj-body">
-      <p>Not a template &mdash; a done-for-you CRM and operations build for plumbers, electricians, glaziers, and construction firms. Lead-to-cash pipeline, quoting, scheduling and dispatch, invoicing, utang/deposits, and the automations that run it &mdash; on GoHighLevel, with the reasoning documented. The engine behind Grimoire 001, offered as a service.</p>
-      <div class="proj-tags"><span class="proj-tag">GHL</span><span class="proj-tag">lead-to-cash</span><span class="proj-tag">automation</span><span class="proj-tag">done-for-you</span></div>
-      <a class="proj-cta" href="{{ '/contact/' | relative_url }}">Start a conversation &rarr;</a>
-    </div>
-  </article>
-
-  <article class="proj">
-    <div class="proj-top">
-      <span class="proj-status concept"><span class="d"></span>In the sketchbook</span>
-      <h2>Politician Tier List</h2>
-      <div class="sub">Public records, ranked and rated</div>
-    </div>
-    <div class="proj-body">
-      <p>A tier-list built on the public record &mdash; politicians ranked and rated against what they actually did, not what they said. Sourced, cited, and structured so the reasoning travels. Early concept; shape and scope still being figured out.</p>
-      <div class="proj-tags"><span class="proj-tag">civic</span><span class="proj-tag">records</span><span class="proj-tag">ratings</span><span class="proj-tag">concept</span></div>
-      <span class="proj-cta muted">Not started &mdash; parked here so it nags me</span>
-    </div>
-  </article>
-
-</div>
-
-<div class="lab-note">
-  <div class="lab-note-inner">
-    Shipped early on purpose. Some of these work, some barely exist, all of them get better in public. If one looks half-finished, that's the point &mdash; it's a lab, not a showroom.
   </div>
+</section>
+
+<section class="lab-block">
+  <div class="lab-inner">
+    <div class="lab-index">02</div>
+    <div>
+      <div class="lab-status building"><span class="d"></span>Open for work</div>
+      <h2>Trades CRM — design &amp; build</h2>
+      <p>Not a template — a done-for-you CRM and operations build for plumbers, electricians, glaziers, and construction firms. The whole lead-to-cash spine: quoting, scheduling and dispatch, invoicing, deposits and utang, and the automations that run it — on GoHighLevel, with the reasoning documented instead of trapped in one person's head. It's the engine behind <em>Grimoire 001</em>, offered as a service.</p>
+      <a class="lab-link" href="{{ '/contact/' | relative_url }}">Start a conversation &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="lab-block">
+  <div class="lab-inner">
+    <div class="lab-index">03</div>
+    <div>
+      <div class="lab-status concept"><span class="d"></span>In the sketchbook</div>
+      <h2>Politician Tier List</h2>
+      <p>A tier-list built on the public record — politicians ranked and rated against what they actually did, not what they said. Sourced, cited, and structured so the reasoning travels. Barely a concept yet; the shape and scope are still being figured out.</p>
+      <span class="lab-link muted">Not started — parked here so it nags me.</span>
+    </div>
+  </div>
+</section>
+
+<div class="lab-close">
+  <p>A lab, not a showroom. If one looks half-finished, that's the point — pushing it somewhere visible is how it gets pushed at all.</p>
 </div>
