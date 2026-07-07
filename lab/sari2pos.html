@@ -1981,7 +1981,7 @@
     <!-- CASH -->
     <div class="cash-section" id="cashSection">
       <div class="quick-cash" id="quickCash"></div>
-      <input class="input-field" type="number" id="tenderInput" placeholder="Maglagay ng cash" inputmode="decimal" oninput="calcChange()">
+      <input class="input-field" type="number" id="tenderInput" placeholder="Maglagay ng cash" inputmode="decimal" oninput="calcChange()" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();confirmCharge();}">
     </div>
 
     <!-- UTANG — name comes from cart customer field, just show summary -->
@@ -2199,6 +2199,9 @@ const DB = {
 let _uidSeq = 0;
 function uid() { return Date.now() * 1000 + (_uidSeq++ % 1000); }
 function peso(n) { return Math.round((Number(n) || 0) * 100) / 100; }
+function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+// Storage keys this app owns. Scoped save/clear so we never wipe other apps on this origin.
+const POS_KEYS = ['users','products','transaksyon','batchHistory','suki','settings','restockLogs','activityLog','drawerAdjustments'];
 
 let _rawUsers = DB.get('users');
 // Migrate: add permissions/role to existing users that don't have them
@@ -2237,16 +2240,9 @@ let drawerAdjustments = DB.get('drawerAdjustments') || []; // { id, type:'+'/'-'
 let lowStockAlertSent = {}; // { productId: true } per session, avoid repeat alerts
 
 function save() {
+  const blobs = { users, products, transaksyon, batchHistory, suki, settings, restockLogs, activityLog, drawerAdjustments };
   let ok = true;
-  ok = DB.set('users', users) && ok;
-  ok = DB.set('products', products) && ok;
-  ok = DB.set('transaksyon', transaksyon) && ok;
-  ok = DB.set('batchHistory', batchHistory) && ok;
-  ok = DB.set('suki', suki) && ok;
-  ok = DB.set('settings', settings) && ok;
-  ok = DB.set('restockLogs', restockLogs) && ok;
-  ok = DB.set('activityLog', activityLog) && ok;
-  ok = DB.set('drawerAdjustments', drawerAdjustments) && ok;
+  for (const k of POS_KEYS) ok = DB.set(k, blobs[k]) && ok;
   if (!ok && typeof showToast === 'function') showToast('\u26a0\ufe0f Storage full \u2014 export a backup soon', 'error');
   return ok;
 }
@@ -2931,7 +2927,12 @@ function renderProducts(filter = '') {
     </div>
   `).join('') || `<div style="color:var(--text-dim);font-size:13px;grid-column:1/-1;padding:20px 0;text-align:center">No products found</div>`;
 }
-function filterProducts() { renderProducts(document.getElementById('productSearch').value); }
+let _searchTimer = null;
+function filterProducts() {
+  clearTimeout(_searchTimer);
+  const v = document.getElementById('productSearch').value;
+  _searchTimer = setTimeout(function(){ renderProducts(v); }, 120);
+}
 
 // ── CART ──
 function addToCart(id) {
@@ -3351,13 +3352,13 @@ function openReceipt(d) {
     <div id="receiptPrintArea" style="background:#fff;color:#111;font-family:'Courier New',monospace;padding:16px;border-radius:8px;font-size:12px;line-height:1.6">
       <div style="text-align:center;margin-bottom:8px">
         ${d.isReprint ? '<div style="font-size:9px;letter-spacing:2px;color:#999;text-transform:uppercase;margin-bottom:4px">— REPRINT —</div>' : ''}
-        <div style="font-size:20px;font-weight:800;letter-spacing:2px">${settings.storeName}</div>
+        <div style="font-size:20px;font-weight:800;letter-spacing:2px">${escapeHtml(settings.storeName)}</div>
         <div style="font-size:11px;color:#555">${d.date.toLocaleString('en-PH')}</div>
-        ${d.customerName ? `<div style="font-size:11px">Customer: ${d.customerName}</div>` : ''}
-        <div style="font-size:10px;color:#888">Cashier: ${d.cashier} · #${String(d.txId).slice(-6)}</div>
+        ${d.customerName ? `<div style="font-size:11px">Customer: ${escapeHtml(d.customerName)}</div>` : ''}
+        <div style="font-size:10px;color:#888">Cashier: ${escapeHtml(d.cashier)} · #${String(d.txId).slice(-6)}</div>
       </div>
       <hr style="border:none;border-top:1px dashed #999;margin:8px 0">
-      ${d.items.map(i => `<div style="display:flex;justify-content:space-between"><span>${i.qty}x ${i.name}</span><span>₱${(i.qty*i.price).toFixed(2)}</span></div>`).join('')}
+      ${d.items.map(i => `<div style="display:flex;justify-content:space-between"><span>${i.qty}x ${escapeHtml(i.name)}</span><span>₱${(i.qty*i.price).toFixed(2)}</span></div>`).join('')}
       <hr style="border:none;border-top:1px dashed #999;margin:8px 0">
       ${d.discountAmt > 0 ? `<div style="display:flex;justify-content:space-between;color:#c00"><span>Discount</span><span>-₱${d.discountAmt.toFixed(2)}</span></div>` : ''}
       <div style="display:flex;justify-content:space-between;font-weight:800;font-size:14px;margin-top:4px"><span>TOTAL</span><span>₱${d.total.toFixed(2)}</span></div>
@@ -4255,49 +4256,57 @@ function saveStoreName_real() {
     showToast(t('storeNameShort'), 'error');
   }
 }
-function exportData() {
-  const data = { users, products, transaksyon, batchHistory, suki, settings, activityLog, drawerAdjustments };
+function exportData(silent) {
+  const data = { _app: 'sari2pos', _schema: 1, _exportedAt: new Date().toISOString(),
+    users, products, transaksyon, batchHistory, suki, settings, restockLogs, activityLog, drawerAdjustments };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `sari2pos-backup-${new Date().toISOString().slice(0,10)}.json`;
   a.click();
-  showToast(t('dataExported'), 'success');
+  URL.revokeObjectURL(a.href);
+  if (!silent) showToast(t('dataExported'), 'success');
 }
 function importData() {
   const input = document.createElement('input');
-  input.type = 'file'; input.accept = '.json';
+  input.type = 'file'; input.accept = '.json,application/json';
   input.onchange = e => {
     const file = e.target.files[0]; if (!file) return;
     const r = new FileReader();
     r.onload = ev => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        if (data.products) products = data.products;
-        if (data.transaksyon) transaksyon = data.transaksyon;
-        if (data.batchHistory) batchHistory = data.batchHistory;
-        if (data.suki) suki = data.suki;
-        if (data.settings) settings = data.settings;
-        if (data.users) {
-          users = data.users.map((u, i) => ({
-            ...u,
-            role: u.role || (i === 0 ? 'owner' : 'cashier'),
-            permissions: u.permissions || defaultPermissions(i === 0),
-          }));
-        }
-        if (data.activityLog) activityLog = data.activityLog;
-        if (data.drawerAdjustments) drawerAdjustments = data.drawerAdjustments;
-        save();
-        // Re-render everything so UI reflects imported data immediately
-        applySettings();
-        renderUserGrid();
-        renderCategories();
-        renderProducts();
-        updateLowStockBadge();
-        updateUtangBadge();
-        closePanel('settings');
-        showToast(t('dataImported'), 'success');
-      } catch { showToast(t('invalidFile'), 'error'); }
+      let data;
+      try { data = JSON.parse(ev.target.result); }
+      catch { showToast(t('invalidFile'), 'error'); return; }
+      const looksValid = data && typeof data === 'object' &&
+        (data._app === 'sari2pos' || Array.isArray(data.products) || Array.isArray(data.transaksyon));
+      if (!looksValid) { showToast(t('invalidFile'), 'error'); return; }
+      const summary = [
+        Array.isArray(data.products) ? data.products.length + ' products' : null,
+        Array.isArray(data.transaksyon) ? data.transaksyon.length + ' sales' : null,
+        Array.isArray(data.suki) ? data.suki.length + ' utang customers' : null,
+      ].filter(Boolean).join(', ') || 'no recognizable records';
+      if (!confirm('Import backup (' + summary + ')?\n\nThis REPLACES all current data on this device. Your current data will be downloaded as a safety backup first.')) return;
+      try { exportData(true); } catch (err) {}
+      const arr = (v, fb) => Array.isArray(v) ? v : fb;
+      if ('products' in data) products = arr(data.products, products);
+      if ('transaksyon' in data) transaksyon = arr(data.transaksyon, transaksyon);
+      if ('batchHistory' in data) batchHistory = arr(data.batchHistory, batchHistory);
+      if ('suki' in data) suki = arr(data.suki, suki);
+      if ('restockLogs' in data) restockLogs = arr(data.restockLogs, restockLogs);
+      if ('activityLog' in data) activityLog = arr(data.activityLog, activityLog);
+      if ('drawerAdjustments' in data) drawerAdjustments = arr(data.drawerAdjustments, drawerAdjustments);
+      if (data.settings && typeof data.settings === 'object') settings = Object.assign({}, settings, data.settings);
+      if (Array.isArray(data.users) && data.users.length) {
+        users = data.users.map((u, i) => ({
+          ...u,
+          role: u.role || (i === 0 ? 'owner' : 'cashier'),
+          permissions: u.permissions || defaultPermissions(i === 0),
+        }));
+      }
+      save();
+      applySettings(); renderUserGrid(); renderCategories(); renderProducts();
+      updateLowStockBadge(); updateUtangBadge(); closePanel('settings');
+      showToast(t('dataImported'), 'success');
     };
     r.readAsText(file);
   };
@@ -4317,8 +4326,9 @@ function logOut() {
   showScreen('userscreen');
 }
 function confirmClearData() {
-  if (!confirm('⚠️ This will delete ALL data. Are you sure?')) return;
-  localStorage.clear(); location.reload();
+  if (!confirm('⚠️ This will delete ALL Sari2POS data on this device. Are you sure?')) return;
+  POS_KEYS.forEach(function(k){ try { localStorage.removeItem(k); } catch(e){} });
+  location.reload();
 }
 
 
