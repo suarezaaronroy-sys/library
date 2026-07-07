@@ -6,70 +6,120 @@ permalink: /lab/
 ---
 
 <div class="lab-page">
-  <section class="lab-cover">
-    <img class="lab-cover-img" src="{{ '/assets/img/brand/brand-workflow-diagram-unsplash.jpg' | relative_url }}" alt="A notebook with a hand-drawn product flow diagram beside product planning pages">
-    <div class="lab-cover-shade"></div>
-    <div class="shell lab-cover-inner">
-      <div class="lab-kicker">Personal Projects &middot; the lab</div>
-      <h1>Things I build off the clock.</h1>
-      <p>Not the Library, which is documentation, and not the Workbench, which is tools. This is where building happens for its own sake: things shipped early and iterated in public, because visible beats perfect and half of them exist mostly to give the experimenting somewhere to go.</p>
-      <div class="lab-context" aria-label="Lab principles">
-        <span>Separate from the archive</span>
-        <span>Useful before polished</span>
-        <span>Local-first when possible</span>
-      </div>
+  <section class="shell lab-bench">
+    <div class="lab-hero-copy">
+      <span class="lab-eyebrow">Personal Projects / active bench</span>
+      <h1>Small things, tested in public.</h1>
+      <p>Not the Library, which preserves finished thinking. Not the Workbench, which removes repeat work. The Lab is where rough tools, service ideas, and civic sketches get enough shape to be argued with.</p>
     </div>
+
+    <aside class="lab-instrument" aria-label="Lab bench snapshot">
+      <div class="lab-instrument-top">
+        <span>Build queue</span>
+        <strong>Local-first where possible</strong>
+      </div>
+      <div class="lab-mini-screen" aria-hidden="true">
+        <div class="lab-mini-toolbar">
+          <b>Sari2POS</b>
+          <span>offline</span>
+        </div>
+        <div class="lab-mini-grid">
+          <span>Rice</span>
+          <span>Coffee</span>
+          <span>GCash</span>
+          <span>Utang</span>
+          <span>Restock</span>
+          <span>Batchout</span>
+        </div>
+        <div class="lab-mini-total">
+          <small>drawer check</small>
+          <strong>PHP 1,240.00</strong>
+        </div>
+      </div>
+      <div class="lab-signal-list">
+        <div><span>01</span><b>Playable</b><em>browser POS</em></div>
+        <div><span>02</span><b>Sellable</b><em>CRM offer</em></div>
+        <div><span>03</span><b>Parked</b><em>civic record</em></div>
+      </div>
+    </aside>
   </section>
 
-  <section class="shell lab-ledger" aria-label="Lab projects">
-    <article class="lab-block">
-      <div class="lab-index">01</div>
-      <div class="lab-title">
-        <div class="lab-status live"><span></span>In development &middot; playable</div>
-        <h2>Sari2POS</h2>
-        <small>Browser POS &middot; sari-sari operations</small>
+  <section class="shell lab-principles" aria-label="Lab principles">
+    <span>Separate from the archive</span>
+    <span>Useful before polished</span>
+    <span>Built small enough to revisit</span>
+    <span>Document the reasoning</span>
+  </section>
+
+  <section class="shell lab-rack" aria-label="Lab projects">
+    <div class="lab-rack-head">
+      <span>Experiment shelf</span>
+      <h2>Not everything here is supposed to be finished. It is supposed to be inspectable.</h2>
+    </div>
+
+    <article class="lab-specimen lab-specimen-primary">
+      <div class="lab-specimen-id">01</div>
+      <div class="lab-specimen-main">
+        <div class="lab-status live"><span></span>In development / playable</div>
+        <h3>Sari2POS</h3>
+        <p>A point-of-sale built for how Filipino corner stores actually run: notebooks, mental math, cash, GCash, utang, restock checks, cashier PINs, and end-of-day drawer reconciliation. It runs in the browser and keeps the store data on the device.</p>
+        <div class="lab-tags">
+          <span>Browser POS</span>
+          <span>Sari-sari operations</span>
+          <span>Local data</span>
+        </div>
       </div>
-      <div class="lab-copy">
-        <p>A point-of-sale built for how Filipino corner stores actually run: the ones on notebooks, mental math, and a good memory for who owes what. Fast product grid, an <em>utang</em> ledger with real per-customer balances, cash / GCash / utang tender, multi-cashier PIN login with roles, restock and low-stock alerts, and end-of-day batchout with drawer reconciliation. It runs entirely in the browser and nothing leaves the device.</p>
-      </div>
-      <div class="lab-action">
-        <a class="lab-link" href="{{ '/lab/sari2pos.html' | relative_url }}">Open the app &rarr;</a>
-      </div>
+      <dl class="lab-measures">
+        <div><dt>State</dt><dd>Playable</dd></div>
+        <div><dt>Proof</dt><dd>Utang ledger + batchout</dd></div>
+        <div><dt>Next</dt><dd>Inventory polish</dd></div>
+      </dl>
+      <a class="lab-link" href="{{ '/lab/sari2pos.html' | relative_url }}">Open the app &rarr;</a>
     </article>
 
-    <article class="lab-block">
-      <div class="lab-index">02</div>
-      <div class="lab-title">
+    <article class="lab-specimen">
+      <div class="lab-specimen-id">02</div>
+      <div class="lab-specimen-main">
         <div class="lab-status building"><span></span>Service experiment</div>
-        <h2>Trades CRM: design &amp; build</h2>
-        <small>Offer design &middot; operations spine</small>
+        <h3>Trades CRM: design &amp; build</h3>
+        <p>A done-for-you CRM and operations build for trade businesses: quoting, scheduling, dispatch, invoicing, deposits, customer history, and the automations around GoHighLevel. The product is the operating spine plus the reasoning trail.</p>
+        <div class="lab-tags">
+          <span>Offer design</span>
+          <span>Lead-to-cash</span>
+          <span>Operating memory</span>
+        </div>
       </div>
-      <div class="lab-copy">
-        <p>Not a template: a done-for-you CRM and operations build for plumbers, electricians, glaziers, and construction firms. The whole lead-to-cash spine: quoting, scheduling and dispatch, invoicing, deposits and utang, and the automations that run it on GoHighLevel, with the reasoning documented instead of trapped in one person's head.</p>
-      </div>
-      <div class="lab-action">
-        <a class="lab-link" href="{{ '/contact/' | relative_url }}">Start a conversation &rarr;</a>
-      </div>
+      <dl class="lab-measures">
+        <div><dt>State</dt><dd>Service design</dd></div>
+        <div><dt>Proof</dt><dd>Field-aware CRM scope</dd></div>
+        <div><dt>Next</dt><dd>Package map</dd></div>
+      </dl>
+      <a class="lab-link" href="{{ '/contact/' | relative_url }}">Start a conversation &rarr;</a>
     </article>
 
-    <article class="lab-block">
-      <div class="lab-index">03</div>
-      <div class="lab-title">
+    <article class="lab-specimen">
+      <div class="lab-specimen-id">03</div>
+      <div class="lab-specimen-main">
         <div class="lab-status concept"><span></span>In the sketchbook</div>
-        <h2>Politician Tier List</h2>
-        <small>Civic record &middot; parked concept</small>
+        <h3>Politician Tier List</h3>
+        <p>A parked civic tool idea: ranking public figures against cited public records instead of vibes. Barely a concept yet, but the constraint is already clear: the reasoning has to travel with the rating.</p>
+        <div class="lab-tags">
+          <span>Civic record</span>
+          <span>Source trail</span>
+          <span>Parked concept</span>
+        </div>
       </div>
-      <div class="lab-copy">
-        <p>A tier-list built on the public record: politicians ranked and rated against what they actually did, not what they said. Sourced, cited, and structured so the reasoning travels. Barely a concept yet; the shape and scope are still being figured out.</p>
-      </div>
-      <div class="lab-action">
-        <span class="lab-link muted">Parked: here so it nags me.</span>
-      </div>
+      <dl class="lab-measures">
+        <div><dt>State</dt><dd>Parked</dd></div>
+        <div><dt>Proof</dt><dd>Concept only</dd></div>
+        <div><dt>Next</dt><dd>Source model</dd></div>
+      </dl>
+      <span class="lab-link muted">Waiting its turn</span>
     </article>
   </section>
 
   <section class="shell lab-close">
     <span>Operating principle</span>
-    <p>A lab, not a showroom. If one looks half-finished, that is the point: pushing it somewhere visible is how it gets pushed at all.</p>
+    <p>A lab is a permission structure. It keeps imperfect work visible long enough for the next useful version to find it.</p>
   </section>
 </div>

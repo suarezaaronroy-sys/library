@@ -1,10 +1,15 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.5"
+  major: false
+  date: "2026-07-08 - 08:05"
+  title: "Lab, rebuilt as a bench"
+  text: "The Lab was reworked again after the first visual pass read too much like the rest of the site. It now has its own prototype-bench language: a build queue, mini POS screen, experiment shelf, status measures, and a tighter local-first identity without borrowing a public-page cover treatment."
 - version: "4.4"
   major: false
   date: "2026-07-08 - 07:40"
-  title: "Lab joins the design system"
-  text: "The Lab moved from a text-only side page into the shared visual language: a workflow-diagram cover, public-page typography, ledger rows, responsive Lab principles, and experiment entries styled alongside the Library rather than apart from it."
+  title: "Lab visual pass"
+  text: "The Lab received its first shared-design pass: inline styles moved into the site stylesheet, project entries were cleaned up, and the page became easier to align with the rest of the Library system."
 - version: "4.3"
   major: false
   date: "2026-07-07 · 18:55"
