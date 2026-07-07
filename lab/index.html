@@ -1,75 +1,111 @@
 ---
 layout: default
-title: Personal Projects
-description: "Things I build off the clock — shipped early and iterated in public. A sari-sari store POS, CRM design and build for trades, and a politician tier-list."
+title: The Lab
+description: "Experimental builds shipped early and iterated in public: Sari2POS, trades CRM service design, and parked civic tools."
 permalink: /lab/
 ---
 <style>
-  .lab-hero{max-width:1000px;margin:0 auto;padding:clamp(3rem,9vw,6rem) clamp(1rem,4vw,2.4rem) clamp(1.5rem,4vw,2.5rem)}
-  .lab-hero .kicker{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
-  .lab-hero h1{font-family:var(--serif);font-size:clamp(2.6rem,8vw,4.4rem);font-weight:600;line-height:.98;letter-spacing:-.025em;margin:.5rem 0 .9rem;max-width:16ch}
-  .lab-hero .lede{color:var(--ink2);max-width:56ch;font-size:1.06rem;line-height:1.62}
+  .lab-shell{width:min(1060px,calc(100% - 2.5rem));margin:0 auto}
+  .lab-hero{padding:clamp(3rem,7vw,5.2rem) 0 clamp(1.4rem,4vw,2.2rem);border-bottom:1px solid var(--ink)}
+  .lab-hero .kicker{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+  .lab-hero h1{font-family:var(--serif);font-size:clamp(2.45rem,5.6vw,4.25rem);font-weight:600;line-height:1.02;letter-spacing:0;margin:.55rem 0 .85rem;max-width:16ch}
+  .lab-hero .lede{color:var(--ink2);max-width:64ch;font-size:1rem;line-height:1.72}
   .lab-hero .lede em{font-style:italic;color:var(--ink)}
+  .lab-context{display:grid;grid-template-columns:repeat(3,1fr);margin-top:1.4rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .lab-context span{padding:.65rem .8rem .7rem 0;border-right:1px solid var(--border);color:var(--ink4);font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em}
+  .lab-context span+span{padding-left:.8rem}
+  .lab-context span:last-child{border-right:0}
 
-  .lab-block{border-top:1px solid var(--border)}
-  .lab-inner{max-width:1000px;margin:0 auto;padding:clamp(2.4rem,6vw,4.2rem) clamp(1rem,4vw,2.4rem);display:grid;grid-template-columns:minmax(0,7rem) 1fr;gap:clamp(1rem,4vw,3rem);align-items:start}
-  .lab-index{font-family:var(--serif);font-size:clamp(2.4rem,6vw,3.6rem);font-weight:300;color:var(--ink4);line-height:1;letter-spacing:-.02em}
+  .lab-block{border-bottom:1px solid var(--border)}
+  .lab-inner{display:grid;grid-template-columns:64px minmax(180px,.62fr) minmax(0,1.38fr) 130px;gap:1.25rem;align-items:start;padding:1.35rem 0}
+  .lab-index{font-family:var(--mono);font-size:.64rem;color:var(--teal);line-height:1.4;padding-top:.35rem}
   .lab-status{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.7rem}
   .lab-status .d{width:6px;height:6px;border-radius:50%;background:currentColor}
-  .lab-status.live{color:var(--green)} .lab-status.building{color:var(--accent)} .lab-status.concept{color:var(--ink3)}
-  .lab-block h2{font-family:var(--serif);font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:600;line-height:1.04;letter-spacing:-.015em;margin-bottom:.9rem}
-  .lab-block p{color:var(--ink2);font-size:1.04rem;line-height:1.68;max-width:60ch;margin-bottom:1.1rem}
-  .lab-block p em{font-style:italic}
-  .lab-link{font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--teal);text-decoration:none}
+  .lab-status.live{color:var(--green)}
+  .lab-status.building{color:var(--accent)}
+  .lab-status.concept{color:var(--ink3)}
+  .lab-title h2{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2rem);font-weight:600;line-height:1.08;letter-spacing:0}
+  .lab-title small{display:block;margin-top:.45rem;color:var(--ink4);font-family:var(--mono);font-size:.58rem;line-height:1.5;text-transform:uppercase;letter-spacing:.07em}
+  .lab-copy p{color:var(--ink2);font-size:.94rem;line-height:1.72;max-width:68ch;margin-bottom:0}
+  .lab-copy p em{font-style:italic}
+  .lab-action{justify-self:end;padding-top:.35rem;text-align:right}
+  .lab-link{font-family:var(--mono);font-size:.68rem;font-weight:500;color:var(--teal);text-decoration:none}
   .lab-link:hover{text-decoration:underline}
   .lab-link.muted{color:var(--ink3);pointer-events:none}
-  .lab-close{max-width:1000px;margin:0 auto;padding:clamp(2rem,5vw,3rem) clamp(1rem,4vw,2.4rem) 5rem;border-top:1px solid var(--border)}
-  .lab-close p{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink2);max-width:52ch;line-height:1.5}
-  @media(max-width:640px){.lab-inner{grid-template-columns:1fr;gap:.4rem}.lab-index{font-size:1.6rem}}
+  .lab-close{padding:clamp(2rem,5vw,3rem) 0 5rem}
+  .lab-close p{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--ink2);max-width:58ch;line-height:1.55}
+  @media(max-width:860px){
+    .lab-inner{grid-template-columns:52px 1fr;gap:.55rem 1rem}
+    .lab-title,.lab-copy,.lab-action{grid-column:2}
+    .lab-action{justify-self:start;text-align:left;padding-top:.2rem}
+    .lab-context{grid-template-columns:1fr}
+    .lab-context span,.lab-context span+span{padding:.55rem 0;border-right:0;border-bottom:1px solid var(--border)}
+    .lab-context span:last-child{border-bottom:0}
+  }
 </style>
 
-<section class="lab-hero">
-  <div class="kicker">Personal Projects · the lab</div>
+<section class="lab-hero lab-shell">
+  <div class="kicker">Personal Projects &middot; the lab</div>
   <h1>Things I build off the clock.</h1>
-  <p class="lede">Not the Library, which is documentation — and not the Workbench, which is tools. This is where the building happens for its own sake: things shipped early and iterated in public, because <em>visible beats perfect</em> and half of them exist mostly to give the experimenting somewhere to go.</p>
+  <p class="lede">Not the Library, which is documentation, and not the Workbench, which is tools. This is where building happens for its own sake: things shipped early and iterated in public, because <em>visible beats perfect</em> and half of them exist mostly to give the experimenting somewhere to go.</p>
+  <div class="lab-context" aria-label="Lab principles">
+    <span>Separate from the archive</span>
+    <span>Useful before polished</span>
+    <span>Local-first when possible</span>
+  </div>
 </section>
 
-<section class="lab-block">
+<section class="lab-block lab-shell">
   <div class="lab-inner">
     <div class="lab-index">01</div>
-    <div>
-      <div class="lab-status live"><span class="d"></span>In development · playable</div>
+    <div class="lab-title">
+      <div class="lab-status live"><span class="d"></span>In development &middot; playable</div>
       <h2>Sari2POS</h2>
-      <p>A point-of-sale built for how Filipino corner stores actually run — the ones on notebooks, mental math, and a good memory for who owes what. Fast product grid, an <em>utang</em> (store-credit) ledger with real per-customer balances, cash / GCash / utang tender, multi-cashier PIN login with roles, restock and low-stock alerts, end-of-day batchout with drawer reconciliation. It runs entirely in the browser and nothing leaves the device.</p>
+      <small>Browser POS &middot; sari-sari operations</small>
+    </div>
+    <div class="lab-copy">
+      <p>A point-of-sale built for how Filipino corner stores actually run: the ones on notebooks, mental math, and a good memory for who owes what. Fast product grid, an <em>utang</em> ledger with real per-customer balances, cash / GCash / utang tender, multi-cashier PIN login with roles, restock and low-stock alerts, and end-of-day batchout with drawer reconciliation. It runs entirely in the browser and nothing leaves the device.</p>
+    </div>
+    <div class="lab-action">
       <a class="lab-link" href="{{ '/lab/sari2pos.html' | relative_url }}">Open the app &rarr;</a>
     </div>
   </div>
 </section>
 
-<section class="lab-block">
+<section class="lab-block lab-shell">
   <div class="lab-inner">
     <div class="lab-index">02</div>
-    <div>
-      <div class="lab-status building"><span class="d"></span>Open for work</div>
-      <h2>Trades CRM — design &amp; build</h2>
-      <p>Not a template — a done-for-you CRM and operations build for plumbers, electricians, glaziers, and construction firms. The whole lead-to-cash spine: quoting, scheduling and dispatch, invoicing, deposits and utang, and the automations that run it — on GoHighLevel, with the reasoning documented instead of trapped in one person's head. It's the engine behind <em>Grimoire 001</em>, offered as a service.</p>
+    <div class="lab-title">
+      <div class="lab-status building"><span class="d"></span>Service experiment</div>
+      <h2>Trades CRM: design &amp; build</h2>
+      <small>Offer design &middot; operations spine</small>
+    </div>
+    <div class="lab-copy">
+      <p>Not a template: a done-for-you CRM and operations build for plumbers, electricians, glaziers, and construction firms. The whole lead-to-cash spine: quoting, scheduling and dispatch, invoicing, deposits and utang, and the automations that run it on GoHighLevel, with the reasoning documented instead of trapped in one person's head.</p>
+    </div>
+    <div class="lab-action">
       <a class="lab-link" href="{{ '/contact/' | relative_url }}">Start a conversation &rarr;</a>
     </div>
   </div>
 </section>
 
-<section class="lab-block">
+<section class="lab-block lab-shell">
   <div class="lab-inner">
     <div class="lab-index">03</div>
-    <div>
+    <div class="lab-title">
       <div class="lab-status concept"><span class="d"></span>In the sketchbook</div>
       <h2>Politician Tier List</h2>
-      <p>A tier-list built on the public record — politicians ranked and rated against what they actually did, not what they said. Sourced, cited, and structured so the reasoning travels. Barely a concept yet; the shape and scope are still being figured out.</p>
-      <span class="lab-link muted">Not started — parked here so it nags me.</span>
+      <small>Civic record &middot; parked concept</small>
+    </div>
+    <div class="lab-copy">
+      <p>A tier-list built on the public record: politicians ranked and rated against what they actually did, not what they said. Sourced, cited, and structured so the reasoning travels. Barely a concept yet; the shape and scope are still being figured out.</p>
+    </div>
+    <div class="lab-action">
+      <span class="lab-link muted">Not started: parked here so it nags me.</span>
     </div>
   </div>
 </section>
 
-<div class="lab-close">
-  <p>A lab, not a showroom. If one looks half-finished, that's the point — pushing it somewhere visible is how it gets pushed at all.</p>
+<div class="lab-close lab-shell">
+  <p>A lab, not a showroom. If one looks half-finished, that's the point: pushing it somewhere visible is how it gets pushed at all.</p>
 </div>
