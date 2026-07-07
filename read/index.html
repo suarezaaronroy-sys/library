@@ -73,6 +73,19 @@
   .toc-ch:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
   .toc-ch.current{border-left-color:var(--accent);color:var(--accent);font-weight:500}
 
+  /* shelf (book picker) */
+  .shelf{max-width:44rem;margin:0 auto;padding:clamp(2rem,7vw,4rem) clamp(1.1rem,5vw,1.6rem) 5rem}
+  .shelf-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+  .shelf h1{font-family:var(--display);font-weight:600;font-size:clamp(2rem,7vw,3rem);letter-spacing:-.01em;margin-bottom:.6rem;line-height:1.05}
+  .shelf-intro{color:var(--dim);font-size:1.02rem;line-height:1.6;margin-bottom:2.4rem;max-width:34rem}
+  .book-card{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:14px;
+    padding:1.4rem 1.5rem;margin-bottom:1rem;background:color-mix(in srgb,var(--fg) 2.5%,transparent);transition:border-color .15s,transform .15s}
+  .book-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .book-tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+  .book-card h2{font-family:var(--display);font-weight:600;font-size:1.5rem;margin-bottom:.1rem;line-height:1.1}
+  .book-author{font-family:var(--serif);font-style:italic;color:var(--dim);font-size:.95rem;margin-bottom:.7rem}
+  .book-blurb{font-size:.95rem;line-height:1.6;opacity:.85;margin-bottom:.9rem}
+  .book-cta{font-family:var(--mono);font-size:12px;color:var(--accent)}
   .loading{max-width:var(--maxw);margin:0 auto;padding:5rem 1.5rem;text-align:center;color:var(--dim);font-family:var(--mono);font-size:13px}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
@@ -94,6 +107,7 @@
 <nav class="toc" id="toc"></nav>
 
 <main>
+  <div class="shelf" id="shelf" style="display:none"></div>
   <div class="loading" id="loading">Opening the book&hellip;</div>
   <article class="reader" id="reader" style="display:none">
     <div class="ch-eyebrow" id="chEyebrow"></div>
@@ -107,10 +121,22 @@
 </main>
 
 <script>
-// ── Reading engine ── book-agnostic. Add a title by dropping its .md and an entry here.
+
+// ── Reading engine ── book-agnostic. Add a title by dropping its .md in /read/
+// and copying the shape below; it appears on the shelf automatically.
 const BOOKS = {
-  anachronizm: { title: "ANACHRONIZM", author: "A. R. Azure", file: "/library/read/anachronizm.md" },
+  anachronizm: {
+    title: "ANACHRONIZM",
+    author: "A. R. Azure",
+    file: "/library/read/anachronizm.md",
+    tag: "Sci-fi trilogy",
+    blurb: "A world quietly rewritten by the Continuity Layer — and the few who still remember the versions it corrected. Three books, eight parts, sixty-one chapters."
+  },
+  // book2: { title: "", author: "", file: "/library/read/book2.md", tag: "", blurb: "" },
+  // book3: { title: "", author: "", file: "/library/read/book3.md", tag: "", blurb: "" },
 };
+// Shelf order (append new ids as you add them).
+const BOOK_ORDER = ["anachronizm"];
 
 const PREF_KEY = "reading-room:prefs";
 const THEMES = ["light","sepia","dark"];
@@ -125,7 +151,6 @@ function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || 
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); }catch(e){} }
 function posKey(){ return "reading-room:pos:" + bookId; }
 
-// apply theme + font size
 function applyPrefs(){
   document.documentElement.dataset.theme = prefs.theme || "sepia";
   document.documentElement.style.setProperty("--fs", (prefs.fs || SIZES[2]) + "rem");
@@ -136,24 +161,44 @@ function clean(s){ return s.replace(/\*/g,"").replace(/\s+/g," ").trim(); }
 function parseBook(md){
   const lines = md.split("\n");
   const out = [];
-  let cur = null, book = "", part = "";
+  let cur = null, book = "", part = "", mainTitle = "";
   const push = () => { if (cur) out.push(cur); };
   for (const raw of lines){
     if (/^\\newpage/.test(raw.trim())) continue;
     let m;
-    if ((m = raw.match(/^###\s+Book\s+(.+)/))){ push(); book = clean(m[1]); part = ""; cur = { book, part:"", title: "Book " + clean(m[1]), body: [], intro:true }; continue; }
+    if ((m = raw.match(/^###\s+Book\s+(.+)/))){ push(); book = "Book " + clean(m[1]); part = ""; cur = { book, part:"", title: book, body: [], intro:true }; continue; }
     if ((m = raw.match(/^#\s+PART\s+(.+)/))){ part = clean(m[1]); continue; }
     if ((m = raw.match(/^##\s+Chapter\s+(.+)/))){ push(); cur = { book, part, title: "Chapter " + clean(m[1]), body: [] }; continue; }
-    if (!cur) cur = { book:"", part:"", title:"Title Page", body:[], intro:true };
+    if (!cur) cur = { book:"", part:"", title:"", body:[], intro:true, titlePage:true };
+    if (!mainTitle){ const h = raw.match(/^#\s+(.+)/); if (h) mainTitle = clean(h[1]); }
     cur.body.push(raw);
   }
   push();
+  // Give the title page the book's name, and strip half-title headings that
+  // just repeat the series title or the chapter title (keeps intros clean).
+  const mt = clean(mainTitle).toLowerCase();
+  for (const ch of out){
+    if (ch.titlePage) ch.title = mainTitle || "Title Page";
+    if (ch.intro){
+      const t = clean(ch.title).toLowerCase();
+      ch.body = ch.body.filter(line => {
+        const hm = line.match(/^#{1,6}\s+(.*)$/);
+        if (!hm) return true;
+        const h = clean(hm[1]).toLowerCase();
+        return h !== mt && h !== t;
+      });
+    }
+  }
   return out;
 }
 
 function render(){
   const ch = chapters[idx];
-  document.getElementById("chEyebrow").textContent = [ch.book, ch.part].filter(Boolean).join("  ·  ");
+  let eyebrow;
+  if (ch.titlePage) eyebrow = "";
+  else if (ch.intro) eyebrow = (BOOKS[bookId] && BOOKS[bookId].title) || "";
+  else eyebrow = [ch.book, ch.part].filter(Boolean).join("  ·  ");
+  document.getElementById("chEyebrow").textContent = eyebrow;
   document.getElementById("chTitle").textContent = ch.title;
   document.getElementById("chBody").innerHTML = marked.parse(ch.body.join("\n").trim());
   const prev = chapters[idx-1], next = chapters[idx+1];
@@ -162,7 +207,6 @@ function render(){
   document.getElementById("prevTitle").textContent = prev ? prev.title : "";
   document.getElementById("nextTitle").textContent = next ? next.title : "";
   document.getElementById("progressFill").style.width = ((idx+1)/chapters.length*100) + "%";
-  // TOC current highlight
   document.querySelectorAll(".toc-ch").forEach((b,i)=> b.classList.toggle("current", i===idx));
   window.scrollTo(0,0);
   try{ localStorage.setItem(posKey(), String(idx)); }catch(e){}
@@ -188,11 +232,40 @@ function buildTOC(){
 function openTOC(){ document.getElementById("toc").classList.add("open"); document.getElementById("tocOverlay").classList.add("open"); const a=document.querySelector(".toc-ch.current"); if(a) a.scrollIntoView({block:"center"}); }
 function closeTOC(){ document.getElementById("toc").classList.remove("open"); document.getElementById("tocOverlay").classList.remove("open"); }
 
+function renderShelf(){
+  document.getElementById("topTitle").textContent = "The Reading Room";
+  document.querySelector(".top a.back").setAttribute("href", "/library/projects/");
+  document.getElementById("tocBtn").style.display = "none";
+  document.querySelector(".top .grp").style.display = "none";
+  document.querySelector(".progress").style.display = "none";
+  document.getElementById("loading").style.display = "none";
+  let html = '<div class="shelf-eyebrow">The Reading Room</div>'
+    + '<h1>What’s on the shelf</h1>'
+    + '<p class="shelf-intro">Full books, read in the browser — chapters, a contents drawer, and light / sepia / dark. Your place is remembered per book.</p>';
+  BOOK_ORDER.filter(id => BOOKS[id]).forEach(id => {
+    const b = BOOKS[id];
+    let pos = 0; try{ pos = parseInt(localStorage.getItem("reading-room:pos:" + id) || "0", 10) || 0; }catch(e){}
+    const cta = pos > 0 ? "Continue reading →" : "Start reading →";
+    html += '<a class="book-card" href="?book=' + id + '">'
+      + (b.tag ? '<div class="book-tag">' + b.tag + '</div>' : '')
+      + '<h2>' + b.title + '</h2>'
+      + (b.author ? '<div class="book-author">' + b.author + '</div>' : '')
+      + (b.blurb ? '<div class="book-blurb">' + b.blurb + '</div>' : '')
+      + '<div class="book-cta">' + cta + '</div></a>';
+  });
+  const shelf = document.getElementById("shelf");
+  shelf.innerHTML = html;
+  shelf.style.display = "block";
+}
+
 async function boot(){
   applyPrefs();
   const params = new URLSearchParams(location.search);
-  if (params.get("book") && BOOKS[params.get("book")]) bookId = params.get("book");
+  const requested = params.get("book");
+  if (!requested || !BOOKS[requested]){ renderShelf(); return; }
+  bookId = requested;
   const meta = BOOKS[bookId];
+  document.querySelector(".top a.back").setAttribute("href", "/library/read/");
   document.getElementById("topTitle").textContent = meta.title;
   document.title = meta.title + " — The Reading Room";
   try{
