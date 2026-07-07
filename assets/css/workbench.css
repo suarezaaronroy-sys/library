@@ -1,13 +1,13 @@
 /* Workbench: quiet operational surfaces built on the Library design system. */
-.workbench-frame{width:min(1440px,calc(100% - 2rem));margin:0 auto;padding:2rem 0 4rem}
-.workbench-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;padding:.8rem 0 1.4rem}
+.workbench-frame{width:min(1360px,calc(100% - 2.4rem));margin:0 auto;padding:1.8rem 0 4rem}
+.workbench-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;padding:.6rem 0 1.25rem}
 .workbench-eyebrow{color:var(--teal);font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
-.workbench-header h1{margin-top:.45rem;font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.7rem);font-weight:600;line-height:1}
+.workbench-header h1{margin-top:.45rem;font-family:var(--serif);font-size:clamp(2.05rem,3.4vw,3.15rem);font-weight:600;line-height:1.04}
 .workbench-header p{max-width:68ch;margin-top:.65rem;color:var(--ink3);font-size:.88rem}
 .workbench-local-status{display:flex;align-items:center;gap:.5rem;color:var(--ink3);font-family:var(--mono);font-size:.64rem;white-space:nowrap}
 .workbench-local-status span{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(21,128,61,.1)}
 .workbench-nav{display:flex;align-items:center;gap:0;overflow-x:auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--border);scrollbar-width:thin}
-.workbench-nav a,.workbench-nav span{flex:0 0 auto;padding:.72rem 1rem;border-right:1px solid var(--border);font-family:var(--mono);font-size:.66rem;white-space:nowrap}
+.workbench-nav a,.workbench-nav span{flex:0 0 auto;padding:.62rem .9rem;border-right:1px solid var(--border);font-family:var(--mono);font-size:.62rem;white-space:nowrap}
 .workbench-nav a{color:var(--ink2);transition:.15s}
 .workbench-nav a:hover{color:var(--accent);background:rgba(255,255,255,.48)}
 .workbench-nav a[aria-current="page"]{color:var(--dark-fg);background:var(--ink)}
@@ -15,9 +15,9 @@
 .workbench-content{padding-top:1.5rem}
 
 .workbench-ledger{border-top:1px solid var(--ink)}
-.workbench-ledger-row{display:grid;grid-template-columns:64px minmax(180px,.7fr) minmax(280px,1.3fr) 110px;gap:1rem;align-items:center;min-height:104px;padding:1rem 0;border-bottom:1px solid var(--border)}
+.workbench-ledger-row{display:grid;grid-template-columns:56px minmax(180px,.62fr) minmax(280px,1.38fr) 112px;gap:1.2rem;align-items:center;min-height:92px;padding:.9rem 0;border-bottom:1px solid var(--border)}
 .workbench-ledger-row>span{color:var(--teal);font-family:var(--mono);font-size:.65rem}
-.workbench-ledger-row h2{font-family:var(--serif);font-size:1.35rem;line-height:1.15}
+.workbench-ledger-row h2{font-family:var(--serif);font-size:1.22rem;line-height:1.16}
 .workbench-ledger-row p{color:var(--ink3);font-size:.82rem;line-height:1.6}
 .workbench-ledger-state{justify-self:end;color:var(--ink4);font-family:var(--mono);font-size:.62rem;text-transform:uppercase}
 a.workbench-ledger-row{transition:.15s}
@@ -527,11 +527,11 @@ textarea.tool-output{resize:vertical}
 /* ── grouped nav (labeled sets) + desk ledger groups ── */
 .workbench-nav{align-items:stretch}
 .workbench-nav-set{flex:0 0 auto;display:flex;flex-direction:column;justify-content:flex-end}
-.workbench-nav-set>span{padding:.4rem 1rem .1rem;border-right:0;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.workbench-nav-set>span{padding:.28rem .9rem 0;border-right:0;font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4)}
 .workbench-nav-set-links{display:flex}
-.workbench-nav-set-links a{padding-top:.4rem;padding-bottom:.62rem}
-.workbench-nav-set+.workbench-nav-set{border-left:1px solid var(--ink)}
-.workbench-ledger-group{display:flex;align-items:baseline;gap:.7rem;padding:1.25rem 0 .45rem;border-bottom:1px solid var(--border)}
+.workbench-nav-set-links a{padding-top:.36rem;padding-bottom:.58rem}
+.workbench-nav-set+.workbench-nav-set{border-left:1px solid var(--border)}
+.workbench-ledger-group{display:flex;align-items:baseline;gap:.7rem;padding:1.05rem 0 .4rem;border-bottom:1px solid var(--border)}
 .workbench-ledger-group span{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
 .workbench-ledger-group em{font-style:normal;color:var(--ink3);font-size:.74rem}
 @media(max-width:760px){.workbench-nav-set>span{padding:.35rem .7rem .1rem}.workbench-ledger-group{flex-direction:column;gap:.15rem}}
