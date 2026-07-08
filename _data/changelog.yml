@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.7"
+  major: false
+  date: "2026-07-08 - 08:35"
+  title: "Sari2POS extraction pass"
+  text: "Sari2POS was split from a single-file Lab prototype into a portable HTML shell, stylesheet, and runtime bundle. A developer handoff now documents the browser contract, storage keys, and APK extraction path so future work can continue without reopening the whole prototype at once."
 - version: "4.6"
   major: false
   date: "2026-07-08 - 08:25"
