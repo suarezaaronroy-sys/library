@@ -1,140 +1,116 @@
----
-layout: default
-title: Politician Tier List
-description: "A Lab MVP for comparing public figures through cited records, news signals, surveys, and confidence scoring."
-permalink: /lab/politician-tier-list/
-extra_css:
-  - /assets/css/politician-tier.css
-extra_js:
-  - /assets/js/politician-tier.js
----
-
-<div class="pt-page" data-politician-tier>
-  <section class="pt-hero">
-    <img class="pt-hero-img" src="{{ '/assets/img/brand/brand-documents-plan-unsplash.jpg' | relative_url }}" alt="Marked documents and planning material on a work surface">
-    <div class="pt-hero-shade"></div>
-    <div class="shell pt-hero-inner">
-      <div class="pt-hero-copy">
-        <span class="pt-eyebrow">Lab MVP / civic comparison engine</span>
-        <h1>Politician Tier List</h1>
-        <p>A prototype for ranking public figures with the reasoning attached: records, cited reporting, survey signals, confidence, and issue fit in one inspectable workspace.</p>
-      </div>
-      <aside class="pt-hero-panel" aria-label="Prototype notice">
-        <span>Demo data only</span>
-        <strong>No real politician is ranked on this page.</strong>
-        <p>The MVP proves the interface and scoring model. A real version needs verified public records, source dates, source quality, and manual review before publication.</p>
-      </aside>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/library/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/library/favicon.png" type="image/png">
+<title>Politician Tier List — Lab MVP</title>
+<meta name="description" content="A Lab MVP for comparing public figures through cited records, news signals, surveys, and confidence scoring. Demo data only.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/library/assets/css/politician-tier.css">
+</head><body>
+<div class="sheet" data-politician-tier>
+  <a class="backbar" href="/library/lab/">&larr; The Lab</a>
+  <header>
+    <div>
+      <div class="eyebrow">Lab MVP &middot; civic comparison engine</div>
+      <h1>Politician Tier List.</h1>
+      <p class="lead">A prototype for ranking public figures with the reasoning attached: records, cited reporting, survey signals, confidence, and issue fit in one inspectable workspace. Move the weights &mdash; the board re-sorts, and every card keeps its source trail.</p>
     </div>
-  </section>
+    <div class="stamp">LAB MVP &middot; DEMO DATA<br>records first &middot; vibes last<br>scoring is inspectable<br>Aaron Suarez</div>
+  </header>
 
-  <section class="shell pt-workspace" aria-label="Politician tier list workspace">
-    <aside class="pt-control-panel" aria-label="Ranking controls">
-      <div class="pt-panel-head">
-        <span>Ranking model</span>
-        <h2>Build the score.</h2>
-      </div>
+  <div class="note"><b>Demo data only.</b> No real politician is ranked on this page. The MVP proves the interface and the scoring model. A real version needs verified public records, source dates, source quality, and manual review before anything is published.</div>
 
-      <label class="pt-field">
-        <span>Search</span>
-        <input id="pt-search" type="search" placeholder="name, office, issue, source">
-      </label>
-
-      <div class="pt-field-row">
-        <label class="pt-field">
-          <span>Jurisdiction</span>
-          <select id="pt-jurisdiction">
-            <option value="all">All</option>
-            <option value="National">National</option>
-            <option value="State">State</option>
-            <option value="City">City</option>
-          </select>
-        </label>
-        <label class="pt-field">
-          <span>Office</span>
-          <select id="pt-office">
-            <option value="all">All</option>
-            <option value="Executive">Executive</option>
-            <option value="Legislative">Legislative</option>
-            <option value="Local">Local</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="pt-slider-stack" aria-label="Score weights">
-        <label><span>Public record</span><input id="pt-weight-record" type="range" min="0" max="50" value="30"><b data-weight-value="record">30</b></label>
-        <label><span>Transparency</span><input id="pt-weight-transparency" type="range" min="0" max="50" value="25"><b data-weight-value="transparency">25</b></label>
-        <label><span>Consistency</span><input id="pt-weight-consistency" type="range" min="0" max="50" value="20"><b data-weight-value="consistency">20</b></label>
-        <label><span>Constituent signal</span><input id="pt-weight-survey" type="range" min="0" max="50" value="25"><b data-weight-value="survey">25</b></label>
-      </div>
-
-      <label class="pt-field">
-        <span>Sort</span>
-        <select id="pt-sort">
-          <option value="score">Tier score</option>
-          <option value="confidence">Confidence</option>
-          <option value="record">Public record</option>
-          <option value="transparency">Transparency</option>
-          <option value="survey">Survey signal</option>
-        </select>
-      </label>
-
-      <div class="pt-method-card">
-        <span>Rule</span>
-        <p>No score without a source trail. No source trail without dates. No confidence score without naming what is missing.</p>
-      </div>
-    </aside>
-
-    <div class="pt-main">
-      <div class="pt-toolbar">
-        <div>
-          <span class="pt-eyebrow">Tier board</span>
-          <h2>Records first. Vibes last.</h2>
-        </div>
-        <button class="pt-ghost-button" type="button" id="pt-reset">Reset weights</button>
-      </div>
-
-      <div class="pt-summary-strip" id="pt-summary-strip" aria-live="polite"></div>
-      <div class="pt-tier-board" id="pt-tier-board"></div>
+  <div class="sectlabel">Ranking model &middot; build the score</div>
+  <div class="pt-controls">
+    <label class="pt-field">
+      <span>Search</span>
+      <input id="pt-search" type="search" placeholder="name, office, issue, source">
+    </label>
+    <label class="pt-field">
+      <span>Jurisdiction</span>
+      <select id="pt-jurisdiction">
+        <option value="all">All</option>
+        <option value="National">National</option>
+        <option value="State">State</option>
+        <option value="City">City</option>
+      </select>
+    </label>
+    <label class="pt-field">
+      <span>Office</span>
+      <select id="pt-office">
+        <option value="all">All</option>
+        <option value="Executive">Executive</option>
+        <option value="Legislative">Legislative</option>
+        <option value="Local">Local</option>
+      </select>
+    </label>
+    <label class="pt-field">
+      <span>Sort by</span>
+      <select id="pt-sort">
+        <option value="score">Tier score</option>
+        <option value="confidence">Confidence</option>
+        <option value="record">Public record</option>
+        <option value="transparency">Transparency</option>
+        <option value="survey">Survey signal</option>
+      </select>
+    </label>
+    <div class="pt-slider-stack" aria-label="Score weights">
+      <label><span>Public record</span><input id="pt-weight-record" type="range" min="0" max="50" value="30"><b data-weight-value="record">30</b></label>
+      <label><span>Transparency</span><input id="pt-weight-transparency" type="range" min="0" max="50" value="25"><b data-weight-value="transparency">25</b></label>
+      <label><span>Consistency</span><input id="pt-weight-consistency" type="range" min="0" max="50" value="20"><b data-weight-value="consistency">20</b></label>
+      <label><span>Constituent signal</span><input id="pt-weight-survey" type="range" min="0" max="50" value="25"><b data-weight-value="survey">25</b></label>
     </div>
-  </section>
+    <div class="pt-controls-foot">
+      <div class="pt-method-card"><span>Rule</span><p>No score without a source trail. No source trail without dates. No confidence score without naming what is missing.</p></div>
+      <button class="pt-ghost-button" type="button" id="pt-reset">Reset weights</button>
+    </div>
+  </div>
 
-  <section class="shell pt-lower-grid">
-    <article class="pt-compare" aria-label="Comparison bench">
-      <div class="pt-section-head">
-        <span>Compare</span>
-        <h2>Shortlist bench.</h2>
-      </div>
+  <div class="sectlabel">Board summary</div>
+  <div class="pt-summary-strip" id="pt-summary-strip" aria-live="polite"></div>
+
+  <div class="sectlabel">Tier board &middot; records first, vibes last</div>
+  <div class="pt-tier-board" id="pt-tier-board"></div>
+
+  <div class="pt-lower">
+    <section class="pt-compare" aria-label="Comparison bench">
+      <div class="sectlabel">Shortlist bench</div>
       <div id="pt-compare-list" class="pt-compare-list"></div>
-    </article>
+    </section>
+    <section class="pt-detail-wrap" aria-label="Evidence detail">
+      <div class="sectlabel">Evidence drawer</div>
+      <article class="pt-detail" id="pt-detail">
+        <div class="pt-empty-detail">
+          <span>Select a profile</span>
+          <p>Open a record to inspect evidence, missing data, and scoring pressure.</p>
+        </div>
+      </article>
+    </section>
+  </div>
 
-    <article class="pt-detail" id="pt-detail" aria-label="Evidence detail">
-      <div class="pt-empty-detail">
-        <span>Select a profile</span>
-        <p>Open a record to inspect evidence, missing data, and scoring pressure.</p>
-      </div>
-    </article>
-  </section>
+  <div class="sectlabel">Issue-fit calculator &middot; where does the record bottleneck?</div>
+  <div class="pt-fit-grid">
+    <label class="pt-field">
+      <span>Profile</span>
+      <select id="pt-fit-profile"></select>
+    </label>
+    <label class="pt-field">
+      <span>Issue lens</span>
+      <select id="pt-fit-issue">
+        <option value="housing">Housing delivery</option>
+        <option value="transport">Transport reliability</option>
+        <option value="smallBusiness">Small business support</option>
+        <option value="ethics">Ethics and disclosure</option>
+      </select>
+    </label>
+    <div class="pt-fit-result" id="pt-fit-result"></div>
+  </div>
 
-  <section class="shell pt-fit-lab" aria-label="Issue fit calculator">
-    <div class="pt-section-head">
-      <span>Issue fit calculator</span>
-      <h2>Where does the record bottleneck?</h2>
-    </div>
-    <div class="pt-fit-grid">
-      <label class="pt-field">
-        <span>Profile</span>
-        <select id="pt-fit-profile"></select>
-      </label>
-      <label class="pt-field">
-        <span>Issue lens</span>
-        <select id="pt-fit-issue">
-          <option value="housing">Housing delivery</option>
-          <option value="transport">Transport reliability</option>
-          <option value="smallBusiness">Small business support</option>
-          <option value="ethics">Ethics and disclosure</option>
-        </select>
-      </label>
-      <div class="pt-fit-result" id="pt-fit-result"></div>
-    </div>
-  </section>
+  <footer>
+    <span>Politician Tier List &middot; Lab MVP &middot; demo data &middot; the reasoning travels with the rating</span>
+    <span>Civic record &middot; suarezaaronroy</span>
+  </footer>
 </div>
+<script src="/library/assets/js/politician-tier.js"></script>
+</body></html>
