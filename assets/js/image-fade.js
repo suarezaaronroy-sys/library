@@ -2,7 +2,7 @@
 // Crash-proof: images only start hidden when the .js-img class is present (set
 // inline in <head>), so a JS failure leaves them fully visible.
 (function () {
-  var SEL = ".home-cover-img,.about-cover-img,.notes-cover-img,.library-cover-img,.contact-cover-img,.home-evidence-item img,.home-proof img,.about-signature img";
+  var SEL = ".home-cover-img,.about-cover-img,.notes-cover-img,.library-cover-img,.contact-cover-img,.lab-cover-img,.home-evidence-item img,.home-proof img,.about-signature img";
   var imgs = document.querySelectorAll(SEL);
   Array.prototype.forEach.call(imgs, function (img) {
     img.decoding = "async";

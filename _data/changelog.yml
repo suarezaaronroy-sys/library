@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.6"
+  major: false
+  date: "2026-07-08 - 08:25"
+  title: "Lab cover alignment"
+  text: "The Lab was brought back into the same public-page visual system as Home, About, Library, Notes, and Contact: a full image cover, unified cover height, shared image fade behavior, and Lab-specific prototype content below the header instead of a detached standalone layout."
 - version: "4.5"
   major: false
   date: "2026-07-08 - 08:05"
