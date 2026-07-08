@@ -1,5 +1,20 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.11"
+  major: false
+  date: "2026-07-08 - 11:54"
+  title: "Ghost, easier to read"
+  text: "The first-visit start-here popup moved from a dark bubble with low-contrast text to a clean white card with full-contrast type, colour-coded route spines, and a small guide tag. The one popup that interrupts to be read now earns it."
+- version: "4.10"
+  major: false
+  date: "2026-07-08 - 09:19"
+  title: "Lab blueprints"
+  text: "Two Lab pieces adopted a shared blueprint design language: gridded paper, a lead-to-cash spine, and colour-coded subsystems. The Trades CRM became a full discovery-notes / MVP-design spread — the offer mapped before it is built, since the real system lives in an operations platform rather than HTML — and the Politician Tier List was reskinned into the same language while keeping its live scoring, filters, tier board, and evidence drawer."
+- version: "4.9"
+  major: false
+  date: "2026-07-08 - 09:09"
+  title: "Sari2POS: data safety"
+  text: "A hardening pass on the store's records. Clear All Data now removes only Sari2POS keys instead of wiping the whole site; backup import validates the file and auto-saves a safety copy before replacing anything; exports carry a signature and now include restock logs; and receipts escape customer and product names. Product search is debounced, and Enter completes a cash sale."
 - version: "4.8"
   major: false
   date: "2026-07-08 - 08:42"
@@ -153,20 +168,4 @@
 - version: "0.4"
   major: false
   date: "2026-04-27 · 17:58"
-  title: "Structure and character"
-  text: "An ambient-sound page, a theming system, a UI-behavior script, a semantic-HTML cleanup, a README, and a reorganized numbered shelf. The first touches of personality."
-- version: "0.3"
-  major: false
-  date: "2026-04-18 · 18:02"
-  title: "The first grimoires"
-  text: "The first two build write-ups: a full-stack CRM engine (a construction build, then “v8.1”) and the Dual Wing rental marketing engine — the earliest receipts — renamed into the 001 / 002 scheme still used today."
-- version: "0.2"
-  major: false
-  date: "2026-03-11 · 22:25"
-  title: "Analytics and navigation"
-  text: "A revamp added Google Analytics, hash-based window navigation, and the SEO bones — a sitemap and robots file. The interactive “notebook” concept matured."
-- version: "0.1"
-  major: true
-  date: "2026-03-02 · 10:12"
-  title: "Genesis"
-  text: "The very first version went public: an experimental, interactive “notebook window” homepage. The seed of everything that followed."
+  
