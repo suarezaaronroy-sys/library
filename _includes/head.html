@@ -12,6 +12,9 @@
 <script>document.documentElement.classList.add('js-img');</script>
 <link rel="stylesheet" href="{{ '/assets/css/main.css?v=15' | relative_url }}">
 {% if page.workbench %}<link rel="stylesheet" href="{{ '/assets/css/workbench.css?v=13' | relative_url }}">{% endif %}
+{% if page.extra_css %}
+{% for stylesheet in page.extra_css %}<link rel="stylesheet" href="{{ stylesheet | relative_url }}?v=1">{% endfor %}
+{% endif %}
 {% if site.google_analytics %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.google_analytics }}');</script>

@@ -15,6 +15,10 @@
 <script src="{{ '/assets/js/personality.js?v=4' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/image-fade.js?v=1' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/changelog.js?v=1' | relative_url }}" defer></script>
+{% if page.extra_js %}
+{% for script in page.extra_js %}<script src="{{ script | relative_url }}?v=1" defer></script>
+{% endfor %}
+{% endif %}
 <script type="module" src="{{ '/assets/js/site-search.js?v=4' | relative_url }}"></script>
 </body>
 </html>

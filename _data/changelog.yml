@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.8"
+  major: false
+  date: "2026-07-08 - 08:42"
+  title: "Politician Tier List MVP"
+  text: "The parked civic concept became a playable Lab prototype with demo-only profiles, weighted scoring, tier grouping, comparison, source trails, issue-fit bottlenecks, and search visibility. The Trades CRM Lab card was softened into discovery notes so it does not overpromise before the technical spine is clear."
 - version: "4.7"
   major: false
   date: "2026-07-08 - 08:35"

@@ -17,6 +17,8 @@ const sitePages = [
   page("site-about", "About", "/about/", "Practice, operating philosophy, and working background.", ["about", "practice"], "Site › About"),
   page("site-library", "Library", "/projects/", "Grimoires, systems documentation, manuals, and project evidence.", ["library", "projects", "grimoires"], "Library › Catalogue"),
   page("site-notes", "Notes", "/notes/", "Short field notes from systems and operational work.", ["notes", "writing"], "Library › Notes"),
+  page("site-lab", "Lab", "/lab/", "Experimental builds shipped early and iterated in public.", ["lab", "experiments", "prototype"], "Site > Lab"),
+  page("site-politician-tier", "Politician Tier List", "/lab/politician-tier-list/", "A civic comparison MVP for ranking public figures through cited records, news signals, surveys, and confidence scoring.", ["lab", "politics", "civic", "ranking", "tier list"], "Lab > Civic tools"),
   page("site-contact", "Contacts", "/contact/", "Direct and studio routes for working together.", ["contact", "email"], "Site › Contacts")
 ];
 
