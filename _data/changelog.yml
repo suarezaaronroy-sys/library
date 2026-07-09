@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.12"
+  major: false
+  date: "2026-07-09 - 08:46"
+  title: "Reporting becomes an Operations workspace"
+  text: "Reporting moved out of the Desk tab and into Operations as its own Workbench page. The workspace now keeps the existing report templates and adds a checklist reminder formatter with H1-H3 Markdown structure, date tags, priorities, statuses, reminders, copy/download/export actions, and local-first saving."
 - version: "4.11"
   major: false
   date: "2026-07-08 - 11:54"
@@ -168,4 +173,3 @@
 - version: "0.4"
   major: false
   date: "2026-04-27 · 17:58"
-  

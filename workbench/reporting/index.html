@@ -1,0 +1,143 @@
+---
+layout: workbench
+title: Reporting Workspace
+description: "Local-first status reports, handoffs, checklist reminders, date tags, priorities, and LLM-ready notes."
+permalink: /workbench/reporting/
+workbench: true
+workspace: reporting
+workbench_title: Reporting Workspace
+workbench_lede: Convert messy updates, reminders, and working notes into clean artifacts.
+workbench_script: /assets/js/workbench/reporting.js
+---
+<div class="workspace-view-tabs" role="tablist" aria-label="Reporting tools">
+  <button type="button" role="tab" aria-selected="true" data-reporting-view="reports">Reports</button>
+  <button type="button" role="tab" aria-selected="false" data-reporting-view="checklist">Checklist reminders</button>
+</div>
+
+<div class="reporting-panel" data-reporting-panel="reports">
+  <nav class="report-template-tabs" role="tablist" aria-label="Reporting templates">
+    <button type="button" role="tab" aria-selected="true" data-report-template="eod">Shift close</button>
+    <button type="button" role="tab" aria-selected="false" data-report-template="status">Task status</button>
+    <button type="button" role="tab" aria-selected="false" data-report-template="handoff">Handoff</button>
+    <button type="button" role="tab" aria-selected="false" data-report-template="meeting">Meeting debrief</button>
+  </nav>
+
+  <div class="artifact-workspace report-artifact-workspace">
+    <section class="tool-panel">
+      <div class="tool-panel-head">
+        <div>
+          <span>01 - Structured context</span>
+          <h2 id="report-form-title">End-of-day report</h2>
+          <p class="tool-intro" id="report-form-intro">Close the shift without reconstructing the day from memory.</p>
+        </div>
+      </div>
+      <form id="report-form" class="tool-form">
+        <div class="tool-row">
+          <label class="workbench-field"><span>Project / client</span><input name="project" placeholder="Project, client, or team"></label>
+          <label class="workbench-field"><span>Report date</span><input name="date" type="date"></label>
+        </div>
+        <label class="workbench-field"><span>Prepared by</span><input name="author" placeholder="Your name"></label>
+        <div id="report-fields" class="tool-form"></div>
+      </form>
+      <p class="privacy-note">Saved only in this browser. No report is transmitted automatically.</p>
+    </section>
+
+    <aside class="tool-panel artifact-output-panel">
+      <div class="tool-panel-head">
+        <div>
+          <span>02 - Portable artifact</span>
+          <h2>Ready for a person or an LLM</h2>
+          <p class="tool-intro">Stable headings preserve meaning when the report moves between tools.</p>
+        </div>
+      </div>
+      <textarea id="report-output" class="tool-output artifact-output" aria-label="Formatted report" readonly></textarea>
+      <div class="tool-actions">
+        <button class="workbench-button primary" type="button" data-report-action="copy">Copy report</button>
+        <button class="workbench-button" type="button" data-report-action="download">Download TXT</button>
+        <button class="workbench-button" type="button" data-report-action="json">Export JSON</button>
+        <button class="workbench-button" type="button" data-report-action="clear">Clear template</button>
+      </div>
+      <output id="report-status" class="tool-status" aria-live="polite">Saved locally</output>
+    </aside>
+  </div>
+</div>
+
+<div class="reporting-panel" data-reporting-panel="checklist" hidden>
+  <div class="artifact-workspace checklist-workspace">
+    <section class="tool-panel checklist-builder">
+      <div class="tool-panel-head">
+        <div>
+          <span>01 - Reminder builder</span>
+          <h2>Checklist note formatter</h2>
+          <p class="tool-intro">Capture one item at a time with date tags, priority, reminder timing, and enough context that it can survive copy/paste.</p>
+        </div>
+      </div>
+
+      <form id="checklist-meta" class="tool-form">
+        <div class="tool-row">
+          <label class="workbench-field"><span>Checklist title</span><input name="title" placeholder="Weekly priorities / Client follow-up / Launch QA"></label>
+          <label class="workbench-field"><span>Owner</span><input name="owner" placeholder="Who owns the list?"></label>
+        </div>
+        <div class="tool-row three">
+          <label class="workbench-field"><span>List date</span><input name="listDate" type="date"></label>
+          <label class="workbench-field"><span>Default tag</span><input name="tag" placeholder="client, admin, launch"></label>
+          <label class="workbench-field"><span>Output mode</span><select name="mode"><option value="markdown">Markdown</option><option value="plain">Plain text</option></select></label>
+        </div>
+        <label class="workbench-field"><span>Context note</span><textarea name="context" placeholder="Why this list exists, what changed, or what must not be forgotten."></textarea></label>
+      </form>
+      <p class="privacy-note">Saved in this browser as you type. Export a Workbench backup from the Desk before relying on it across devices, browser cleanup, or power trouble.</p>
+
+      <form id="checklist-item-form" class="tool-form checklist-item-form">
+        <div class="tool-row">
+          <label class="workbench-field"><span>Item title</span><input name="title" placeholder="Send corrected invoice summary"></label>
+          <label class="workbench-field"><span>Section / H2</span><input name="section" placeholder="Client admin / QA / Today"></label>
+        </div>
+        <div class="tool-row three">
+          <label class="workbench-field"><span>Priority</span><select name="priority"><option>High</option><option>Medium</option><option>Low</option><option>Someday</option></select></label>
+          <label class="workbench-field"><span>Status</span><select name="status"><option>Next</option><option>Waiting</option><option>In progress</option><option>Scheduled</option><option>Done</option></select></label>
+          <label class="workbench-field"><span>Due date</span><input name="due" type="date"></label>
+        </div>
+        <div class="tool-row three">
+          <label class="workbench-field"><span>Reminder date</span><input name="reminder" type="date"></label>
+          <label class="workbench-field"><span>Tags</span><input name="tags" placeholder="invoice, client, urgent"></label>
+          <label class="workbench-field"><span>Link / evidence</span><input name="link" placeholder="URL, file, thread, ticket"></label>
+        </div>
+        <label class="workbench-field"><span>Bullets / notes</span><textarea name="notes" placeholder="One bullet per line. These become clean nested bullets under the H3 item."></textarea></label>
+        <div class="tool-actions">
+          <button class="workbench-button primary" type="submit">Add checklist item</button>
+          <button class="workbench-button" type="button" data-checklist-action="update">Update selected</button>
+          <button class="workbench-button" type="button" data-checklist-action="reset-item">Reset item form</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="tool-panel checklist-items-panel">
+      <div class="tool-panel-head">
+        <div>
+          <span>02 - Active items</span>
+          <h2>Reminder queue</h2>
+          <p class="tool-intro">Click an item to edit it. The exported note keeps H1-H3 hierarchy plus bullet metadata.</p>
+        </div>
+      </div>
+      <div id="checklist-items" class="checklist-items" aria-live="polite"></div>
+    </section>
+
+    <aside class="tool-panel artifact-output-panel checklist-output-panel">
+      <div class="tool-panel-head">
+        <div>
+          <span>03 - Copy-ready note</span>
+          <h2>Formatted checklist</h2>
+          <p class="tool-intro">Markdown headings and bullets stay predictable when pasted into email, docs, Notion, or an LLM.</p>
+        </div>
+      </div>
+      <textarea id="checklist-output" class="tool-output artifact-output" aria-label="Formatted checklist" readonly></textarea>
+      <div class="tool-actions">
+        <button class="workbench-button primary" type="button" data-checklist-action="copy">Copy checklist</button>
+        <button class="workbench-button" type="button" data-checklist-action="download">Download TXT</button>
+        <button class="workbench-button" type="button" data-checklist-action="json">Export JSON</button>
+        <button class="workbench-button" type="button" data-checklist-action="clear">Clear list</button>
+      </div>
+      <output id="checklist-status" class="tool-status" aria-live="polite">Saved locally</output>
+    </aside>
+  </div>
+</div>

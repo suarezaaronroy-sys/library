@@ -136,6 +136,24 @@
     "pricing": "Included"
   },
   {
+    "id": "reporting",
+    "name": "Reporting Workspace",
+    "url": "/workbench/reporting/",
+    "kind": "internal",
+    "category": "Operations",
+    "description": "Status reports, handoffs, checklist reminders, priorities, date tags, and copy-ready notes.",
+    "tags": [
+      "reporting",
+      "checklist",
+      "reminders",
+      "todo",
+      "handoff",
+      "status",
+      "markdown"
+    ],
+    "pricing": "Included"
+  },
+  {
     "id": "library-tools",
     "name": "Library Tools",
     "url": "/workbench/library-tools/",

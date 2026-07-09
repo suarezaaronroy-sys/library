@@ -1,7 +1,7 @@
 ---
 layout: workbench
 title: Operator Workbench
-description: "Client-side tools for billing, scheduling, writing, marketing, CRM operations, publishing, decision memory, resources, and systems mapping."
+description: "Client-side tools for billing, scheduling, reporting, writing, marketing, CRM operations, publishing, decision memory, resources, and systems mapping."
 permalink: /workbench/
 workbench: true
 workspace: index
@@ -9,14 +9,8 @@ workbench_title: Operator Workbench
 workbench_lede: Small, local-first tools for recurring operational work.
 workbench_script: /assets/js/workbench/desk.js
 ---
-<div class="workspace-view-tabs" role="tablist" aria-label="Desk views">
-  <button type="button" role="tab" aria-selected="true" data-desk-view="workspaces">Workspaces</button>
-  <button type="button" role="tab" aria-selected="false" data-desk-view="reporting">Reporting</button>
-</div>
-
-<div data-desk-panel="workspaces">
 <section class="workbench-ledger" aria-label="Workspace status">
-  <div class="workbench-ledger-group"><span>Operations</span><em>Money, time, campaigns, and pipeline — the daily mechanics.</em></div>
+  <div class="workbench-ledger-group"><span>Operations</span><em>Money, time, campaigns, pipeline, and reporting - the daily mechanics.</em></div>
   <a class="workbench-ledger-row" href="{{ '/workbench/billing/' | relative_url }}">
     <span>01</span><h2>Billing</h2><p>Cutoff calendar, rates, currency estimates, and invoice-ready exports.</p><b class="workbench-ledger-state">Open workspace</b>
   </a>
@@ -29,23 +23,29 @@ workbench_script: /assets/js/workbench/desk.js
   <a class="workbench-ledger-row" href="{{ '/workbench/crm/' | relative_url }}">
     <span>04</span><h2>CRM</h2><p>Pipeline simulation, workflow mapping, JSON, regex, and request tools.</p><b class="workbench-ledger-state">Open workspace</b>
   </a>
+  <a class="workbench-ledger-row" href="{{ '/workbench/reporting/' | relative_url }}">
+    <span>05</span><h2>Reporting</h2><p>Status reports, handoffs, checklist reminders, date tags, and LLM-ready artifacts.</p><b class="workbench-ledger-state">Open workspace</b>
+  </a>
+
   <div class="workbench-ledger-group"><span>Writing desk</span><em>Drafting, cleanup, and publishing helpers.</em></div>
   <a class="workbench-ledger-row" href="{{ '/workbench/writing/' | relative_url }}">
-    <span>05</span><h2>Writing</h2><p>Formatted notepad, snippets, text cleanup, and Markdown preview.</p><b class="workbench-ledger-state">Open workspace</b>
+    <span>06</span><h2>Writing</h2><p>Formatted notepad, snippets, text cleanup, and Markdown preview.</p><b class="workbench-ledger-state">Open workspace</b>
   </a>
   <a class="workbench-ledger-row" href="{{ '/workbench/library-tools/' | relative_url }}">
-    <span>06</span><h2>Library tools</h2><p>Grimoire and Note builders, metadata, and related-link helpers.</p><b class="workbench-ledger-state">Open workspace</b>
+    <span>07</span><h2>Library tools</h2><p>Grimoire and Note builders, metadata, and related-link helpers.</p><b class="workbench-ledger-state">Open workspace</b>
   </a>
-  <div class="workbench-ledger-group"><span>Thinking</span><em>Decisions and diagrams — memory that outlives the meeting.</em></div>
+
+  <div class="workbench-ledger-group"><span>Thinking</span><em>Decisions and diagrams - memory that outlives the meeting.</em></div>
   <a class="workbench-ledger-row" href="{{ '/workbench/decisions/' | relative_url }}">
-    <span>07</span><h2>Decisions</h2><p>Decision records, changed beliefs, outcomes, and future review.</p><b class="workbench-ledger-state">Open workspace</b>
+    <span>08</span><h2>Decisions</h2><p>Decision records, changed beliefs, outcomes, and future review.</p><b class="workbench-ledger-state">Open workspace</b>
   </a>
   <a class="workbench-ledger-row" href="{{ '/workbench/whiteboard/' | relative_url }}">
-    <span>08</span><h2>Whiteboard</h2><p>Editable flow starters for quick mapping, dry runs, and meeting explanations.</p><b class="workbench-ledger-state">Open workspace</b>
+    <span>09</span><h2>Whiteboard</h2><p>Editable flow starters for quick mapping, dry runs, and meeting explanations.</p><b class="workbench-ledger-state">Open workspace</b>
   </a>
+
   <div class="workbench-ledger-group"><span>Reference</span><em>Curated pointers, kept close.</em></div>
   <a class="workbench-ledger-row" href="{{ '/workbench/resources/' | relative_url }}">
-    <span>09</span><h2>Resources</h2><p>Curated tools, private notes, favorites, recents, and searchable metadata.</p><b class="workbench-ledger-state">Open workspace</b>
+    <span>10</span><h2>Resources</h2><p>Curated tools, private notes, favorites, recents, and searchable metadata.</p><b class="workbench-ledger-state">Open workspace</b>
   </a>
 </section>
 
@@ -56,7 +56,7 @@ workbench_script: /assets/js/workbench/desk.js
 
 <aside class="workbench-desk-note workbench-backup" aria-label="Workbench data backup">
   <span>Your data</span>
-  <p>Every workspace saves only to this browser. Export one file with all of it — invoices, budgets, calculator, reports — and restore it here on any machine.</p>
+  <p>Every workspace saves only to this browser. Export one file with all of it - invoices, budgets, calculator, reports, and checklists - and restore it here on any machine.</p>
   <div class="workbench-backup-actions">
     <button type="button" class="workbench-button primary" id="backup-export">Export all data</button>
     <button type="button" class="workbench-button" id="backup-import">Import backup</button>
@@ -64,52 +64,3 @@ workbench_script: /assets/js/workbench/desk.js
     <span id="backup-status" role="status"></span>
   </div>
 </aside>
-</div>
-
-<div class="desk-reporting" data-desk-panel="reporting" hidden>
-  <nav class="report-template-tabs" role="tablist" aria-label="Reporting templates">
-    <button type="button" role="tab" aria-selected="true" data-report-template="eod">Shift close</button>
-    <button type="button" role="tab" aria-selected="false" data-report-template="status">Task status</button>
-    <button type="button" role="tab" aria-selected="false" data-report-template="handoff">Handoff</button>
-    <button type="button" role="tab" aria-selected="false" data-report-template="meeting">Meeting debrief</button>
-  </nav>
-
-  <div class="artifact-workspace report-artifact-workspace">
-    <section class="tool-panel">
-      <div class="tool-panel-head">
-        <div>
-          <span>01 · Structured context</span>
-          <h2 id="report-form-title">End-of-day report</h2>
-          <p class="tool-intro" id="report-form-intro">Close the shift without reconstructing the day from memory.</p>
-        </div>
-      </div>
-      <form id="report-form" class="tool-form">
-        <div class="tool-row">
-          <label class="workbench-field"><span>Project / client</span><input name="project" placeholder="Project, client, or team"></label>
-          <label class="workbench-field"><span>Report date</span><input name="date" type="date"></label>
-        </div>
-        <label class="workbench-field"><span>Prepared by</span><input name="author" placeholder="Your name"></label>
-        <div id="report-fields" class="tool-form"></div>
-      </form>
-      <p class="privacy-note">Saved only in this browser. No report is transmitted automatically.</p>
-    </section>
-
-    <aside class="tool-panel artifact-output-panel">
-      <div class="tool-panel-head">
-        <div>
-          <span>02 · Portable artifact</span>
-          <h2>Ready for a person or an LLM</h2>
-          <p class="tool-intro">Stable headings preserve meaning when the report moves between tools.</p>
-        </div>
-      </div>
-      <textarea id="report-output" class="tool-output artifact-output" aria-label="Formatted report" readonly></textarea>
-      <div class="tool-actions">
-        <button class="workbench-button primary" type="button" data-report-action="copy">Copy report</button>
-        <button class="workbench-button" type="button" data-report-action="download">Download TXT</button>
-        <button class="workbench-button" type="button" data-report-action="json">Export JSON</button>
-        <button class="workbench-button" type="button" data-report-action="clear">Clear template</button>
-      </div>
-      <output id="report-status" class="tool-status" aria-live="polite">Saved locally</output>
-    </aside>
-  </div>
-</div>

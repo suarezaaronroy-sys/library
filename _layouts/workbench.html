@@ -28,6 +28,7 @@ layout: default
         <a href="{{ '/workbench/scheduling/' | relative_url }}"{% if page.workspace == 'scheduling' %} aria-current="page"{% endif %} title="Clock, stopwatch, countdowns, timezone overlap">Scheduling</a>
         <a href="{{ '/workbench/marketing/' | relative_url }}"{% if page.workspace == 'marketing' %} aria-current="page"{% endif %} title="Campaign naming, UTM builder, funnel math, ROI models">Marketing</a>
         <a href="{{ '/workbench/crm/' | relative_url }}"{% if page.workspace == 'crm' %} aria-current="page"{% endif %} title="Pipeline simulation, workflow mapping, JSON / regex / request tools">CRM</a>
+        <a href="{{ '/workbench/reporting/' | relative_url }}"{% if page.workspace == 'reporting' %} aria-current="page"{% endif %} title="Reports, checklist reminders, and portable status artifacts">Reporting</a>
       </div>
     </div>
     <div class="workbench-nav-set">
@@ -58,5 +59,5 @@ layout: default
 </div>
 {% if page.canvas %}<script src="{{ '/assets/vendor/cytoscape/cytoscape-3.34.0.min.js' | relative_url }}"></script>{% endif %}
 {% if page.workbench_script %}
-<script type="module" src="{{ page.workbench_script | relative_url }}?v=22"></script>
+<script type="module" src="{{ page.workbench_script | relative_url }}?v=23"></script>
 {% endif %}
