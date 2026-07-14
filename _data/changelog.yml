@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.13"
+  major: false
+  date: "2026-07-14 - 09:12"
+  title: "Workbench link previews"
+  text: "Workbench pages now use dedicated 1200x630 Open Graph cards instead of the generic AS default, with generated previews for Billing, Scheduling, Reporting, Writing, Marketing, CRM, Library Tools, Decisions, Whiteboard, Resources, and the Desk."
 - version: "4.12"
   major: false
   date: "2026-07-09 - 08:46"
