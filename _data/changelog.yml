@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.14"
+  major: false
+  date: "2026-07-14 - 09:32"
+  title: "Deep-link preview system"
+  text: "Site, Workbench, Lab, Grimoire, and Note deep links now get generated 1200x630 Open Graph cards instead of falling back to the generic AS image. A reusable generator updates the preview artwork and page metadata so future public pages can be kept consistent."
 - version: "4.13"
   major: false
   date: "2026-07-14 - 09:12"

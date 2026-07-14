@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/pipeline-stages-that-lie.png
 title: "Pipeline Stages That Lie to You."
 date: 2026-01-15
 category: CRM

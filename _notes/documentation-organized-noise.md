@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/documentation-organized-noise.png
 title: "Documentation Nobody Uses Is Just Organized Noise."
 date: 2026-02-20
 category: Systems

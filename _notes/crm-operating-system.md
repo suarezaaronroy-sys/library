@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/crm-operating-system.png
 title: "CRM Isn't Just a Database. It's an Operating System."
 date: 2026-01-25
 category: CRM

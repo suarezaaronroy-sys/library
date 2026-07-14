@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/automation-trap.png
 title: "The Automation Trap: When You Automate a Broken Process."
 date: 2026-02-28
 category: Operations

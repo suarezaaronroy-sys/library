@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/handoffs-die-here.png
 title: "Handoffs Are Where Work Goes to Die."
 date: 2026-03-01
 category: Operations

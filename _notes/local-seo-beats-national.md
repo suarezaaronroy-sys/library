@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/local-seo-beats-national.png
 title: "Why Local SEO Beats National for New Businesses."
 date: 2026-02-15
 category: Field Notes

@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/escalation-tax.png
 title: "The Escalation Tax: What It's Costing You Every Day."
 date: 2026-03-08
 category: Operations

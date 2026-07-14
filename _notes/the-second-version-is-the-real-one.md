@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/the-second-version-is-the-real-one.png
 title: "The Second Version Is the Real One."
 date: 2025-02-11
 category: Practice

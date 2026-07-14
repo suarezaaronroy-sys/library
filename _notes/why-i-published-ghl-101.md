@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/why-i-published-ghl-101.png
 title: "GHL 101: Why I Published Over a Year of Notes for Free."
 date: 2026-03-20
 category: Field Notes

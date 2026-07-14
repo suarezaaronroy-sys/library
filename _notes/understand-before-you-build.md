@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/understand-before-you-build.png
 title: "Understand Before You Build."
 date: 2024-09-17
 category: Practice

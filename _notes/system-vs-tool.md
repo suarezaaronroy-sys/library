@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/system-vs-tool.png
 title: "The Difference Between a Tool and a System."
 date: 2026-02-10
 category: Systems

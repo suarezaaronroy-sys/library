@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/landlord-list-open-rate.png
 title: "34.2% Open Rate from a Landlord List. What Actually Worked."
 date: 2026-04-10
 category: Field Notes

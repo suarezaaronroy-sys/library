@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/knowledge-is-a-moving-horizon.png
 title: "Knowledge Is a Moving Horizon."
 date: 2025-05-13
 category: Practice

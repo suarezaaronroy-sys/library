@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/reputation-in-small-decisions.png
 title: "Reputation Is Written in Small Decisions."
 date: 2025-11-18
 category: Practice

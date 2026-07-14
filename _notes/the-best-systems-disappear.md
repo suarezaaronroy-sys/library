@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/the-best-systems-disappear.png
 title: "The Best Systems Disappear."
 date: 2024-11-19
 category: Systems

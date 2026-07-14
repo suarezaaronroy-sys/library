@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/stop-training-people.png
 title: "Stop Training People. Start Building Systems That Set Them Free."
 date: 2026-03-15
 category: Systems

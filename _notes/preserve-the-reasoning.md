@@ -1,4 +1,5 @@
 ---
+image: /assets/og/notes/preserve-the-reasoning.png
 title: "Preserve the Reasoning, Not Just the Result."
 date: 2025-08-19
 category: Systems

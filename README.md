@@ -9,7 +9,7 @@ field notes, and essays.
 - Five primary routes: Home, About, Library, Notes, and Contact
 - Fifteen published Grimoires (G001-G014 and G017), two visible drafts
   (G015-G016), and one retired alias (G018)
-- Eleven Notes generated from the `_notes` collection
+- Seventeen Notes generated from the `_notes` collection
 - One data file driving the Library catalogue
 - Shared Jekyll layouts and includes for the primary site
 - Self-contained HTML for the long-form Grimoires
@@ -80,7 +80,15 @@ Create `_notes/<slug>.md` with `title`, `date`, `category`, `lede`, and
 - `jekyll-feed` publishes all Notes at `/feed.xml`.
 - `jekyll-redirect-from` preserves the legacy `.html` primary routes.
 - `robots.txt` allows crawling and advertises the sitemap.
-- `assets/og-default.png` is the 1200 x 630 default social image.
+- `assets/og-default.png` is the 1200 x 630 fallback social image.
+- `tools/generate-og-previews.ps1` generates page-specific 1200 x 630 cards
+  for Site, Workbench, Lab, Grimoires, and Notes, then wires `image:` front
+  matter or standalone Open Graph/Twitter tags. Run it after adding public
+  pages:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\generate-og-previews.ps1
+```
 
 ## Contact Architecture
 
