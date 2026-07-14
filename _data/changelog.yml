@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.15"
+  major: false
+  date: "2026-07-14 - 09:58"
+  title: "Standalone favicon paths"
+  text: "Standalone Grimoire, Lab, and reading-room pages now use the same /library/ favicon and apple-touch-icon paths as the shared Jekyll layout, fixing deep links that could fall back to an older domain-root favicon."
 - version: "4.14"
   major: false
   date: "2026-07-14 - 09:32"
