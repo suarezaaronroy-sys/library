@@ -17,6 +17,8 @@ const captureList = document.querySelector("#capture-list");
 const copyToday = document.querySelector("#copy-today");
 const clearCaptures = document.querySelector("#clear-captures");
 const scratchpad = document.querySelector("#desk-scratchpad");
+const scratchpadToolbar = document.querySelector("#desk-format-toolbar");
+const scratchpadBlockFormat = document.querySelector("#desk-block-format");
 const scratchpadCount = document.querySelector("#scratchpad-count");
 const deskSaveState = document.querySelector("#desk-save-state");
 const deviceState = document.querySelector("#desk-device-state");
@@ -55,6 +57,9 @@ function loadDesk() {
 const state = loadDesk();
 state.captures ||= [];
 state.clipboard ||= "";
+state.scratchpad ||= "";
+state.scratchpadHtml ||= state.scratchpad ? plainTextToEditorHtml(state.scratchpad) : "";
+let scratchpadRange = null;
 
 function saveDesk() {
   state.lastSaved = new Date().toISOString();
@@ -73,6 +78,25 @@ function formatTime(value) {
 
 function escapeHtml(value) {
   return String(value || "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+}
+
+function plainTextToEditorHtml(value) {
+  return value ? `<p>${escapeHtml(value).replace(/\r?\n/g, "<br>")}</p>` : "";
+}
+
+function sanitizeEditorHtml(value) {
+  const template = document.createElement("template");
+  template.innerHTML = String(value || "");
+  const allowed = new Set(["P", "DIV", "BR", "H1", "H2", "H3", "BLOCKQUOTE", "UL", "OL", "LI", "STRONG", "B", "EM", "I", "U", "S", "STRIKE"]);
+  Array.from(template.content.querySelectorAll("script,style,iframe,object,embed,link,meta")).forEach((node) => node.remove());
+  Array.from(template.content.querySelectorAll("*")).reverse().forEach((node) => {
+    if (!allowed.has(node.tagName)) {
+      node.replaceWith(...node.childNodes);
+      return;
+    }
+    Array.from(node.attributes).forEach((attribute) => node.removeAttribute(attribute.name));
+  });
+  return template.innerHTML;
 }
 
 function updateSaveState() {
@@ -102,7 +126,71 @@ function renderCaptures() {
 
 function updateScratchpadCount() {
   if (!scratchpadCount || !scratchpad) return;
-  scratchpadCount.textContent = `${scratchpad.value.length} chars`;
+  const text = scratchpad.innerText.replace(/\u00a0/g, " ");
+  scratchpadCount.textContent = `${text.length} chars`;
+}
+
+function selectionIsInScratchpad() {
+  const selection = window.getSelection();
+  return Boolean(selection?.rangeCount && scratchpad?.contains(selection.anchorNode));
+}
+
+function rememberScratchpadSelection() {
+  if (!selectionIsInScratchpad()) return;
+  scratchpadRange = window.getSelection().getRangeAt(0).cloneRange();
+}
+
+function restoreScratchpadSelection() {
+  if (!scratchpad) return false;
+  const selection = window.getSelection();
+  if (scratchpadRange && scratchpad.contains(scratchpadRange.commonAncestorContainer)) {
+    selection.removeAllRanges();
+    selection.addRange(scratchpadRange);
+    return true;
+  }
+  const range = document.createRange();
+  range.selectNodeContents(scratchpad);
+  range.collapse(false);
+  selection.removeAllRanges();
+  selection.addRange(range);
+  scratchpadRange = range.cloneRange();
+  return true;
+}
+
+function updateScratchpadToolbar() {
+  if (!scratchpadToolbar || !selectionIsInScratchpad()) return;
+  scratchpadToolbar.querySelectorAll("[data-editor-toggle]").forEach((button) => {
+    let active = false;
+    try {
+      active = document.queryCommandState(button.dataset.editorCommand);
+    } catch {}
+    button.setAttribute("aria-pressed", String(active));
+  });
+  if (scratchpadBlockFormat) {
+    let block = "p";
+    try {
+      block = String(document.queryCommandValue("formatBlock") || "p").replace(/[<>]/g, "").toLowerCase();
+    } catch {}
+    scratchpadBlockFormat.value = ["p", "h1", "h2", "h3", "blockquote"].includes(block) ? block : "p";
+  }
+}
+
+function saveScratchpad() {
+  if (!scratchpad) return;
+  state.scratchpadHtml = scratchpad.innerHTML;
+  state.scratchpad = scratchpad.innerText.replace(/\u00a0/g, " ");
+  updateScratchpadCount();
+  saveDesk();
+}
+
+function runEditorCommand(command, value = null) {
+  if (!scratchpad) return;
+  restoreScratchpadSelection();
+  scratchpad.focus({ preventScroll: true });
+  document.execCommand(command, false, value);
+  rememberScratchpadSelection();
+  saveScratchpad();
+  updateScratchpadToolbar();
 }
 
 function readSession() {
@@ -171,12 +259,43 @@ function openCommand() {
 }
 
 if (scratchpad) {
-  scratchpad.value = state.scratchpad || "";
+  scratchpad.innerHTML = sanitizeEditorHtml(state.scratchpadHtml);
   updateScratchpadCount();
-  scratchpad.addEventListener("input", () => {
-    state.scratchpad = scratchpad.value;
-    updateScratchpadCount();
-    saveDesk();
+  scratchpad.addEventListener("input", saveScratchpad);
+  scratchpad.addEventListener("keyup", () => {
+    rememberScratchpadSelection();
+    updateScratchpadToolbar();
+  });
+  scratchpad.addEventListener("mouseup", () => {
+    rememberScratchpadSelection();
+    updateScratchpadToolbar();
+  });
+  scratchpad.addEventListener("paste", (event) => {
+    event.preventDefault();
+    document.execCommand("insertText", false, event.clipboardData?.getData("text/plain") || "");
+  });
+  scratchpad.addEventListener("keydown", (event) => {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      runEditorCommand(event.shiftKey ? "outdent" : "indent");
+    } else if (event.altKey && event.shiftKey && event.key === "5") {
+      event.preventDefault();
+      runEditorCommand("strikeThrough");
+    }
+  });
+  document.addEventListener("selectionchange", () => {
+    rememberScratchpadSelection();
+    updateScratchpadToolbar();
+  });
+  scratchpadToolbar?.addEventListener("mousedown", (event) => {
+    if (event.target.closest("button")) event.preventDefault();
+  });
+  scratchpadToolbar?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-editor-command]");
+    if (button) runEditorCommand(button.dataset.editorCommand);
+  });
+  scratchpadBlockFormat?.addEventListener("change", () => {
+    runEditorCommand("formatBlock", scratchpadBlockFormat.value);
   });
 }
 
