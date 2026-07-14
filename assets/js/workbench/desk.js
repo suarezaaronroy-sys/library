@@ -19,6 +19,8 @@ const clearCaptures = document.querySelector("#clear-captures");
 const scratchpad = document.querySelector("#desk-scratchpad");
 const scratchpadToolbar = document.querySelector("#desk-format-toolbar");
 const scratchpadBlockFormat = document.querySelector("#desk-block-format");
+const scratchpadFontFamily = document.querySelector("#desk-font-family");
+const scratchpadFontSize = document.querySelector("#desk-font-size");
 const scratchpadCount = document.querySelector("#scratchpad-count");
 const deskSaveState = document.querySelector("#desk-save-state");
 const deviceState = document.querySelector("#desk-device-state");
@@ -87,14 +89,21 @@ function plainTextToEditorHtml(value) {
 function sanitizeEditorHtml(value) {
   const template = document.createElement("template");
   template.innerHTML = String(value || "");
-  const allowed = new Set(["P", "DIV", "BR", "H1", "H2", "H3", "BLOCKQUOTE", "UL", "OL", "LI", "STRONG", "B", "EM", "I", "U", "S", "STRIKE"]);
+  const allowed = new Set(["P", "DIV", "BR", "H1", "H2", "H3", "BLOCKQUOTE", "UL", "OL", "LI", "STRONG", "B", "EM", "I", "U", "S", "STRIKE", "FONT"]);
+  const allowedFonts = new Set(["DM Sans", "Fraunces", "DM Mono"]);
   Array.from(template.content.querySelectorAll("script,style,iframe,object,embed,link,meta")).forEach((node) => node.remove());
   Array.from(template.content.querySelectorAll("*")).reverse().forEach((node) => {
     if (!allowed.has(node.tagName)) {
       node.replaceWith(...node.childNodes);
       return;
     }
+    const indent = /^[1-6]$/.test(node.dataset.indent || "") ? node.dataset.indent : "";
+    const face = node.tagName === "FONT" && allowedFonts.has(node.getAttribute("face")) ? node.getAttribute("face") : "";
+    const size = node.tagName === "FONT" && /^[1-6]$/.test(node.getAttribute("size") || "") ? node.getAttribute("size") : "";
     Array.from(node.attributes).forEach((attribute) => node.removeAttribute(attribute.name));
+    if (indent) node.dataset.indent = indent;
+    if (face) node.setAttribute("face", face);
+    if (size) node.setAttribute("size", size);
   });
   return template.innerHTML;
 }
@@ -173,6 +182,20 @@ function updateScratchpadToolbar() {
     } catch {}
     scratchpadBlockFormat.value = ["p", "h1", "h2", "h3", "blockquote"].includes(block) ? block : "p";
   }
+  if (scratchpadFontFamily) {
+    let family = "DM Sans";
+    try {
+      family = String(document.queryCommandValue("fontName") || family).replace(/["']/g, "");
+    } catch {}
+    scratchpadFontFamily.value = ["DM Sans", "Fraunces", "DM Mono"].includes(family) ? family : "DM Sans";
+  }
+  if (scratchpadFontSize) {
+    let size = "3";
+    try {
+      size = String(document.queryCommandValue("fontSize") || size);
+    } catch {}
+    scratchpadFontSize.value = ["2", "3", "4", "5", "6"].includes(size) ? size : "3";
+  }
 }
 
 function saveScratchpad() {
@@ -183,11 +206,65 @@ function saveScratchpad() {
   saveDesk();
 }
 
+function selectedScratchpadBlocks() {
+  const selection = window.getSelection();
+  if (!selection?.rangeCount) return [];
+  let range = selection.getRangeAt(0);
+  let blocks = Array.from(scratchpad.children).filter((node) => {
+    try {
+      return range.intersectsNode(node);
+    } catch {
+      return false;
+    }
+  });
+  const blockTags = new Set(["P", "DIV", "H1", "H2", "H3", "BLOCKQUOTE"]);
+  if (!blocks.some((node) => blockTags.has(node.tagName)) && scratchpad.textContent.trim()) {
+    document.execCommand("formatBlock", false, "p");
+    rememberScratchpadSelection();
+    range = window.getSelection().getRangeAt(0);
+    blocks = Array.from(scratchpad.children).filter((node) => {
+      try {
+        return range.intersectsNode(node);
+      } catch {
+        return false;
+      }
+    });
+  }
+  return blocks.filter((node) => blockTags.has(node.tagName));
+}
+
+function adjustScratchpadIndent(delta) {
+  let inList = false;
+  try {
+    inList = document.queryCommandState("insertUnorderedList") || document.queryCommandState("insertOrderedList");
+  } catch {}
+  if (inList) {
+    document.execCommand(delta > 0 ? "indent" : "outdent");
+    return;
+  }
+  selectedScratchpadBlocks().forEach((block) => {
+    const current = Number(block.dataset.indent || 0);
+    if (delta < 0 && current === 0 && block.tagName === "BLOCKQUOTE") {
+      const paragraph = document.createElement("p");
+      while (block.firstChild) paragraph.appendChild(block.firstChild);
+      block.replaceWith(paragraph);
+      return;
+    }
+    const next = Math.max(0, Math.min(6, current + delta));
+    if (next) block.dataset.indent = String(next);
+    else delete block.dataset.indent;
+  });
+}
+
 function runEditorCommand(command, value = null) {
   if (!scratchpad) return;
   restoreScratchpadSelection();
   scratchpad.focus({ preventScroll: true });
-  document.execCommand(command, false, value);
+  if (command === "indent" || command === "outdent") {
+    adjustScratchpadIndent(command === "indent" ? 1 : -1);
+  } else {
+    document.execCommand(command, false, value);
+  }
   rememberScratchpadSelection();
   saveScratchpad();
   updateScratchpadToolbar();
@@ -260,6 +337,9 @@ function openCommand() {
 
 if (scratchpad) {
   scratchpad.innerHTML = sanitizeEditorHtml(state.scratchpadHtml);
+  try {
+    document.execCommand("styleWithCSS", false, false);
+  } catch {}
   updateScratchpadCount();
   scratchpad.addEventListener("input", saveScratchpad);
   scratchpad.addEventListener("keyup", () => {
@@ -296,6 +376,12 @@ if (scratchpad) {
   });
   scratchpadBlockFormat?.addEventListener("change", () => {
     runEditorCommand("formatBlock", scratchpadBlockFormat.value);
+  });
+  scratchpadFontFamily?.addEventListener("change", () => {
+    runEditorCommand("fontName", scratchpadFontFamily.value);
+  });
+  scratchpadFontSize?.addEventListener("change", () => {
+    runEditorCommand("fontSize", scratchpadFontSize.value);
   });
 }
 

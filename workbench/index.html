@@ -65,6 +65,26 @@ workbench_script: /assets/js/workbench/desk.js
               <button type="button" data-editor-command="underline" data-editor-toggle aria-label="Underline" title="Underline (Ctrl+U)"><u>U</u></button>
               <button type="button" data-editor-command="strikeThrough" data-editor-toggle aria-label="Strikethrough" title="Strikethrough (Alt+Shift+5)"><s>S</s></button>
             </div>
+            <div class="desk-format-group" aria-label="Font">
+              <label class="desk-font-format">
+                <span class="sr-only">Font family</span>
+                <select id="desk-font-family" aria-label="Font family" title="Font family">
+                  <option value="DM Sans">Sans</option>
+                  <option value="Fraunces">Serif</option>
+                  <option value="DM Mono">Mono</option>
+                </select>
+              </label>
+              <label class="desk-font-format desk-font-size-format">
+                <span class="sr-only">Font size</span>
+                <select id="desk-font-size" aria-label="Font size" title="Font size">
+                  <option value="2">Small</option>
+                  <option value="3" selected>Normal</option>
+                  <option value="4">Large</option>
+                  <option value="5">Larger</option>
+                  <option value="6">Largest</option>
+                </select>
+              </label>
+            </div>
             <div class="desk-format-group" aria-label="Lists and indentation">
               <button type="button" data-editor-command="insertUnorderedList" data-editor-toggle aria-label="Bulleted list" title="Bulleted list">•</button>
               <button type="button" data-editor-command="insertOrderedList" data-editor-toggle aria-label="Numbered list" title="Numbered list">1.</button>
