@@ -29,6 +29,7 @@ html.workbench-local-transition{view-transition-name:none}
 .workbench-content{padding-top:1.5rem}
 .workbench-content>[data-billing-view-panel]:not([hidden]),.workbench-content>[data-marketing-panel]:not([hidden]),.workbench-content>[data-reporting-panel]:not([hidden]),.workbench-content>[data-resource-panel]:not([hidden]),.workbench-content>[data-whiteboard-panel]:not([hidden]){animation:workbench-panel-in 240ms cubic-bezier(.2,.75,.25,1) both}
 html.workbench-local-transition .workbench-content>[data-billing-view-panel]:not([hidden]),html.workbench-local-transition .workbench-content>[data-marketing-panel]:not([hidden]),html.workbench-local-transition .workbench-content>[data-reporting-panel]:not([hidden]),html.workbench-local-transition .workbench-content>[data-resource-panel]:not([hidden]),html.workbench-local-transition .workbench-content>[data-whiteboard-panel]:not([hidden]){animation:none}
+html.supports-view-transitions .workbench-content>[data-billing-view-panel]:not([hidden]),html.supports-view-transitions .workbench-content>[data-marketing-panel]:not([hidden]),html.supports-view-transitions .workbench-content>[data-reporting-panel]:not([hidden]),html.supports-view-transitions .workbench-content>[data-resource-panel]:not([hidden]),html.supports-view-transitions .workbench-content>[data-whiteboard-panel]:not([hidden]){animation:none}
 #grimoire-ghost,#ghost-popup{display:none!important}
 
 .desk-command-center{margin-bottom:1.8rem;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:rgba(245,242,236,.48)}
