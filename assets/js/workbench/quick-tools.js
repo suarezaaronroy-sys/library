@@ -1,11 +1,15 @@
+import { transitionWorkspace } from "./motion.mjs?v=1";
+
 const resourceViewButtons = document.querySelectorAll("[data-resource-view-panel]");
 resourceViewButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const view = button.dataset.resourceViewPanel;
-    resourceViewButtons.forEach((item) => item.setAttribute("aria-selected", String(item === button)));
-    document.querySelectorAll("[data-resource-panel]").forEach((panel) => {
-      panel.hidden = panel.dataset.resourcePanel !== view;
-    });
+    transitionWorkspace(() => {
+      resourceViewButtons.forEach((item) => item.setAttribute("aria-selected", String(item === button)));
+      document.querySelectorAll("[data-resource-panel]").forEach((panel) => {
+        panel.hidden = panel.dataset.resourcePanel !== view;
+      });
+    }, "[data-resource-panel]:not([hidden])");
   });
 });
 

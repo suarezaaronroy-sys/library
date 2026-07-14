@@ -1,5 +1,6 @@
 import { loadState, saveState } from "./store.js?v=5";
 import { downloadFile, escapeHtml, slug } from "./utils.mjs?v=1";
+import { transitionWorkspace } from "./motion.mjs?v=1";
 
 const REPORT_STORAGE_KEY = "aaron-workbench:v1:desk-reports";
 const CHECKLIST_STORAGE_KEY = "aaron-workbench:v1:checklist-reminders";
@@ -75,18 +76,20 @@ function initReportingViews() {
   document.querySelectorAll("[data-reporting-view]").forEach((button) => {
     button.addEventListener("click", () => switchReportingView(button.dataset.reportingView));
   });
-  if (window.location.hash === "#checklist") switchReportingView("checklist");
+  if (window.location.hash === "#checklist") switchReportingView("checklist", false);
 }
 
-function switchReportingView(view) {
-  const hash = view === "reports" ? window.location.pathname + window.location.search : `#${view}`;
-  window.history.replaceState(null, "", hash);
-  document.querySelectorAll("[data-reporting-view]").forEach((button) => {
-    button.setAttribute("aria-selected", String(button.dataset.reportingView === view));
-  });
-  document.querySelectorAll("[data-reporting-panel]").forEach((panel) => {
-    panel.hidden = panel.dataset.reportingPanel !== view;
-  });
+function switchReportingView(view, animate = true) {
+  transitionWorkspace(() => {
+    const hash = view === "reports" ? window.location.pathname + window.location.search : `#${view}`;
+    window.history.replaceState(null, "", hash);
+    document.querySelectorAll("[data-reporting-view]").forEach((button) => {
+      button.setAttribute("aria-selected", String(button.dataset.reportingView === view));
+    });
+    document.querySelectorAll("[data-reporting-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.reportingPanel !== view;
+    });
+  }, "[data-reporting-panel]:not([hidden])", animate);
 }
 
 function initReports() {
@@ -101,8 +104,10 @@ function initReports() {
 
   document.querySelectorAll("[data-report-template]").forEach((button) => {
     button.addEventListener("click", () => {
-      activeTemplate = button.dataset.reportTemplate;
-      renderTemplate();
+      transitionWorkspace(() => {
+        activeTemplate = button.dataset.reportTemplate;
+        renderTemplate();
+      }, ".report-artifact-workspace");
     });
   });
 

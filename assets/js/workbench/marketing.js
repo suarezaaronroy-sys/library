@@ -1,5 +1,6 @@
 import { loadState, saveState } from "./store.js?v=5";
 import { escapeHtml, slug } from "./utils.mjs?v=1";
+import { transitionWorkspace } from "./motion.mjs?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v2:marketing";
 const FUNNEL_PATTERNS = {
@@ -134,12 +135,14 @@ if (root) {
   renderFunnelPattern();
 
   function switchView(view) {
-    document.querySelectorAll("[data-marketing-view]").forEach((button) => {
-      button.setAttribute("aria-selected", String(button.dataset.marketingView === view));
-    });
-    document.querySelectorAll("[data-marketing-panel]").forEach((panel) => {
-      panel.hidden = panel.dataset.marketingPanel !== view;
-    });
+    transitionWorkspace(() => {
+      document.querySelectorAll("[data-marketing-view]").forEach((button) => {
+        button.setAttribute("aria-selected", String(button.dataset.marketingView === view));
+      });
+      document.querySelectorAll("[data-marketing-panel]").forEach((panel) => {
+        panel.hidden = panel.dataset.marketingPanel !== view;
+      });
+    }, "[data-marketing-panel]:not([hidden])");
   }
 
   function hydrateBrief() {
