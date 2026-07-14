@@ -1,5 +1,5 @@
 /* Workbench: quiet operational surfaces built on the Library design system. */
-.workbench-frame{width:min(1360px,calc(100% - 2.4rem));margin:0 auto;padding:1.8rem 0 4rem}
+.workbench-frame{width:calc(100% - 1rem);max-width:none;margin:0 auto;padding:1.8rem 0 4rem}
 .workbench-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;padding:.6rem 0 1.25rem}
 .workbench-eyebrow{color:var(--teal);font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
 .workbench-header h1{margin-top:.45rem;font-family:var(--serif);font-size:clamp(2.05rem,3.4vw,3.15rem);font-weight:600;line-height:1.04}
@@ -350,7 +350,6 @@ textarea.tool-output{resize:vertical}
 .screenshot-export{display:grid;grid-template-columns:minmax(180px,1fr) 120px auto;align-items:end;gap:.5rem;margin-top:.7rem}
 
 
-.workbench-frame[data-workspace="canvas"]{width:calc(100% - 1rem);max-width:none}
 .systems-canvas{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
 .canvas-toolbar{display:grid;grid-template-columns:170px minmax(180px,1fr) auto auto auto auto auto minmax(90px,auto);gap:.55rem;align-items:end;padding:.7rem;border-bottom:1px solid var(--border);background:rgba(245,242,236,.82)}
 .canvas-autosave{display:inline-flex;min-height:38px;align-items:center;gap:.45rem;padding:0 .65rem;border:1px solid var(--border);background:var(--bg);color:var(--muted);font-family:var(--mono);font-size:.6rem;white-space:nowrap}
@@ -436,7 +435,7 @@ textarea.tool-output{resize:vertical}
   .canvas-workspace{grid-template-columns:150px minmax(0,1fr) 270px}
 }
 @media(max-width:760px){
-  .workbench-frame{width:min(100% - 1rem,680px);padding-top:1rem}
+  .workbench-frame{width:calc(100% - 1rem);padding-top:1rem}
   .workbench-header{align-items:flex-start;flex-direction:column;gap:.8rem}
   .workbench-header h1{font-size:2.35rem}
   .workbench-nav{margin:0 -.5rem}
@@ -498,7 +497,6 @@ textarea.tool-output{resize:vertical}
   .screenshot-canvas-wrap{min-height:220px}
   .screenshot-export{grid-template-columns:1fr 1fr}
   .screenshot-export>.primary{grid-column:1 / -1}
-  .workbench-frame[data-workspace="canvas"]{width:calc(100% - 1rem)}
   .canvas-toolbar{grid-template-columns:1fr 1fr}
   .canvas-title-field{max-width:none}
   .canvas-autosave{justify-content:center}
