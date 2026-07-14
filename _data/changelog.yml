@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.16"
+  major: false
+  date: "2026-07-14 - 11:31"
+  title: "Workbench Desk command center"
+  text: "The Workbench home now acts as a portable command center for weak laptops and tablets: Alt+K command palette, quick capture, sticky scratchpad, session resume, recent workspaces, local/offline status, and copy-ready daily context."
 - version: "4.15"
   major: false
   date: "2026-07-14 - 09:58"

@@ -10,6 +10,73 @@ workbench_title: Operator Workbench
 workbench_lede: Small, local-first tools for recurring operational work.
 workbench_script: /assets/js/workbench/desk.js
 ---
+<section class="desk-command-center" aria-labelledby="desk-command-title">
+  <div class="desk-command-head">
+    <div>
+      <span class="desk-kicker">Command center</span>
+      <h2 id="desk-command-title">Open browser, continue working.</h2>
+      <p>A low-friction desk for weak laptops, tablets, borrowed machines, and the days where installing another app is already too much.</p>
+    </div>
+    <button class="workbench-button primary" type="button" id="command-open">Command palette <kbd>Alt</kbd><kbd>K</kbd></button>
+  </div>
+
+  <div class="desk-grid">
+    <section class="desk-panel desk-panel-main" aria-labelledby="quick-capture-title">
+      <div class="desk-panel-head">
+        <span>Today</span>
+        <b id="desk-save-state">Saved locally</b>
+      </div>
+      <h3 id="quick-capture-title">Quick capture</h3>
+      <form id="quick-capture-form" class="quick-capture-form">
+        <label class="workbench-field">
+          <span>Thought, task, link, number, anything</span>
+          <textarea id="quick-capture-input" rows="3" placeholder="Invoice follow-up, meeting note, supplier quote, useful link..."></textarea>
+        </label>
+        <div class="tool-actions">
+          <button class="workbench-button primary" type="submit">Capture</button>
+          <button class="workbench-button" type="button" id="copy-today">Copy today</button>
+          <button class="workbench-button" type="button" id="clear-captures">Clear captures</button>
+        </div>
+      </form>
+      <div class="capture-list" id="capture-list" aria-live="polite"></div>
+    </section>
+
+    <section class="desk-panel" aria-labelledby="scratchpad-title">
+      <div class="desk-panel-head">
+        <span>Sticky note</span>
+        <b id="scratchpad-count">0 chars</b>
+      </div>
+      <h3 id="scratchpad-title">Scratchpad</h3>
+      <label class="workbench-field">
+        <span>Always available</span>
+        <textarea id="desk-scratchpad" rows="12" placeholder="Keep the working thread here. Saved to this browser."></textarea>
+      </label>
+    </section>
+
+    <section class="desk-panel" aria-labelledby="resume-title">
+      <div class="desk-panel-head">
+        <span>Session</span>
+        <b id="desk-device-state">Checking</b>
+      </div>
+      <h3 id="resume-title">Resume</h3>
+      <div class="resume-card" id="resume-card"></div>
+      <div class="recent-workspaces" id="recent-workspaces"></div>
+    </section>
+  </div>
+</section>
+
+<div class="command-palette" id="command-palette" hidden>
+  <div class="command-backdrop" data-command-close></div>
+  <section class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title">
+    <div class="command-input-wrap">
+      <span id="command-title">Jump to</span>
+      <input id="command-input" type="search" autocomplete="off" placeholder="Search tools, notes, actions...">
+      <button type="button" data-command-close aria-label="Close command palette">×</button>
+    </div>
+    <div class="command-results" id="command-results"></div>
+  </section>
+</div>
+
 <section class="workbench-ledger" aria-label="Workspace status">
   <div class="workbench-ledger-group"><span>Operations</span><em>Money, time, campaigns, pipeline, and reporting - the daily mechanics.</em></div>
   <a class="workbench-ledger-row" href="{{ '/workbench/billing/' | relative_url }}">
