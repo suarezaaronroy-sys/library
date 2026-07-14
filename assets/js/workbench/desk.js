@@ -22,6 +22,10 @@ const deskSaveState = document.querySelector("#desk-save-state");
 const deviceState = document.querySelector("#desk-device-state");
 const resumeCard = document.querySelector("#resume-card");
 const recentWorkspaces = document.querySelector("#recent-workspaces");
+const clipboardInput = document.querySelector("#desk-clipboard");
+const clipboardCopy = document.querySelector("#clipboard-copy");
+const clipboardCapture = document.querySelector("#clipboard-capture");
+const clipboardClear = document.querySelector("#clipboard-clear");
 
 const tools = [
   { title: "Billing", detail: "Invoices, rate calculator, currency, budgets", href: "/library/workbench/billing/", keys: "invoice money rate currency budget calculator" },
@@ -36,6 +40,7 @@ const tools = [
   { title: "Resources", detail: "Tool directory, private notes, favorites", href: "/library/workbench/resources/", keys: "links resources tools reference" },
   { title: "Capture thought", detail: "Focus the quick capture box", action: "capture", keys: "quick capture task thought inbox" },
   { title: "Scratchpad", detail: "Focus the sticky scratchpad", action: "scratchpad", keys: "sticky note scratchpad write" },
+  { title: "Clipboard", detail: "Focus the manual paste buffer", action: "clipboard", keys: "paste copy clipboard buffer move text" },
   { title: "Export backup", detail: "Download all local Workbench data", action: "backup", keys: "backup export data restore" }
 ];
 
@@ -49,6 +54,7 @@ function loadDesk() {
 
 const state = loadDesk();
 state.captures ||= [];
+state.clipboard ||= "";
 
 function saveDesk() {
   state.lastSaved = new Date().toISOString();
@@ -134,6 +140,8 @@ function runCommand(item) {
     captureInput?.focus();
   } else if (item.action === "scratchpad") {
     scratchpad?.focus();
+  } else if (item.action === "clipboard") {
+    clipboardInput?.focus();
   } else if (item.action === "backup") {
     backupExport?.click();
   }
@@ -172,6 +180,14 @@ if (scratchpad) {
   });
 }
 
+if (clipboardInput) {
+  clipboardInput.value = state.clipboard || "";
+  clipboardInput.addEventListener("input", () => {
+    state.clipboard = clipboardInput.value;
+    saveDesk();
+  });
+}
+
 captureForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const text = captureInput?.value.trim();
@@ -198,6 +214,9 @@ copyToday?.addEventListener("click", async () => {
     "## Captures",
     ...(state.captures.length ? state.captures.map((item) => `- ${formatTime(item.created)} - ${item.text}`) : ["- None"]),
     "",
+    "## Clipboard",
+    state.clipboard || "None",
+    "",
     "## Scratchpad",
     state.scratchpad || "None"
   ];
@@ -213,6 +232,32 @@ clearCaptures?.addEventListener("click", () => {
   state.captures = [];
   saveDesk();
   renderCaptures();
+});
+
+clipboardCopy?.addEventListener("click", async () => {
+  const text = clipboardInput?.value || "";
+  if (!text.trim()) return;
+  try {
+    await navigator.clipboard?.writeText(text);
+    if (deskSaveState) deskSaveState.textContent = "Copied clipboard";
+  } catch {
+    if (deskSaveState) deskSaveState.textContent = "Copy blocked by browser";
+  }
+});
+
+clipboardCapture?.addEventListener("click", () => {
+  const text = clipboardInput?.value.trim();
+  if (!text) return;
+  state.captures.unshift({ id: crypto.randomUUID?.() || String(Date.now()), text: `Clipboard: ${text}`, created: new Date().toISOString() });
+  state.captures = state.captures.slice(0, 30);
+  saveDesk();
+  renderCaptures();
+});
+
+clipboardClear?.addEventListener("click", () => {
+  state.clipboard = "";
+  if (clipboardInput) clipboardInput.value = "";
+  saveDesk();
 });
 
 commandOpen?.addEventListener("click", openCommand);

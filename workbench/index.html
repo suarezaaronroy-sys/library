@@ -1,35 +1,57 @@
 ---
 layout: workbench
 title: Operator Workbench
-description: "Client-side tools for billing, scheduling, reporting, writing, marketing, CRM operations, publishing, decision memory, resources, and systems mapping."
+description: "A lightweight browser-based work environment for freelancers, operators, and systems people, with local-first notes, captures, utilities, and operating memory."
 permalink: /workbench/
 image: /assets/og/workbench/desk.png
 workbench: true
 workspace: index
 workbench_title: Operator Workbench
-workbench_lede: Small, local-first tools for recurring operational work.
+workbench_lede: A local-first browser desk for recurring operational work.
 workbench_script: /assets/js/workbench/desk.js
 ---
-<section class="desk-command-center" aria-labelledby="desk-command-title">
+<section class="desk-command-center desk-os" aria-labelledby="desk-command-title">
   <div class="desk-command-head">
     <div>
-      <span class="desk-kicker">Command center</span>
+      <span class="desk-kicker">Desk environment</span>
       <h2 id="desk-command-title">Open browser, continue working.</h2>
-      <p>A low-friction desk for weak laptops, tablets, borrowed machines, and the days where installing another app is already too much.</p>
+      <p>A lightweight browser-based work environment for freelancers, operators, and systems people. The tools are here, but continuity comes first.</p>
     </div>
     <button class="workbench-button primary" type="button" id="command-open">Command palette <kbd>Alt</kbd><kbd>K</kbd></button>
   </div>
 
-  <div class="desk-grid">
-    <section class="desk-panel desk-panel-main" aria-labelledby="quick-capture-title">
+  <div class="desk-grid desk-os-grid">
+    <section class="desk-panel desk-panel-main" aria-labelledby="resume-title">
+      <div class="desk-panel-head">
+        <span>Resume work</span>
+        <b id="desk-device-state">Checking</b>
+      </div>
+      <h3 id="resume-title">Where you left off</h3>
+      <div class="resume-card" id="resume-card"></div>
+      <div class="recent-workspaces" id="recent-workspaces"></div>
+      <div class="desk-continuity-note">
+        <strong>Cheap-device test</strong>
+        <p>Would this make the weakest laptop or borrowed tablet feel more capable?</p>
+      </div>
+    </section>
+
+    <section class="desk-panel" aria-labelledby="today-title">
       <div class="desk-panel-head">
         <span>Today</span>
         <b id="desk-save-state">Saved locally</b>
       </div>
-      <h3 id="quick-capture-title">Quick capture</h3>
+      <h3 id="today-title">Notes and captures</h3>
+      <label class="workbench-field">
+        <span>Today's note</span>
+        <textarea id="desk-scratchpad" rows="8" placeholder="Keep the working thread here. Saved to this browser."></textarea>
+      </label>
+      <div class="desk-panel-head desk-subhead">
+        <span>Scratchpad</span>
+        <b id="scratchpad-count">0 chars</b>
+      </div>
       <form id="quick-capture-form" class="quick-capture-form">
         <label class="workbench-field">
-          <span>Thought, task, link, number, anything</span>
+          <span>Fast capture</span>
           <textarea id="quick-capture-input" rows="3" placeholder="Invoice follow-up, meeting note, supplier quote, useful link..."></textarea>
         </label>
         <div class="tool-actions">
@@ -41,26 +63,53 @@ workbench_script: /assets/js/workbench/desk.js
       <div class="capture-list" id="capture-list" aria-live="polite"></div>
     </section>
 
-    <section class="desk-panel" aria-labelledby="scratchpad-title">
+    <section class="desk-panel desk-dock" aria-labelledby="dock-title">
       <div class="desk-panel-head">
-        <span>Sticky note</span>
-        <b id="scratchpad-count">0 chars</b>
+        <span>Desk dock</span>
+        <b>Local-first</b>
       </div>
-      <h3 id="scratchpad-title">Scratchpad</h3>
-      <label class="workbench-field">
-        <span>Always available</span>
-        <textarea id="desk-scratchpad" rows="12" placeholder="Keep the working thread here. Saved to this browser."></textarea>
-      </label>
-    </section>
+      <h3 id="dock-title">Things kept close</h3>
+      <div class="desk-dock-stack">
+        <section class="desk-mini-panel" aria-labelledby="clipboard-title">
+          <div class="desk-mini-head"><span>Clipboard</span><b>Manual</b></div>
+          <h4 id="clipboard-title">Paste buffer</h4>
+          <textarea id="desk-clipboard" rows="5" placeholder="Paste something here before moving between devices, tabs, calls, or tools."></textarea>
+          <div class="tool-actions">
+            <button class="workbench-button primary" type="button" id="clipboard-copy">Copy</button>
+            <button class="workbench-button" type="button" id="clipboard-capture">Capture</button>
+            <button class="workbench-button" type="button" id="clipboard-clear">Clear</button>
+          </div>
+        </section>
 
-    <section class="desk-panel" aria-labelledby="resume-title">
-      <div class="desk-panel-head">
-        <span>Session</span>
-        <b id="desk-device-state">Checking</b>
+        <section class="desk-mini-panel" aria-label="Quick tools">
+          <div class="desk-mini-head"><span>Quick tools</span><b>Pull out</b></div>
+          <div class="desk-link-list">
+            <a href="{{ '/workbench/billing/' | relative_url }}">Invoice calculator</a>
+            <a href="{{ '/workbench/reporting/' | relative_url }}">Status report</a>
+            <a href="{{ '/workbench/whiteboard/' | relative_url }}">Meeting board</a>
+            <a href="{{ '/workbench/resources/' | relative_url }}">Password generator</a>
+          </div>
+        </section>
+
+        <section class="desk-mini-panel" aria-label="Timers and bookmarks">
+          <div class="desk-mini-head"><span>Timers</span><b>Remote work</b></div>
+          <div class="desk-link-list two-col">
+            <a href="{{ '/workbench/scheduling/' | relative_url }}">Clock</a>
+            <a href="{{ '/workbench/scheduling/' | relative_url }}">Stopwatch</a>
+            <a href="{{ '/workbench/scheduling/' | relative_url }}">Countdown</a>
+            <a href="{{ '/workbench/scheduling/' | relative_url }}">World time</a>
+          </div>
+        </section>
+
+        <section class="desk-mini-panel" aria-label="Bookmarks">
+          <div class="desk-mini-head"><span>Bookmarks</span><b>Library</b></div>
+          <div class="desk-link-list">
+            <a href="{{ '/workbench/library-tools/' | relative_url }}">Builder tools</a>
+            <a href="{{ '/workbench/decisions/' | relative_url }}">Decision log</a>
+            <a href="{{ '/notes/' | relative_url }}">Field notes</a>
+          </div>
+        </section>
       </div>
-      <h3 id="resume-title">Resume</h3>
-      <div class="resume-card" id="resume-card"></div>
-      <div class="recent-workspaces" id="recent-workspaces"></div>
     </section>
   </div>
 </section>

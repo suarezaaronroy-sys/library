@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.17"
+  major: false
+  date: "2026-07-14 - 11:55"
+  title: "Workbench Desk-first home"
+  text: "The Workbench home now reads more like a lightweight browser desk than a utility list: Resume Work, Today's Notes, Recent Captures, a manual Clipboard dock, quick tools, timers, and bookmarks lead the page while the full workspace directory stays below."
 - version: "4.16"
   major: false
   date: "2026-07-14 - 11:31"
