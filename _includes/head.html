@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js-img');</script>
+<script>document.documentElement.classList.add('js-img');if(typeof document.startViewTransition==='function')document.documentElement.classList.add('supports-view-transitions');</script>
 <link rel="stylesheet" href="{{ '/assets/css/main.css?v=17' | relative_url }}">
-{% if page.workbench %}<link rel="stylesheet" href="{{ '/assets/css/workbench.css?v=16' | relative_url }}">{% endif %}
+{% if page.workbench %}<link rel="stylesheet" href="{{ '/assets/css/workbench.css?v=22' | relative_url }}">{% endif %}
 {% if page.extra_css %}
 {% for stylesheet in page.extra_css %}<link rel="stylesheet" href="{{ stylesheet | relative_url }}?v=1">{% endfor %}
 {% endif %}

@@ -17,6 +17,10 @@ const captureList = document.querySelector("#capture-list");
 const copyToday = document.querySelector("#copy-today");
 const clearCaptures = document.querySelector("#clear-captures");
 const scratchpad = document.querySelector("#desk-scratchpad");
+const scratchpadToolbar = document.querySelector("#desk-format-toolbar");
+const scratchpadBlockFormat = document.querySelector("#desk-block-format");
+const scratchpadFontFamily = document.querySelector("#desk-font-family");
+const scratchpadFontSize = document.querySelector("#desk-font-size");
 const scratchpadCount = document.querySelector("#scratchpad-count");
 const deskSaveState = document.querySelector("#desk-save-state");
 const deviceState = document.querySelector("#desk-device-state");
@@ -55,6 +59,9 @@ function loadDesk() {
 const state = loadDesk();
 state.captures ||= [];
 state.clipboard ||= "";
+state.scratchpad ||= "";
+state.scratchpadHtml ||= state.scratchpad ? plainTextToEditorHtml(state.scratchpad) : "";
+let scratchpadRange = null;
 
 function saveDesk() {
   state.lastSaved = new Date().toISOString();
@@ -73,6 +80,32 @@ function formatTime(value) {
 
 function escapeHtml(value) {
   return String(value || "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+}
+
+function plainTextToEditorHtml(value) {
+  return value ? `<p>${escapeHtml(value).replace(/\r?\n/g, "<br>")}</p>` : "";
+}
+
+function sanitizeEditorHtml(value) {
+  const template = document.createElement("template");
+  template.innerHTML = String(value || "");
+  const allowed = new Set(["P", "DIV", "BR", "H1", "H2", "H3", "BLOCKQUOTE", "UL", "OL", "LI", "STRONG", "B", "EM", "I", "U", "S", "STRIKE", "FONT"]);
+  const allowedFonts = new Set(["DM Sans", "Fraunces", "DM Mono"]);
+  Array.from(template.content.querySelectorAll("script,style,iframe,object,embed,link,meta")).forEach((node) => node.remove());
+  Array.from(template.content.querySelectorAll("*")).reverse().forEach((node) => {
+    if (!allowed.has(node.tagName)) {
+      node.replaceWith(...node.childNodes);
+      return;
+    }
+    const indent = /^[1-6]$/.test(node.dataset.indent || "") ? node.dataset.indent : "";
+    const face = node.tagName === "FONT" && allowedFonts.has(node.getAttribute("face")) ? node.getAttribute("face") : "";
+    const size = node.tagName === "FONT" && /^[1-6]$/.test(node.getAttribute("size") || "") ? node.getAttribute("size") : "";
+    Array.from(node.attributes).forEach((attribute) => node.removeAttribute(attribute.name));
+    if (indent) node.dataset.indent = indent;
+    if (face) node.setAttribute("face", face);
+    if (size) node.setAttribute("size", size);
+  });
+  return template.innerHTML;
 }
 
 function updateSaveState() {
@@ -102,7 +135,139 @@ function renderCaptures() {
 
 function updateScratchpadCount() {
   if (!scratchpadCount || !scratchpad) return;
-  scratchpadCount.textContent = `${scratchpad.value.length} chars`;
+  const text = scratchpad.innerText.replace(/\u00a0/g, " ");
+  scratchpadCount.textContent = `${text.length} chars`;
+}
+
+function selectionIsInScratchpad() {
+  const selection = window.getSelection();
+  return Boolean(selection?.rangeCount && scratchpad?.contains(selection.anchorNode));
+}
+
+function rememberScratchpadSelection() {
+  if (!selectionIsInScratchpad()) return;
+  scratchpadRange = window.getSelection().getRangeAt(0).cloneRange();
+}
+
+function restoreScratchpadSelection() {
+  if (!scratchpad) return false;
+  const selection = window.getSelection();
+  if (scratchpadRange && scratchpad.contains(scratchpadRange.commonAncestorContainer)) {
+    selection.removeAllRanges();
+    selection.addRange(scratchpadRange);
+    return true;
+  }
+  const range = document.createRange();
+  range.selectNodeContents(scratchpad);
+  range.collapse(false);
+  selection.removeAllRanges();
+  selection.addRange(range);
+  scratchpadRange = range.cloneRange();
+  return true;
+}
+
+function updateScratchpadToolbar() {
+  if (!scratchpadToolbar || !selectionIsInScratchpad()) return;
+  scratchpadToolbar.querySelectorAll("[data-editor-toggle]").forEach((button) => {
+    let active = false;
+    try {
+      active = document.queryCommandState(button.dataset.editorCommand);
+    } catch {}
+    button.setAttribute("aria-pressed", String(active));
+  });
+  if (scratchpadBlockFormat) {
+    let block = "p";
+    try {
+      block = String(document.queryCommandValue("formatBlock") || "p").replace(/[<>]/g, "").toLowerCase();
+    } catch {}
+    scratchpadBlockFormat.value = ["p", "h1", "h2", "h3", "blockquote"].includes(block) ? block : "p";
+  }
+  if (scratchpadFontFamily) {
+    let family = "DM Sans";
+    try {
+      family = String(document.queryCommandValue("fontName") || family).replace(/["']/g, "");
+    } catch {}
+    scratchpadFontFamily.value = ["DM Sans", "Fraunces", "DM Mono"].includes(family) ? family : "DM Sans";
+  }
+  if (scratchpadFontSize) {
+    let size = "3";
+    try {
+      size = String(document.queryCommandValue("fontSize") || size);
+    } catch {}
+    scratchpadFontSize.value = ["2", "3", "4", "5", "6"].includes(size) ? size : "3";
+  }
+}
+
+function saveScratchpad() {
+  if (!scratchpad) return;
+  state.scratchpadHtml = scratchpad.innerHTML;
+  state.scratchpad = scratchpad.innerText.replace(/\u00a0/g, " ");
+  updateScratchpadCount();
+  saveDesk();
+}
+
+function selectedScratchpadBlocks() {
+  const selection = window.getSelection();
+  if (!selection?.rangeCount) return [];
+  let range = selection.getRangeAt(0);
+  let blocks = Array.from(scratchpad.children).filter((node) => {
+    try {
+      return range.intersectsNode(node);
+    } catch {
+      return false;
+    }
+  });
+  const blockTags = new Set(["P", "DIV", "H1", "H2", "H3", "BLOCKQUOTE"]);
+  if (!blocks.some((node) => blockTags.has(node.tagName)) && scratchpad.textContent.trim()) {
+    document.execCommand("formatBlock", false, "p");
+    rememberScratchpadSelection();
+    range = window.getSelection().getRangeAt(0);
+    blocks = Array.from(scratchpad.children).filter((node) => {
+      try {
+        return range.intersectsNode(node);
+      } catch {
+        return false;
+      }
+    });
+  }
+  return blocks.filter((node) => blockTags.has(node.tagName));
+}
+
+function adjustScratchpadIndent(delta) {
+  let inList = false;
+  try {
+    inList = document.queryCommandState("insertUnorderedList") || document.queryCommandState("insertOrderedList");
+  } catch {}
+  if (inList) {
+    document.execCommand(delta > 0 ? "indent" : "outdent");
+    return;
+  }
+  selectedScratchpadBlocks().forEach((block) => {
+    const current = Number(block.dataset.indent || 0);
+    if (delta < 0 && current === 0 && block.tagName === "BLOCKQUOTE") {
+      const paragraph = document.createElement("p");
+      while (block.firstChild) paragraph.appendChild(block.firstChild);
+      block.replaceWith(paragraph);
+      return;
+    }
+    const next = Math.max(0, Math.min(6, current + delta));
+    if (next) block.dataset.indent = String(next);
+    else delete block.dataset.indent;
+  });
+}
+
+function runEditorCommand(command, value = null) {
+  if (!scratchpad) return;
+  restoreScratchpadSelection();
+  scratchpad.focus({ preventScroll: true });
+  if (command === "indent" || command === "outdent") {
+    adjustScratchpadIndent(command === "indent" ? 1 : -1);
+  } else {
+    document.execCommand(command, false, value);
+  }
+  rememberScratchpadSelection();
+  saveScratchpad();
+  updateScratchpadToolbar();
 }
 
 function readSession() {
@@ -171,12 +336,52 @@ function openCommand() {
 }
 
 if (scratchpad) {
-  scratchpad.value = state.scratchpad || "";
+  scratchpad.innerHTML = sanitizeEditorHtml(state.scratchpadHtml);
+  try {
+    document.execCommand("styleWithCSS", false, false);
+  } catch {}
   updateScratchpadCount();
-  scratchpad.addEventListener("input", () => {
-    state.scratchpad = scratchpad.value;
-    updateScratchpadCount();
-    saveDesk();
+  scratchpad.addEventListener("input", saveScratchpad);
+  scratchpad.addEventListener("keyup", () => {
+    rememberScratchpadSelection();
+    updateScratchpadToolbar();
+  });
+  scratchpad.addEventListener("mouseup", () => {
+    rememberScratchpadSelection();
+    updateScratchpadToolbar();
+  });
+  scratchpad.addEventListener("paste", (event) => {
+    event.preventDefault();
+    document.execCommand("insertText", false, event.clipboardData?.getData("text/plain") || "");
+  });
+  scratchpad.addEventListener("keydown", (event) => {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      runEditorCommand(event.shiftKey ? "outdent" : "indent");
+    } else if (event.altKey && event.shiftKey && event.key === "5") {
+      event.preventDefault();
+      runEditorCommand("strikeThrough");
+    }
+  });
+  document.addEventListener("selectionchange", () => {
+    rememberScratchpadSelection();
+    updateScratchpadToolbar();
+  });
+  scratchpadToolbar?.addEventListener("mousedown", (event) => {
+    if (event.target.closest("button")) event.preventDefault();
+  });
+  scratchpadToolbar?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-editor-command]");
+    if (button) runEditorCommand(button.dataset.editorCommand);
+  });
+  scratchpadBlockFormat?.addEventListener("change", () => {
+    runEditorCommand("formatBlock", scratchpadBlockFormat.value);
+  });
+  scratchpadFontFamily?.addEventListener("change", () => {
+    runEditorCommand("fontName", scratchpadFontFamily.value);
+  });
+  scratchpadFontSize?.addEventListener("change", () => {
+    runEditorCommand("fontSize", scratchpadFontSize.value);
   });
 }
 

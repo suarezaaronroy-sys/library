@@ -1,5 +1,6 @@
 import { loadState, saveState } from "./store.js?v=5";
 import { downloadFile, escapeHtml } from "./utils.mjs?v=1";
+import { transitionWorkspace } from "./motion.mjs?v=1";
 import {
   createWorkbenchGraph,
   fitWorkbenchGraph,
@@ -66,13 +67,15 @@ if (pipelineRoot) initPipeline();
 if (automationRoot) initAutomation();
 
 function switchView(view) {
-  viewButtons.forEach((button) => button.setAttribute("aria-selected", String(button.dataset.whiteboardView === view)));
-  document.querySelectorAll("[data-whiteboard-panel]").forEach((panel) => {
-    panel.hidden = panel.dataset.whiteboardPanel !== view;
-  });
-  if (view === "board") window.dispatchEvent(new CustomEvent("whiteboard:board-shown"));
-  if (view === "pipeline") window.dispatchEvent(new CustomEvent("whiteboard:pipeline-shown"));
-  if (view === "automation") window.dispatchEvent(new CustomEvent("whiteboard:automation-shown"));
+  transitionWorkspace(() => {
+    viewButtons.forEach((button) => button.setAttribute("aria-selected", String(button.dataset.whiteboardView === view)));
+    document.querySelectorAll("[data-whiteboard-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.whiteboardPanel !== view;
+    });
+    if (view === "board") window.dispatchEvent(new CustomEvent("whiteboard:board-shown"));
+    if (view === "pipeline") window.dispatchEvent(new CustomEvent("whiteboard:pipeline-shown"));
+    if (view === "automation") window.dispatchEvent(new CustomEvent("whiteboard:automation-shown"));
+  }, "[data-whiteboard-panel]:not([hidden])");
 }
 
 function initPipeline() {

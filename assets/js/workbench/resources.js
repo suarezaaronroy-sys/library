@@ -7,7 +7,7 @@ import {
   saveResourceState,
   searchResources
 } from "./registry.mjs?v=1";
-import "./quick-tools.js?v=1";
+import "./quick-tools.js?v=2";
 
 const registry = getRegistry();
 const COLLECTIONS = [

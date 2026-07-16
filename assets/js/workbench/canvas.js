@@ -1,5 +1,5 @@
 import { loadState, saveState } from "./store.js?v=5";
-import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=4";
+import { FLOW_LIBRARY, PIPELINE_PATTERNS } from "./whiteboard-modes.js?v=5";
 import { GRIMOIRE_MAPS } from "./grimoire-maps.mjs?v=4";
 import { ADVANCED_FLOWS } from "./advanced-flows.mjs?v=1";
 const FLOWCHART_MAPS = readGrimoireFlowcharts();

@@ -17,6 +17,7 @@ import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
 import "./calculator.js?v=5";
 import { downloadFile, escapeHtml, slug } from "./utils.mjs?v=1";
+import { transitionWorkspace } from "./motion.mjs?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
 const today = new Date();
@@ -99,7 +100,7 @@ if (root) {
 
   // Deep-linkable views: /workbench/billing/#calculator etc.
   const initialView = window.location.hash.slice(1);
-  if (["budget", "personal", "calculator"].includes(initialView)) switchBillingView(initialView);
+  if (["budget", "personal", "calculator"].includes(initialView)) switchBillingView(initialView, false);
 
   form.addEventListener("input", () => {
     state.profile = Object.fromEntries(new FormData(form));
@@ -316,16 +317,18 @@ if (root) {
       : `Manual exchange rate · 1 ${currency} = PHP`;
   }
 
-  function switchBillingView(view) {
-    const hash = view === "invoice" ? window.location.pathname + window.location.search : `#${view}`;
-    window.history.replaceState(null, "", hash);
-    document.querySelectorAll("[data-billing-view]").forEach((button) => {
-      const active = button.dataset.billingView === view;
-      button.setAttribute("aria-selected", String(active));
-    });
-    document.querySelectorAll("[data-billing-view-panel]").forEach((panel) => {
-      panel.hidden = panel.dataset.billingViewPanel !== view;
-    });
+  function switchBillingView(view, animate = true) {
+    transitionWorkspace(() => {
+      const hash = view === "invoice" ? window.location.pathname + window.location.search : `#${view}`;
+      window.history.replaceState(null, "", hash);
+      document.querySelectorAll("[data-billing-view]").forEach((button) => {
+        const active = button.dataset.billingView === view;
+        button.setAttribute("aria-selected", String(active));
+      });
+      document.querySelectorAll("[data-billing-view-panel]").forEach((panel) => {
+        panel.hidden = panel.dataset.billingViewPanel !== view;
+      });
+    }, "[data-billing-view-panel]:not([hidden])", animate);
   }
 
   function render() {
