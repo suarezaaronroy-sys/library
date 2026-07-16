@@ -230,7 +230,7 @@ $MainPages = @(
   @{ Path = "projects.html"; Output = "assets/og/site/library.png"; Url = "/projects/"; Title = "The Library"; Subtitle = "Free grimoires on CRM, automation, AI workflows, SEO, payments, remote work, and organizational systems."; Kind = "Library"; Accent = "#4338ca"; Chips = @("grimoires", "ungated", "systems"); Lines = @("CRM", "Automation", "Payments", "AI operations", "Quiet trades") },
   @{ Path = "notes.html"; Output = "assets/og/site/notes.png"; Url = "/notes/"; Title = "Field Notes"; Subtitle = "Short operational notes on systems, automation, handoffs, documentation, and the work behind the work."; Kind = "Notes"; Accent = "#b45309"; Chips = @("notes", "signals", "memory"); Lines = @("CRM", "Operations", "Systems", "AI", "Documentation") },
   @{ Path = "contact.html"; Output = "assets/og/site/contact.png"; Url = "/contact/"; Title = "Contact Aaron Suarez"; Subtitle = "Roles, collaboration, writing, library questions, and selective operational systems engagements."; Kind = "Contact"; Accent = "#15803d"; Chips = @("roles", "collaboration", "writing"); Lines = @("Direct lane", "Studio lane", "Remote-first", "Evidence", "Next step") },
-  @{ Path = "lab/index.html"; Output = "assets/og/lab/lab.png"; Url = "/lab/"; Title = "The Lab"; Subtitle = "Experimental builds shipped early and iterated in public: Sari2POS, trades CRM strategy, and civic comparison tools."; Kind = "Lab"; Accent = "#1d4ed8"; Chips = @("mvp", "prototype", "bench"); Lines = @("Sari2POS", "Trades CRM", "Politician tiers", "Service design", "Rough tools") }
+  @{ Path = "lab/index.html"; Output = "assets/og/lab/lab.png"; Url = "/lab/"; Title = "The Lab"; Subtitle = "Experimental builds and applied studies kept visible while their reasoning is still changing."; Kind = "Lab"; Accent = "#1d4ed8"; Chips = @("mvp", "study", "bench"); Lines = @("Sari2POS", "Trades operations", "Homeground PH", "Politician tiers", "Rough tools") }
 )
 
 foreach ($Page in $MainPages) {
@@ -269,8 +269,14 @@ foreach ($Path in $LabPages) {
   $Description = Get-HtmlDescription $Text "A Lab prototype from the working library."
   $Output = "assets/og/lab/$Slug.png"
   $PagePath = "/library/lab/$Slug.html"
+  $IsTradesStudy = $Slug -eq "trades-crm"
   $Cards.Add([pscustomobject]@{
-    Output = $Output; Path = $PagePath; Title = $Title; Subtitle = $Description; Kind = "Lab prototype"; Accent = "#1d4ed8"; Chips = @("lab", "mvp", "prototype"); Lines = @("Problem frame", "Demo surface", "Operating logic", "Evidence", "Next iteration"); PanelTitle = "Blueprint"
+    Output = $Output; Path = $PagePath; Title = $Title; Subtitle = $Description
+    Kind = $(if ($IsTradesStudy) { "Architecture study" } else { "Lab prototype" })
+    Accent = "#1d4ed8"
+    Chips = $(if ($IsTradesStudy) { @("systems", "principles", "operations") } else { @("lab", "mvp", "prototype") })
+    Lines = $(if ($IsTradesStudy) { @("Operational memory", "Context-first work", "Explicit relationships", "Human control", "Reconciliation") } else { @("Problem frame", "Demo surface", "Operating logic", "Evidence", "Next iteration") })
+    PanelTitle = $(if ($IsTradesStudy) { "Working principles" } else { "Blueprint" })
   })
   Set-StandaloneHtmlPreview $Path $Title $Description ($BaseUrl + "/lab/$Slug.html") ($BaseUrl + "/" + $Output) "website"
 }

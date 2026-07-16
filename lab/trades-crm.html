@@ -4,18 +4,18 @@
 <link rel="apple-touch-icon" href="/library/apple-touch-icon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trades CRM — Discovery Notes & MVP Design</title>
-<meta name="description" content="A discovery-notes / MVP-design blueprint for a trades CRM: the lead-to-cash spine, backbone subsystems, automations, and a phased build path. Planning and strategy, not a built system.">
+<title>Trades Operations — Applied Architecture Notes</title>
+<meta name="description" content="Applied architecture notes on durable operational memory, context-first work, explicit relationships, human-controlled automation, and the realities of bespoke trade businesses.">
 <meta name="twitter:image" content="https://suarezaaronroy-sys.github.io/library/assets/og/lab/trades-crm.png">
-<meta name="twitter:description" content="A discovery-notes / MVP-design blueprint for a trades CRM: the lead-to-cash spine, backbone subsystems, automations, and a phased build path. Planning and strategy, not a built system.">
-<meta name="twitter:title" content="Trades CRM — Discovery Notes &amp; MVP Design">
+<meta name="twitter:description" content="Applied architecture notes on durable operational memory, context-first work, explicit relationships, human-controlled automation, and the realities of bespoke trade businesses.">
+<meta name="twitter:title" content="Trades Operations — Applied Architecture Notes">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
 <meta property="og:image" content="https://suarezaaronroy-sys.github.io/library/assets/og/lab/trades-crm.png">
 <meta property="og:url" content="https://suarezaaronroy-sys.github.io/library/lab/trades-crm.html">
-<meta property="og:description" content="A discovery-notes / MVP-design blueprint for a trades CRM: the lead-to-cash spine, backbone subsystems, automations, and a phased build path. Planning and strategy, not a built system.">
-<meta property="og:title" content="Trades CRM — Discovery Notes &amp; MVP Design">
+<meta property="og:description" content="Applied architecture notes on durable operational memory, context-first work, explicit relationships, human-controlled automation, and the realities of bespoke trade businesses.">
+<meta property="og:title" content="Trades Operations — Applied Architecture Notes">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -55,7 +55,7 @@ h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.8rem,5vw,3rem);lin
 .kpi span{font-family:var(--mono);font-size:8px;color:var(--ink3)}
 
 /* pipeline spine */
-.spine{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:5px}
+.spine{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
 .ph{border:1px solid var(--line);border-top:3px solid var(--c);border-radius:5px;background:var(--card);padding:.45rem .5rem}
 .ph-h{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.04em;color:var(--c);margin-bottom:.35rem}
 .ph ul{list-style:none;padding:0}
@@ -97,66 +97,66 @@ h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.8rem,5vw,3rem);lin
 
 footer{margin-top:1.6rem;border-top:1px solid var(--line);padding-top:.8rem;font-family:var(--mono);font-size:9.5px;color:var(--ink3);line-height:1.8;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
-@media(max-width:1100px){.kpis{grid-template-columns:repeat(4,1fr)}.spine{grid-template-columns:repeat(7,1fr)}.subs{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.probs{grid-template-columns:repeat(3,1fr)}.build{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:1fr}}
-@media(max-width:640px){.spine{grid-template-columns:repeat(3,1fr)}.subs,.probs,.build{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(4,1fr)}.spine{grid-template-columns:repeat(4,1fr)}.subs{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.probs{grid-template-columns:repeat(3,1fr)}.build{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:1fr}}
+@media(max-width:640px){.spine{grid-template-columns:repeat(2,1fr)}.subs,.probs,.build{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
 </style></head><body>
 <div class="sheet">
   <a class="backbar" href="/library/lab/">&larr; The Lab</a>
   <header>
     <div>
-      <div class="eyebrow">Lab &middot; discovery notes / MVP design</div>
-      <h1>Trades CRM &mdash; the build, mapped before it&rsquo;s sold.</h1>
-      <p class="lead">This is design work, not a running system. A trades CRM gets assembled in an operations platform &mdash; GoHighLevel plus integrations &mdash; not in HTML. What lives here is the thinking that has to come first: the problem, the lead&rarr;cash spine, the subsystems that carry it, the automations that run it, and a phased path from a sellable MVP to the full operating system. Plumbing, electrical, glazing, HVAC, construction &mdash; the shape is the same.</p>
+      <div class="eyebrow">Lab &middot; applied architecture notes</div>
+      <h1>Trade work is not a funnel. It is a living record of commitments.</h1>
+      <p class="lead">These notes ask how software can make bespoke operational work easier to understand without pretending the work is simple. They are informed by studying real records, handoffs, calendars, documents and exceptions, then testing the resulting ideas through prototypes. The subject is the system philosophy: what operational software should preserve, expose and leave to human judgement.</p>
     </div>
-    <div class="stamp">DISCOVERY &middot; MVP DESIGN<br>visualisation &middot; planning &middot; strategy<br>built on G001 logic<br>Aaron Suarez</div>
+    <div class="stamp">APPLIED STUDY<br>operational memory &middot; workflow architecture<br>principles grounded in use<br>Aaron Suarez</div>
   </header>
 
-  <div class="note"><b>What this is.</b> A planning and strategy artifact for a done-for-you CRM offer &mdash; the map a client and I would agree on before a single automation is built. The real system is configured in the CRM platform; this page exists so the reasoning is visible and arguable up front, instead of discovered mid-build. No live CRM runs on this page.</div>
+  <div class="note"><b>What this is.</b> A public architecture study about the reasoning that can travel between trades. It stays at the level of durable principles: how work is identified, connected, scheduled, explained, reconciled and remembered.</div>
 
-  <div class="sectlabel">The problem &middot; where trades businesses leak money</div>
+  <div class="sectlabel">Working assumptions &middot; what the work keeps proving</div>
   <div class="probs">
-    <div class="prob"><h3>Missed calls</h3><p>A ringing phone on a job site is a lost lead. No call-back, no text, no record it ever happened.</p><span>&rarr; capture gap</span></div>
-    <div class="prob"><h3>Slow quotes</h3><p>Days between survey and sent quote. The keenest lead cools while the paperwork waits.</p><span>&rarr; convert gap</span></div>
-    <div class="prob"><h3>No follow-up</h3><p>Unsigned quotes sit untouched. Most jobs are won on the second or third nudge that never gets sent.</p><span>&rarr; nurture gap</span></div>
-    <div class="prob"><h3>Aged debt</h3><p>Work delivered, invoice forgotten. Cash the business already earned sits uncollected past 30 days.</p><span>&rarr; collect gap</span></div>
-    <div class="prob"><h3>Silent after</h3><p>Job done, customer gone. No review ask, no maintenance reminder, no reactivation. Reputation and repeat work left on the table.</p><span>&rarr; retain gap</span></div>
+    <div class="prob"><h3>The Job is the harness</h3><p>Messages, people, sites, promises, documents, purchases and money need one durable place to meet without becoming one overloaded record.</p><span>&rarr; continuity</span></div>
+    <div class="prob"><h3>The calendar runs the day</h3><p>A stage describes position. A dated commitment changes what people actually do, so time, ownership and readiness need equal weight.</p><span>&rarr; operational truth</span></div>
+    <div class="prob"><h3>Relationships beat flat fields</h3><p>The person paying may not live on site; the person granting access may not approve the work. Roles must be explicit.</p><span>&rarr; correct context</span></div>
+    <div class="prob"><h3>Exceptions are normal</h3><p>Provisional dates, split crews, phased contracts, supplier delays and nearby double-bookings are not edge cases in bespoke work.</p><span>&rarr; flexible control</span></div>
+    <div class="prob"><h3>History must explain state</h3><p>If a record says waiting, blocked or complete, the evidence and decision trail should make that state understandable.</p><span>&rarr; explainability</span></div>
   </div>
 
-  <div class="sectlabel">The numbers it has to move</div>
-  <div class="kpis"><div class="kpi"><b>CLOSE RATE</b><span>quote &rarr; won</span></div><div class="kpi"><b>AVG JOB VALUE</b><span>per won job</span></div><div class="kpi"><b>GROSS MARGIN</b><span>actual vs quoted</span></div><div class="kpi"><b>TIME-TO-QUOTE</b><span>survey &rarr; sent</span></div><div class="kpi"><b>SHOW RATE</b><span>booked &rarr; attended</span></div><div class="kpi"><b>CASH COLLECTED</b><span>this period</span></div><div class="kpi"><b>AGED DEBT</b><span>&gt; 30 days</span></div><div class="kpi"><b>REVIEW RATE</b><span>done &rarr; reviewed</span></div></div>
+  <div class="sectlabel">What useful operational software must preserve</div>
+  <div class="kpis"><div class="kpi"><b>IDENTITY</b><span>stable references</span></div><div class="kpi"><b>CONTEXT</b><span>what changes the decision</span></div><div class="kpi"><b>OWNERSHIP</b><span>who carries the next move</span></div><div class="kpi"><b>TIME</b><span>promises and constraints</span></div><div class="kpi"><b>EVIDENCE</b><span>why the record says this</span></div><div class="kpi"><b>COMMERCIAL CHAIN</b><span>scope to money</span></div><div class="kpi"><b>EXCEPTIONS</b><span>flags without dead ends</span></div><div class="kpi"><b>AUDIT</b><span>what changed and when</span></div></div>
 
-  <div class="sectlabel">The pipeline &middot; acquire &rarr; capture &rarr; convert &rarr; deliver &rarr; collect &rarr; retain</div>
-  <div class="spine"><div class="ph" style="--c:#0d9488"><div class="ph-h">ACQUIRE</div><ul><li>Local SEO / GMB</li><li>Paid ads</li><li>Van + signage</li><li>Word of mouth</li><li>Referral engine</li><li>Directories</li></ul></div><div class="ph" style="--c:#0d9488"><div class="ph-h">CAPTURE</div><ul><li>Web form</li><li>Missed-call text-back</li><li>Live chat / WhatsApp</li><li>Inbound call</li><li>Manual entry</li><li>&rarr; Contact created</li></ul></div><div class="ph" style="--c:#c2410c"><div class="ph-h">QUALIFY</div><ul><li>Job type + scope</li><li>Territory</li><li>Urgency</li><li>Budget signal</li><li>Spam filter</li><li>Lead score</li></ul></div><div class="ph" style="--c:#c2410c"><div class="ph-h">BOOK</div><ul><li>Survey scheduling</li><li>Calendar hold</li><li>Reminders</li><li>Assign surveyor</li><li>Route plan</li><li>No-show tripwire</li></ul></div><div class="ph" style="--c:#c2410c"><div class="ph-h">SURVEY</div><ul><li>On-site measure</li><li>Photos + notes</li><li>Access constraints</li><li>Compliance check</li><li>Materials list</li><li>Survey &rarr; CRM</li></ul></div><div class="ph" style="--c:#c2410c"><div class="ph-h">QUOTE</div><ul><li>Materials + labour</li><li>Margin + contingency</li><li>Good/Better/Best</li><li>E-sign</li><li>Sent timestamp</li><li>HiTL gate</li></ul></div><div class="ph" style="--c:#c2410c"><div class="ph-h">NURTURE</div><ul><li>48h follow-up</li><li>Chase unsigned</li><li>Objection handling</li><li>Price reframe</li><li>Decision reminder</li><li>Stop on reply</li></ul></div><div class="ph" style="--c:#1d4ed8"><div class="ph-h">WIN</div><ul><li>Contract signed</li><li>Deposit invoice</li><li>Onboarding pack</li><li>Pipeline &rarr; Won</li><li>Delivery trigger</li><li>CAPI event</li></ul></div><div class="ph" style="--c:#1d4ed8"><div class="ph-h">SCHEDULE</div><ul><li>Crew dispatch</li><li>Availability check</li><li>Materials ordered</li><li>Supplier PO</li><li>Client prep note</li><li>Install date</li></ul></div><div class="ph" style="--c:#1d4ed8"><div class="ph-h">EXECUTE</div><ul><li>On-site work</li><li>Daily job phase</li><li>Variations</li><li>Photo evidence</li><li>H&amp;S on site</li><li>Progress updates</li></ul></div><div class="ph" style="--c:#1d4ed8"><div class="ph-h">SIGN-OFF</div><ul><li>Snag list</li><li>Defect log</li><li>Quality check</li><li>Client sign-off</li><li>Warranty issued</li><li>Completion cert</li></ul></div><div class="ph" style="--c:#15803d"><div class="ph-h">INVOICE</div><ul><li>Final invoice</li><li>Card / bank</li><li>Payment cleared</li><li>Reconcile</li><li>Job costing</li><li>Margin actual</li></ul></div><div class="ph" style="--c:#7c3aed"><div class="ph-h">AFTER-SALES</div><ul><li>Warranty tracking</li><li>Compliance docs</li><li>Insurance / COI</li><li>Maintenance reminder</li><li>Reactivation</li><li>Repeat work</li></ul></div><div class="ph" style="--c:#7c3aed"><div class="ph-h">REVIEW</div><ul><li>NPS survey</li><li>Google review ask</li><li>Detractor recovery</li><li>Referral request</li><li>Case study</li><li>Reputation loop</li></ul></div></div>
+  <div class="sectlabel">A conceptual spine &middot; not a prescribed pipeline</div>
+  <div class="spine"><div class="ph" style="--c:#0d9488"><div class="ph-h">INTAKE</div><ul><li>Preserve source</li><li>Create identity</li><li>Capture uncertainty</li><li>Avoid premature structure</li></ul></div><div class="ph" style="--c:#c2410c"><div class="ph-h">UNDERSTAND</div><ul><li>Clarify need</li><li>Link people and place</li><li>Record constraints</li><li>Separate fact from guess</li></ul></div><div class="ph" style="--c:#c2410c"><div class="ph-h">COMMIT</div><ul><li>Define scope</li><li>Version the promise</li><li>Name the owner</li><li>Make dates explicit</li></ul></div><div class="ph" style="--c:#1d4ed8"><div class="ph-h">PREPARE</div><ul><li>Check readiness</li><li>Coordinate resources</li><li>Surface dependencies</li><li>Flag conflicts</li></ul></div><div class="ph" style="--c:#1d4ed8"><div class="ph-h">DELIVER</div><ul><li>Follow the calendar</li><li>Capture changes</li><li>Keep context visible</li><li>Escalate exceptions</li></ul></div><div class="ph" style="--c:#15803d"><div class="ph-h">RECONCILE</div><ul><li>Compare promise to fact</li><li>Connect cost and value</li><li>Resolve evidence gaps</li><li>Close deliberately</li></ul></div><div class="ph" style="--c:#7c3aed"><div class="ph-h">REMEMBER</div><ul><li>Retain service history</li><li>Preserve decisions</li><li>Support future work</li><li>Learn from exceptions</li></ul></div></div>
 
-  <div class="sectlabel">The backbone &middot; subsystems that carry every job</div>
-  <div class="subs"><div class="sub" style="--c:#57534e"><h3>CRM CORE</h3><p>Contacts &middot; Jobs &middot; Opportunities &middot; pipeline stages &middot; custom fields &middot; lifecycle stage &middot; intent score &middot; owner &middot; source &middot; dedup / merge</p></div><div class="sub" style="--c:#57534e"><h3>COMMS</h3><p>SMS &middot; email &middot; WhatsApp &middot; call tracking &middot; templates &middot; first-response timer &middot; human-reply stop &middot; consent</p></div><div class="sub" style="--c:#1d4ed8"><h3>SCHEDULING &amp; DISPATCH</h3><p>Shared calendar &middot; crew availability &middot; route optimisation &middot; survey vs install slots &middot; reschedule loop &middot; capacity board</p></div><div class="sub" style="--c:#1d4ed8"><h3>SUPPLIERS &amp; STOCK</h3><p>Purchase orders &middot; price lists &middot; lead times &middot; stock levels &middot; delivery tracking &middot; reorder points</p></div><div class="sub" style="--c:#15803d"><h3>FINANCE</h3><p>Deposits &middot; staged invoices &middot; accounting sync &middot; job costing &middot; gross margin &middot; VAT / tax &middot; aged debt &middot; cash-flow</p></div><div class="sub" style="--c:#57534e"><h3>COMPLIANCE &amp; DOCS</h3><p>Contracts &middot; quotes &middot; signed sign-offs &middot; warranties &middot; insurance / COI expiry &middot; H&amp;S / RAMS &middot; photo archive</p></div><div class="sub" style="--c:#7c3aed"><h3>REPUTATION</h3><p>Google Business &middot; review requests &middot; NPS &middot; referral tracking &middot; testimonials &middot; detractor escalation &middot; reactivation</p></div><div class="sub" style="--c:#b45309"><h3>REPORTING &amp; KPIs</h3><p>Close rate &middot; avg job value &middot; margin % &middot; time-to-quote &middot; show rate &middot; cash collected &middot; aged debt &middot; source ROI</p></div></div>
+  <div class="sectlabel">Design principles &middot; the connective tissue matters most</div>
+  <div class="subs"><div class="sub" style="--c:#57534e"><h3>Durable identities</h3><p>Important records need stable references that survive renaming, imports, document versions and changing relationships.</p></div><div class="sub" style="--c:#57534e"><h3>Explicit relationships</h3><p>People, sites, commitments and documents should be linked by role rather than compressed into whichever field was available.</p></div><div class="sub" style="--c:#0d9488"><h3>Context-first screens</h3><p>The work, the context that changes the decision and the likely next actions should be visible together whenever space permits.</p></div><div class="sub" style="--c:#1d4ed8"><h3>Calendar truth</h3><p>Time-based commitments deserve their own model. A schedule informs state and risk without becoming the same thing as status.</p></div><div class="sub" style="--c:#b45309"><h3>Flags, not walls</h3><p>Conflicts should usually be visible and explainable rather than blocked. Operators often know context the rules cannot see.</p></div><div class="sub" style="--c:#7c3aed"><h3>Human-controlled automation</h3><p>Software can route, draft, calculate and warn. Irreversible promises, money decisions and exceptions remain accountable to a person.</p></div><div class="sub" style="--c:#15803d"><h3>Modular boundaries</h3><p>Connected does not mean inseparable. A failure or refinement in one area should not force the whole operational model to be rewritten.</p></div><div class="sub" style="--c:#57534e"><h3>Evidence before certainty</h3><p>Imports and inference can propose relationships, but ambiguity should stay visible until stronger evidence or human judgement resolves it.</p></div></div>
 
-  <div class="sectlabel">The automations that run it</div>
+  <div class="sectlabel">The division of labour &middot; assistance without concealed authority</div>
   <div class="two">
-    <div class="autos"><h3>Tripwires &amp; loops</h3><ol><li>Missed-call &rarr; instant text-back + callback task</li><li>Quote sent &rarr; 48h follow-up &rarr; decision reminder &rarr; stop on reply</li><li>No-show detected &rarr; auto-reschedule loop (max 2)</li><li>Deposit cleared &rarr; schedule crew + order materials</li><li>Job complete &rarr; warranty PDF + compliance file + review ask</li><li>Invoice overdue &rarr; staged chase (7/14/30d) &rarr; escalate to owner</li><li>Estimate &gt; threshold &rarr; manager approval before send (HiTL)</li><li>Insurance / cert within 30 days of expiry &rarr; owner task</li><li>Lead idle past stage SLA &rarr; escalate / reassign</li><li>Cooled lead &rarr; 12-month reactivation nurture</li></ol></div>
-    <div class="legend"><h3>Phase legend</h3><div class="legrow"><span class="dot" style="background:#0d9488"></span>ACQUIRE / CAPTURE</div><div class="legrow"><span class="dot" style="background:#c2410c"></span>CONVERT (survey&rarr;quote&rarr;win)</div><div class="legrow"><span class="dot" style="background:#1d4ed8"></span>DELIVER (schedule&rarr;sign-off)</div><div class="legrow"><span class="dot" style="background:#15803d"></span>COLLECT (invoice&rarr;cash)</div><div class="legrow"><span class="dot" style="background:#7c3aed"></span>RETAIN (after-sales&rarr;reviews)</div><div class="legrow"><span class="dot" style="background:#57534e"></span>BACKBONE (CRM/comms/docs)</div><div class="legrow"><span class="dot" style="background:#b45309"></span>REPORTING / AUTOMATIONS</div>
-      <div style="margin-top:.6rem;font-size:10px;color:var(--ink3);line-height:1.6">Every stage feeds the CRM and the reporting layer in real time. No lead sits idle without a tripwire on it.</div>
+    <div class="autos"><h3>The system can safely assist</h3><ol><li>Collect related context around the work in progress</li><li>Derive summaries from authoritative records</li><li>Detect clashes, missing evidence and inconsistent facts</li><li>Suggest routing, ownership and next actions</li><li>Draft communications from approved templates</li><li>Reconcile likely matches while exposing confidence</li><li>Remember decisions, changes and unresolved exceptions</li></ol></div>
+    <div class="legend"><h3>Human authority remains</h3><div class="legrow"><span class="dot" style="background:#0d9488"></span>Promise a date or outcome</div><div class="legrow"><span class="dot" style="background:#c2410c"></span>Approve scope and commercial terms</div><div class="legrow"><span class="dot" style="background:#1d4ed8"></span>Override a conflict with local context</div><div class="legrow"><span class="dot" style="background:#15803d"></span>Confirm financial allocation</div><div class="legrow"><span class="dot" style="background:#7c3aed"></span>Send sensitive communication</div><div class="legrow"><span class="dot" style="background:#57534e"></span>Resolve ambiguous identity or evidence</div>
+      <div style="margin-top:.6rem;font-size:10px;color:var(--ink3);line-height:1.6">Automation is strongest when its reasoning is visible, its confidence is honest and its authority is bounded.</div>
     </div>
   </div>
 
-  <div class="sectlabel">The build path &middot; sellable before complete</div>
+  <div class="sectlabel">How the study stays grounded</div>
   <div class="build">
-    <div class="stage" style="--c:#0d9488"><div class="tag">MVP &middot; week 1&ndash;2</div><h3>Stop the leaks</h3><ul><li>Missed-call text-back</li><li>Lead capture &rarr; one pipeline</li><li>Quote follow-up sequence</li><li>Review request on complete</li><li>One dashboard, five numbers</li></ul></div>
-    <div class="stage" style="--c:#c2410c"><div class="tag">V1 &middot; month 1</div><h3>Convert &amp; deliver</h3><ul><li>Survey &rarr; quote workflow</li><li>Good/Better/Best e-sign</li><li>Deposit &rarr; schedule trigger</li><li>Crew dispatch + reminders</li><li>Staged invoice chase</li></ul></div>
-    <div class="stage" style="--c:#1d4ed8"><div class="tag">V2 &middot; month 2&ndash;3</div><h3>Full operating system</h3><ul><li>Job costing + margin actuals</li><li>Supplier PO + stock</li><li>Compliance / cert expiry</li><li>Accounting sync</li><li>Reactivation + referral loops</li></ul></div>
-    <div class="stage" style="--c:#7c3aed"><div class="tag">Ongoing</div><h3>Tune the loop</h3><ul><li>Source ROI review</li><li>Bottleneck hunt by stage</li><li>SLA + escalation tuning</li><li>HiTL threshold calibration</li><li>Documented, handed over</li></ul></div>
+    <div class="stage" style="--c:#0d9488"><div class="tag">01 &middot; observe</div><h3>Start with the mess</h3><ul><li>Read the actual records</li><li>Follow real handoffs</li><li>Notice duplicate work</li><li>Record where memory fails</li></ul></div>
+    <div class="stage" style="--c:#c2410c"><div class="tag">02 &middot; model</div><h3>Name the distinctions</h3><ul><li>Separate identity from state</li><li>Separate status from schedule</li><li>Separate role from person</li><li>Separate fact from inference</li></ul></div>
+    <div class="stage" style="--c:#1d4ed8"><div class="tag">03 &middot; prototype</div><h3>Make reasoning tangible</h3><ul><li>Test navigation and density</li><li>Expose missing relationships</li><li>Exercise exceptions</li><li>Prefer reversible structures</li></ul></div>
+    <div class="stage" style="--c:#7c3aed"><div class="tag">04 &middot; reconcile</div><h3>Compress after learning</h3><ul><li>Remove duplicated concepts</li><li>Strengthen shared contracts</li><li>Keep useful complexity</li><li>Document what remains open</li></ul></div>
   </div>
 
-  <div class="sectlabel">Where it actually gets built &middot; demo vs real</div>
+  <div class="sectlabel">What is public here &middot; and what is intentionally not</div>
   <div class="tools">
-    <div class="tool"><h3>Platform</h3><p><b>GoHighLevel</b> carries CRM core, pipelines, comms, calendars, and workflow automations. The map above becomes pipelines, custom fields, and workflow triggers &mdash; configured, not coded.</p></div>
-    <div class="tool"><h3>Integrations</h3><p><b>Stripe / bank</b> for deposits and payments, <b>accounting</b> sync for job costing and aged debt, <b>call tracking</b> for capture, <b>e-sign</b> for quotes. Each is a wired dependency, not HTML.</p></div>
-    <div class="tool"><h3>Human in the loop</h3><p><b>HiTL gates</b> hold anything irreversible &mdash; quotes over threshold, escalations, owner approvals &mdash; so automation speeds the work without removing judgement from the money decisions.</p></div>
+    <div class="tool"><h3>Grounded</h3><p><b>The principles come from use.</b> They have been pressure-tested against operational records, changing requirements and the cognitive load of navigating connected work.</p></div>
+    <div class="tool"><h3>Abstracted</h3><p><b>The publication stays at principles level.</b> It explains why certain boundaries matter without turning one company&rsquo;s process into a universal prescription.</p></div>
+    <div class="tool"><h3>Still open</h3><p><b>The model is not declared finished.</b> Reconciliation, access, scale, integrations and the balance between flexibility and constraint remain questions to keep testing.</p></div>
   </div>
 
   <footer>
-    <span>Trades CRM &middot; discovery notes &amp; MVP design &middot; the reasoning, not the container &middot; reshape live to any trade</span>
-    <span>Offer design &middot; suarezaaronroy</span>
+    <span>Trades operations &middot; applied architecture notes &middot; principles grounded in use</span>
+    <span>Operational systems &middot; suarezaaronroy</span>
   </footer>
 </div>
 </body></html>

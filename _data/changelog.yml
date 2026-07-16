@@ -1,5 +1,15 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.19"
+  major: false
+  date: "2026-07-17 - 04:45"
+  title: "Homeground joins the Lab"
+  text: "Homeground PH now appears as an external Lab specimen: a live buyer-first property directory and lead-generation MVP with structured requirements, shortlist comparison, source visibility, and introduction routing. The project remains hosted separately; the Library only records what the experiment is testing."
+- version: "4.18"
+  major: false
+  date: "2026-07-17 - 04:30"
+  title: "Trades architecture study grounded"
+  text: "The Trades Lab entry now presents the philosophy learned from applied workflow study: durable operational memory, context-first work, explicit relationships, calendar truth, visible exceptions, bounded automation, and reconciliation. The page stays at principles level instead of turning one company’s process into a universal prescription."
 - version: "4.17"
   major: false
   date: "2026-07-14 - 11:55"
