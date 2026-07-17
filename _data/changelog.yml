@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.20"
+  major: false
+  date: "2026-07-17 - 12:48"
+  title: "Trades principles get a companion deck"
+  text: "The Trades operations Lab entry now includes an editable ten-slide D'Workbench sales deck. It translates the public working principles into a product-facing story using anonymized Demo screens while keeping live records and application source code out of the site."
 - version: "4.19"
   major: false
   date: "2026-07-17 - 04:45"
