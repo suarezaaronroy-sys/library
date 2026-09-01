@@ -184,13 +184,13 @@ a.workbench-ledger-row .workbench-ledger-state{color:var(--green)}
 .calendar-toolbar button:hover,.workbench-icon-button:hover{border-color:var(--accent);color:var(--accent)}
 .billing-month-input{min-height:36px;padding:.35rem .55rem;font-family:var(--mono);font-size:.7rem}
 .period-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1rem}
-.billing-calendars{display:grid;gap:1.2rem}
+.billing-calendars{display:grid;gap:.85rem;max-width:720px;margin-inline:auto}
 .billing-month-section{min-width:0}
-.billing-month-title{margin-bottom:.45rem;font-family:var(--serif);font-size:1.05rem}
-.calendar-weekdays,.billing-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
-.calendar-weekdays{margin-bottom:4px}
-.calendar-weekdays span{padding:.25rem 0;text-align:center;color:var(--ink4);font-family:var(--mono);font-size:.55rem;text-transform:uppercase}
-.billing-day{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;aspect-ratio:1;min-width:0;padding:.38rem;border:1px solid var(--border2);border-radius:3px;background:rgba(255,255,255,.48);color:var(--ink2);cursor:pointer;transition:.12s}
+.billing-month-title{margin-bottom:.3rem;font-family:var(--serif);font-size:1rem}
+.calendar-weekdays,.billing-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.calendar-weekdays{margin-bottom:3px}
+.calendar-weekdays span{padding:.15rem 0;text-align:center;color:var(--ink4);font-family:var(--mono);font-size:.52rem;text-transform:uppercase}
+.billing-day{position:relative;display:flex;height:clamp(58px,4.6vw,72px);flex-direction:column;align-items:flex-start;justify-content:space-between;min-width:0;padding:.32rem;border:1px solid var(--border2);border-radius:3px;background:rgba(255,255,255,.48);color:var(--ink2);cursor:pointer;transition:.12s}
 .billing-day:hover{border-color:var(--teal);transform:translateY(-1px)}
 .billing-day:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
 .billing-day.is-empty{visibility:hidden;pointer-events:none}
@@ -206,12 +206,13 @@ a.workbench-ledger-row .workbench-ledger-state{color:var(--green)}
 .billing-day-custom .cust-adj{display:grid;place-items:center;width:15px;height:15px;border-radius:3px;color:var(--ink3);font-size:.72rem;line-height:1;cursor:pointer;transition:.12s}
 .billing-day-custom .cust-adj:hover{background:rgba(29,78,216,.16);color:#1741ba}
 .billing-day.is-weekend .billing-day-number{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
-.calendar-actions{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
+.billing-calendar-panel .period-toolbar,.billing-calendar-panel .calendar-actions,.billing-calendar-panel .calendar-legend{max-width:720px;margin-inline:auto}
+.calendar-actions{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.75rem}
 .workbench-button{min-height:36px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--ink2);padding:.45rem .7rem;font-family:var(--mono);font-size:.61rem;cursor:pointer;transition:.14s}
 .workbench-button:hover{border-color:var(--accent);color:var(--accent)}
 .workbench-button.primary{background:var(--ink);border-color:var(--ink);color:var(--dark-fg)}
 .workbench-button.primary:hover{background:var(--accent);border-color:var(--accent);color:#fff}
-.calendar-legend{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:.9rem;color:var(--ink4);font-family:var(--mono);font-size:.52rem}
+.calendar-legend{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.65rem;color:var(--ink4);font-family:var(--mono);font-size:.52rem}
 .calendar-legend span{display:flex;align-items:center;gap:.3rem}
 .calendar-legend i{width:8px;height:8px;border-radius:2px;border:1px solid var(--border);background:var(--bg2)}
 .calendar-legend .full{background:rgba(13,148,136,.22)}.calendar-legend .half{background:rgba(180,83,9,.2)}.calendar-legend .holiday{background:rgba(194,65,12,.18)}.calendar-legend .custom{background:rgba(29,78,216,.22)}
@@ -497,7 +498,7 @@ textarea.tool-output{resize:vertical}
   .workbench-panel+.workbench-panel{border-left:0;border-top:1px solid var(--border)}
   .workbench-field-inline{grid-template-columns:1fr}
   .period-toolbar{grid-template-columns:1fr}
-  .billing-day{min-height:48px;aspect-ratio:auto;padding:.3rem}
+  .billing-day{height:48px;min-height:48px;padding:.3rem}
   .billing-day-state{font-size:.44rem}
   .summary-metrics{grid-template-columns:1fr 1fr}
   .summary-metric:nth-child(2n){border-right:0}
