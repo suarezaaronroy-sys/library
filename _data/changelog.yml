@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.21"
+  major: false
+  date: "2026-09-02 - 05:49"
+  title: "Billing becomes a reusable document workflow"
+  text: "The Billing Workspace now produces a styled A4 invoice with editable public-use fields, hourly or daily rates, compact cycle calendars, previous and next cycle navigation, issue-date invoice numbering, and a side-by-side document preview. The print layer was extracted into a safe shared D'Workbench document engine for future Contracts, Estimates, Quotes, and related business documents."
 - version: "4.20"
   major: false
   date: "2026-07-17 - 12:48"
