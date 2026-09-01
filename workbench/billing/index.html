@@ -9,7 +9,10 @@ workspace: billing
 workbench_title: Billing Workspace
 workbench_lede: Turn any billing period into invoice-ready numbers without opening a spreadsheet.
 workbench_script: /assets/js/workbench/billing.js
+extra_css:
+  - /assets/css/invoice.css
 ---
+<div class="no-print billing-tool-ui">
 <div class="workspace-view-tabs" role="tablist" aria-label="Billing tools">
   <button type="button" role="tab" aria-selected="true" data-billing-view="invoice">Invoice</button>
   <button type="button" role="tab" aria-selected="false" data-billing-view="budget">Client budget</button>
@@ -203,6 +206,14 @@ workbench_script: /assets/js/workbench/billing.js
     </div>
 
     <form id="billing-form" class="billing-form">
+      <nav class="billing-form-jumps" aria-label="Invoice form sections">
+        <a href="#invoice-parties-fields">Parties</a>
+        <a href="#invoice-work-fields">Work &amp; rate</a>
+        <a href="#invoice-payment-fields">Payment</a>
+      </nav>
+
+      <section id="invoice-parties-fields" class="billing-form-section" aria-labelledby="invoice-parties-title">
+        <h3 id="invoice-parties-title">Parties and document</h3>
       <div class="workbench-field-inline">
         <label class="workbench-field">
           <span>From / provider</span>
@@ -215,8 +226,18 @@ workbench_script: /assets/js/workbench/billing.js
       </div>
 
       <label class="workbench-field">
+        <span>Provider address</span>
+        <textarea id="provider-address" name="providerAddress" rows="2" placeholder="City, region, country"></textarea>
+      </label>
+
+      <label class="workbench-field">
         <span>Client</span>
         <input id="client-name" name="clientName" autocomplete="organization" placeholder="Client or project">
+      </label>
+
+      <label class="workbench-field">
+        <span>Client address</span>
+        <textarea id="client-address" name="clientAddress" rows="2" placeholder="Client billing address"></textarea>
       </label>
 
       <div class="workbench-field-inline">
@@ -227,6 +248,21 @@ workbench_script: /assets/js/workbench/billing.js
         <label class="workbench-field">
           <span>Client email</span>
           <input id="client-email" name="clientEmail" type="email" placeholder="billing@client.com">
+        </label>
+      </div>
+
+      </section>
+
+      <section id="invoice-work-fields" class="billing-form-section" aria-labelledby="invoice-work-title">
+      <h3 id="invoice-work-title">Work and rate</h3>
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Service description</span>
+          <input id="service-description" name="serviceDescription" placeholder="Social Media Management">
+        </label>
+        <label class="workbench-field">
+          <span>Payment terms</span>
+          <input id="payment-terms" name="terms" placeholder="Net 7">
         </label>
       </div>
 
@@ -253,11 +289,12 @@ workbench_script: /assets/js/workbench/billing.js
       </label>
 
       <fieldset class="workbench-fieldset">
-        <legend>Rate basis</legend>
+        <legend>How do you charge this client?</legend>
         <div class="workbench-segmented">
-          <label><input id="rate-hourly" type="radio" name="rateType" value="hourly" checked>Hourly</label>
-          <label><input id="rate-daily" type="radio" name="rateType" value="daily">Daily</label>
+          <label><input id="rate-hourly" type="radio" name="rateType" value="hourly" checked>Per hour</label>
+          <label><input id="rate-daily" type="radio" name="rateType" value="daily">Per day</label>
         </div>
+        <small class="billing-rate-help" id="billing-rate-help">Hourly invoices show both days and hours.</small>
       </fieldset>
 
       <div class="workbench-field-inline">
@@ -265,7 +302,7 @@ workbench_script: /assets/js/workbench/billing.js
           <span>Rate</span>
           <input id="rate" name="rate" type="number" min="0" step="0.01" inputmode="decimal" value="0">
         </label>
-        <label class="workbench-field">
+        <label class="workbench-field" data-hourly-only>
           <span>Hours / day</span>
           <input id="hours-per-day" name="hoursPerDay" type="number" min="0" step="0.25" inputmode="decimal" value="8">
         </label>
@@ -292,10 +329,58 @@ workbench_script: /assets/js/workbench/billing.js
         <span>Invoice notes</span>
         <textarea id="billing-notes" name="notes" placeholder="Scope, reference, or payment terms"></textarea>
       </label>
-      <label class="workbench-field">
-        <span>Payment instructions</span>
-        <textarea id="payment-details" name="paymentDetails" placeholder="Bank, Wise, PayPal, or payment link"></textarea>
-      </label>
+
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Adjustment label</span>
+          <input id="adjustment-label" name="adjustmentLabel" placeholder="Credit or additional charge">
+        </label>
+        <label class="workbench-field">
+          <span>Adjustment</span>
+          <input id="adjustment-amount" name="adjustmentAmount" type="number" step="0.01" inputmode="decimal" value="0">
+          <small>Use a negative amount for a credit.</small>
+        </label>
+      </div>
+
+      </section>
+
+      <section id="invoice-payment-fields" class="billing-form-section" aria-labelledby="invoice-payment-title">
+      <h3 id="invoice-payment-title">Payment and optional details</h3>
+      <div class="workbench-field-inline">
+        <label class="workbench-field">
+          <span>Payment method</span>
+          <input id="payment-method" name="paymentMethod" placeholder="Wise">
+        </label>
+        <label class="workbench-field">
+          <span>Payment account</span>
+          <input id="payment-details" name="paymentDetails" placeholder="@account or bank details">
+        </label>
+      </div>
+
+      <details class="billing-optional-fields">
+        <summary>Optional invoice fields</summary>
+        <div class="billing-form billing-optional-fields-body">
+          <div class="workbench-field-inline">
+            <label class="workbench-field"><span>Provider organization</span><input name="providerOrg"></label>
+            <label class="workbench-field"><span>Provider tax ID</span><input name="providerTaxId"></label>
+          </div>
+          <div class="workbench-field-inline">
+            <label class="workbench-field"><span>Client organization</span><input name="clientOrg"></label>
+            <label class="workbench-field"><span>Attention</span><input name="clientAttn"></label>
+          </div>
+          <div class="workbench-field-inline">
+            <label class="workbench-field"><span>Client VAT / tax ID</span><input name="clientTaxId"></label>
+            <label class="workbench-field"><span>PO reference</span><input name="clientPoRef"></label>
+          </div>
+          <div class="workbench-field-inline">
+            <label class="workbench-field"><span>Account name</span><input name="paymentAccountName"></label>
+            <label class="workbench-field"><span>Payment reference</span><input name="paymentReference"></label>
+          </div>
+          <label class="workbench-field"><span>Footer message</span><input name="footerTerms"></label>
+          <label class="workbench-field"><span>Website</span><input name="website"></label>
+        </div>
+      </details>
+      </section>
       <output id="billing-save-state" class="workbench-save-state" aria-live="polite">Ready</output>
     </form>
   </aside>
@@ -347,8 +432,8 @@ workbench_script: /assets/js/workbench/billing.js
 
     <div class="summary-metrics">
       <div class="summary-metric"><span>Billable days</span><strong id="selected-days">0</strong></div>
-      <div class="summary-metric"><span>Billable hours</span><strong id="billable-hours">0</strong></div>
-      <div class="summary-metric"><span>Daily equivalent</span><strong id="daily-total">—</strong></div>
+      <div class="summary-metric" data-hourly-only><span>Billable hours</span><strong id="billable-hours">0</strong></div>
+      <div class="summary-metric"><span id="daily-total-label">Daily equivalent</span><strong id="daily-total">—</strong></div>
     </div>
     <div class="summary-total">
       <span>Invoice total</span>
@@ -457,3 +542,6 @@ workbench_script: /assets/js/workbench/billing.js
     <output id="budget-toast" class="workbench-toast" aria-live="polite"></output>
   </aside>
 </div>
+</div>
+
+<div id="invoice-print-root" class="print-only" aria-hidden="true"></div>

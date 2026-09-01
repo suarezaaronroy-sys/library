@@ -1,5 +1,6 @@
 import {
   buildBudgetSummary,
+  buildInvoiceData,
   buildInvoiceSummary,
   buildPeriodStatuses,
   calculateBilling,
@@ -8,15 +9,17 @@ import {
   daysInMonth,
   formatDateKey,
   formatMonthKey,
+  formatCurrencyMinor,
   money,
   monthLabel,
   monthsInPeriod,
   number
-} from "./billing-core.mjs?v=5";
+} from "./billing-core.mjs?v=6";
+import { renderInvoiceDocument } from "./invoice-document.mjs?v=1";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
 import "./calculator.js?v=5";
-import { downloadFile, escapeHtml, slug } from "./utils.mjs?v=1";
+import { downloadFile, slug } from "./utils.mjs?v=1";
 import { transitionWorkspace } from "./motion.mjs?v=1";
 
 const STORAGE_KEY = "aaron-workbench:v1:billing";
@@ -28,7 +31,7 @@ const defaultPeriod = {
 };
 const todayKey = formatDateKey(today);
 const dueDate = new Date(today);
-dueDate.setDate(dueDate.getDate() + 14);
+dueDate.setDate(dueDate.getDate() + 7);
 const DEFAULT_BUDGET = {
   name: "",
   currency: "GBP",
@@ -41,25 +44,42 @@ const DEFAULT_BUDGET = {
   notes: ""
 };
 const DEFAULT_STATE = {
-  schemaVersion: 3,
+  schemaVersion: 4,
   period: defaultPeriod,
   profile: {
     providerName: "",
+    providerOrg: "",
+    providerAddress: "",
     providerEmail: "",
+    providerTaxId: "",
     clientName: "",
+    clientOrg: "",
+    clientAttn: "",
+    clientAddress: "",
     clientEmail: "",
+    clientTaxId: "",
+    clientPoRef: "",
     invoiceNumber: `INV-${currentMonth.replace("-", "")}-001`,
     issueDate: todayKey,
     dueDate: formatDateKey(dueDate),
+    terms: "",
     currency: "GBP",
     rateType: "hourly",
     rate: 0,
     hoursPerDay: 8,
-    fxRate: 74,
+    serviceDescription: "",
+    fxRate: 0,
     fxSource: "",
-    fxDate: todayKey,
+    fxDate: "",
     notes: "",
-    paymentDetails: ""
+    adjustmentLabel: "",
+    adjustmentAmount: 0,
+    paymentMethod: "",
+    paymentAccountName: "",
+    paymentDetails: "",
+    paymentReference: "",
+    footerTerms: "",
+    website: ""
   },
   budget: DEFAULT_BUDGET,
   dates: {}
@@ -107,11 +127,13 @@ if (root) {
     state.profile.rate = Number(state.profile.rate);
     state.profile.hoursPerDay = Number(state.profile.hoursPerDay);
     state.profile.fxRate = Number(state.profile.fxRate);
+    state.profile.adjustmentAmount = Number(state.profile.adjustmentAmount);
     if (state.profile.rate < 0) {
       state.profile.rate = 0;
       form.elements.namedItem("rate").value = "0";
       announce("Rate can't be negative - reset to 0.");
     }
+    renderBillingMode();
     persist();
     renderSummary();
   });
@@ -199,7 +221,7 @@ if (root) {
         announce("Summary selected. Copy it from the text field.");
       }
     } else if (action === "print-invoice") {
-      printArtifact(document.querySelector("#invoice-output").value, "Invoice");
+      printInvoiceDocument();
     } else if (action === "download-invoice") {
       if (!calculateBilling(state.profile, periodDates()).billableDays) {
         announce("Nothing billable yet - mark days on the calendar first.");
@@ -244,7 +266,7 @@ if (root) {
     if (Number(loaded.schemaVersion) >= 2 && loaded.period) {
       return {
         ...loaded,
-        schemaVersion: 3,
+        schemaVersion: 4,
         profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
         budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) }
       };
@@ -255,7 +277,7 @@ if (root) {
       end: `${month}-${String(daysInMonth(month)).padStart(2, "0")}`
     };
     return {
-      schemaVersion: 3,
+      schemaVersion: 4,
       period,
       profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
       budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) },
@@ -301,6 +323,7 @@ if (root) {
     });
     document.querySelector("#fx-rate").disabled = state.profile.currency === "PHP";
     renderFxLabel();
+    renderBillingMode();
   }
 
   function hydrateBudget() {
@@ -387,14 +410,20 @@ if (root) {
   }
 
   function renderSummary() {
-    const totals = calculateBilling(state.profile, periodDates());
+    const dates = periodDates();
+    const totals = calculateBilling(state.profile, dates);
+    const invoice = buildInvoiceData(state.profile, state.period, dates);
     const currency = state.profile.currency;
     document.querySelector("#selected-days").textContent = number(totals.billableDays);
     document.querySelector("#billable-hours").textContent = number(totals.billableHours);
     document.querySelector("#daily-total").textContent = `${currency} ${money(totals.dailyEquivalent)}`;
-    document.querySelector("#native-total").textContent = `${currency} ${money(totals.nativeTotal)}`;
-    document.querySelector("#php-total").textContent = `PHP ${money(totals.phpTotal)} estimate`;
+    document.querySelector("#native-total").textContent = formatCurrencyMinor(invoice.totals.grandTotal, currency);
+    const phpGrandTotal = Math.round(invoice.totals.grandTotal * (Number(state.profile.fxRate) || (currency === "PHP" ? 1 : 0)));
+    const phpOutput = document.querySelector("#php-total");
+    phpOutput.hidden = !invoice.fx;
+    phpOutput.textContent = invoice.fx ? `${formatCurrencyMinor(phpGrandTotal, "PHP")} estimate` : "";
     document.querySelector("#invoice-output").value = buildInvoiceSummary(state.profile, state.period, totals);
+    document.querySelector("#invoice-print-root").innerHTML = renderInvoiceDocument(invoice);
   }
 
   function budgetFromForm() {
@@ -480,16 +509,29 @@ if (root) {
   }
 
 
-  function printArtifact(content, title) {
-    const popup = window.open("", "_blank", "width=800,height=900");
-    if (!popup) {
-      announce("Pop-up blocked. Use Copy invoice instead.");
+  function printInvoiceDocument() {
+    const dates = periodDates();
+    if (!calculateBilling(state.profile, dates).billableDays) {
+      announce("Nothing billable yet - mark days on the calendar first.");
       return;
     }
-    popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${escapeHtml(title)}</title><style>body{max-width:720px;margin:48px auto;padding:0 32px;color:#1c1917;font:14px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap} @media print{body{margin:0}}</style></head><body>${escapeHtml(content)}</body></html>`);
-    popup.document.close();
-    popup.focus();
-    popup.print();
+    const previousTitle = document.title;
+    document.title = state.profile.invoiceNumber || "Invoice";
+    window.addEventListener("afterprint", () => {
+      document.title = previousTitle;
+    }, { once: true });
+    window.print();
+  }
+
+  function renderBillingMode() {
+    const hourly = state.profile.rateType !== "daily";
+    root.querySelectorAll("[data-hourly-only]").forEach((element) => {
+      element.hidden = !hourly;
+    });
+    document.querySelector("#billing-rate-help").textContent = hourly
+      ? "Hourly invoices show both days and hours."
+      : "Daily invoices show days only. Half days bill at 0.5 day.";
+    document.querySelector("#daily-total-label").textContent = hourly ? "Daily equivalent" : "Daily rate";
   }
 
 

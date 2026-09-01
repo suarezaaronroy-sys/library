@@ -76,33 +76,120 @@ export function calculateBilling(profile, statuses) {
     return total + (weights[state] || 0);
   }, 0);
   const rate = positiveNumber(profile.rate, 0);
+  const rateMinor = toMinorUnits(rate);
   const fxRate = positiveNumber(profile.fxRate, profile.currency === "PHP" ? 1 : 0);
   const billableHours = billableDays * hoursPerDay;
-  const dailyEquivalent = profile.rateType === "daily" ? rate : rate * hoursPerDay;
-  const nativeTotal = profile.rateType === "daily"
-    ? billableDays * rate
-    : billableHours * rate;
+  const dailyEquivalentMinor = profile.rateType === "daily"
+    ? rateMinor
+    : Math.round(rateMinor * hoursPerDay);
+  const nativeTotalMinor = profile.rateType === "daily"
+    ? Math.round(billableDays * rateMinor)
+    : Math.round(billableHours * rateMinor);
+  const phpTotalMinor = Math.round(nativeTotalMinor * fxRate);
 
   return {
     billableDays,
     billableHours,
-    dailyEquivalent,
-    nativeTotal,
-    phpTotal: nativeTotal * fxRate
+    dailyEquivalentMinor,
+    nativeTotalMinor,
+    phpTotalMinor,
+    // Decimal aliases preserve the existing calculator and export contract.
+    dailyEquivalent: fromMinorUnits(dailyEquivalentMinor),
+    nativeTotal: fromMinorUnits(nativeTotalMinor),
+    phpTotal: fromMinorUnits(phpTotalMinor)
+  };
+}
+
+export function buildInvoiceData(profile, period, statuses) {
+  const totals = calculateBilling(profile, statuses);
+  const adjustmentAmount = toMinorUnits(Number(profile.adjustmentAmount) || 0);
+  const adjustments = adjustmentAmount
+    ? [{ label: profile.adjustmentLabel?.trim() || "Adjustment", amount: adjustmentAmount }]
+    : [];
+  const adjustmentTotal = adjustments.reduce((sum, item) => sum + item.amount, 0);
+  const currency = profile.currency || "GBP";
+  const paymentFields = [];
+  if (profile.paymentDetails?.trim()) {
+    paymentFields.push({ label: "Account", value: profile.paymentDetails.trim() });
+  }
+
+  return {
+    template: "time",
+    ref: profile.invoiceNumber?.trim() || "",
+    issued: profile.issueDate || "",
+    due: profile.dueDate || "",
+    terms: profile.terms?.trim() || "",
+    from: {
+      name: profile.providerName?.trim() || "",
+      org: profile.providerOrg?.trim() || "",
+      addressLines: addressLines(profile.providerAddress),
+      email: profile.providerEmail?.trim() || "",
+      taxId: profile.providerTaxId?.trim() || null
+    },
+    to: {
+      name: profile.clientName?.trim() || "",
+      org: profile.clientOrg?.trim() || "",
+      attn: profile.clientAttn?.trim() || "",
+      addressLines: addressLines(profile.clientAddress),
+      email: profile.clientEmail?.trim() || "",
+      taxId: profile.clientTaxId?.trim() || null,
+      poRef: profile.clientPoRef?.trim() || null
+    },
+    currency,
+    fx: currency !== "PHP" && positiveNumber(profile.fxRate, 0) > 0
+      ? { to: "PHP", rate: positiveNumber(profile.fxRate, 0) }
+      : null,
+    period: { from: period.start, to: period.end },
+    lines: [{
+      desc: profile.serviceDescription?.trim() || "",
+      note: profile.rateType === "hourly" && positiveNumber(profile.hoursPerDay, 0) > 0
+        ? `${number(profile.hoursPerDay)} hours/day`
+        : "",
+      days: totals.billableDays,
+      hours: totals.billableHours,
+      rate: toMinorUnits(profile.rate),
+      rateUnit: profile.rateType === "daily" ? "day" : "hour",
+      amount: totals.nativeTotalMinor
+    }],
+    adjustments,
+    totals: {
+      billableDays: totals.billableDays,
+      billableHours: totals.billableHours,
+      subtotal: totals.nativeTotalMinor,
+      adjustmentTotal,
+      grandTotal: totals.nativeTotalMinor + adjustmentTotal
+    },
+    payment: {
+      method: profile.paymentMethod?.trim() || "",
+      accountName: profile.paymentAccountName?.trim() || "",
+      fields: paymentFields,
+      reference: profile.paymentReference?.trim() || ""
+    },
+    notes: profile.notes?.trim() || "",
+    footerTerms: profile.footerTerms?.trim() || "",
+    website: profile.website?.trim() || "",
+    retainer: null,
+    milestone: null
   };
 }
 
 export function buildInvoiceSummary(profile, period, totals) {
-  const client = profile.clientName.trim() || "Client";
-  const provider = profile.providerName?.trim() || "Provider";
+  const client = profile.clientName?.trim() || "";
+  const provider = profile.providerName?.trim() || "";
   const currency = profile.currency || "PHP";
   const rateLabel = profile.rateType === "daily"
     ? `${currency} ${money(profile.rate)} / day`
     : `${currency} ${money(profile.rate)} / hour`;
-  const notes = profile.notes.trim();
+  const notes = profile.notes?.trim() || "";
   const paymentDetails = profile.paymentDetails?.trim();
   const fxSource = profile.fxSource?.trim();
   const fxDate = profile.fxDate?.trim();
+  const adjustmentMinor = toMinorUnits(Number(profile.adjustmentAmount) || 0);
+  const grandTotalMinor = totals.nativeTotalMinor + adjustmentMinor;
+  const phpGrandTotalMinor = Math.round(grandTotalMinor * positiveNumber(profile.fxRate, profile.currency === "PHP" ? 1 : 0));
+  const hasProvider = Boolean(provider || profile.providerEmail?.trim());
+  const hasClient = Boolean(client || profile.clientEmail?.trim());
+  const hasFx = currency !== "PHP" && positiveNumber(profile.fxRate, 0) > 0;
 
   return [
     `INVOICE`,
@@ -110,26 +197,28 @@ export function buildInvoiceSummary(profile, period, totals) {
     profile.issueDate ? `Issue date: ${profile.issueDate}` : null,
     profile.dueDate ? `Due date: ${profile.dueDate}` : null,
     ``,
-    `FROM`,
-    provider,
-    profile.providerEmail?.trim() || null,
-    ``,
-    `BILL TO`,
-    client,
-    profile.clientEmail?.trim() || null,
-    ``,
+    hasProvider ? `FROM` : null,
+    hasProvider ? provider || null : null,
+    hasProvider ? profile.providerEmail?.trim() || null : null,
+    hasProvider ? `` : null,
+    hasClient ? `BILL TO` : null,
+    hasClient ? client || null : null,
+    hasClient ? profile.clientEmail?.trim() || null : null,
+    hasClient ? `` : null,
     `SERVICE`,
     `Billing period: ${billingPeriod(period.start, period.end)}`,
     ``,
     `Rate: ${rateLabel}`,
     profile.rateType === "hourly" ? `Hours per day: ${number(profile.hoursPerDay)}` : null,
     `Billable days: ${number(totals.billableDays)}`,
-    `Billable hours: ${number(totals.billableHours)}`,
+    profile.rateType === "hourly" ? `Billable hours: ${number(totals.billableHours)}` : null,
     ``,
-    `Total: ${currency} ${money(totals.nativeTotal)}`,
-    currency !== "PHP" ? `PHP estimate: PHP ${money(totals.phpTotal)}` : null,
-    currency !== "PHP" ? `Manual exchange rate: 1 ${currency} = PHP ${number(profile.fxRate)}` : null,
-    currency !== "PHP" && (fxSource || fxDate)
+    adjustmentMinor ? `Subtotal: ${formatCurrencyMinor(totals.nativeTotalMinor, currency)}` : null,
+    adjustmentMinor ? `${profile.adjustmentLabel?.trim() || "Adjustment"}: ${formatCurrencyMinor(adjustmentMinor, currency)}` : null,
+    `Total: ${formatCurrencyMinor(grandTotalMinor, currency)}`,
+    hasFx ? `PHP estimate: ${formatCurrencyMinor(phpGrandTotalMinor, "PHP")}` : null,
+    hasFx ? `Manual exchange rate: 1 ${currency} = PHP ${number(profile.fxRate)}` : null,
+    hasFx && (fxSource || fxDate)
       ? `Rate reference: ${[fxSource, fxDate ? `checked ${fxDate}` : ""].filter(Boolean).join(" · ")}`
       : null,
     notes ? `` : null,
@@ -138,7 +227,7 @@ export function buildInvoiceSummary(profile, period, totals) {
     paymentDetails ? `PAYMENT INSTRUCTIONS` : null,
     paymentDetails || null,
     ``,
-    currency !== "PHP"
+    hasFx
       ? `The PHP conversion uses a manually entered reference rate. Confirm the final payout with your payment provider.`
       : null
   ].filter((line) => line !== null).join("\n");
@@ -229,6 +318,33 @@ export function number(value) {
   return new Intl.NumberFormat("en-US", {
     maximumFractionDigits: 2
   }).format(Number(value) || 0);
+}
+
+export function toMinorUnits(value) {
+  return Math.round((Number(value) || 0) * 100);
+}
+
+export function fromMinorUnits(value) {
+  return (Number(value) || 0) / 100;
+}
+
+export function formatCurrencyMinor(value, currency = "GBP") {
+  const amount = fromMinorUnits(value);
+  const formatted = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency,
+    currencyDisplay: "code",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(Math.abs(amount)).replace(/\u00a0/g, " ");
+  return amount < 0 ? formatted.replace(`${currency} `, `${currency} -`) : formatted;
+}
+
+function addressLines(value) {
+  return String(value || "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
 }
 
 function positiveNumber(value, fallback) {

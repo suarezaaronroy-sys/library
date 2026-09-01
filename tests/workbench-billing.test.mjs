@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   buildBudgetSummary,
+  buildInvoiceData,
   buildInvoiceSummary,
   buildMonthStatuses,
   buildPeriodStatuses,
@@ -9,8 +10,10 @@ import {
   calculateBudget,
   cycleDayState,
   daysInMonth,
+  formatCurrencyMinor,
   monthsInPeriod
 } from "../assets/js/workbench/billing-core.mjs";
+import { renderInvoiceDocument } from "../assets/js/workbench/invoice-document.mjs";
 
 test("weekdays start full and weekends start off", () => {
   const statuses = buildMonthStatuses("2026-06");
@@ -124,4 +127,125 @@ test("custom-hours days bill their exact hours", () => {
   assert.equal(totals.billableHours, 18);
   assert.equal(totals.billableDays, 2.25);
   assert.equal(totals.nativeTotal, 180);
+});
+
+test("invoice document data reconciles half days and a credit in minor units", () => {
+  const profile = {
+    providerName: "Aaron Suarez",
+    providerAddress: "Valencia City\nPhilippines",
+    clientName: "AD Glazing",
+    clientAddress: "Broxburn\nScotland",
+    invoiceNumber: "INV-202608-003",
+    issueDate: "2026-08-28",
+    dueDate: "2026-09-04",
+    terms: "Net 7",
+    currency: "GBP",
+    rateType: "hourly",
+    rate: 4,
+    hoursPerDay: 7.5,
+    serviceDescription: "Social Media Management",
+    adjustmentLabel: "Service credit",
+    adjustmentAmount: -10.25,
+    fxRate: 73,
+    paymentMethod: "Wise",
+    paymentDetails: "@aaronroybantaculos"
+  };
+  const invoice = buildInvoiceData(profile, { start: "2026-07-28", end: "2026-08-27" }, {
+    a: "full",
+    b: "half",
+    c: "custom:3.75",
+    d: "holiday",
+    e: "off"
+  });
+
+  assert.equal(invoice.totals.billableDays, 2);
+  assert.equal(invoice.totals.billableHours, 15);
+  assert.equal(invoice.totals.subtotal, 6000);
+  assert.equal(invoice.totals.adjustmentTotal, -1025);
+  assert.equal(invoice.totals.grandTotal, 4975);
+  assert.equal(invoice.lines[0].amount, invoice.totals.subtotal);
+  assert.deepEqual(invoice.from.addressLines, ["Valencia City", "Philippines"]);
+});
+
+test("currency formatter emits stable ISO currency labels", () => {
+  assert.equal(formatCurrencyMinor(69000, "GBP"), "GBP 690.00");
+  assert.equal(formatCurrencyMinor(-1000, "GBP"), "GBP -10.00");
+  assert.equal(formatCurrencyMinor(123456, "USD"), "USD 1,234.56");
+  assert.equal(formatCurrencyMinor(987650, "PHP"), "PHP 9,876.50");
+});
+
+test("invoice renderer consumes only the document contract", () => {
+  const invoice = buildInvoiceData({
+    providerName: "Aaron Suarez",
+    clientName: "AD Glazing",
+    invoiceNumber: "INV-202608-003",
+    issueDate: "2026-08-28",
+    dueDate: "2026-09-04",
+    currency: "GBP",
+    rateType: "hourly",
+    rate: 4,
+    hoursPerDay: 7.5,
+    serviceDescription: "Social Media Management",
+    fxRate: 73,
+    paymentMethod: "Wise",
+    paymentDetails: "@aaronroybantaculos"
+  }, { start: "2026-07-28", end: "2026-08-27" }, { a: "full" });
+  const html = renderInvoiceDocument(invoice);
+
+  assert.match(html, /INV-202608-003/);
+  assert.match(html, /Social Media Management/);
+  assert.match(html, /GBP 30\.00/);
+  assert.match(html, /Indicative only:/);
+  assert.doesNotMatch(html, /billing-calendar|providerName/);
+});
+
+test("invoice renderer skips optional line items when their values are blank", () => {
+  const invoice = buildInvoiceData({
+    invoiceNumber: "INV-202609-001",
+    currency: "GBP",
+    rateType: "daily",
+    rate: 100,
+    hoursPerDay: 8,
+    fxRate: 0,
+    providerName: "",
+    clientName: "",
+    dueDate: "",
+    terms: "",
+    paymentMethod: "",
+    paymentDetails: "",
+    footerTerms: "",
+    website: ""
+  }, { start: "2026-09-01", end: "2026-09-01" }, { a: "full" });
+  const html = renderInvoiceDocument(invoice);
+
+  assert.doesNotMatch(html, />From</);
+  assert.doesNotMatch(html, />Bill to</);
+  assert.doesNotMatch(html, /Payment method|Payment due|As agreed/);
+  assert.doesNotMatch(html, /invoice-document-footer/);
+  assert.doesNotMatch(html, /Client tax ID|PO reference|Terms/);
+  assert.doesNotMatch(html, /<th>Hours<\/th>|hours\/day/);
+});
+
+test("daily invoice output omits hours while preserving half-day math", () => {
+  const profile = {
+    providerName: "Aaron Suarez",
+    clientName: "AD Glazing",
+    invoiceNumber: "INV-202608-003",
+    currency: "GBP",
+    rateType: "daily",
+    rate: 30,
+    hoursPerDay: 8,
+    fxRate: 0
+  };
+  const statuses = { a: "full", b: "half" };
+  const totals = calculateBilling(profile, statuses);
+  const invoice = buildInvoiceData(profile, { start: "2026-08-01", end: "2026-08-02" }, statuses);
+  const html = renderInvoiceDocument(invoice);
+  const summary = buildInvoiceSummary(profile, { start: "2026-08-01", end: "2026-08-02" }, totals);
+
+  assert.equal(invoice.totals.billableDays, 1.5);
+  assert.equal(invoice.totals.grandTotal, 4500);
+  assert.match(html, /GBP 30\.00 \/ day/);
+  assert.doesNotMatch(html, /<th>Hours<\/th>|hours\/day/);
+  assert.doesNotMatch(summary, /Billable hours/);
 });
