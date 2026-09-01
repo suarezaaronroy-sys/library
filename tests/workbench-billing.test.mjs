@@ -11,9 +11,15 @@ import {
   cycleDayState,
   daysInMonth,
   formatCurrencyMinor,
+  invoiceNumberForDate,
   monthsInPeriod
 } from "../assets/js/workbench/billing-core.mjs";
 import { renderInvoiceDocument } from "../assets/js/workbench/invoice-document.mjs";
+
+test("invoice numbers use the issue date in INV-YYYYMMDD0 format", () => {
+  assert.equal(invoiceNumberForDate("2026-09-02"), "INV-202609020");
+  assert.equal(invoiceNumberForDate(""), "");
+});
 
 test("weekdays start full and weekends start off", () => {
   const statuses = buildMonthStatuses("2026-06");

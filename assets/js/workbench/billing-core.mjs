@@ -100,6 +100,11 @@ export function calculateBilling(profile, statuses) {
   };
 }
 
+export function invoiceNumberForDate(dateKey) {
+  const compact = String(dateKey || "").replaceAll("-", "");
+  return /^\d{8}$/.test(compact) ? `INV-${compact}0` : "";
+}
+
 export function buildInvoiceData(profile, period, statuses) {
   const totals = calculateBilling(profile, statuses);
   const adjustmentAmount = toMinorUnits(Number(profile.adjustmentAmount) || 0);

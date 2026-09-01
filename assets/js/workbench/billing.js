@@ -10,11 +10,12 @@ import {
   formatDateKey,
   formatMonthKey,
   formatCurrencyMinor,
+  invoiceNumberForDate,
   money,
   monthLabel,
   monthsInPeriod,
   number
-} from "./billing-core.mjs?v=6";
+} from "./billing-core.mjs?v=7";
 import { renderInvoiceDocument } from "./invoice-document.mjs?v=2";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
@@ -30,6 +31,7 @@ const defaultPeriod = {
   end: `${currentMonth}-${String(daysInMonth(currentMonth)).padStart(2, "0")}`
 };
 const todayKey = formatDateKey(today);
+const defaultInvoiceNumber = invoiceNumberForDate(todayKey);
 const dueDate = new Date(today);
 dueDate.setDate(dueDate.getDate() + 7);
 const DEFAULT_BUDGET = {
@@ -44,7 +46,7 @@ const DEFAULT_BUDGET = {
   notes: ""
 };
 const DEFAULT_STATE = {
-  schemaVersion: 4,
+  schemaVersion: 5,
   period: defaultPeriod,
   profile: {
     providerName: "",
@@ -59,7 +61,7 @@ const DEFAULT_STATE = {
     clientEmail: "",
     clientTaxId: "",
     clientPoRef: "",
-    invoiceNumber: `INV-${currentMonth.replace("-", "")}-001`,
+    invoiceNumber: defaultInvoiceNumber,
     issueDate: todayKey,
     dueDate: formatDateKey(dueDate),
     terms: "",
@@ -122,8 +124,14 @@ if (root) {
   const initialView = window.location.hash.slice(1);
   if (["budget", "personal", "calculator"].includes(initialView)) switchBillingView(initialView, false);
 
-  form.addEventListener("input", () => {
+  form.addEventListener("input", (event) => {
+    const previousIssueDate = state.profile.issueDate;
+    const previousInvoiceNumber = state.profile.invoiceNumber;
     state.profile = Object.fromEntries(new FormData(form));
+    if (event.target.name === "issueDate" && previousInvoiceNumber === invoiceNumberForDate(previousIssueDate)) {
+      state.profile.invoiceNumber = invoiceNumberForDate(state.profile.issueDate);
+      form.elements.namedItem("invoiceNumber").value = state.profile.invoiceNumber;
+    }
     state.profile.rate = Number(state.profile.rate);
     state.profile.hoursPerDay = Number(state.profile.hoursPerDay);
     state.profile.fxRate = Number(state.profile.fxRate);
@@ -264,10 +272,14 @@ if (root) {
 
   function migrateState(loaded) {
     if (Number(loaded.schemaVersion) >= 2 && loaded.period) {
+      const profile = { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) };
+      if (Number(loaded.schemaVersion) < 5 && /^INV-\d{6}-001$/.test(profile.invoiceNumber || "")) {
+        profile.invoiceNumber = invoiceNumberForDate(profile.issueDate || todayKey);
+      }
       return {
         ...loaded,
-        schemaVersion: 4,
-        profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
+        schemaVersion: 5,
+        profile,
         budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) }
       };
     }
@@ -277,7 +289,7 @@ if (root) {
       end: `${month}-${String(daysInMonth(month)).padStart(2, "0")}`
     };
     return {
-      schemaVersion: 4,
+      schemaVersion: 5,
       period,
       profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
       budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) },
