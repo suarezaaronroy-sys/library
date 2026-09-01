@@ -15,7 +15,7 @@ import {
   monthsInPeriod,
   number
 } from "./billing-core.mjs?v=6";
-import { renderInvoiceDocument } from "./invoice-document.mjs?v=1";
+import { renderInvoiceDocument } from "./invoice-document.mjs?v=2";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
 import "./calculator.js?v=5";

@@ -444,7 +444,8 @@ extra_css:
     <textarea id="invoice-output" class="invoice-output" aria-label="Formatted invoice" readonly></textarea>
     <div class="summary-actions">
       <button class="workbench-button primary" type="button" data-action="copy-summary">Copy invoice</button>
-      <button class="workbench-button" type="button" data-action="print-invoice">Print / save PDF</button>
+      <a class="workbench-button" href="#invoice-preview">Preview A4 invoice</a>
+      <button class="workbench-button" type="button" data-action="print-invoice">Print styled A4 PDF</button>
       <button class="workbench-button" type="button" data-action="download-invoice">Download TXT</button>
       <button class="workbench-button" type="button" data-action="download-csv">Download CSV</button>
       <button class="workbench-button" type="button" data-action="export-json">Export JSON</button>
@@ -544,4 +545,14 @@ extra_css:
 </div>
 </div>
 
-<div id="invoice-print-root" class="print-only" aria-hidden="true"></div>
+<section id="invoice-preview" class="invoice-preview-shell" data-billing-view-panel="invoice" aria-labelledby="invoice-preview-title">
+  <header class="invoice-preview-header no-print">
+    <div>
+      <span>04 · Final document</span>
+      <h2 id="invoice-preview-title">A4 invoice preview</h2>
+      <p>This is the document that will be printed or saved as PDF—not the text summary above.</p>
+    </div>
+    <span class="invoice-preview-badge">Styled invoice · v2</span>
+  </header>
+  <div id="invoice-print-root" class="invoice-preview-stage"></div>
+</section>
