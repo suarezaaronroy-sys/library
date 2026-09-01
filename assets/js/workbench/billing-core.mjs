@@ -105,6 +105,38 @@ export function invoiceNumberForDate(dateKey) {
   return /^\d{8}$/.test(compact) ? `INV-${compact}0` : "";
 }
 
+export function shiftDateKey(dateKey, days) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(dateKey || ""))) return "";
+  const date = parseDateKey(dateKey);
+  date.setDate(date.getDate() + Number(days || 0));
+  return formatDateKey(date);
+}
+
+export function shiftDateMonths(dateKey, months) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(dateKey || ""))) return "";
+  const [year, month, day] = dateKey.split("-").map(Number);
+  const target = new Date(year, month - 1 + Number(months || 0), 1);
+  const targetMonth = formatMonthKey(target);
+  target.setDate(Math.min(day, daysInMonth(targetMonth)));
+  return formatDateKey(target);
+}
+
+export function nextBillingCycle(period) {
+  const start = String(period?.start || "");
+  const end = String(period?.end || "");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(start) || !/^\d{4}-\d{2}-\d{2}$/.test(end)) {
+    return { start, end, shiftMonths: 0 };
+  }
+
+  const first = parseDateKey(start);
+  const last = parseDateKey(end);
+  if (first > last) return { start, end, shiftMonths: 0 };
+
+  const nextStart = shiftDateKey(end, 1);
+  const nextEnd = shiftDateKey(shiftDateMonths(nextStart, 1), -1);
+  return { start: nextStart, end: nextEnd, shiftMonths: 1 };
+}
+
 export function buildInvoiceData(profile, period, statuses) {
   const totals = calculateBilling(profile, statuses);
   const adjustmentAmount = toMinorUnits(Number(profile.adjustmentAmount) || 0);

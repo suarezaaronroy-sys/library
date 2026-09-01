@@ -208,6 +208,7 @@ a.workbench-ledger-row .workbench-ledger-state{color:var(--green)}
 .billing-day.is-weekend .billing-day-number{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
 .billing-calendar-panel .period-toolbar,.billing-calendar-panel .calendar-actions,.billing-calendar-panel .calendar-legend{max-width:720px;margin-inline:auto}
 .calendar-actions{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.75rem}
+.calendar-cycle-help{max-width:720px;margin:.5rem auto 0;color:var(--ink4);font-size:.62rem;line-height:1.45}
 .workbench-button{min-height:36px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--ink2);padding:.45rem .7rem;font-family:var(--mono);font-size:.61rem;cursor:pointer;transition:.14s}
 .workbench-button:hover{border-color:var(--accent);color:var(--accent)}
 .workbench-button.primary{background:var(--ink);border-color:var(--ink);color:var(--dark-fg)}

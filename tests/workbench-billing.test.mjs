@@ -12,13 +12,35 @@ import {
   daysInMonth,
   formatCurrencyMinor,
   invoiceNumberForDate,
-  monthsInPeriod
+  monthsInPeriod,
+  nextBillingCycle,
+  shiftDateMonths
 } from "../assets/js/workbench/billing-core.mjs";
 import { renderInvoiceDocument } from "../assets/js/workbench/invoice-document.mjs";
 
 test("invoice numbers use the issue date in INV-YYYYMMDD0 format", () => {
   assert.equal(invoiceNumberForDate("2026-09-02"), "INV-202609020");
   assert.equal(invoiceNumberForDate(""), "");
+});
+
+test("next billing cycle preserves monthly start, end, issue, and due anchors", () => {
+  assert.deepEqual(nextBillingCycle({ start: "2026-06-28", end: "2026-07-27" }), {
+    start: "2026-07-28",
+    end: "2026-08-27",
+    shiftMonths: 1
+  });
+  assert.deepEqual(nextBillingCycle({ start: "2026-07-28", end: "2026-08-27" }), {
+    start: "2026-08-28",
+    end: "2026-09-27",
+    shiftMonths: 1
+  });
+  assert.equal(shiftDateMonths("2026-08-28", 1), "2026-09-28");
+  assert.equal(shiftDateMonths("2026-09-04", 1), "2026-10-04");
+  assert.deepEqual(nextBillingCycle({ start: "2026-08-12", end: "2026-09-11" }), {
+    start: "2026-09-12",
+    end: "2026-10-11",
+    shiftMonths: 1
+  });
 });
 
 test("weekdays start full and weekends start off", () => {

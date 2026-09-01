@@ -14,8 +14,10 @@ import {
   money,
   monthLabel,
   monthsInPeriod,
-  number
-} from "./billing-core.mjs?v=7";
+  nextBillingCycle,
+  number,
+  shiftDateMonths
+} from "./billing-core.mjs?v=9";
 import { renderInvoiceDocument } from "./invoice-document.mjs?v=2";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
@@ -220,6 +222,8 @@ if (root) {
       });
       persist();
       render();
+    } else if (action === "next-cycle") {
+      advanceToNextCycle();
     } else if (action === "copy-summary") {
       try {
         await navigator.clipboard.writeText(document.querySelector("#invoice-output").value);
@@ -336,6 +340,37 @@ if (root) {
     document.querySelector("#fx-rate").disabled = state.profile.currency === "PHP";
     renderFxLabel();
     renderBillingMode();
+  }
+
+  function advanceToNextCycle() {
+    const previousPeriod = { ...state.period };
+    const previousIssueDate = state.profile.issueDate;
+    const previousInvoiceNumber = state.profile.invoiceNumber;
+    const next = nextBillingCycle(previousPeriod);
+    if (!next.shiftMonths) {
+      announce("Set a valid billing period before starting the next cycle.");
+      return;
+    }
+
+    state.period = { start: next.start, end: next.end };
+    state.dates = {
+      ...state.dates,
+      ...buildPeriodStatuses(next.start, next.end)
+    };
+    state.profile.issueDate = shiftDateMonths(state.profile.issueDate, next.shiftMonths);
+    state.profile.dueDate = shiftDateMonths(state.profile.dueDate, next.shiftMonths);
+    if (previousInvoiceNumber === invoiceNumberForDate(previousIssueDate)) {
+      state.profile.invoiceNumber = invoiceNumberForDate(state.profile.issueDate);
+    }
+
+    startInput.value = state.period.start;
+    endInput.value = state.period.end;
+    form.elements.namedItem("issueDate").value = state.profile.issueDate;
+    form.elements.namedItem("dueDate").value = state.profile.dueDate;
+    form.elements.namedItem("invoiceNumber").value = state.profile.invoiceNumber;
+    persist();
+    render();
+    announce(`Next cycle ready: ${state.period.start} to ${state.period.end}.`);
   }
 
   function hydrateBudget() {
