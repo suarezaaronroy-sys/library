@@ -18,10 +18,34 @@ import {
   shiftDateMonths
 } from "../assets/js/workbench/billing-core.mjs";
 import { renderInvoiceDocument } from "../assets/js/workbench/invoice-document.mjs";
+import { renderBusinessDocument } from "../assets/js/workbench/document-engine.mjs";
 
 test("invoice numbers use the issue date in INV-YYYYMMDD0 format", () => {
   assert.equal(invoiceNumberForDate("2026-09-02"), "INV-202609020");
   assert.equal(invoiceNumberForDate(""), "");
+});
+
+test("document engine renders quote and contract models without trusting HTML", () => {
+  const quote = renderBusinessDocument({
+    kind: "Quote",
+    ref: "QUO-202609020",
+    parties: [{ label: "Prepared for", heading: "Visitor <script>alert(1)</script>", lines: [] }],
+    table: {
+      columns: [{ key: "item", label: "Item" }, { key: "amount", label: "Amount", align: "right" }],
+      rows: [{ item: { value: "Discovery", strong: true }, amount: "GBP 500.00" }]
+    },
+    totals: [{ label: "Quote total", value: "GBP 500.00", emphasis: true }]
+  });
+  const contract = renderBusinessDocument({
+    kind: "Contract",
+    sections: [{ heading: "Scope", body: "Deliver the agreed services." }],
+    signatures: [{ label: "Provider", name: "Studio" }, { label: "Client", name: "Client" }]
+  });
+
+  assert.match(quote, /QUOTE|QUO-202609020|Quote total|GBP 500\.00/);
+  assert.doesNotMatch(quote, /<script>/);
+  assert.match(quote, /&lt;script&gt;/);
+  assert.match(contract, /CONTRACT|Scope|document-signatures/);
 });
 
 test("next billing cycle preserves monthly start, end, issue, and due anchors", () => {
@@ -255,7 +279,7 @@ test("invoice renderer skips optional line items when their values are blank", (
   assert.doesNotMatch(html, />From</);
   assert.doesNotMatch(html, />Bill to</);
   assert.doesNotMatch(html, /Payment method|Payment due|As agreed/);
-  assert.doesNotMatch(html, /invoice-document-footer/);
+  assert.doesNotMatch(html, /document-footer/);
   assert.doesNotMatch(html, /Client tax ID|PO reference|Terms/);
   assert.doesNotMatch(html, /<th>Hours<\/th>|hours\/day/);
 });

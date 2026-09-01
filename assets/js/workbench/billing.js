@@ -19,7 +19,7 @@ import {
   previousBillingCycle,
   shiftDateMonths
 } from "./billing-core.mjs?v=10";
-import { renderInvoiceDocument } from "./invoice-document.mjs?v=2";
+import { renderInvoiceDocument } from "./invoice-document.mjs?v=3";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
 import "./calculator.js?v=5";
