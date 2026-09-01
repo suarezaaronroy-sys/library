@@ -12,7 +12,7 @@ workbench_script: /assets/js/workbench/billing.js
 extra_css:
   - /assets/css/invoice.css
 ---
-<div class="no-print billing-tool-ui">
+<div class="billing-tool-ui">
 <div class="workspace-view-tabs" role="tablist" aria-label="Billing tools">
   <button type="button" role="tab" aria-selected="true" data-billing-view="invoice">Invoice</button>
   <button type="button" role="tab" aria-selected="false" data-billing-view="budget">Client budget</button>
@@ -408,6 +408,7 @@ extra_css:
     <div id="billing-calendar" class="billing-calendars" aria-label="Billing period calendars"></div>
 
     <div class="calendar-actions">
+      <button class="workbench-button" type="button" data-action="previous-cycle">← Previous cycle</button>
       <button class="workbench-button" type="button" data-action="select-weekdays">Weekdays full</button>
       <button class="workbench-button" type="button" data-action="clear-period">Clear period</button>
       <button class="workbench-button" type="button" data-action="reset-period">Reset period</button>
@@ -455,6 +456,18 @@ extra_css:
     <p class="billing-disclaimer">Exchange rates are estimates. Confirm final payout with Wise, PayPal, or your payment provider.</p>
     <output id="billing-toast" class="workbench-toast" aria-live="polite"></output>
   </aside>
+
+  <section id="invoice-preview" class="invoice-preview-shell" aria-labelledby="invoice-preview-title">
+    <header class="invoice-preview-header no-print">
+      <div>
+        <span>04 · Final document</span>
+        <h2 id="invoice-preview-title">A4 invoice preview</h2>
+        <p>This is the document that will be printed or saved as PDF—not the text summary.</p>
+      </div>
+      <span class="invoice-preview-badge">Styled invoice · v2</span>
+    </header>
+    <div id="invoice-print-root" class="invoice-preview-stage"></div>
+  </section>
 </div>
 
 <div id="budget-workspace" class="budget-layout" data-billing-view-panel="budget" hidden>
@@ -546,15 +559,3 @@ extra_css:
   </aside>
 </div>
 </div>
-
-<section id="invoice-preview" class="invoice-preview-shell" data-billing-view-panel="invoice" aria-labelledby="invoice-preview-title">
-  <header class="invoice-preview-header no-print">
-    <div>
-      <span>04 · Final document</span>
-      <h2 id="invoice-preview-title">A4 invoice preview</h2>
-      <p>This is the document that will be printed or saved as PDF—not the text summary above.</p>
-    </div>
-    <span class="invoice-preview-badge">Styled invoice · v2</span>
-  </header>
-  <div id="invoice-print-root" class="invoice-preview-stage"></div>
-</section>

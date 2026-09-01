@@ -148,11 +148,14 @@ a.workbench-ledger-row .workbench-ledger-state{color:var(--green)}
 .workspace-view-tabs{display:flex;overflow-x:auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
 .workspace-view-tabs button{min-width:120px;height:42px;border:0;border-right:1px solid var(--border);background:transparent;padding:0 1rem;color:var(--ink3);font-family:var(--mono);font-size:.64rem;cursor:pointer;transition:color .15s ease,background-color .15s ease}
 .workspace-view-tabs button[aria-selected="true"]{background:var(--ink);color:var(--dark-fg)}
-.billing-layout{display:grid;grid-template-columns:clamp(300px,18vw,350px) minmax(560px,1fr) clamp(320px,20vw,380px);border-bottom:1px solid var(--ink);background:rgba(245,242,236,.66)}
+.billing-layout{display:grid;grid-template-columns:clamp(300px,18vw,350px) repeat(2,minmax(430px,1fr));align-items:start;border-bottom:1px solid var(--ink);background:rgba(245,242,236,.66)}
 .budget-layout{display:grid;grid-template-columns:minmax(420px,.7fr) minmax(540px,1.3fr);border-bottom:1px solid var(--ink);background:rgba(245,242,236,.66)}
 .budget-layout[hidden],.billing-layout[hidden]{display:none}
 .workbench-panel{min-width:0;padding:clamp(1.15rem,1.5vw,1.65rem)}
 .workbench-panel+.workbench-panel{border-left:1px solid var(--border)}
+.billing-layout>.workbench-panel:first-child{grid-column:1;grid-row:1 / span 2}
+.billing-layout>.billing-calendar-panel{grid-column:2;grid-row:1}
+.billing-layout>.billing-summary{grid-column:2 / 4;grid-row:2;border-top:1px solid var(--border);border-left:1px solid var(--border)}
 .workbench-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem}
 .workbench-panel-head span{color:var(--teal);font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em}
 .workbench-panel-head h2{margin-top:.25rem;font-family:var(--serif);font-size:1.25rem;line-height:1.15}
@@ -431,6 +434,9 @@ textarea.tool-output{resize:vertical}
   .desk-os-grid{grid-template-columns:minmax(0,1fr) minmax(320px,.75fr)}
   .desk-panel:last-child{grid-column:1 / -1;border-top:1px solid var(--border)}
   .billing-layout{grid-template-columns:300px minmax(0,1fr)}
+  .billing-layout>.workbench-panel:first-child{grid-column:1;grid-row:1 / span 3}
+  .billing-layout>.billing-calendar-panel{grid-column:2;grid-row:1}
+  .billing-layout>.billing-summary{grid-column:2;grid-row:3}
   .budget-layout{grid-template-columns:320px minmax(0,1fr)}
   .personal-budget-layout{grid-template-columns:320px minmax(0,1fr)}
   .personal-budget-layout>.billing-summary{grid-column:1 / -1;border-top:1px solid var(--border)}
@@ -446,6 +452,9 @@ textarea.tool-output{resize:vertical}
   .desk-panel:last-child{grid-column:1 / -1;border-top:1px solid var(--border)}
   .recent-workspaces{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1rem}
   .billing-layout{grid-template-columns:250px minmax(0,1fr)}
+  .billing-layout>.workbench-panel:first-child{grid-column:1;grid-row:1 / span 3}
+  .billing-layout>.billing-calendar-panel{grid-column:2;grid-row:1}
+  .billing-layout>.billing-summary{grid-column:2;grid-row:3}
   .budget-layout{grid-template-columns:300px minmax(0,1fr)}
   .personal-budget-layout{grid-template-columns:300px minmax(0,1fr)}
   .personal-budget-layout>.billing-summary{grid-column:1 / -1;border-top:1px solid var(--border)}

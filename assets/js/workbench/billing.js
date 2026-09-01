@@ -16,8 +16,9 @@ import {
   monthsInPeriod,
   nextBillingCycle,
   number,
+  previousBillingCycle,
   shiftDateMonths
-} from "./billing-core.mjs?v=9";
+} from "./billing-core.mjs?v=10";
 import { renderInvoiceDocument } from "./invoice-document.mjs?v=2";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
@@ -223,7 +224,9 @@ if (root) {
       persist();
       render();
     } else if (action === "next-cycle") {
-      advanceToNextCycle();
+      changeBillingCycle(1);
+    } else if (action === "previous-cycle") {
+      changeBillingCycle(-1);
     } else if (action === "copy-summary") {
       try {
         await navigator.clipboard.writeText(document.querySelector("#invoice-output").value);
@@ -342,23 +345,25 @@ if (root) {
     renderBillingMode();
   }
 
-  function advanceToNextCycle() {
+  function changeBillingCycle(direction) {
     const previousPeriod = { ...state.period };
     const previousIssueDate = state.profile.issueDate;
     const previousInvoiceNumber = state.profile.invoiceNumber;
-    const next = nextBillingCycle(previousPeriod);
-    if (!next.shiftMonths) {
-      announce("Set a valid billing period before starting the next cycle.");
+    const cycle = direction > 0
+      ? nextBillingCycle(previousPeriod)
+      : previousBillingCycle(previousPeriod);
+    if (!cycle.shiftMonths) {
+      announce("Set a valid billing period before changing cycles.");
       return;
     }
 
-    state.period = { start: next.start, end: next.end };
+    state.period = { start: cycle.start, end: cycle.end };
     state.dates = {
       ...state.dates,
-      ...buildPeriodStatuses(next.start, next.end)
+      ...buildPeriodStatuses(cycle.start, cycle.end, state.dates)
     };
-    state.profile.issueDate = shiftDateMonths(state.profile.issueDate, next.shiftMonths);
-    state.profile.dueDate = shiftDateMonths(state.profile.dueDate, next.shiftMonths);
+    state.profile.issueDate = shiftDateMonths(state.profile.issueDate, cycle.shiftMonths);
+    state.profile.dueDate = shiftDateMonths(state.profile.dueDate, cycle.shiftMonths);
     if (previousInvoiceNumber === invoiceNumberForDate(previousIssueDate)) {
       state.profile.invoiceNumber = invoiceNumberForDate(state.profile.issueDate);
     }
@@ -370,7 +375,7 @@ if (root) {
     form.elements.namedItem("invoiceNumber").value = state.profile.invoiceNumber;
     persist();
     render();
-    announce(`Next cycle ready: ${state.period.start} to ${state.period.end}.`);
+    announce(`${direction > 0 ? "Next" : "Previous"} cycle ready: ${state.period.start} to ${state.period.end}.`);
   }
 
   function hydrateBudget() {

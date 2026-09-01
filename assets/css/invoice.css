@@ -11,14 +11,14 @@
 .billing-optional-fields summary{cursor:pointer;font-family:var(--mono);font-size:.68rem;font-weight:500;color:var(--ink2)}
 .billing-optional-fields-body{margin-top:.9rem}
 
-.invoice-preview-shell{margin-top:1.5rem;border:1px solid var(--border);border-radius:8px;background:var(--bg2);padding:1.25rem}
+.invoice-preview-shell{grid-column:3;grid-row:1;margin:0 1.15rem 1.15rem;border:1px solid var(--border);border-radius:8px;background:var(--bg2);padding:1rem}
 .invoice-preview-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;max-width:210mm;margin:0 auto 1rem}
 .invoice-preview-header span{color:var(--ink3);font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;text-transform:uppercase}
 .invoice-preview-header h2{margin:.2rem 0 0;color:var(--ink);font-family:var(--serif);font-size:1.45rem}
 .invoice-preview-header p{margin:.3rem 0 0;color:var(--ink3);font-size:.78rem}
 .invoice-preview-badge{flex:none;border:1px solid var(--border);border-radius:999px;background:var(--bg);padding:.45rem .65rem;color:var(--accent)!important}
-.invoice-preview-stage{box-sizing:border-box;width:100%;max-width:210mm;min-height:297mm;margin:0 auto;background:#fff;padding:16mm;box-shadow:0 14px 40px rgba(28,25,23,.14)}
-.invoice-preview-stage .invoice-document{min-height:265mm}
+.invoice-preview-stage{box-sizing:border-box;width:100%;max-width:210mm;aspect-ratio:210/297;margin:0 auto;background:#fff;padding:clamp(8mm,2.2vw,16mm);box-shadow:0 14px 40px rgba(28,25,23,.14)}
+.invoice-preview-stage .invoice-document{min-height:0}
 
 .invoice-document{
   --invoice-ink:#20262f;
@@ -89,14 +89,20 @@
   .workbench-frame{max-width:none!important;margin:0!important;padding:0!important}
   .workbench-header,.workbench-nav{display:none!important}
   .workbench-content{margin:0!important;padding:0!important}
+  .billing-tool-ui>.workspace-view-tabs,.billing-tool-ui>[data-billing-view-panel]:not(#billing-workspace),#billing-workspace>:not(.invoice-preview-shell){display:none!important}
+  #billing-workspace{display:block!important;border:0!important;background:#fff!important}
   .invoice-preview-shell{display:block!important;margin:0!important;border:0!important;border-radius:0!important;background:#fff!important;padding:0!important}
-  .invoice-preview-stage{width:auto!important;max-width:none!important;min-height:0!important;margin:0!important;padding:0!important;box-shadow:none!important}
+  .invoice-preview-stage{width:auto!important;max-width:none!important;min-height:0!important;aspect-ratio:auto!important;margin:0!important;padding:0!important;box-shadow:none!important}
   .invoice-document{min-height:265mm;background:#fff!important;color:#20262f!important}
   .invoice-lines tr,.invoice-totals,.invoice-payment{break-inside:avoid;page-break-inside:avoid}
 }
 
+@media (max-width:1240px){
+  .invoice-preview-shell{grid-column:2;grid-row:2;margin:1.15rem}
+}
+
 @media (max-width:720px){
-  .invoice-preview-shell{padding:.65rem;overflow-x:auto}
+  .invoice-preview-shell{margin:.75rem;padding:.65rem;overflow-x:auto}
   .invoice-preview-header{display:grid}
   .invoice-preview-stage{min-width:620px;padding:12mm}
 }

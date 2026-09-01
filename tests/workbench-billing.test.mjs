@@ -14,6 +14,7 @@ import {
   invoiceNumberForDate,
   monthsInPeriod,
   nextBillingCycle,
+  previousBillingCycle,
   shiftDateMonths
 } from "../assets/js/workbench/billing-core.mjs";
 import { renderInvoiceDocument } from "../assets/js/workbench/invoice-document.mjs";
@@ -40,6 +41,11 @@ test("next billing cycle preserves monthly start, end, issue, and due anchors", 
     start: "2026-09-12",
     end: "2026-10-11",
     shiftMonths: 1
+  });
+  assert.deepEqual(previousBillingCycle({ start: "2026-07-28", end: "2026-08-27" }), {
+    start: "2026-06-28",
+    end: "2026-07-27",
+    shiftMonths: -1
   });
 });
 

@@ -137,6 +137,22 @@ export function nextBillingCycle(period) {
   return { start: nextStart, end: nextEnd, shiftMonths: 1 };
 }
 
+export function previousBillingCycle(period) {
+  const start = String(period?.start || "");
+  const end = String(period?.end || "");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(start) || !/^\d{4}-\d{2}-\d{2}$/.test(end)) {
+    return { start, end, shiftMonths: 0 };
+  }
+
+  const first = parseDateKey(start);
+  const last = parseDateKey(end);
+  if (first > last) return { start, end, shiftMonths: 0 };
+
+  const previousStart = shiftDateMonths(start, -1);
+  const previousEnd = shiftDateKey(start, -1);
+  return { start: previousStart, end: previousEnd, shiftMonths: -1 };
+}
+
 export function buildInvoiceData(profile, period, statuses) {
   const totals = calculateBilling(profile, statuses);
   const adjustmentAmount = toMinorUnits(Number(profile.adjustmentAmount) || 0);
