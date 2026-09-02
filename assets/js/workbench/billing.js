@@ -1,7 +1,7 @@
 import {
   buildBudgetSummary,
   buildInvoiceData,
-  buildInvoiceSummary,
+  buildInvoiceText,
   buildPeriodStatuses,
   calculateBilling,
   calculateBudget,
@@ -18,8 +18,9 @@ import {
   number,
   previousBillingCycle,
   shiftDateMonths
-} from "./billing-core.mjs?v=10";
-import { renderInvoiceDocument } from "./invoice-document.mjs?v=3";
+} from "./billing-core.mjs?v=11";
+import { renderDocument } from "./invoice-document.mjs?v=4";
+import { convertMinor } from "./document-money.mjs?v=1";
 import { loadState, saveState } from "./store.js?v=5";
 import "./personal-budget.js?v=4";
 import "./calculator.js?v=5";
@@ -49,7 +50,7 @@ const DEFAULT_BUDGET = {
   notes: ""
 };
 const DEFAULT_STATE = {
-  schemaVersion: 5,
+  schemaVersion: 6,
   period: defaultPeriod,
   profile: {
     providerName: "",
@@ -73,6 +74,22 @@ const DEFAULT_STATE = {
     rate: 0,
     hoursPerDay: 8,
     serviceDescription: "",
+    serviceNote: "",
+    template: "time",
+    retainerFee: 0,
+    retainerIncludedHours: 0,
+    retainerOverageHours: 0,
+    retainerOverageRate: 0,
+    retainerCarriedOver: 0,
+    retainerCycleIndex: "",
+    retainerCycleTotal: "",
+    retainerScope: "",
+    milestoneProjectRef: "",
+    milestoneContractValue: 0,
+    milestoneInvoicedToDate: 0,
+    milestone1Name: "", milestone1Note: "", milestone1State: "Scheduled", milestone1Pct: "", milestone1Value: 0, milestone1Billed: 0,
+    milestone2Name: "", milestone2Note: "", milestone2State: "Scheduled", milestone2Pct: "", milestone2Value: 0, milestone2Billed: 0,
+    milestone3Name: "", milestone3Note: "", milestone3State: "Scheduled", milestone3Pct: "", milestone3Value: 0, milestone3Billed: 0,
     fxRate: 0,
     fxSource: "",
     fxDate: "",
@@ -135,10 +152,13 @@ if (root) {
       state.profile.invoiceNumber = invoiceNumberForDate(state.profile.issueDate);
       form.elements.namedItem("invoiceNumber").value = state.profile.invoiceNumber;
     }
-    state.profile.rate = Number(state.profile.rate);
-    state.profile.hoursPerDay = Number(state.profile.hoursPerDay);
-    state.profile.fxRate = Number(state.profile.fxRate);
-    state.profile.adjustmentAmount = Number(state.profile.adjustmentAmount);
+    ["rate", "hoursPerDay", "fxRate", "adjustmentAmount", "retainerFee", "retainerIncludedHours",
+      "retainerOverageHours", "retainerOverageRate", "retainerCarriedOver", "retainerCycleIndex",
+      "retainerCycleTotal", "milestoneContractValue", "milestoneInvoicedToDate", "milestone1Pct",
+      "milestone1Value", "milestone1Billed", "milestone2Pct", "milestone2Value", "milestone2Billed",
+      "milestone3Pct", "milestone3Value", "milestone3Billed"].forEach((name) => {
+      state.profile[name] = state.profile[name] === "" ? "" : Number(state.profile[name]);
+    });
     if (state.profile.rate < 0) {
       state.profile.rate = 0;
       form.elements.namedItem("rate").value = "0";
@@ -238,15 +258,15 @@ if (root) {
     } else if (action === "print-invoice") {
       printInvoiceDocument();
     } else if (action === "download-invoice") {
-      if (!calculateBilling(state.profile, periodDates()).billableDays) {
-        announce("Nothing billable yet - mark days on the calendar first.");
+      if (!currentInvoice().totals.grandTotal) {
+        announce("Nothing billable yet - add a charge first.");
         return;
       }
       downloadFile(document.querySelector("#invoice-output").value, invoiceFileName("txt"), "text/plain");
       announce("Invoice text prepared.");
     } else if (action === "download-csv") {
-      if (!calculateBilling(state.profile, periodDates()).billableDays) {
-        announce("Nothing billable yet - mark days on the calendar first.");
+      if (!currentInvoice().totals.grandTotal) {
+        announce("Nothing billable yet - add a charge first.");
         return;
       }
       downloadFile(csvExport(), `billing-${state.period.start}-to-${state.period.end}.csv`, "text/csv");
@@ -285,7 +305,7 @@ if (root) {
       }
       return {
         ...loaded,
-        schemaVersion: 5,
+        schemaVersion: 6,
         profile,
         budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) }
       };
@@ -296,7 +316,7 @@ if (root) {
       end: `${month}-${String(daysInMonth(month)).padStart(2, "0")}`
     };
     return {
-      schemaVersion: 5,
+      schemaVersion: 6,
       period,
       profile: { ...DEFAULT_STATE.profile, ...(loaded.profile || {}) },
       budget: { ...DEFAULT_BUDGET, ...(loaded.budget || {}) },
@@ -407,8 +427,12 @@ if (root) {
   }
 
   function render() {
-    renderCalendars();
+    if ((state.profile.template || "time") === "time") renderCalendars();
     renderSummary();
+  }
+
+  function currentInvoice() {
+    return buildInvoiceData(state.profile, state.period, periodDates());
   }
 
   function renderCalendars() {
@@ -466,16 +490,31 @@ if (root) {
     const totals = calculateBilling(state.profile, dates);
     const invoice = buildInvoiceData(state.profile, state.period, dates);
     const currency = state.profile.currency;
-    document.querySelector("#selected-days").textContent = number(totals.billableDays);
-    document.querySelector("#billable-hours").textContent = number(totals.billableHours);
-    document.querySelector("#daily-total").textContent = `${currency} ${money(totals.dailyEquivalent)}`;
+    const template = invoice.template;
+    if (template === "retainer") {
+      document.querySelector("#selected-days").textContent = number(invoice.retainer.includedHours);
+      document.querySelector("#billable-hours").textContent = number(invoice.totals.billableHours);
+      document.querySelector("#daily-total").textContent = formatCurrencyMinor(
+        invoice.lines.find((line) => line.rateUnit === "cycle")?.amount || 0,
+        currency
+      );
+    } else if (template === "milestone") {
+      const stages = invoice.milestone.stages;
+      document.querySelector("#selected-days").textContent = number(stages.length);
+      document.querySelector("#billable-hours").textContent = number(stages.filter((stage) => stage.billedThisInvoice > 0).length);
+      document.querySelector("#daily-total").textContent = formatCurrencyMinor(invoice.milestone.contractValue, currency);
+    } else {
+      document.querySelector("#selected-days").textContent = number(totals.billableDays);
+      document.querySelector("#billable-hours").textContent = number(totals.billableHours);
+      document.querySelector("#daily-total").textContent = `${currency} ${money(totals.dailyEquivalent)}`;
+    }
     document.querySelector("#native-total").textContent = formatCurrencyMinor(invoice.totals.grandTotal, currency);
-    const phpGrandTotal = Math.round(invoice.totals.grandTotal * (Number(state.profile.fxRate) || (currency === "PHP" ? 1 : 0)));
+    const phpGrandTotal = convertMinor(invoice.totals.grandTotal, Number(state.profile.fxRate) || (currency === "PHP" ? 1 : 0), currency, "PHP");
     const phpOutput = document.querySelector("#php-total");
     phpOutput.hidden = !invoice.fx;
     phpOutput.textContent = invoice.fx ? `${formatCurrencyMinor(phpGrandTotal, "PHP")} estimate` : "";
-    document.querySelector("#invoice-output").value = buildInvoiceSummary(state.profile, state.period, totals);
-    document.querySelector("#invoice-print-root").innerHTML = renderInvoiceDocument(invoice);
+    document.querySelector("#invoice-output").value = buildInvoiceText(invoice);
+    document.querySelector("#invoice-print-root").innerHTML = renderDocument(invoice);
   }
 
   function budgetFromForm() {
@@ -522,21 +561,19 @@ if (root) {
 
   function csvExport() {
     const dates = periodDates();
-    const totals = calculateBilling(state.profile, dates);
+    const invoice = buildInvoiceData(state.profile, state.period, dates);
     const rows = [
-      ["date", "status"],
-      ...Object.entries(dates),
-      [],
+      ["invoice_type", invoice.template],
       ["client", state.profile.clientName],
       ["period_start", state.period.start],
       ["period_end", state.period.end],
       ["currency", state.profile.currency],
-      ["rate_type", state.profile.rateType],
-      ["rate", state.profile.rate],
-      ["billable_days", totals.billableDays],
-      ["billable_hours", totals.billableHours],
-      ["native_total", totals.nativeTotal],
-      ["php_estimate", totals.phpTotal]
+      ["invoice_total", formatCurrencyMinor(invoice.totals.grandTotal, invoice.currency)],
+      [],
+      ["item", "detail", "amount"],
+      ...invoice.lines.map((line) => [line.desc, line.note, formatCurrencyMinor(line.amount, invoice.currency)]),
+      ...(invoice.milestone?.stages || []).map((stage) => [stage.name, stage.state, formatCurrencyMinor(stage.billedThisInvoice, invoice.currency)]),
+      ...(invoice.template === "time" ? [[""], ["date", "status"], ...Object.entries(dates)] : [])
     ];
     return rows.map((row) => row.map(csvCell).join(",")).join("\n");
   }
@@ -562,9 +599,8 @@ if (root) {
 
 
   function printInvoiceDocument() {
-    const dates = periodDates();
-    if (!calculateBilling(state.profile, dates).billableDays) {
-      announce("Nothing billable yet - mark days on the calendar first.");
+    if (!currentInvoice().totals.grandTotal) {
+      announce("Nothing billable yet - add a charge first.");
       return;
     }
     const previousTitle = document.title;
@@ -576,14 +612,35 @@ if (root) {
   }
 
   function renderBillingMode() {
+    const template = state.profile.template || "time";
     const hourly = state.profile.rateType !== "daily";
-    root.querySelectorAll("[data-hourly-only]").forEach((element) => {
-      element.hidden = !hourly;
+    root.querySelectorAll("[data-invoice-template-fields]").forEach((element) => {
+      element.hidden = element.dataset.invoiceTemplateFields !== template;
     });
+    root.querySelectorAll("[data-time-only]").forEach((element) => {
+      element.hidden = template !== "time";
+    });
+    root.querySelectorAll("[data-not-milestone]").forEach((element) => {
+      element.hidden = template === "milestone";
+    });
+    root.querySelectorAll("[data-hourly-only]").forEach((element) => {
+      element.hidden = template === "time" ? !hourly : false;
+    });
+    const guidance = document.querySelector("[data-template-guidance]");
+    guidance.hidden = template === "time";
+    guidance.innerHTML = template === "retainer"
+      ? "<strong>Retainer invoice</strong><span>The period comes from the dates above. Charges come from the fee and any overage entered in the form.</span>"
+      : "<strong>Milestone invoice</strong><span>No calendar is needed. Add the project stages and only completed billing values appear on the document.</span>";
+    document.querySelector("#billing-calendar-title").textContent = template === "time" ? "Mark the days" : template === "retainer" ? "Set the cycle" : "Project billing";
+    document.querySelector("#billing-calendar-lede").textContent = template === "time"
+      ? "A period may cross months. Click a date to change its state."
+      : template === "retainer" ? "Choose the service period for this retainer cycle." : "Milestone values are managed in the organized form at left.";
+    document.querySelector("#selected-days-label").textContent = template === "time" ? "Billable days" : template === "retainer" ? "Included hours" : "Milestones";
+    document.querySelector("#billable-hours-label").textContent = template === "time" ? "Billable hours" : template === "retainer" ? "Overage hours" : "Billed stages";
+    document.querySelector("#daily-total-label").textContent = template === "time" ? (hourly ? "Daily equivalent" : "Daily rate") : template === "retainer" ? "Retainer fee" : "Contract value";
     document.querySelector("#billing-rate-help").textContent = hourly
       ? "Hourly invoices show both days and hours."
       : "Daily invoices show days only. Half days bill at 0.5 day.";
-    document.querySelector("#daily-total-label").textContent = hourly ? "Daily equivalent" : "Daily rate";
   }
 
 

@@ -1,5 +1,10 @@
 # Site changelog — newest first. Rendered by _includes/changelog.html.
 # major: true gets a "major" badge. Times are Asia/Manila (PHT).
+- version: "4.22"
+  major: false
+  date: "2026-09-02 - 17:18"
+  title: "Invoices adapt to the work"
+  text: "The Invoice Generator now supports time-based, retainer, and milestone billing without changing the established A4 document style. Its form reveals only the fields needed for the selected invoice type, keeps optional business and settlement details grouped, omits empty sections from the document, and gives the wider milestone table enough room at laptop sizes. Print output also gains safer pagination, colour, party, and currency handling."
 - version: "4.21"
   major: false
   date: "2026-09-02 - 05:49"

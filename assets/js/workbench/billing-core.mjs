@@ -1,3 +1,5 @@
+import { convertMinor, minorUnitDigits } from "./document-money.mjs";
+
 export const DAY_STATES = ["full", "half", "custom", "holiday", "off"];
 
 export function formatMonthKey(date = new Date()) {
@@ -76,7 +78,8 @@ export function calculateBilling(profile, statuses) {
     return total + (weights[state] || 0);
   }, 0);
   const rate = positiveNumber(profile.rate, 0);
-  const rateMinor = toMinorUnits(rate);
+  const currency = profile.currency || "GBP";
+  const rateMinor = toMinorUnits(rate, currency);
   const fxRate = positiveNumber(profile.fxRate, profile.currency === "PHP" ? 1 : 0);
   const billableHours = billableDays * hoursPerDay;
   const dailyEquivalentMinor = profile.rateType === "daily"
@@ -85,7 +88,7 @@ export function calculateBilling(profile, statuses) {
   const nativeTotalMinor = profile.rateType === "daily"
     ? Math.round(billableDays * rateMinor)
     : Math.round(billableHours * rateMinor);
-  const phpTotalMinor = Math.round(nativeTotalMinor * fxRate);
+  const phpTotalMinor = convertMinor(nativeTotalMinor, fxRate, currency, "PHP");
 
   return {
     billableDays,
@@ -94,9 +97,9 @@ export function calculateBilling(profile, statuses) {
     nativeTotalMinor,
     phpTotalMinor,
     // Decimal aliases preserve the existing calculator and export contract.
-    dailyEquivalent: fromMinorUnits(dailyEquivalentMinor),
-    nativeTotal: fromMinorUnits(nativeTotalMinor),
-    phpTotal: fromMinorUnits(phpTotalMinor)
+    dailyEquivalent: fromMinorUnits(dailyEquivalentMinor, currency),
+    nativeTotal: fromMinorUnits(nativeTotalMinor, currency),
+    phpTotal: fromMinorUnits(phpTotalMinor, "PHP")
   };
 }
 
@@ -154,20 +157,76 @@ export function previousBillingCycle(period) {
 }
 
 export function buildInvoiceData(profile, period, statuses) {
-  const totals = calculateBilling(profile, statuses);
-  const adjustmentAmount = toMinorUnits(Number(profile.adjustmentAmount) || 0);
+  const currency = profile.currency || "GBP";
+  const template = ["time", "retainer", "milestone"].includes(profile.template) ? profile.template : "time";
+  const timeTotals = calculateBilling(profile, statuses || {});
+  const adjustmentAmount = toMinorUnits(Number(profile.adjustmentAmount) || 0, currency);
   const adjustments = adjustmentAmount
     ? [{ label: profile.adjustmentLabel?.trim() || "Adjustment", amount: adjustmentAmount }]
     : [];
   const adjustmentTotal = adjustments.reduce((sum, item) => sum + item.amount, 0);
-  const currency = profile.currency || "GBP";
-  const paymentFields = [];
-  if (profile.paymentDetails?.trim()) {
-    paymentFields.push({ label: "Account", value: profile.paymentDetails.trim() });
+  const paymentFields = parsePaymentFields(profile.paymentDetails);
+  let lines = [];
+  let subtotal = 0;
+  let billableDays = 0;
+  let billableHours = 0;
+  let retainer = null;
+  let milestone = null;
+
+  if (template === "retainer") {
+    const fee = toMinorUnits(profile.retainerFee, currency);
+    const overageHours = positiveNumber(profile.retainerOverageHours, 0);
+    const overageRate = toMinorUnits(profile.retainerOverageRate, currency);
+    const overageAmount = Math.round(overageHours * overageRate);
+    if (fee) lines.push({ desc: profile.serviceDescription?.trim() || "Retainer fee", note: profile.serviceNote?.trim() || "", days: 1, rate: fee, rateUnit: "cycle", amount: fee });
+    if (overageAmount) lines.push({ desc: "Additional hours", note: profile.serviceNote?.trim() || "", hours: overageHours, rate: overageRate, rateUnit: "hour", amount: overageAmount });
+    subtotal = fee + overageAmount;
+    billableHours = overageHours;
+    retainer = {
+      periodFrom: period.start,
+      periodTo: period.end,
+      includedHours: positiveNumber(profile.retainerIncludedHours, 0),
+      carriedOver: positiveNumber(profile.retainerCarriedOver, 0),
+      cycleIndex: positiveNumber(profile.retainerCycleIndex, 0) || null,
+      cycleTotal: positiveNumber(profile.retainerCycleTotal, 0) || null,
+      scope: textLines(profile.retainerScope)
+    };
+  } else if (template === "milestone") {
+    const stages = [1, 2, 3].map((index) => ({
+      name: profile[`milestone${index}Name`]?.trim() || "",
+      note: profile[`milestone${index}Note`]?.trim() || "",
+      state: profile[`milestone${index}State`]?.trim() || "Scheduled",
+      pct: optionalNumber(profile[`milestone${index}Pct`]),
+      value: toMinorUnits(profile[`milestone${index}Value`], currency),
+      billedThisInvoice: toMinorUnits(profile[`milestone${index}Billed`], currency)
+    })).filter((stage) => stage.name || stage.note || stage.value || stage.billedThisInvoice);
+    subtotal = stages.reduce((sum, stage) => sum + stage.billedThisInvoice, 0);
+    milestone = {
+      projectRef: profile.milestoneProjectRef?.trim() || profile.serviceDescription?.trim() || "",
+      contractValue: toMinorUnits(profile.milestoneContractValue, currency),
+      invoicedToDate: toMinorUnits(profile.milestoneInvoicedToDate, currency),
+      stages
+    };
+  } else {
+    billableDays = timeTotals.billableDays;
+    billableHours = timeTotals.billableHours;
+    subtotal = timeTotals.nativeTotalMinor;
+    const rateNote = profile.rateType === "hourly" && positiveNumber(profile.hoursPerDay, 0) > 0
+      ? `${number(profile.hoursPerDay)} hours/day`
+      : "";
+    lines = [{
+      desc: profile.serviceDescription?.trim() || "",
+      note: [profile.serviceNote?.trim(), rateNote].filter(Boolean).join(" · "),
+      days: billableDays,
+      hours: billableHours,
+      rate: toMinorUnits(profile.rate, currency),
+      rateUnit: profile.rateType === "daily" ? "day" : "hour",
+      amount: subtotal
+    }];
   }
 
   return {
-    template: "time",
+    template,
     ref: profile.invoiceNumber?.trim() || "",
     issued: profile.issueDate || "",
     due: profile.dueDate || "",
@@ -193,24 +252,14 @@ export function buildInvoiceData(profile, period, statuses) {
       ? { to: "PHP", rate: positiveNumber(profile.fxRate, 0) }
       : null,
     period: { from: period.start, to: period.end },
-    lines: [{
-      desc: profile.serviceDescription?.trim() || "",
-      note: profile.rateType === "hourly" && positiveNumber(profile.hoursPerDay, 0) > 0
-        ? `${number(profile.hoursPerDay)} hours/day`
-        : "",
-      days: totals.billableDays,
-      hours: totals.billableHours,
-      rate: toMinorUnits(profile.rate),
-      rateUnit: profile.rateType === "daily" ? "day" : "hour",
-      amount: totals.nativeTotalMinor
-    }],
+    lines,
     adjustments,
     totals: {
-      billableDays: totals.billableDays,
-      billableHours: totals.billableHours,
-      subtotal: totals.nativeTotalMinor,
+      billableDays,
+      billableHours,
+      subtotal,
       adjustmentTotal,
-      grandTotal: totals.nativeTotalMinor + adjustmentTotal
+      grandTotal: subtotal + adjustmentTotal
     },
     payment: {
       method: profile.paymentMethod?.trim() || "",
@@ -221,9 +270,44 @@ export function buildInvoiceData(profile, period, statuses) {
     notes: profile.notes?.trim() || "",
     footerTerms: profile.footerTerms?.trim() || "",
     website: profile.website?.trim() || "",
-    retainer: null,
-    milestone: null
+    retainer,
+    milestone
   };
+}
+
+export function buildInvoiceText(invoice) {
+  const party = (heading, value) => {
+    const lines = [value?.org, value?.name, value?.attn, ...(value?.addressLines || []), value?.email].filter(Boolean);
+    return lines.length ? [heading, ...new Set(lines), ""] : [];
+  };
+  const variant = [];
+  if (invoice.template === "retainer") {
+    const r = invoice.retainer || {};
+    variant.push("RETAINER", r.periodFrom && r.periodTo ? `Period: ${billingPeriod(r.periodFrom, r.periodTo)}` : null,
+      r.includedHours ? `Included hours: ${number(r.includedHours)}` : null,
+      r.carriedOver ? `Carried over: ${number(r.carriedOver)} hours` : null,
+      r.cycleIndex && r.cycleTotal ? `Cycle: ${r.cycleIndex} of ${r.cycleTotal}` : null,
+      ...(r.scope?.length ? ["", "SCOPE", ...r.scope.map((item) => `- ${item}`)] : []));
+  } else if (invoice.template === "milestone") {
+    const m = invoice.milestone || {};
+    variant.push("MILESTONES", m.projectRef ? `Project: ${m.projectRef}` : null,
+      m.contractValue ? `Contract value: ${formatCurrencyMinor(m.contractValue, invoice.currency)}` : null,
+      ...(m.stages || []).map((stage) => `${stage.name || "Milestone"}: ${stage.state}${stage.billedThisInvoice ? ` · ${formatCurrencyMinor(stage.billedThisInvoice, invoice.currency)}` : ""}`));
+  } else {
+    variant.push("SERVICE", invoice.period?.from && invoice.period?.to ? `Billing period: ${billingPeriod(invoice.period.from, invoice.period.to)}` : null,
+      ...invoice.lines.map((line) => `${line.desc || "Service"}: ${number(line.days)} days${line.hours ? ` · ${number(line.hours)} hours` : ""}`));
+  }
+  return ["INVOICE", invoice.ref ? `Invoice number: ${invoice.ref}` : null,
+    invoice.issued ? `Issue date: ${invoice.issued}` : null, invoice.due ? `Due date: ${invoice.due}` : null, "",
+    ...party("FROM", invoice.from), ...party("BILL TO", invoice.to), ...variant, "",
+    ...invoice.lines.map((line) => `${line.desc || "Charge"}: ${formatCurrencyMinor(line.amount, invoice.currency)}`),
+    ...(invoice.adjustments || []).map((item) => `${item.label}: ${formatCurrencyMinor(item.amount, invoice.currency)}`),
+    `Total: ${formatCurrencyMinor(invoice.totals.grandTotal, invoice.currency)}`,
+    invoice.notes ? "" : null, invoice.notes ? `Notes: ${invoice.notes}` : null,
+    invoice.payment?.method ? "" : null, invoice.payment?.method ? `Payment method: ${invoice.payment.method}` : null,
+    ...(invoice.payment?.fields || []).map((field) => `${field.label ? `${field.label}: ` : ""}${field.value}`),
+    invoice.payment?.reference ? `Reference: ${invoice.payment.reference}` : null
+  ].filter((line) => line !== null && line !== undefined).join("\n");
 }
 
 export function buildInvoiceSummary(profile, period, totals) {
@@ -237,9 +321,9 @@ export function buildInvoiceSummary(profile, period, totals) {
   const paymentDetails = profile.paymentDetails?.trim();
   const fxSource = profile.fxSource?.trim();
   const fxDate = profile.fxDate?.trim();
-  const adjustmentMinor = toMinorUnits(Number(profile.adjustmentAmount) || 0);
+  const adjustmentMinor = toMinorUnits(Number(profile.adjustmentAmount) || 0, currency);
   const grandTotalMinor = totals.nativeTotalMinor + adjustmentMinor;
-  const phpGrandTotalMinor = Math.round(grandTotalMinor * positiveNumber(profile.fxRate, profile.currency === "PHP" ? 1 : 0));
+  const phpGrandTotalMinor = convertMinor(grandTotalMinor, positiveNumber(profile.fxRate, profile.currency === "PHP" ? 1 : 0), currency, "PHP");
   const hasProvider = Boolean(provider || profile.providerEmail?.trim());
   const hasClient = Boolean(client || profile.clientEmail?.trim());
   const hasFx = currency !== "PHP" && positiveNumber(profile.fxRate, 0) > 0;
@@ -373,22 +457,23 @@ export function number(value) {
   }).format(Number(value) || 0);
 }
 
-export function toMinorUnits(value) {
-  return Math.round((Number(value) || 0) * 100);
+export function toMinorUnits(value, currency = "GBP") {
+  return Math.round((Number(value) || 0) * 10 ** minorUnitDigits(currency));
 }
 
-export function fromMinorUnits(value) {
-  return (Number(value) || 0) / 100;
+export function fromMinorUnits(value, currency = "GBP") {
+  return (Number(value) || 0) / 10 ** minorUnitDigits(currency);
 }
 
 export function formatCurrencyMinor(value, currency = "GBP") {
-  const amount = fromMinorUnits(value);
+  const digits = minorUnitDigits(currency);
+  const amount = fromMinorUnits(value, currency);
   const formatted = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency,
     currencyDisplay: "code",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits
   }).format(Math.abs(amount)).replace(/\u00a0/g, " ");
   return amount < 0 ? formatted.replace(`${currency} `, `${currency} -`) : formatted;
 }
@@ -398,6 +483,23 @@ function addressLines(value) {
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean);
+}
+
+function textLines(value) {
+  return String(value || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+}
+
+function parsePaymentFields(value) {
+  return textLines(value).map((line) => {
+    const separator = line.indexOf(":");
+    return separator > 0
+      ? { label: line.slice(0, separator).trim(), value: line.slice(separator + 1).trim() }
+      : { label: "Details", value: line };
+  });
+}
+
+function optionalNumber(value) {
+  return value === "" || value == null ? null : Number(value);
 }
 
 function positiveNumber(value, fallback) {

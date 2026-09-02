@@ -17,7 +17,7 @@ import {
   previousBillingCycle,
   shiftDateMonths
 } from "../assets/js/workbench/billing-core.mjs";
-import { renderInvoiceDocument } from "../assets/js/workbench/invoice-document.mjs";
+import { renderDocument, renderInvoiceDocument } from "../assets/js/workbench/invoice-document.mjs";
 import { renderBusinessDocument } from "../assets/js/workbench/document-engine.mjs";
 
 test("invoice numbers use the issue date in INV-YYYYMMDD0 format", () => {
@@ -306,4 +306,54 @@ test("daily invoice output omits hours while preserving half-day math", () => {
   assert.match(html, /GBP 30\.00 \/ day/);
   assert.doesNotMatch(html, /<th>Hours<\/th>|hours\/day/);
   assert.doesNotMatch(summary, /Billable hours/);
+});
+
+test("retainer invoice adds only populated charges and optional scope", () => {
+  const invoice = buildInvoiceData({
+    template: "retainer",
+    currency: "GBP",
+    serviceDescription: "Operations retainer",
+    retainerFee: 900,
+    retainerIncludedHours: 20,
+    retainerOverageHours: 2.5,
+    retainerOverageRate: 40,
+    retainerScope: "Weekly reporting\nPriority support\n",
+    adjustmentAmount: 0
+  }, { start: "2026-09-01", end: "2026-09-30" }, {});
+  const html = renderDocument(invoice);
+
+  assert.equal(invoice.lines.length, 2);
+  assert.equal(invoice.totals.grandTotal, 100000);
+  assert.deepEqual(invoice.retainer.scope, ["Weekly reporting", "Priority support"]);
+  assert.match(html, /Retainer period|Operations retainer|Additional hours|Scope included this cycle/);
+  assert.doesNotMatch(html, /Carried over/);
+});
+
+test("milestone invoice ignores empty stages and totals billed values", () => {
+  const invoice = buildInvoiceData({
+    template: "milestone",
+    currency: "USD",
+    milestoneProjectRef: "HOMEGROUND-02",
+    milestoneContractValue: 5000,
+    milestoneInvoicedToDate: 1000,
+    milestone1Name: "Discovery",
+    milestone1State: "Complete",
+    milestone1Pct: 20,
+    milestone1Value: 1000,
+    milestone1Billed: 1000,
+    milestone2Name: "",
+    milestone2Value: 0,
+    milestone2Billed: 0
+  }, { start: "", end: "" }, {});
+  const html = renderDocument(invoice);
+
+  assert.equal(invoice.milestone.stages.length, 1);
+  assert.equal(invoice.totals.grandTotal, 100000);
+  assert.match(html, /HOMEGROUND-02|Discovery|USD 1,000\.00/);
+  assert.doesNotMatch(html, /Milestone 2/);
+});
+
+test("minor-unit formatting supports zero and three decimal currencies", () => {
+  assert.equal(formatCurrencyMinor(1234, "JPY"), "JPY 1,234");
+  assert.equal(formatCurrencyMinor(1234, "KWD"), "KWD 1.234");
 });

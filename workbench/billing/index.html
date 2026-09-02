@@ -262,10 +262,19 @@ extra_css:
           <input id="service-description" name="serviceDescription" placeholder="Social Media Management">
         </label>
         <label class="workbench-field">
-          <span>Payment terms</span>
-          <input id="payment-terms" name="terms" placeholder="Net 7">
+          <span>Invoice type</span>
+          <select id="invoice-template" name="template">
+            <option value="time">Time-based</option>
+            <option value="retainer">Retainer</option>
+            <option value="milestone">Milestone</option>
+          </select>
         </label>
       </div>
+
+      <label class="workbench-field">
+        <span>Service detail, optional</span>
+        <textarea id="service-note" name="serviceNote" rows="2" placeholder="Short scope or delivery detail"></textarea>
+      </label>
 
       <div class="workbench-field-inline">
         <label class="workbench-field">
@@ -278,35 +287,72 @@ extra_css:
         </label>
       </div>
 
-      <label class="workbench-field">
-        <span>Currency</span>
-        <select id="currency" name="currency">
-          <option value="GBP">GBP · British pound</option>
-          <option value="USD">USD · US dollar</option>
-          <option value="CAD">CAD · Canadian dollar</option>
-          <option value="AUD">AUD · Australian dollar</option>
-          <option value="PHP">PHP · Philippine peso</option>
-        </select>
-      </label>
-
-      <fieldset class="workbench-fieldset">
-        <legend>How do you charge this client?</legend>
-        <div class="workbench-segmented">
-          <label><input id="rate-hourly" type="radio" name="rateType" value="hourly" checked>Per hour</label>
-          <label><input id="rate-daily" type="radio" name="rateType" value="daily">Per day</label>
-        </div>
-        <small class="billing-rate-help" id="billing-rate-help">Hourly invoices show both days and hours.</small>
-      </fieldset>
-
       <div class="workbench-field-inline">
-        <label class="workbench-field">
-          <span>Rate</span>
-          <input id="rate" name="rate" type="number" min="0" step="0.01" inputmode="decimal" value="0">
-        </label>
-        <label class="workbench-field" data-hourly-only>
-          <span>Hours / day</span>
-          <input id="hours-per-day" name="hoursPerDay" type="number" min="0" step="0.25" inputmode="decimal" value="8">
-        </label>
+        <label class="workbench-field"><span>Payment terms</span><input id="payment-terms" name="terms" placeholder="Net 7"></label>
+        <label class="workbench-field"><span>Currency</span><select id="currency" name="currency">
+          <option value="GBP">GBP · British pound</option><option value="USD">USD · US dollar</option>
+          <option value="CAD">CAD · Canadian dollar</option><option value="AUD">AUD · Australian dollar</option>
+          <option value="PHP">PHP · Philippine peso</option>
+        </select></label>
+      </div>
+
+      <div class="billing-template-fields billing-form" data-invoice-template-fields="time">
+        <fieldset class="workbench-fieldset">
+          <legend>How do you charge this client?</legend>
+          <div class="workbench-segmented">
+            <label><input id="rate-hourly" type="radio" name="rateType" value="hourly" checked>Per hour</label>
+            <label><input id="rate-daily" type="radio" name="rateType" value="daily">Per day</label>
+          </div>
+          <small class="billing-rate-help" id="billing-rate-help">Hourly invoices show both days and hours.</small>
+        </fieldset>
+        <div class="workbench-field-inline">
+          <label class="workbench-field"><span>Rate</span><input id="rate" name="rate" type="number" min="0" step="0.01" inputmode="decimal" value="0"></label>
+          <label class="workbench-field" data-hourly-only><span>Hours / day</span><input id="hours-per-day" name="hoursPerDay" type="number" min="0" step="0.25" inputmode="decimal" value="8"></label>
+        </div>
+      </div>
+
+      <div class="billing-template-fields billing-form" data-invoice-template-fields="retainer" hidden>
+        <div class="workbench-field-inline">
+          <label class="workbench-field"><span>Retainer fee</span><input name="retainerFee" type="number" min="0" step="0.01" value="0"></label>
+          <label class="workbench-field"><span>Included hours</span><input name="retainerIncludedHours" type="number" min="0" step="0.25" value="0"></label>
+        </div>
+        <div class="workbench-field-inline">
+          <label class="workbench-field"><span>Overage hours</span><input name="retainerOverageHours" type="number" min="0" step="0.25" value="0"></label>
+          <label class="workbench-field"><span>Overage rate / hour</span><input name="retainerOverageRate" type="number" min="0" step="0.01" value="0"></label>
+        </div>
+        <div class="workbench-field-inline">
+          <label class="workbench-field"><span>Carried-over hours</span><input name="retainerCarriedOver" type="number" min="0" step="0.25" value="0"></label>
+          <label class="workbench-field"><span>Cycle</span><div class="billing-cycle-inputs"><input name="retainerCycleIndex" type="number" min="1" step="1" placeholder="1" aria-label="Current cycle"><span>of</span><input name="retainerCycleTotal" type="number" min="1" step="1" placeholder="12" aria-label="Total cycles"></div></label>
+        </div>
+        <label class="workbench-field"><span>Scope included</span><textarea name="retainerScope" rows="5" placeholder="One included service per line"></textarea></label>
+      </div>
+
+      <div class="billing-template-fields billing-form" data-invoice-template-fields="milestone" hidden>
+        <div class="workbench-field-inline">
+          <label class="workbench-field"><span>Project reference</span><input name="milestoneProjectRef" placeholder="PROJECT-01"></label>
+          <label class="workbench-field"><span>Contract value</span><input name="milestoneContractValue" type="number" min="0" step="0.01" value="0"></label>
+        </div>
+        <label class="workbench-field"><span>Invoiced to date</span><input name="milestoneInvoicedToDate" type="number" min="0" step="0.01" value="0"></label>
+        <p class="billing-template-hint">Add up to three stages. Empty stages stay off the document.</p>
+        <div class="billing-milestone-list">
+          {% for index in (1..3) %}
+          <details class="billing-milestone-entry" {% if index == 1 %}open{% endif %}>
+            <summary>Milestone {{ index }}</summary>
+            <div class="billing-form billing-milestone-entry-body">
+              <label class="workbench-field"><span>Name</span><input name="milestone{{ index }}Name" placeholder="Discovery and system map"></label>
+              <label class="workbench-field"><span>Detail</span><input name="milestone{{ index }}Note" placeholder="Deliverables or acceptance detail"></label>
+              <div class="workbench-field-inline">
+                <label class="workbench-field"><span>State</span><select name="milestone{{ index }}State"><option>Scheduled</option><option>Active</option><option>Complete</option><option>Invoiced</option></select></label>
+                <label class="workbench-field"><span>Contract %</span><input name="milestone{{ index }}Pct" type="number" min="0" max="100" step="0.1"></label>
+              </div>
+              <div class="workbench-field-inline">
+                <label class="workbench-field"><span>Stage value</span><input name="milestone{{ index }}Value" type="number" min="0" step="0.01"></label>
+                <label class="workbench-field"><span>Billed this invoice</span><input name="milestone{{ index }}Billed" type="number" min="0" step="0.01"></label>
+              </div>
+            </div>
+          </details>
+          {% endfor %}
+        </div>
       </div>
 
       <label class="workbench-field">
@@ -326,22 +372,16 @@ extra_css:
         </label>
       </div>
 
-      <label class="workbench-field">
-        <span>Invoice notes</span>
-        <textarea id="billing-notes" name="notes" placeholder="Scope, reference, or payment terms"></textarea>
-      </label>
-
-      <div class="workbench-field-inline">
-        <label class="workbench-field">
-          <span>Adjustment label</span>
-          <input id="adjustment-label" name="adjustmentLabel" placeholder="Credit or additional charge">
-        </label>
-        <label class="workbench-field">
-          <span>Adjustment</span>
-          <input id="adjustment-amount" name="adjustmentAmount" type="number" step="0.01" inputmode="decimal" value="0">
-          <small>Use a negative amount for a credit.</small>
-        </label>
-      </div>
+      <details class="billing-optional-fields">
+        <summary>Notes, credits, and additional charges</summary>
+        <div class="billing-form billing-optional-fields-body">
+          <label class="workbench-field"><span>Invoice notes</span><textarea id="billing-notes" name="notes" placeholder="Scope, reference, or payment terms"></textarea></label>
+          <div class="workbench-field-inline">
+            <label class="workbench-field"><span>Adjustment label</span><input id="adjustment-label" name="adjustmentLabel" placeholder="Credit or additional charge"></label>
+            <label class="workbench-field"><span>Adjustment</span><input id="adjustment-amount" name="adjustmentAmount" type="number" step="0.01" inputmode="decimal" value="0"><small>Use a negative amount for a credit.</small></label>
+          </div>
+        </div>
+      </details>
 
       </section>
 
@@ -353,13 +393,13 @@ extra_css:
           <input id="payment-method" name="paymentMethod" placeholder="Wise">
         </label>
         <label class="workbench-field">
-          <span>Payment account</span>
-          <input id="payment-details" name="paymentDetails" placeholder="@account or bank details">
+          <span>Payment details</span>
+          <textarea id="payment-details" name="paymentDetails" rows="3" placeholder="Sort code: 00-00-00&#10;Account no: 00000000"></textarea>
         </label>
       </div>
 
       <details class="billing-optional-fields">
-        <summary>Optional invoice fields</summary>
+        <summary>Business references</summary>
         <div class="billing-form billing-optional-fields-body">
           <div class="workbench-field-inline">
             <label class="workbench-field"><span>Provider organization</span><input name="providerOrg"></label>
@@ -373,10 +413,13 @@ extra_css:
             <label class="workbench-field"><span>Client VAT / tax ID</span><input name="clientTaxId"></label>
             <label class="workbench-field"><span>PO reference</span><input name="clientPoRef"></label>
           </div>
-          <div class="workbench-field-inline">
-            <label class="workbench-field"><span>Account name</span><input name="paymentAccountName"></label>
-            <label class="workbench-field"><span>Payment reference</span><input name="paymentReference"></label>
-          </div>
+        </div>
+      </details>
+
+      <details class="billing-optional-fields">
+        <summary>Settlement and footer</summary>
+        <div class="billing-form billing-optional-fields-body">
+          <div class="workbench-field-inline"><label class="workbench-field"><span>Account name</span><input name="paymentAccountName"></label><label class="workbench-field"><span>Payment reference</span><input name="paymentReference"></label></div>
           <label class="workbench-field"><span>Footer message</span><input name="footerTerms"></label>
           <label class="workbench-field"><span>Website</span><input name="website"></label>
         </div>
@@ -391,11 +434,11 @@ extra_css:
       <div>
         <span>02 · Billing period</span>
         <h2 id="billing-calendar-title">Mark the days</h2>
-        <p>A period may cross months. Click a date to change its state.</p>
+        <p id="billing-calendar-lede">A period may cross months. Click a date to change its state.</p>
       </div>
     </div>
 
-    <div class="period-toolbar">
+    <div class="period-toolbar" data-not-milestone>
       <label class="workbench-field">
         <span>Period starts</span>
         <input id="period-start" type="date">
@@ -406,17 +449,19 @@ extra_css:
       </label>
     </div>
 
-    <div id="billing-calendar" class="billing-calendars" aria-label="Billing period calendars"></div>
+    <div id="billing-calendar" class="billing-calendars" aria-label="Billing period calendars" data-time-only></div>
+
+    <div class="billing-template-guidance" data-template-guidance hidden></div>
 
     <div class="calendar-actions">
-      <button class="workbench-button" type="button" data-action="previous-cycle">← Previous cycle</button>
-      <button class="workbench-button" type="button" data-action="select-weekdays">Weekdays full</button>
-      <button class="workbench-button" type="button" data-action="clear-period">Clear period</button>
-      <button class="workbench-button" type="button" data-action="reset-period">Reset period</button>
-      <button class="workbench-button primary" type="button" data-action="next-cycle">Next cycle →</button>
+      <button class="workbench-button" type="button" data-action="previous-cycle" data-not-milestone>← Previous cycle</button>
+      <button class="workbench-button" type="button" data-action="select-weekdays" data-time-only>Weekdays full</button>
+      <button class="workbench-button" type="button" data-action="clear-period" data-time-only>Clear period</button>
+      <button class="workbench-button" type="button" data-action="reset-period" data-time-only>Reset period</button>
+      <button class="workbench-button primary" type="button" data-action="next-cycle" data-not-milestone>Next cycle →</button>
     </div>
-    <p class="calendar-cycle-help">Advances the billing period while keeping this browser's editable client, rate, and payment setup. No values are shared with other visitors.</p>
-    <div class="calendar-legend" aria-label="Day state legend">
+    <p class="calendar-cycle-help" data-not-milestone>Advances the billing period while keeping this browser's editable client, rate, and payment setup. No values are shared with other visitors.</p>
+    <div class="calendar-legend" aria-label="Day state legend" data-time-only>
       <span><i class="full"></i>Full day</span>
       <span><i class="half"></i>Half day</span>
       <span><i class="custom"></i>Custom hours</span>
@@ -435,8 +480,8 @@ extra_css:
     </div>
 
     <div class="summary-metrics">
-      <div class="summary-metric"><span>Billable days</span><strong id="selected-days">0</strong></div>
-      <div class="summary-metric" data-hourly-only><span>Billable hours</span><strong id="billable-hours">0</strong></div>
+      <div class="summary-metric"><span id="selected-days-label">Billable days</span><strong id="selected-days">0</strong></div>
+      <div class="summary-metric" data-hourly-only><span id="billable-hours-label">Billable hours</span><strong id="billable-hours">0</strong></div>
       <div class="summary-metric"><span id="daily-total-label">Daily equivalent</span><strong id="daily-total">—</strong></div>
     </div>
     <div class="summary-total">

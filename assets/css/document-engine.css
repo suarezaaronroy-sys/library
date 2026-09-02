@@ -1,14 +1,125 @@
+/* D'Workbench document engine — print-safe A4 business documents.
+   Changes from previous revision are marked [FIX n] against REVIEW.md. */
+
 .document-sheet{--document-ink:#20262f;--document-muted:#667085;--document-rule:#d0d5dd;--document-soft:#f2f4f7;--document-accent:#168c83;box-sizing:border-box;width:100%;background:#fff;color:var(--document-ink);font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.45}
 .document-sheet *{box-sizing:border-box}
+
 .document-header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:2px solid var(--document-accent);padding:0 0 8mm}
-.document-title{display:flex;align-items:center;gap:6mm}.document-mark{width:12mm;height:12mm;border-radius:2.5mm;background:var(--document-accent)}
-.document-sheet h1{margin:0;color:var(--document-ink);font-size:29pt;line-height:1;letter-spacing:-.035em}.document-meta{display:grid;gap:1.5mm;text-align:right;color:var(--document-muted);font-variant-numeric:tabular-nums}.document-meta strong{color:var(--document-ink);font-size:12pt}
-.document-parties{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18mm;padding:8mm 0 5mm}.document-party>span,.document-banner span,.document-detail-strip span,.document-notes>span,.document-settlement-method>span,.document-due-panel>span,.document-signatures span{display:block;margin-bottom:2mm;color:var(--document-muted);font-size:8pt;font-weight:700;letter-spacing:.02em;text-transform:uppercase}.document-party>strong{display:block;margin-bottom:2mm;font-size:12pt}.document-party p{margin:0 0 .8mm;color:var(--document-muted)}
-.document-banner{display:flex;align-items:center;justify-content:space-between;gap:10mm;border-radius:3mm;background:var(--document-soft);padding:4mm 6mm}.document-banner div>strong{display:block;font-size:10.5pt}.document-banner>strong{color:var(--document-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.document-detail-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4mm;border-bottom:1px solid var(--document-rule);padding:5mm 0 3.5mm}.document-detail-strip strong{display:block;font-size:9pt;overflow-wrap:anywhere}
-.document-content-section{margin-top:7mm}.document-content-section h2{margin:0 0 2mm;font-size:12pt}.document-content-section p{margin:0;color:var(--document-muted);white-space:normal}.document-content-section ol{margin:2mm 0 0;padding-left:5mm}.document-content-section li{margin:0 0 1.5mm}
-.document-table{width:100%;margin-top:8mm;border-collapse:separate;border-spacing:0;font-size:9.5pt}.document-table thead{display:table-header-group}.document-table th{background:var(--document-ink);color:#fff;padding:4mm;text-align:left;font-size:8pt;text-transform:uppercase}.document-table th:first-child{border-radius:2mm 0 0}.document-table th:last-child{border-radius:0 2mm 0 0}.document-table th.align-right,.document-table td.align-right{text-align:right}.document-table td{border-bottom:1px solid var(--document-rule);padding:6mm 4mm;vertical-align:top}.document-table td:first-child{border-left:1px solid var(--document-rule)}.document-table td:last-child{border-right:1px solid var(--document-rule)}.document-table td>strong{display:block;font-size:10.5pt}.document-table td>small{display:block;margin-top:1.5mm;color:var(--document-muted);font-size:8.5pt}.document-table td.is-strong{font-weight:700}.document-numeric,.document-total-row strong{font-variant-numeric:tabular-nums;white-space:nowrap}
-.document-financials{display:grid;grid-template-columns:minmax(0,1fr) 74mm;gap:12mm;margin-top:5mm}.document-notes p{margin:0;color:var(--document-muted);font-size:9pt}.document-total-row{display:flex;align-items:baseline;justify-content:space-between;gap:8mm;padding:2mm 0;color:var(--document-muted)}.document-total-row strong{color:var(--document-ink)}.document-total-row.is-emphasis{border-bottom:1.5px solid var(--document-accent);padding:3mm 0;color:var(--document-ink);font-size:11pt;font-weight:700}.document-total-row.is-emphasis strong{color:var(--document-accent);font-size:15pt}.document-footnote{margin:3mm 0 0 auto;width:74mm;color:var(--document-muted);font-size:7.5pt;line-height:1.45}
-.document-settlement{display:grid;grid-template-columns:1fr 72mm;gap:20mm;align-items:start;margin-top:12mm}.document-settlement-method>strong{display:block;margin-bottom:2mm;font-size:11pt}.document-settlement-method p{margin:1mm 0;color:var(--document-muted)}.document-settlement-field{display:flex;gap:2mm;margin-top:1mm;color:var(--document-muted)}.document-settlement-field span::after{content:":"}.document-settlement-field strong{color:var(--document-ink);font-weight:400;white-space:pre-line}.document-due-panel{border-radius:3mm;background:var(--document-soft);padding:6mm}.document-due-panel strong{display:block;font-size:11pt;font-variant-numeric:tabular-nums}
-.document-signatures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18mm;margin-top:18mm}.document-signatures i{display:block;height:12mm;border-bottom:1px solid var(--document-rule)}.document-signatures strong{display:block;margin-top:2mm}.document-signatures p{margin:1mm 0 0;color:var(--document-muted);font-size:8.5pt}.document-footer{display:flex;justify-content:space-between;gap:10mm;border-top:1px solid var(--document-rule);margin-top:14mm;padding-top:4mm;color:var(--document-muted);font-size:8pt}
-@media print{@page{size:A4;margin:16mm}.document-sheet{min-height:265mm;background:#fff!important;color:#20262f!important}.document-table tr,.document-totals,.document-settlement,.document-signatures{break-inside:avoid;page-break-inside:avoid}}
+.document-title{display:flex;align-items:center;gap:6mm}
+.document-mark{width:12mm;height:12mm;border-radius:2.5mm;background:var(--document-accent)}
+.document-sheet h1{margin:0;color:var(--document-ink);font-size:29pt;line-height:1;letter-spacing:-.035em}
+.document-meta{display:grid;gap:1.5mm;text-align:right;color:var(--document-muted);font-variant-numeric:tabular-nums}
+.document-meta strong{color:var(--document-ink);font-size:12pt}
+
+.document-parties{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18mm;padding:8mm 0 5mm}
+.document-party>span,.document-banner span,.document-detail-strip span,.document-notes>span,.document-settlement-method>span,.document-due-panel>span,.document-signatures span{display:block;margin-bottom:2mm;color:var(--document-muted);font-size:8pt;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+.document-party>strong{display:block;margin-bottom:2mm;font-size:12pt}
+.document-party p{margin:0 0 .8mm;color:var(--document-muted)}
+
+.document-banner{display:flex;align-items:center;justify-content:space-between;gap:10mm;border-radius:3mm;background:var(--document-soft);padding:4mm 6mm}
+.document-banner div>strong{display:block;font-size:10.5pt}
+.document-banner>strong{color:var(--document-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.document-detail-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4mm;border-bottom:1px solid var(--document-rule);padding:5mm 0 3.5mm}
+.document-detail-strip strong{display:block;font-size:9pt;overflow-wrap:anywhere}
+
+.document-content-section{margin-top:7mm}
+.document-content-section h2{margin:0 0 2mm;font-size:12pt}
+.document-content-section p{margin:0;color:var(--document-muted);white-space:normal}
+.document-content-section ol,.document-content-section ul{margin:2mm 0 0;padding-left:5mm}
+.document-content-section li{margin:0 0 1.5mm}
+/* [FIX 8] two-column unordered scope list for retainer documents */
+.document-content-section ul.is-columnar{columns:2;column-gap:12mm;padding-left:4mm}
+.document-content-section ul.is-columnar li{break-inside:avoid}
+
+.document-table{width:100%;margin-top:8mm;border-collapse:separate;border-spacing:0;font-size:9.5pt}
+.document-table thead{display:table-header-group}
+.document-table th{background:var(--document-ink);color:#fff;padding:4mm;text-align:left;font-size:8pt;text-transform:uppercase}
+.document-table th:first-child{border-radius:2mm 0 0}
+.document-table th:last-child{border-radius:0 2mm 0 0}
+.document-table th.align-right,.document-table td.align-right{text-align:right}
+.document-table td{border-bottom:1px solid var(--document-rule);padding:6mm 4mm;vertical-align:top}
+.document-table td:first-child{border-left:1px solid var(--document-rule)}
+.document-table td:last-child{border-right:1px solid var(--document-rule)}
+.document-table td>strong{display:block;font-size:10.5pt}
+.document-table td>small{display:block;margin-top:1.5mm;color:var(--document-muted);font-size:8.5pt}
+.document-table td.is-strong{font-weight:700}
+.document-numeric,.document-total-row strong{font-variant-numeric:tabular-nums;white-space:nowrap}
+/* [FIX 8] milestone stage state pill — outline only, prints without fill */
+.document-state{display:inline-block;border:1px solid var(--document-ink);border-radius:1mm;padding:.6mm 1.8mm;font-size:7.5pt;font-weight:700;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+.document-state.is-muted{border-color:var(--document-rule);color:var(--document-muted)}
+
+.document-financials{display:grid;grid-template-columns:minmax(0,1fr) 74mm;gap:12mm;margin-top:5mm}
+.document-notes p{margin:0;color:var(--document-muted);font-size:9pt}
+.document-total-row{display:flex;align-items:baseline;justify-content:space-between;gap:8mm;padding:2mm 0;color:var(--document-muted)}
+.document-total-row strong{color:var(--document-ink)}
+.document-total-row.is-emphasis{border-bottom:1.5px solid var(--document-accent);padding:3mm 0;color:var(--document-ink);font-size:11pt;font-weight:700}
+/* [FIX 5] the amount due stays ink, not accent — it must be the darkest thing on a
+   greyscale print. The accent keeps the rule beneath it. */
+.document-total-row.is-emphasis strong{color:var(--document-ink);font-size:15pt}
+.document-footnote{margin:3mm 0 0 auto;width:74mm;color:var(--document-muted);font-size:7.5pt;line-height:1.45}
+
+.document-settlement{display:grid;grid-template-columns:1fr 72mm;gap:20mm;align-items:start;margin-top:12mm}
+.document-settlement-method>strong{display:block;margin-bottom:2mm;font-size:11pt}
+.document-settlement-method p{margin:1mm 0;color:var(--document-muted)}
+.document-settlement-field{display:flex;gap:2mm;margin-top:1mm;color:var(--document-muted)}
+.document-settlement-field span::after{content:":"}
+.document-settlement-field strong{color:var(--document-ink);font-weight:400;white-space:pre-line}
+.document-due-panel{border-radius:3mm;background:var(--document-soft);padding:6mm}
+.document-due-panel strong{display:block;font-size:11pt;font-variant-numeric:tabular-nums}
+
+.document-signatures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18mm;margin-top:18mm}
+.document-signatures i{display:block;height:12mm;border-bottom:1px solid var(--document-rule)}
+.document-signatures strong{display:block;margin-top:2mm}
+.document-signatures p{margin:1mm 0 0;color:var(--document-muted);font-size:8.5pt}
+.document-footer{display:flex;justify-content:space-between;gap:10mm;border-top:1px solid var(--document-rule);margin-top:14mm;padding-top:4mm;color:var(--document-muted);font-size:8pt}
+
+@media print{
+  @page{size:A4;margin:16mm}
+
+  /* [FIX 1] Chrome's print dialog has "Background graphics" OFF by default, which
+     drops these fills and leaves white text on white. Forcing exact colour is the
+     difference between a legible table header and a blank strip. Verified. */
+  .document-table th,
+  .document-banner,
+  .document-due-panel,
+  .document-mark{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  .document-sheet{background:#fff!important;color:#20262f!important}
+
+  /* [FIX 2] compaction. A four-line invoice measured 1352px against a 1002px A4
+     budget and orphaned the totals and bank details onto a bare page 2. Row padding
+     was the bulk of it (89px per row). Do not loosen these without re-running
+     check-page-budget.mjs. */
+  .document-sheet{font-size:9.5pt;line-height:1.35}
+  .document-header{padding-bottom:4mm}
+  .document-sheet h1{font-size:20pt}
+  .document-mark{width:8mm;height:8mm}
+  .document-title{gap:4mm}
+  .document-meta strong{font-size:11pt}
+  .document-parties{padding:4mm 0 2.5mm;gap:12mm}
+  .document-party>strong{font-size:11pt;margin-bottom:1mm}
+  .document-party p{margin:0 0 .4mm}
+  .document-party>span,.document-banner span,.document-detail-strip span,.document-notes>span,.document-settlement-method>span,.document-due-panel>span{margin-bottom:1.2mm}
+  .document-banner{padding:2.5mm 5mm}
+  .document-detail-strip{padding:3mm 0 2mm}
+  .document-content-section{margin-top:4mm}
+  .document-content-section li{margin:0 0 .8mm}
+  .document-table{margin-top:4mm}
+  .document-table th{padding:2.2mm 4mm}
+  .document-table td{padding:2mm 4mm}
+  .document-table td>strong{font-size:10pt}
+  .document-table td>small{margin-top:.6mm}
+  .document-financials{margin-top:3mm}
+  .document-total-row{padding:1.4mm 0}
+  .document-settlement{margin-top:5mm}
+  .document-settlement-method p{margin:.6mm 0}
+  .document-due-panel{padding:3.5mm}
+  .document-signatures{margin-top:10mm}
+  .document-footer{margin-top:5mm;padding-top:2.5mm}
+
+  .document-table tr,.document-totals,.document-financials,.document-settlement,.document-signatures,.document-banner{break-inside:avoid;page-break-inside:avoid}
+  /* [FIX 4] never strand the money on its own page */
+  .document-table{break-after:avoid}
+  .document-footnote{break-before:avoid}
+}
