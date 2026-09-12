@@ -1,3 +1,8 @@
+> This repository is the legacy GitHub Pages entry point. HTML pages redirect to
+> https://dlibrary-omega.vercel.app, preserving paths, queries and fragments.
+> Active development is in the private `asmultitaskcollective-prog/library` repository.
+> Workbench data is origin-specific: existing users must export/import their browser backup.
+
 # Aaron Suarez - The Working Library
 
 The source for [suarezaaronroy-sys.github.io/library](https://suarezaaronroy-sys.github.io/library/):
